@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+			<ul>
+				<li sec:authorize="!isAuthenticated()" class="loginlogout"><a href="/login">Login</a></li>
+				<li sec:authorize="isAuthenticated()" class="loginlogout"><a href="/logout">Logout</a></li>
+			</ul>
+		
+		<div class="content">
+			<ul>
+				<li><a href="sortiment.html">Sortiment</a></li>
+			</ul>
+			<p sec:authorize="isAuthenticated()" th:text="${'Moin ' + #authentication?.name}"></p>
+			<p sec:authorize="!isAuthenticated()">you are logged out</p>
+			
+			<div class="salespoint" sec:authorize="hasRole('ROLE_BOSS')">	
+				<ul>
+					<li><a href="register.html">New Customer?</a></li>
+					<li><a href="eingabe.html">Hinzufügen</a></li>
+					<li><a href="loeschen.html">Löschen</a></li>
+					<li><a href="uebersicht.html">Standortübersicht</a></li>
+				</ul>
+			</div>
+			<div class="salespoint" sec:authorize="hasRole('ROLE_CUSTOMER')">
+				<ul>
+					<li><a href="uebersicht.html">Standortübersicht</a></li>
+				</ul>
+			</div>
+			
+			<div class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+				<ul>
+					<li><a href="cookbook.html">Rezepte</a></li>
+				</ul>
+			</div>
+			
+		</div>
+	</body>
+</html>

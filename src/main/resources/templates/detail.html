@@ -1,0 +1,59 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <body>
+    <h3 align="center"><i>Detailansicht</i></h3>  
+    <h2 align="left" th:text="${article.name}"></h2>  
+
+		
+
+			<div class="detailDescription">
+			
+				<img th:src="@{'/resources/img/cover/' + ${article.image} + '.jpg'}" class="thumbnail" src="../resources/img/cover/nopic.jpg" alt="" align="center" style="display: inline"/>
+				
+				<table style="display: inline">
+				<tr>
+					<th>Alter:</th>
+					<td th:text="${article.alter}" />
+				</tr>
+				
+				<tr>
+					<th>Alkoholgehalt:</th>
+					<td th:text="${article.alkoholgehalt}" />
+				</tr>
+				
+				<tr>
+					<th>Volumen:</th>
+					<td th:text="${article.volumen}" />
+				</tr>
+				<tr>
+					<th>Cognacart:</th>
+					<td th:text="${article.cognacart}" />
+				</tr>
+				<tr>
+					<th>Preis:</th>
+					<td th:text="${article.price}" />
+				</tr>
+			
+			</table>
+			
+				<p></p>
+				<form  method="post" action="/warenkorb">
+					<input type="hidden" name="pid" th:value="${article.identifier}" /> 
+					<label for="number">Anzahl: </label>
+					<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" /><br />
+					<p></p>
+					<input type="submit" value="Artikel zum Warenkorb hinzuf&uuml;gen" />
+				</form>			
+			</div>
+			
+			<form  method="get" action="/warenkorb">
+					<button name="searchterm">Nur zum Warenkorb gehen</button>
+				</form>
+			
+
+            <!-- Hier kommt man zurück zum Artikelkatalog -->
+			<form method="get" action="/sortiment">
+				<button name="searchTerm">Zur&uuml;ck zum Sortiment</button>
+			</form>
+					
+      </body>      
+   </html>

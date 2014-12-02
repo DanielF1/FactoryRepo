@@ -1,0 +1,315 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<!-- JS dependencies -->
+	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/docs.min.js"></script>
+	
+	<!-- CSS dependencies -->
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+	<style type="text/css">
+	  
+		th, td {padding: 10px;}
+		.modal-backdrop{z-index:0!important} 
+		
+	</style>
+</head>
+
+<body>
+	<!-- modal content -->
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+	
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="myModalLabel">Confirm that action</h4>
+				</div>
+	      
+				<div class="modal-body">
+					<h4 class="modal-title" id="myModalLabel">Are you sure you want to delete this recipe? </h4>
+				</div>
+	
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+					<form th:method="delete">
+						<button type="button" class="btn btn-default float-right" onclick="deleteEntry()" >Delete</button>
+					</form>
+					
+					
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- /modal content -->
+			
+	<table width="100%" border="50%" >
+		<tr>
+			<td>			
+				<h1>Rezepte</h1>
+				<!-- <div class="input_fields_wrap"> -->
+				<!--     <button class="add_field_button">Add More Fields</button> -->
+				<!--     <div><input type="text" name="mytext[]"></div> -->
+				<!-- </div> -->
+			
+				<!-- add recipe form -->
+				<div id="main">
+				    <div class="my-form" >
+<!-- 				    	<form action="#" th:action="@{/sg/add}" th:object="${subjectGroup}" method="POST"> -->
+<!--       						<p > -->
+<!--       							<input type="text" th:field="*{name}" placeholder="Name..."/></p> -->
+							
+<!-- 							      <table> -->
+<!-- 						            <tr th:each="ingredient, rowStat : *{ingredients}"> -->
+<!-- 						              <td><input type="text" th:field="*{ingredients[__${rowStat.index}__].label}" placeholder="Option..."/></td> -->
+<!-- 						            </tr> -->
+<!-- 						        </table> -->
+						
+<!-- 				                <a class="add-box" href="#"><button class="btn btn-default" name="addOption">Add More</button></a> -->
+				            
+<!-- 				            <p><input type="submit" class="btn btn-default" th:value="#{recipe.form.submit}" value="Senden" /></p> -->
+	
+<!-- 				        </form>   -->
+				        
+				        
+				        
+				        <form role="form" method="post" th:action="@{/cookbook/addRecipe}">
+				        	<p >
+				        		<label for="name">Name</label>
+								<input name="name" type="text" /><br /> 
+							</p>
+							
+				            <p class="text-box">
+				                <label for="ingredient">Zutat <span class="box-number">1</span></label>
+				                <input type="text" name="ingridientName" value="" id="box" />
+				                <input type="number" name="ingridientAmount" value="" id="box" min="1" />
+				                <select name="ingridientUnit">
+									<option value="Liter">Liter</option>
+									<option value="Kg">Kg</option>
+								</select>
+				                <a class="add-box" href="#"><button class="btn btn-default">Add More</button></a>
+				            </p>
+				            <p><input type="submit" class="btn btn-default" value="Speichern" /></p>
+				        </form>   
+				    </div>
+				</div>
+				<!-- /add recipe form -->
+				
+				<!-- search field -->
+	<!-- 			<div class="search-group"> -->
+	<!-- 				<form method="post" role="form" th:action="@{/cookbook/search}"> -->
+	<!-- 					<input name="searchTerm" type="text" placeholder="Search"/> -->
+	<!-- 					<input type="hidden" value="Senden" /> -->
+	<!-- 				</form> -->
+	<!-- 			</div> -->
+				<!--/search field -->
+	
+				<!-- recipe list -->
+				<div th:each="recipe : ${recipes}">
+				
+					<button th:value="${recipe.id}"  class="btn btn-default pull-right glyphicon glyphicon-remove btn-lg" 
+							data-toggle="modal" data-target="#myModal" onclick="doSomething(this)"></button>
+
+					<a th:href="@{'/cookbook/recipe/' + ${recipe.id}}">
+						<ul>
+							<li th:text="${recipe.name}">text</li>
+							<ul th:each="ingredient : ${recipe.ingredients}">
+								<li>
+									<span th:text="${ingredient.name}"></span>			
+									<span th:text="${ingredient.amount}"></span>
+									<span th:text="${ingredient.unit}"></span>
+								</li>
+							</ul>
+						</ul>
+					</a>
+			    </div>
+			    <!-- /recipe list -->  
+			    
+			    <!-- search result -->	
+	<!-- 			<div th:each="result : ${results}"> -->
+	<!-- 				<form th:method="delete" th:action="@{/cookbook/} + ${result.id}"> -->
+	<!-- 					<button class="btn btn-default pull-right glyphicon glyphicon-remove btn-lg" data-toggle="modal" data-target="#myModal" id="myModal"></button> -->
+	<!-- 				</form>	 -->
+		
+	<!-- 				<a th:href="@{'/cookbook/recipe/' + ${result.id}}"> -->
+	<!-- 					<ul> -->
+	<!-- 						<li th:text="${result.name}">text</li> -->
+	<!-- 						<ul th:each="ingredient : ${result.ingredients}"> -->
+	<!-- 							<li> -->
+	<!-- 								<span th:text="${ingredient.name}"></span>			 -->
+	<!-- 								<span th:text="${ingredient.amount}"></span> -->
+	<!-- 								<span th:text="${ingredient.unit}"></span> -->
+	<!-- 							</li> -->
+	<!-- 						</ul> -->
+	<!-- 					</ul> -->
+	<!-- 				</a> -->
+	<!-- 		    </div> -->
+				<!-- /search result -->
+			      
+			</td>
+			
+			<td>
+				<h1>Ausgewähltes Rezept</h1>
+				
+				<!-- recipe details -->	
+				<div th:each="recipe : ${selectedRecipe}">	
+					<form th:method="get" th:action="@{'/cookbook/wedding/' + ${recipe.id}}">		
+						<ul>
+							<li name ="recipe_name" th:text="${recipe.name}">text</li>
+							<ul th:each="ingredient : ${recipe.ingredients}">
+								<li>
+									<span name ="ingredient_name" th:text="${ingredient.name}"></span>			
+									<span th:name ="ingredient_amount" th:text="${ingredient.amount}"></span>
+									<span th:name ="ingredient_unit" th:text="${ingredient.unit}"></span>
+								</li>
+							</ul>
+						</ul>
+						<button class="btn btn-default">Herstellen</button>
+					</form>
+				</div>
+			    <!-- /recipe details -->
+			</td>
+			
+		</tr>
+		<tr>	
+			<td>
+				<!-- Fasslager -->
+				<h1>Fasslager</h1>
+					<div class="pull-left" th:each="barrelstock : ${stocks}">
+						<ul>
+							<li th:text="${barrelstock.name}">text</li>
+							<ul th:each="barrel : ${barrelstock.barrels}">
+								<li>
+									<span>Inhalt:</span> <span th:text="${barrel.content}"></span> 
+									<span>Volumen:</span> <span th:text="${barrel.amount}"></span> 									
+									<span>Zustand:</span> <span th:text="${barrel.type}"></span> 
+								</li>
+							</ul>
+						</ul>
+					</div>
+				<!-- /Fasslager -->
+			</td>
+			<td>
+				<h1>Hochzeit</h1>
+				<div>
+				<ul>
+					<li><h4 th:text="${selected_name}">Name</h4></li>
+						<ul class="pull-left" th:each="ingredient : ${selected_ingredients}">
+							<li>
+								<span th:text="${ingredient.name}"></span>			
+								<span th:text="${ingredient.amount}"></span>
+								<span th:text="${ingredient.unit}"></span>
+							</li>
+						</ul>
+				
+						<span>_______________________________________________________</span>
+					
+						<ul>
+							<li>	
+								<span th:text="${not_enough_0}"></span><br/>	<span th:text="${not_enough_1}"></span><br/>		
+								<span th:text="${not_enough_2}"></span><br/>	<span th:text="${not_enough_3}"></span><br/>		
+								<span th:text="${not_enough_4}"></span><br/>	<span th:text="${not_enough_5}"></span><br/>
+								
+								<span th:text="${not_exist__0}"></span><br/>	<span th:text="${not_exist__1}"></span><br/>		
+								<span th:text="${not_exist__2}"></span><br/>	<span th:text="${not_exist__3}"></span><br/>		
+								<span th:text="${not_exist__4}"></span><br/>	<span th:text="${not_exist__5}"></span>
+							</li>
+						</ul>
+					
+					
+<!-- 					<li><span th:text="${notfound0}"></span><br/>		<span th:text="${notfound1}"></span><br/></li> -->
+<!-- 					<li><span th:text="${notfound2}"></span><br/>		<span th:text="${notfound3}"></span><br/></li> -->
+					
+ 						<li><span th:text="${not_enough_bottles}"></span></li> 
+				</ul>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<!-- Flaschenlager -->
+				<h1>Flaschenlager</h1>
+				
+					<div class="pull-left" th:each="bottlestock : ${bottleStocks}">
+						<ul>
+							<li th:text="${bottlestock.name}">text</li>
+							
+							<li><ul>
+								<li><span>Anzahl leerer Flaschen:</span> <span th:text="${bottlestock.quantity_empty}"></span></li>
+								<li th:each="empty, it : ${bottlestock.emptybottles}">
+									<span>Volumen:</span> <span th:text="${amount}"></span> <br/>			
+									<span>Zustand:</span> <span th:text="${type}"></span> 
+								</li>
+							</ul></li>
+							<li><ul>
+								<li><span>Anzahl voller Flaschen:</span> <span th:text="${bottlestock.quantity_full}"></span></li>
+								<li th:each="full : ${fullbottles}">
+									<span>Volumen:</span> <span th:text="${amount}"></span> <br/>			
+									<span>Zustand:</span> <span th:text="${type}"></span> 
+								</li>
+							</ul></li>
+						</ul>
+					</div>
+				<!-- /Flaschenlager -->
+			</td>
+			<td>
+				<h3>Leer :)</h3>
+			</td>
+		</tr>
+	</table>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+    /*============= add recipe form =============*/
+	jQuery(document).ready(function($){
+	    $('.my-form .add-box').click(function(){
+	        var n = $('.text-box').length + 1;
+	        if( 5 < n ) {
+	            alert('Stop it!');
+	            return false;
+	        }
+	        var box_html = $('<p class="text-box"><label for="ingredient">Zutat <span class="box-number">' + n + '</span></label> <input type="text" name="ingridientName" class="box-number" id="box" /> <input type="number" name="ingridientAmount" value="" id="box" min="1"/> <select name="ingridientUnit" value="" id="box"><option value="Liter">Liter</option><option value="Kg">Kg</option></select> <a href="#" class="remove-box"><button class="btn btn-default glyphicon glyphicon-remove"></button></a></p>');
+	        box_html.hide();
+	        $('.my-form p.text-box:last').after(box_html);
+	        box_html.fadeIn('slow');
+	        return false;
+	    });
+	    $('.my-form').on('click', '.remove-box', function(){
+	        $(this).parent().css( 'background-color', '#FF6C6C');
+	        $(this).parent().fadeOut("slow", function() {
+	            $(this).remove();
+	            $('.box-number').each(function(index){
+	                $(this).text( index + 1 );
+	            });
+	        });
+	        return false;
+	    });
+	});
+	
+
+	/*============= delete entry URL =============*/
+	var idForDelete ="";
+	
+	function doSomething(elem){
+		idForDelete = elem.value;
+	}
+	
+	function deleteEntry()
+	{
+		var newURL      = "cookbook/delete";
+		newURL = newURL + "/" + escape(idForDelete);
+		
+		location.href = newURL;
+	}
+	
+/*]]>*/
+</script>
+</body>
+</html>

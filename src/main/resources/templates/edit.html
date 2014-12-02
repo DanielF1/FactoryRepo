@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	</head>
+
+	<body>
+
+		<form method="post" th:action="@{/edit}">
+            <table>
+                <tr><td>Standortangaben:</td></tr>
+                <tr><td>Name: </td><td th:text="${location.name}"></td></tr>
+                <tr><td>Addresse: </td><td th:text="${location.address}"></td></tr>
+                <tr><td>PLZ Ort: </td><td th:text="${location.city}"></td></tr>
+                <tr><td>Tel.: </td><td><input type="text" name="telefon" th:value="${location.telefon}"/></td></tr>
+                <tr><td>E-Mail: </td><td><input type="text" name="mail" th:value="${location.mail}"/></td></tr>
+                <tr><td>Abteilungen: </td><td><input type="text" name="departments" th:value="${location.departments}"/></td></tr>
+            	<tr><td><input name="id" type="hidden" th:value="${location.id}"/></td></tr>
+                <tr><td><button type="submit">Speichern!</button></td></tr>
+           	</table>
+           	
+        </form>
+	</body>
+</html>

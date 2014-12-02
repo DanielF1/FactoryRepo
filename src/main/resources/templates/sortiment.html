@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+    <body>
+   	
+   	<h1 align="center"><i>Herzlich Willkommen in unserem Katalog</i></h1>
+   	<h3 align="center">Bitte w&auml;hlen Sie verschiedene Artikel aus:</h3>
+       
+
+			<a th:each="article : ${articles}" th:href="@{'/detail/' + ${article.identifier}}" href="detail.html">
+					<div class="content">  
+					
+						<h4 th:text="${article.name}"></h4>
+						<img th:src="@{'/resources/img/cover/' + ${article.image} + '.jpg'}" class="thumbnail" src="../resources/img/cover/nopic.jpg" alt=""/>
+						<p th:text="${article.alter}"></p>
+						<p th:text="${article.alkoholgehalt}"></p>
+						<p th:text="${article.volumen}"></p>
+						<p th:text="${article.cognacart}"></p>
+						<p th:text="${article.price}"></p>	
+						
+					</div>
+				</a>
+				
+				<form  method="get" action="warenkorb">
+					<button name="searchterm">Zum Warenkorb</button>
+				</form>
+			
+    </body>
+</html>

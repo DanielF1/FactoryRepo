@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<body>
+    	<h3 align="center"><i>Willkommen im Warenkorb</i></h3>    
+   		<h5 align="center">Sie haben sich f&uuml;r folgende Artikel entschieden:</h5>
+   	 
+	<table align="center" style="width:95%">
+            		
+ 		<thead>
+           <tr>
+
+            <th>Name</th>
+        	<th>Alter</th>
+	     	<th>Alkoholgehalt</th>
+        	<th>Volumen</th>
+        	<th>Cognacart</th>
+        	<th>Preis pro St&uuml;ck</th>
+        	<th>Anzahl</th>
+           </tr>
+        </thead>
+   
+        	<tr th:each=" cartItem : ${cart}">
+        
+        		
+				<td align="center" th:text="${cartItem.product.name}"></td>
+				<td align="center" th:text="${cartItem.product.alter}"></td>
+				<td align="center" th:text="${cartItem.product.alkoholgehalt}"></td>
+				<td align="center" th:text="${cartItem.product.volumen}"></td>
+				<td align="center" th:text="${cartItem.product.cognacart}"></td>
+				<td align="center" th:text="${cartItem.product.price}"></td>
+				<td align="center" th:text="${cartItem.quantity}"></td>					
+			</tr>
+					
+					
+			<form method="post" action="kaufen">
+                <button type="submit">Artikel kaufen</button>
+            </form>
+                     
+                     
+            <!-- Hier kommt man zurück zum Artikelkatalog -->
+			<form method="get" action="/sortiment">
+				<button name="searchTerm">Weitere Artikel Hinzuf&uuml;gen</button>
+			</form>
+					
+            <!--Warenkorb wird verworfen -->
+			<form method="post" th:action="@{cart/clear}">
+				<button name="searchterm">Warenkorb verwerfen</button>
+			</form>
+				
+	</table>
+		 
+								
+			 <p align="right">Gesamtsumme:</p>
+			 <p align="right" th:text="${cart.price}"></p>
+	</body>      
+</html>
