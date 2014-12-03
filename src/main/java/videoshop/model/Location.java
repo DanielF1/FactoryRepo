@@ -1,8 +1,13 @@
 package videoshop.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Location {
@@ -15,17 +20,18 @@ public class Location {
 	private String city;
 	private String telefon;
 	private String mail;
-	//#TODO departments in Array umwandeln
-	private String departments;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private static List<Department> departments = new ArrayList<>();
 	
 
-	public Location(String name, String address, String city, String telefon, String mail, String departments){
+	public Location(String name, String address, String city, String telefon, String mail, List<Department> departments){
 		this.name = name;
 		this.address = address;
 		this.city = city;
 		this.telefon = telefon;
 		this.mail = mail;
-		this.departments = departments;	
+		Location.departments = departments;	
 	}
 	
 	Location(){}
@@ -78,18 +84,13 @@ public class Location {
 		this.mail = mail;
 	}
 	
-	public void setDepartments(String departments){
-		this.departments = departments;
+	public void setDepartments(List<Department> departments){
+		Location.departments = departments;
 	}
 
-	public String getDepartments() {
+	public List<Department> getDepartments() {
 		return departments;
 	}
-	
-	//Liste muss erst noch eingefügt werden
-//	public List<Department> getDepartments() {
-//		return departments;
-//	}
 	
 	//prüft alle Locations die Produktionsmanagement haben und gibt sie aus
 //	public WineDepartment getWineDepartment() {

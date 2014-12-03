@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import videoshop.model.Department;
 import videoshop.model.Location;
 import videoshop.model.Locationmanagement;
 
@@ -46,7 +47,7 @@ public class ManagementController {
 	    								@RequestParam ("city") String city,
 	    								@RequestParam ("telefon") String telefon,
 	    								@RequestParam ("mail") String mail,
-	    								@RequestParam ("departments") String departments) {
+	    								@RequestParam ("departments") List<Department> departments) {
 	        
 	    	Location location = new Location(name, address, city, telefon, mail, departments);
 	    	
@@ -123,7 +124,7 @@ public class ManagementController {
 		@RequestMapping(value="/edit", method = RequestMethod.POST)
 		public String editLocation(	@RequestParam("telefon")String telefon,
 									@RequestParam("mail") String mail,
-									@RequestParam("departments") String departments , 
+									@RequestParam("departments") List<Department> departments , 
 									@RequestParam("id") Long id){
 			
 			Location location = locationmanagement.findOne(id);

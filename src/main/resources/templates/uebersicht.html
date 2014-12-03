@@ -5,7 +5,7 @@
 	</head>
 
 	<body>
-		<table align="center" cellspacing="10">			
+		<table>			
 		<caption>Standorte</caption>
 			<thead>
 				<tr>
@@ -24,8 +24,13 @@
 					<td th:text="${loc.city}">Ort</td>
 					<td th:text="${loc.telefon}">Telefon</td>
 					<td th:text="${loc.mail}">E-Mail</td>
-					<td th:text="${loc.departments}">Abteilungen</td>
-					<!--  button mit id als action -->
+					<td>
+					<ul th:each="department : ${loc.departments}">
+						<li>
+							<span th:text="${department.name}"></span>			
+						</li>
+					</ul>
+					</td>
 					<td>
 					<form method="get" role="form" th:action="@{/edit/} + ${loc.id}">
 						<button  type="submit">Bearbeiten</button>
@@ -35,7 +40,7 @@
 		</table>
 
 		<div class="search-group">
-			<form align="center" method="post" role="form" th:action="@{/uebersicht}">
+			<form method="post" role="form" th:action="@{/uebersicht}">
 				<input name="searchTerm" type="text" placeholder="Search"/>
 				<input type="hidden" value="Senden" />
 			</form>

@@ -2,6 +2,9 @@ package videoshop;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import videoshop.model.Article;
+import videoshop.model.Department;
 import videoshop.model.Location;
 import videoshop.model.Locationmanagement;
 import videoshop.model.Sortiment;
@@ -56,14 +60,35 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	
 	private void initializeLocList(Locationmanagement locationmanagement) {
 
+		Department d1 = new Department("Lager");
+		Department d2 = new Department("Produktion");
+		Department d3 = new Department("Verkauf");
+		Department d4 = new Department("Verwaltung");
+		
+		List<Department> list1 = new ArrayList<Department>();
+		list1.add(d1);
+		list1.add(d2);
+		
+		List<Department> list2 = new ArrayList<Department>();
+		list2.add(d3);
+		list2.add(d1);
+		
+		List<Department> list3 = new ArrayList<Department>();
+		list3.add(d4);
+		
+		List<Department> list4 = new ArrayList<Department>();
+		list4.add(d1);
+		list4.add(d2);
+		list4.add(d3);
+		
 		if (locationmanagement.findAll().iterator().hasNext()) {
 			return;
 		}
 
-		locationmanagement.save(new Location("Standort 1","Klausstrasse 1", "0999 Klaushausen", "81906666", "klaus@klaus.de", "Lager"));
-		locationmanagement.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", "Destillation, Lager"));
-		locationmanagement.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", "Verwaltung"));
-		locationmanagement.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", "Verkauf, Destillation"));
+		locationmanagement.save(new Location("Standort 1","Klausstrasse 1", "0999 Klaushausen", "81906666", "klaus@klaus.de", list1));
+		locationmanagement.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", list2));
+		locationmanagement.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", list3));
+		locationmanagement.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", list4));
 		
 	}
 	
