@@ -4,6 +4,9 @@ import static org.joda.money.CurrencyUnit.EUR;
 
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountIdentifier;
@@ -20,6 +23,7 @@ import videoshop.model.Sortiment;
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
 
+//	private final Inventory<InventoryItem> inventory;
 	private final Locationmanagement locationmanagement;
 	private final UserAccountManager userAccountManager;
 	private final Sortiment sortiment;
@@ -29,15 +33,16 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
-			Sortiment sortiment/*, BarrelList barrelList*/) {
+			Sortiment sortiment/* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
 
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		//Assert.notNull(barrelList, "BarrelList must not be null!");
 		
 		this.userAccountManager = userAccountManager;
-		this.locationmanagement = locationmanagement;
+		this.locationmanagement = locationmanagement;	
 		this.sortiment = sortiment;
+//		Inventory<InventoryItem> inventory;
 //		this.barrelList = barrelList;
 	}
 
@@ -100,6 +105,15 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		sortiment.save(new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %","0,7 Liter","Cognac"));
 		sortiment.save(new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac"));
 
+		
+		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
+		
+
+//		for (Article article : sortiment.findAll()) {
+//			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
+//			inventory.save(inventoryItem);
+//				}
+//		
 	}
 
 //	private void initializeBarrelList(BarrelList barrelList) {

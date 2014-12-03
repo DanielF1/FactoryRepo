@@ -32,10 +32,15 @@
 					<th>Preis:</th>
 					<td th:text="${article.price}" />
 				</tr>
+				
+				<tr>
+					<th>Vorrat:</th>
+					<td th:text="${quantity}" />
+				</tr>
 			
 			</table>
 			
-				<p></p>
+				
 				<form  method="post" action="/warenkorb">
 					<input type="hidden" name="pid" th:value="${article.identifier}" /> 
 					<label for="number">Anzahl: </label>
