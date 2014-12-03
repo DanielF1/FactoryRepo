@@ -25,7 +25,7 @@
 					<td th:text="${loc.telefon}">Telefon</td>
 					<td th:text="${loc.mail}">E-Mail</td>
 					<td>
-					<ul th:each="department : ${loc.departments}">
+					<ul th:each="department : ${loc.departments}" style="list-style-type:none">
 						<li>
 							<span th:text="${department.name}"></span>			
 						</li>

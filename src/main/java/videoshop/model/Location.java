@@ -1,13 +1,12 @@
 package videoshop.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Location {
@@ -20,9 +19,8 @@ public class Location {
 	private String city;
 	private String telefon;
 	private String mail;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	private static List<Department> departments = new ArrayList<>();
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Department> departments;
 	
 
 	public Location(String name, String address, String city, String telefon, String mail, List<Department> departments){
@@ -31,7 +29,7 @@ public class Location {
 		this.city = city;
 		this.telefon = telefon;
 		this.mail = mail;
-		Location.departments = departments;	
+		this.departments = departments;	
 	}
 	
 	Location(){}
@@ -85,7 +83,7 @@ public class Location {
 	}
 	
 	public void setDepartments(List<Department> departments){
-		Location.departments = departments;
+		this.departments = departments;
 	}
 
 	public List<Department> getDepartments() {
