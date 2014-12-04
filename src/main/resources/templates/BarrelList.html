@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Barrelliste</title>
+		<style>
+		table, th, td {
+    	border: 1px solid black;
+    	border-collapse: collapse;
+		}
+		th,td {
+    	padding: 15px;
+		}
+		th {
+    	text-align: center;
+		}
+		</style>
+	</head>
+<body>
+	<div class="all">
+		<ul>
+				<li class="loginlogout"><a href="logout">Logout</a></li>
+		</ul>
+		<div class="content">
+			<table width="1000">
+				<h1>Barrelliste</h1>
+				
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Content</th>
+						<th>Amount</th>
+						<th>Birthdate_of_barrel</th>
+						<th>Death_of_barrel</th>
+						<th>LastFill</th>
+						<th>Action</th>
+						
+						</tr>
+				</thead>
+				<tbody th:remove="all-but-first">
+						<tr th:each=" Barrel : ${BarrelList}">
+							<td th:text="${Barrel.getId()}">1</td>
+							<td th:text="${Barrel.getContent()}">23</td>
+							<td th:text="${Barrel.getAmount()}">Wein</td>
+							<td th:text="${Barrel.getBirthdate_of_barrel()}">10.10.2012</td>
+							<td th:text="${Barrel.getDeath_of_barrel()}">10.10.2013</td>
+							<td th:text="${Barrel.getLastFill()}">20.10.2014</td>	
+						<td><form method="post" action="/BarrelList"><input type="submit" value = "delete" th:formaction="'deleteBarrel?Id=' + ${Barrel.getId()}"/></form>
+							</td> 
+			
+      </tr>					
+				</tbody>		
+															
+			</table>
+			<br/>
+		<form method="post" action="/inserted"><input type="submit" value="Fass hinzufügen" /></form>
+		
+		</div>
+	</div>
+	
+</body>
+</html>
