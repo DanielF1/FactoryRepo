@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class BarrelStock extends Stock{
+public class BarrelStock{
 	
 	private @Id @GeneratedValue Long id;
 	private BarrelMaker barrelmaker;

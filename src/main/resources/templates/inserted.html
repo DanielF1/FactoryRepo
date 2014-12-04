@@ -1,0 +1,61 @@
+
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<style>
+		table{
+    	border: 0px;
+    	width: 400px;
+		}
+		th,td {
+    	padding: 10px;
+		}
+		</style>
+</head>
+<body>
+	<div>
+		<header>
+			<h1>Insert Barrel</h1>
+		</header>
+		<div>
+				<form method="post" action="/insertBarrel" th:object="${insertBarrel}">
+
+					<table>
+					<tr>
+						<td>ID: </td> 
+						<td><input id="Id" th:field="*{Id}" th:errorclass="fieldError" type="text" name="Id" ></input></td>
+						<td><p th:if="${#fields.hasErrors('Id')}" th:errors="*{Id}">Der ID darf nicht leer sein.</p> </td>
+						</tr>
+							<tr>
+						<td>Content: </td>
+						<td><input id="Content" th:field="*{Content}" type="text" name="Content" ></input></td>
+						</tr>
+						<tr>
+						<tr>
+						<td>Amount: </td>
+						<td><input id="Amount" th:field="*{Amount}" th:errorclass="fieldError" type="text" name="Amount" ></input></td>
+						<td><p th:if="${#fields.hasErrors('Amount')}" th:errors="*{Amount}">Das Volume darf nicht leer sein.</p> </td>
+						</tr>
+						<td>Birthdate_of_barrel: </td>
+						<td><input id="Birthdate_of_barrel" th:field="*{Birthdate_of_barrel}" th:errorclass="fieldError" type="date" name="Birthdate_of_barrel" ></input></td>
+						<td><p th:if="${#fields.hasErrors('Birthdate_of_barrel')}" th:errors="*{Birthdate_of_barrel}">Das Datum darf nicht leer sein.</p></td>
+						</tr>
+						<tr>
+						<td>Death_of_barrel: </td> 
+						<td><input id="Death_of_barrel" th:field="*{Death_of_barrel}" th:errorclass="fieldError" type="date" name="Death_of_barrel" ></input></td>
+						<td><p th:if="${#fields.hasErrors('Death_of_barrel')}" th:errors="*{Death_of_barrel}">Das Datum darf nicht leer sein.</p> </td>
+						</tr>
+						<tr>
+						<td><input type="submit" value="insert" /></td>
+						</tr>
+						<tr> 
+						<td>Last Fill: </td> 
+						<td><input id="LastFill" th:field="*{LastFill}" th:errorclass="fieldError" type="date" name="LastFill" ></input></td>
+						<td><p th:if="${#fields.hasErrors('LastFill')}" th:errors="*{LastFill}">Das Datum darf nicht leer sein.</p> </td>
+						</tr>
+						</table>
+				</form>
+		</div>
+	</div>
+</body>
+</html>
