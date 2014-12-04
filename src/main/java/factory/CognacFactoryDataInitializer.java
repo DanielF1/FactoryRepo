@@ -86,22 +86,39 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Department d2 = new Department("Produktion");
 		Department d3 = new Department("Verkauf");
 		Department d4 = new Department("Verwaltung");
+		Department d5 = new Department("");
 		
 		List<Department> list1 = new ArrayList<Department>();
 		list1.add(d1);
 		list1.add(d2);
+		list1.add(d5);
+		list1.add(d5);
+		list1.add(d5);
+		list1.add(d5);
 		
 		List<Department> list2 = new ArrayList<Department>();
 		list2.add(d3);
 		list2.add(d1);
+		list2.add(d5);
+		list2.add(d5);
+		list2.add(d5);
+		list2.add(d5);
 		
 		List<Department> list3 = new ArrayList<Department>();
 		list3.add(d4);
+		list3.add(d5);
+		list3.add(d5);
+		list3.add(d5);
+		list3.add(d5);
+		list3.add(d5);
 		
 		List<Department> list4 = new ArrayList<Department>();
 		list4.add(d1);
 		list4.add(d2);
 		list4.add(d3);
+		list4.add(d5);
+		list4.add(d5);
+		list4.add(d5);
 		
 		if (locationmanagement.findAll().iterator().hasNext()) {
 			return;

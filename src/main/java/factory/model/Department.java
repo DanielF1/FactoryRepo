@@ -12,7 +12,8 @@ public class Department {
 	private Long id;
 	private String name;
 	
-	Department(){}
+	@Deprecated
+	public Department(){}
 
 	public Department(String name) {
 		this.name = name;

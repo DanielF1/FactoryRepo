@@ -117,6 +117,7 @@ public class ManagementController {
 		
 		@RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
 		public String editLocations(@PathVariable Long id, Model model){
+			
 			model.addAttribute("location" ,locationmanagement.findOne(id));
 			return "edit";
 		}
@@ -124,13 +125,21 @@ public class ManagementController {
 		@RequestMapping(value="/edit", method = RequestMethod.POST)
 		public String editLocation(	@RequestParam("telefon")String telefon,
 									@RequestParam("mail") String mail,
-									@RequestParam("departments") List<Department> departments , 
+									@RequestParam("departments") String[] departments, 
 									@RequestParam("id") Long id){
 			
 			Location location = locationmanagement.findOne(id);
 			location.setTelefon(telefon);
 			location.setMail(mail);
-			location.setDepartments(departments);
+			
+			List<Department> dep = new ArrayList<Department>();
+			for(String s : departments){
+				dep.add(new Department(s));
+			}
+			location.setDepartments(dep);
+			
+			
+			System.out.println(departments.getClass());
 			
 			locationmanagement.save(location);
 			return "redirect:/uebersicht";
