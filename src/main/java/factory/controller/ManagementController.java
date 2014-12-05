@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.Department;
+import factory.model.Employee;
 import factory.model.Location;
 import factory.model.Locationmanagement;
 
@@ -29,12 +30,6 @@ public class ManagementController {
 		}
 
 
-		@RequestMapping(value = "/menu", method = RequestMethod.GET)
-		public String startseite(){
-			return "menu";
-		}
-	
-	
 		@RequestMapping(value="/eingabe", method=RequestMethod.GET)
 	    public String Anzeige() {
 	        return "eingabe";
@@ -47,9 +42,10 @@ public class ManagementController {
 	    								@RequestParam ("city") String city,
 	    								@RequestParam ("telefon") String telefon,
 	    								@RequestParam ("mail") String mail,
+	    								@RequestParam ("employees") List<Employee> employees,
 	    								@RequestParam ("departments") List<Department> departments) {
 	        
-	    	Location location = new Location(name, address, city, telefon, mail, departments);
+	    	Location location = new Location(name, address, city, telefon, mail, employees, departments);
 	    	
 	    	locationmanagement.save(location);
 	    	
@@ -77,25 +73,25 @@ public class ManagementController {
 	    	return "ausgabe2";
 		}
 	    
-	    @RequestMapping(value = "/uebersicht", method = RequestMethod.GET)
+	    @RequestMapping(value = "/loclist", method = RequestMethod.GET)
 		public String standortUebersicht(ModelMap modelMap){
 	    	
 	    	modelMap.addAttribute("locations", locationmanagement.findAll());
 	    	
-			return "uebersicht";
+			return "loclist";
 		}
 	    
 	  //Search START
-		@RequestMapping(value = "/uebersicht", method = RequestMethod.POST)
+		@RequestMapping(value = "/loclist", method = RequestMethod.POST)
 		public String goToFilteredLocations(@RequestParam("searchTerm") String searchTerm, RedirectAttributes redirectAttrs)
 		{		
 			redirectAttrs.addAttribute("term", searchTerm);
-			return "redirect:/uebersicht/{term}";
+			return "redirect:/loclist/{term}";
 		}
 
 		
 		//show result
-		@RequestMapping(value = "/uebersicht/{term}")
+		@RequestMapping(value = "/loclist/{term}")
 		public String showFilteredLocations(@PathVariable("term") String searchTerm, ModelMap modelMap, RedirectAttributes redirectAttrs)
 		{		
 			List<Location> resultList = new ArrayList<>();
@@ -111,39 +107,9 @@ public class ManagementController {
 			
 			modelMap.addAttribute("locations", resultList);
 			
-			return "uebersicht";
+			return "loclist";
 		}
 	//Search END
-		
-		@RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
-		public String editLocations(@PathVariable Long id, Model model){
-			
-			model.addAttribute("location" ,locationmanagement.findOne(id));
-			return "edit";
-		}
-		
-		@RequestMapping(value="/edit", method = RequestMethod.POST)
-		public String editLocation(	@RequestParam("telefon")String telefon,
-									@RequestParam("mail") String mail,
-									@RequestParam("departments") String[] departments, 
-									@RequestParam("id") Long id){
-			
-			Location location = locationmanagement.findOne(id);
-			location.setTelefon(telefon);
-			location.setMail(mail);
-			
-			List<Department> dep = new ArrayList<Department>();
-			for(String s : departments){
-				dep.add(new Department(s));
-			}
-			location.setDepartments(dep);
-			
-			
-			System.out.println(departments.getClass());
-			
-			locationmanagement.save(location);
-			return "redirect:/uebersicht";
-		}
 		
 		//für Liste von Locations mit Productionmanagement
 //		public List<Location> getLocationWithWine(){

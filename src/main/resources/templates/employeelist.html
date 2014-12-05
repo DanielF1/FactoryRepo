@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	</head>
+
+	<body>
+		<table>			
+		<caption>Mitarbeiter</caption>
+			<thead>
+				<tr>
+					<th>Beschäftigung</th>
+					<th>Nachname</th>
+					<th>Vorname</th>
+					<th>Gehalt</th>
+					<th>E-Mail</th>
+					<th>Adresse</th>
+				</tr>
+			</thead>
+								
+				<tr th:each="loc : ${locations} ">
+					<td>
+					<ul th:each="employee : ${loc.employees}" style="list-style-type:none">
+						<li>
+							<span th:text="${employee.workplace}"></span>
+							<span th:text="${employee.name}"></span>
+							<span th:text="${employee.firstname}"></span>
+							<span th:text="${employee.salary}"></span>
+							<span th:text="${employee.mail}"></span>
+							<span th:text="${employee.address}"></span>			
+						</li>
+					</ul>
+					</td>
+					<td>
+					<form method="get" role="form" th:action="@{/edit/} + ${loc.id}">
+						<button  type="submit">Bearbeiten</button>
+					</form>
+					</td>
+				</tr>
+		</table>	
+	</body>
+</html>

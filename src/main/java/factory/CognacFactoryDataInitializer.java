@@ -21,6 +21,7 @@ import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.CookBook;
 import factory.model.Department;
+import factory.model.Employee;
 import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.Locationmanagement;
@@ -41,6 +42,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
 			Sortiment sortiment, CookBook cookbook, BarrelStock barrelstock/**//* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
 
+
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbook, "CookBook must not be null!");
@@ -49,6 +51,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.locationmanagement = locationmanagement;	
 		this.sortiment = sortiment;
 		this.cookbook = cookbook;
+
 		this.barrelstock = barrelstock;
 //		this.barrelstock_inter = barrelstock_inter;
 //		Inventory<InventoryItem> inventory;
@@ -68,52 +71,99 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	
 	private void initializeLocList(Locationmanagement locationmanagement) {
 
-		Department d1 = new Department("Lager");
-		Department d2 = new Department("Produktion");
-		Department d3 = new Department("Verkauf");
-		Department d4 = new Department("Verwaltung");
-		Department d5 = new Department("");
+		Department d1 = new Department("Flaschenlager");
+		Department d2 = new Department("Fasslager");
+		Department d3 = new Department("Weinlager");
+		Department d4 = new Department("Produktion");
+		Department d5 = new Department("Verkauf");
+		Department d6 = new Department("Verwaltung");
+		Department d7 = new Department("");
 		
 		List<Department> list1 = new ArrayList<Department>();
 		list1.add(d1);
-		list1.add(d2);
-		list1.add(d5);
-		list1.add(d5);
-		list1.add(d5);
-		list1.add(d5);
+		list1.add(d4);
+		
+		list1.add(d7);
+		list1.add(d7);
+		list1.add(d7);
+		list1.add(d7);
 		
 		List<Department> list2 = new ArrayList<Department>();
-		list2.add(d3);
-		list2.add(d1);
-		list2.add(d5);
-		list2.add(d5);
-		list2.add(d5);
+		list2.add(d2);
+		list2.add(d4);
 		list2.add(d5);
 		
+		list2.add(d7);
+		list2.add(d7);
+		list2.add(d7);
+
+		
 		List<Department> list3 = new ArrayList<Department>();
-		list3.add(d4);
-		list3.add(d5);
-		list3.add(d5);
-		list3.add(d5);
-		list3.add(d5);
-		list3.add(d5);
+		list3.add(d6);
+		
+		list3.add(d7);
+		list3.add(d7);
+		list3.add(d7);
+		list3.add(d7);
+		list3.add(d7);
 		
 		List<Department> list4 = new ArrayList<Department>();
 		list4.add(d1);
 		list4.add(d2);
 		list4.add(d3);
-		list4.add(d5);
-		list4.add(d5);
-		list4.add(d5);
+		
+		list4.add(d7);
+		list4.add(d7);
+		list4.add(d7);
+		
+		Employee e1 = new Employee("Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse");
+		Employee e2 = new Employee("Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse");
+		Employee e3 = new Employee("Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse");
+		Employee e4 = new Employee("Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet");
+		Employee e5 = new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse");
+		Employee e6 = new Employee("","","","","","");
+		
+		List<Employee> list5 = new ArrayList<Employee>();
+		list5.add(e1);
+		list5.add(e3);
+		list5.add(e4);
+		
+		list5.add(e5);
+		list5.add(e6);
+		
+		
+		List<Employee> list6 = new ArrayList<Employee>();
+		list6.add(e1);
+		list6.add(e3);
+		list6.add(e4);
+		list6.add(e2);
+		
+		list5.add(e6);
+		
+		List<Employee> list7 = new ArrayList<Employee>();
+		list7.add(e5);
+		
+		list5.add(e6);
+//		list5.add(e8);
+//		list5.add(e8);
+//		list5.add(e8);
+		
+		List<Employee> list8 = new ArrayList<Employee>();
+		list8.add(e1);
+		list8.add(e2);
+		list8.add(e3);
+		
+//		list5.add(e9);
+//		list5.add(e9);
 		
 		if (locationmanagement.findAll().iterator().hasNext()) {
 			return;
 		}
 
-		locationmanagement.save(new Location("Standort 1","Klausstrasse 1", "0999 Klaushausen", "81906666", "klaus@klaus.de", list1));
-		locationmanagement.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", list2));
-		locationmanagement.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", list3));
-		locationmanagement.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", list4));
+		locationmanagement.save(new Location("Standort 1","Klausstrasse 1", "0999 Klaushausen", "81906666", "klaus@klaus.de", list5, list1));
+		locationmanagement.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", list6, list2));
+		locationmanagement.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", list7, list3));
+		locationmanagement.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", list8, list4));
 		
 	}
 	

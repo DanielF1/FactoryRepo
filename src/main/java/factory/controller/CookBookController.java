@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.Barrel;
-import factory.model.BarrelStock;
 import factory.model.Bottle;
-import factory.model.BottleStock;
 import factory.model.CookBook;
 import factory.model.Ingredient;
 import factory.model.Recipe;
@@ -356,7 +354,5 @@ public class CookBookController {
 		cookbook.delete(id);
 		return "redirect:/cookbook";
 	}
-	
-
 
 }

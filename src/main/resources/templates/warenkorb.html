@@ -1,8 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<body>
     	<h3 align="center"><i>Willkommen im Warenkorb</i></h3>    
-   		<h5 align="center">Sie haben sich f&uuml;r folgende Artikel entschieden:</h5>
    	 
+   	<div th:unless="${cart.empty}"> 
+   	
 	<table align="center" style="width:95%">
             		
  		<thead>
@@ -27,29 +28,34 @@
 				<td align="center" th:text="${cartItem.product.volumen}"></td>
 				<td align="center" th:text="${cartItem.product.cognacart}"></td>
 				<td align="center" th:text="${cartItem.product.price}"></td>
-				<td align="center" th:text="${cartItem.quantity}"></td>					
-			</tr>
-					
+				<td align="center" th:text="${cartItem.quantity}"></td>		
+				
+				<td><form method="post" th:action="@{/loeschen}">
+                 	<input type="hidden" name="pid" th:value="${cartItem.product.identifier}" />
+               		<button type="submit">L&ouml;schen</button> 	
+          		</form></td>
+							
+			</tr>	
+			</table>
 					
 			<form method="post" action="kaufen">
                 <button type="submit">Artikel kaufen</button>
             </form>
-                     
-                     
-            <!-- Hier kommt man zurück zum Artikelkatalog -->
-			<form method="get" action="/sortiment">
-				<button name="searchTerm">Weitere Artikel Hinzuf&uuml;gen</button>
-			</form>
 					
             <!--Warenkorb wird verworfen -->
 			<form method="post" th:action="@{cart/clear}">
 				<button name="searchterm">Warenkorb verwerfen</button>
 			</form>
 				
-	</table>
-		 
-								
 			 <p align="right">Gesamtsumme:</p>
 			 <p align="right" th:text="${cart.price}"></p>
+	</div>
+	
+			<form method="get" action="/sortiment">
+				<button name="searchTerm">Artikel Hinzuf&uuml;gen</button>
+			</form>
+		
+		<p align="center" th:if="${cart.empty}" th:text="#{cart.empty}">Leer</p>
+				
 	</body>      
 </html>
