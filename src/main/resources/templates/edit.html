@@ -14,9 +14,11 @@
                 <tr><td>PLZ Ort: </td><td th:text="${location.city}"></td></tr>
                 <tr><td>Tel.: </td><td><input type="text" name="telefon" th:value="${location.telefon}"/></td></tr>
                 <tr><td>E-Mail: </td><td><input type="text" name="mail" th:value="${location.mail}"/></td></tr>
+                <tr><td>Mitarbeiter: </td><td><input th:each="emp : ${location.employees}" type="text" name="employees" th:value="${emp.workplace}"/></td></tr>
                 <tr><td>Abteilungen: </td><td><input th:each="dep : ${location.departments}" type="text" name="departments" th:value="${dep.name}"/></td></tr>
             	<tr><td><input name="id" type="hidden" th:value="${location.id}"/></td></tr>
                 <tr><td><button type="submit">Speichern!</button></td></tr>
+                
            	</table>
            	
         </form>
