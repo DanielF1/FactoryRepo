@@ -11,7 +11,7 @@ public class BarrelStorageArea {
 	public BarrelStorageArea(BarrelStock barrelstock) {
 		this.barrelstock = barrelstock;
 		barrelmaker = new BarrelMaker(this);
-		barrelbrewer = new MasterBrewer();
+		barrelbrewer = new MasterBrewer(this);
 		barrelmaker.registriereBraumeister(barrelbrewer);
 	}
 
@@ -44,6 +44,10 @@ public class BarrelStorageArea {
 
 	public void setBarrelmaker(BarrelMaker barrelmaker) {
 		this.barrelmaker = barrelmaker;
+	}	
+
+	public MasterBrewer getMasterBrewer() {
+		return barrelbrewer;
 	}
 
 	

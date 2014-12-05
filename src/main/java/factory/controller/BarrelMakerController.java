@@ -18,7 +18,7 @@ import factory.model.validation.InsertBarrel;
 
 
 @Controller
-@PreAuthorize("hasRole('ROLE_BARRELMAKER')")
+@PreAuthorize("hasRole('ROLE_BARRELMAKER') || hasRole('ROLE_BREWER')")
 public class BarrelMakerController {
 	BarrelStorageArea barrelstoragearea;
 
@@ -64,6 +64,13 @@ public class BarrelMakerController {
 	public String deleteBarrel(@RequestParam("Id") Long Id, ModelMap modelMap) {
 
 		barrelstoragearea.deleteBarrel(Id);
+
+		return "redirect:/BarrelList";
+	}
+	@RequestMapping(value = "/putBarrelstogether")
+	public String putBarrelsTogether(ModelMap modelMap) {
+
+		barrelstoragearea.getMasterBrewer().zusammenschuetten();
 
 		return "redirect:/BarrelList";
 	}
