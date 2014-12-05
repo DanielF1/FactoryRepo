@@ -35,7 +35,7 @@
 //			return;
 //		} 
 //		// Es hat funktioniert
-//		barrelstock.deleteBarrel(fass.getId());
-//		barrelstock.saveBarrel(neuesFass);
+////		barrelstock.deleteBarrel(fass.getId());
+////		barrelstock.saveBarrel(neuesFass);
 //	}
 //}

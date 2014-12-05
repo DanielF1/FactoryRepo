@@ -24,9 +24,6 @@ import factory.model.Location;
 import factory.model.Locationmanagement;
 import factory.model.Recipe;
 import factory.model.Sortiment;
-//import factory.model.Stock;
-import factory.model.Stock2;
-//import factory.model.BarrelStock;
 
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
@@ -35,30 +32,21 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final Sortiment sortiment;
 	private final CookBook cookbook;
-//	private final Stock stock;
-	private final Stock2 stock2;
-//	private final BarrelStock barrelstock;
-	
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
-			Sortiment sortiment, CookBook cookbook /*,Stock stock*/, Stock2 stock2/*, BarrelStock barrelstock*//* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
+			Sortiment sortiment, CookBook cookbook/* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
 
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbook, "CookBook must not be null!");
-//		Assert.notNull(stock, "Stock must not be null!");
-		Assert.notNull(stock2, "Stock2 must not be null!");
-//		Assert.notNull(barrelstock, "barrelstock must not be null!");
-		//Assert.notNull(barrelList, "BarrelList must not be null!");
+
 		
 		this.userAccountManager = userAccountManager;
 		this.locationmanagement = locationmanagement;	
 		this.sortiment = sortiment;
 		this.cookbook = cookbook;
-//		this.stock = stock;
-		this.stock2 = stock2;
-//		this.barrelstock = barrelstock;
+
 //		Inventory<InventoryItem> inventory;
 //		this.barrelList = barrelList;
 	}
