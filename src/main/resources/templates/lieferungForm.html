@@ -1,0 +1,30 @@
+<html>
+<body>
+	<h1>EinlieferungForm</h1>
+	<form method="post" action="LF_result">
+		<table>
+			<tr>
+				<td colspan="2"><span th:text="${error}"> </span></td>
+			</tr>
+			<tr>
+				<td>Weinmenge</td>
+				<td><input type="text" name="quantity" /></td>
+			</tr>
+			<tr>
+				<td>Lieferdatum</td>
+				<td><input type="date" name="date" /></td>
+			</tr>
+			<tr>
+				<td>Standort</td>
+				<td>
+				<select name="place">
+						<option th:each=" item : ${locations}" th:text="${item}"></option>
+				</select></td>
+			</tr>
+			<tr>
+				<td><button type="submit">Abschicken</button></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
