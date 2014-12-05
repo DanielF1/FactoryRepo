@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
 
 import factory.model.Article;
 import factory.model.Barrel;
-import factory.model.BarrelStock;
+//import factory.model.BarrelStock;
 import factory.model.Bottle;
 import factory.model.Bottle.BottleType;
 import factory.model.BottleStock;
@@ -29,7 +29,7 @@ import factory.model.Location;
 import factory.model.Locationmanagement;
 import factory.model.Recipe;
 import factory.model.Sortiment;
-import factory.model.Stock;
+//import factory.model.Stock;
 import factory.model.Stock2;
 
 @Component
@@ -39,30 +39,30 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final Sortiment sortiment;
 	private final CookBook cookbook;
-	private final Stock stock;
+//	private final Stock stock;
 	private final Stock2 stock2;
-	private final BarrelStock barrelstock;
+//	private final BarrelStock barrelstock;
 	
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
-			Sortiment sortiment, CookBook cookbook, Stock stock, Stock2 stock2, BarrelStock barrelstock/* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
+			Sortiment sortiment, CookBook cookbook /*,Stock stock*/, Stock2 stock2/*, BarrelStock barrelstock*//* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
 
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbook, "CookBook must not be null!");
-		Assert.notNull(stock, "Stock must not be null!");
+//		Assert.notNull(stock, "Stock must not be null!");
 		Assert.notNull(stock2, "Stock2 must not be null!");
-		Assert.notNull(barrelstock, "barrelstock must not be null!");
+//		Assert.notNull(barrelstock, "barrelstock must not be null!");
 		//Assert.notNull(barrelList, "BarrelList must not be null!");
 		
 		this.userAccountManager = userAccountManager;
 		this.locationmanagement = locationmanagement;	
 		this.sortiment = sortiment;
 		this.cookbook = cookbook;
-		this.stock = stock;
+//		this.stock = stock;
 		this.stock2 = stock2;
-		this.barrelstock = barrelstock;
+//		this.barrelstock = barrelstock;
 //		Inventory<InventoryItem> inventory;
 //		this.barrelList = barrelList;
 	}
@@ -73,8 +73,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		initializeUsers(userAccountManager);
 		initializeSortiment();
 		initializeCookBook(cookbook);
-		initializeStock(stock);
-		initializeStock2(stock2);
+//		initializeStock(stock);
+//		initializeStock2(stock2);
 //		initializeBarrelList(barrelList);
 	}
 	
@@ -218,37 +218,37 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		cookbook.save(new Recipe("Cognac C", mapIngredients3));		
 	}
 	
-	private void initializeStock(Stock stock) {}
-
-
-	void initializeStock2(Stock2 stock2) 
-	{
-
-		Bottle b1 = new Bottle(0.7, BottleType.EMPTY);
-		Bottle b2 = new Bottle(0.7, BottleType.FULL);
-		
-		List<Bottle> empty = new ArrayList<Bottle>();
-		List<Bottle> full = new ArrayList<Bottle>();
-		
-		empty.add(b1);
-		full.add(b2);
-		
-		stock2.save(new BottleStock("Lager A", 100, empty, 20, full));
-	}
-	
-	public void initializeBarrelStock(BarrelStock barrelstock) 
-	{
-		
-		//List<Barrel> mapBarrels = new ArrayList<Barrel>();		
-		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")) );
-		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2008-11-04"),LocalDate.parse("2009-12-03"), LocalDate.parse("2008-12-04")));
-		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2010-12-03"),LocalDate.parse("2012-12-32"), LocalDate.parse("2011-12-11")));
-		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2011-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2011-12-03")));
-		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2011-12-23"),LocalDate.parse("2017-1-03"), LocalDate.parse("2011-12-30")));
-		
-		//	stock.save(new BarrelStock("Lager A", mapBarrels));
-	
-	}
+//	private void initializeStock(Stock stock) {}
+//
+//
+//	void initializeStock2(Stock2 stock2) 
+//	{
+//
+//		Bottle b1 = new Bottle(0.7, BottleType.EMPTY);
+//		Bottle b2 = new Bottle(0.7, BottleType.FULL);
+//		
+//		List<Bottle> empty = new ArrayList<Bottle>();
+//		List<Bottle> full = new ArrayList<Bottle>();
+//		
+//		empty.add(b1);
+//		full.add(b2);
+//		
+//		stock2.save(new BottleStock("Lager A", 100, empty, 20, full));
+//	}
+//	
+//	public void initializeBarrelStock(BarrelStock barrelstock) 
+//	{
+//		
+//		//List<Barrel> mapBarrels = new ArrayList<Barrel>();		
+//		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")) );
+//		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2008-11-04"),LocalDate.parse("2009-12-03"), LocalDate.parse("2008-12-04")));
+//		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2010-12-03"),LocalDate.parse("2012-12-32"), LocalDate.parse("2011-12-11")));
+//		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2011-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2011-12-03")));
+//		barrelstock.saveBarrel(new Barrel("Wein", 20 ,LocalDate.parse("2011-12-23"),LocalDate.parse("2017-1-03"), LocalDate.parse("2011-12-30")));
+//		
+//		//	stock.save(new BarrelStock("Lager A", mapBarrels));
+//	
+//	}
 //	private void initializeBarrelList(BarrelList barrelList) {
 //
 //		if (barrelList.findAll().iterator().hasNext()) {

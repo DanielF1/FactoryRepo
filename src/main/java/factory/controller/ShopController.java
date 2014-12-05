@@ -4,6 +4,7 @@ import org.salespointframework.order.Cart;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,6 +19,7 @@ import factory.model.Article;
 import factory.model.Sortiment;
 
 @Controller
+@PreAuthorize("isAuthenticated()")
 @SessionAttributes("cart")
 public class ShopController {
 	

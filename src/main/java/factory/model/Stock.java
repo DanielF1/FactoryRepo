@@ -1,7 +1,7 @@
-package factory.model;
-
-
-public class Stock {
-
-
-}
+//package factory.model;
+//
+//
+//public class Stock {
+//
+//
+//}
