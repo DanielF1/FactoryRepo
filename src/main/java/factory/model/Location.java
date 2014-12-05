@@ -20,18 +20,22 @@ public class Location {
 	private String telefon;
 	private String mail;
 	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Employee> employees;
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Department> departments;
 	
 
-	public Location(String name, String address, String city, String telefon, String mail, List<Department> departments){
+	public Location(String name, String address, String city, String telefon, String mail, List<Employee> employees, List<Department> departments){
 		this.name = name;
 		this.address = address;
 		this.city = city;
 		this.telefon = telefon;
 		this.mail = mail;
+		this.employees = employees;
 		this.departments = departments;	
 	}
 	
+
 	Location(){}
 	
 	public String getName(){
@@ -80,6 +84,14 @@ public class Location {
 	
 	public void setMail(String mail){
 		this.mail = mail;
+	}
+	
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 	
 	public void setDepartments(List<Department> departments){

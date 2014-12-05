@@ -2,7 +2,6 @@ package factory;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +16,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import factory.model.Article;
-import factory.model.Barrel;
-//import factory.model.BarrelStock;
-import factory.model.Bottle;
-import factory.model.Bottle.BottleType;
-import factory.model.BottleStock;
 import factory.model.CookBook;
 import factory.model.Department;
+import factory.model.Employee;
 import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.Locationmanagement;
@@ -31,6 +26,7 @@ import factory.model.Recipe;
 import factory.model.Sortiment;
 //import factory.model.Stock;
 import factory.model.Stock2;
+//import factory.model.BarrelStock;
 
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
@@ -118,14 +114,36 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list4.add(d5);
 		list4.add(d5);
 		
+		Employee e1 = new Employee("Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse");
+		Employee e2 = new Employee("Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse");
+		Employee e3 = new Employee("Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse");
+		Employee e4 = new Employee("Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet");
+		Employee e5 = new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse");
+		
+		List<Employee> list5 = new ArrayList<Employee>();
+		list5.add(e1);
+		list5.add(e2);
+		
+		List<Employee> list6 = new ArrayList<Employee>();
+		list6.add(e3);
+		list6.add(e1);
+		
+		List<Employee> list7 = new ArrayList<Employee>();
+		list7.add(e4);
+		
+		List<Employee> list8 = new ArrayList<Employee>();
+		list8.add(e1);
+		list8.add(e2);
+		list8.add(e3);
+		
 		if (locationmanagement.findAll().iterator().hasNext()) {
 			return;
 		}
 
-		locationmanagement.save(new Location("Standort 1","Klausstrasse 1", "0999 Klaushausen", "81906666", "klaus@klaus.de", list1));
-		locationmanagement.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", list2));
-		locationmanagement.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", list3));
-		locationmanagement.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", list4));
+		locationmanagement.save(new Location("Standort 1","Klausstrasse 1", "0999 Klaushausen", "81906666", "klaus@klaus.de", list5, list1));
+		locationmanagement.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", list6, list2));
+		locationmanagement.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", list7, list3));
+		locationmanagement.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", list8, list4));
 		
 	}
 	

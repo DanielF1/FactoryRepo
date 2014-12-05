@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.Department;
+import factory.model.Employee;
 import factory.model.Location;
 import factory.model.Locationmanagement;
 
@@ -47,9 +48,10 @@ public class ManagementController {
 	    								@RequestParam ("city") String city,
 	    								@RequestParam ("telefon") String telefon,
 	    								@RequestParam ("mail") String mail,
+	    								@RequestParam ("employees") List<Employee> employees,
 	    								@RequestParam ("departments") List<Department> departments) {
 	        
-	    	Location location = new Location(name, address, city, telefon, mail, departments);
+	    	Location location = new Location(name, address, city, telefon, mail, employees, departments);
 	    	
 	    	locationmanagement.save(location);
 	    	
