@@ -45,13 +45,13 @@
 						<td><input id="Death_of_barrel" th:field="*{Death_of_barrel}" th:errorclass="fieldError" type="date" name="Death_of_barrel" ></input></td>
 						<td><p th:if="${#fields.hasErrors('Death_of_barrel')}" th:errors="*{Death_of_barrel}">Das Datum darf nicht leer sein.</p> </td>
 						</tr>
-						<tr>
-						<td><input type="submit" value="insert" /></td>
-						</tr>
 						<tr> 
 						<td>Last Fill: </td> 
 						<td><input id="LastFill" th:field="*{LastFill}" th:errorclass="fieldError" type="date" name="LastFill" ></input></td>
 						<td><p th:if="${#fields.hasErrors('LastFill')}" th:errors="*{LastFill}">Das Datum darf nicht leer sein.</p> </td>
+						</tr>
+						<tr>
+						<td><input type="submit" value="insert" /></td>
 						</tr>
 						</table>
 				</form>

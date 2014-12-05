@@ -4,7 +4,9 @@ public class MasterBrewer {
 
 	public boolean gibtAltesFass(Barrel altesFass, Barrel neuesFass) {
 		neuesFass.setContent(altesFass.getContent());
-		altesFass.setContent(null);
+		neuesFass.setAmount(altesFass.getAmount());
+		altesFass.setContent("");
+		altesFass.setAmount(0);
 		return true; 
 	}
   

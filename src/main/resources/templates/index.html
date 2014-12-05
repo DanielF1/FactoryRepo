@@ -36,6 +36,11 @@
 					<li><a href="cookbook.html">Rezepte</a></li>
 				</ul>
 			</div>
+			<div class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
+				<ul>
+					<li><a href="BarrelList.html">BarrelList</a></li>
+				</ul>
+			</div>
 			
 		</div>
 	</body>
