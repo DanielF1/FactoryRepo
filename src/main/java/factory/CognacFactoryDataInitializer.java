@@ -76,65 +76,90 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	
 	private void initializeLocList(Locationmanagement locationmanagement) {
 
-		Department d1 = new Department("Lager");
-		Department d2 = new Department("Produktion");
-		Department d3 = new Department("Verkauf");
-		Department d4 = new Department("Verwaltung");
-		Department d5 = new Department("");
+		Department d1 = new Department("Flaschenlager");
+		Department d2 = new Department("Fasslager");
+		Department d3 = new Department("Weinlager");
+		Department d4 = new Department("Produktion");
+		Department d5 = new Department("Verkauf");
+		Department d6 = new Department("Verwaltung");
+		Department d7 = new Department("");
 		
 		List<Department> list1 = new ArrayList<Department>();
 		list1.add(d1);
-		list1.add(d2);
-		list1.add(d5);
-		list1.add(d5);
-		list1.add(d5);
-		list1.add(d5);
+		list1.add(d4);
+		
+		list1.add(d7);
+		list1.add(d7);
+		list1.add(d7);
+		list1.add(d7);
 		
 		List<Department> list2 = new ArrayList<Department>();
-		list2.add(d3);
-		list2.add(d1);
-		list2.add(d5);
-		list2.add(d5);
-		list2.add(d5);
+		list2.add(d2);
+		list2.add(d4);
 		list2.add(d5);
 		
+		list2.add(d7);
+		list2.add(d7);
+		list2.add(d7);
+		list2.add(d7);
+		
 		List<Department> list3 = new ArrayList<Department>();
-		list3.add(d4);
-		list3.add(d5);
-		list3.add(d5);
-		list3.add(d5);
-		list3.add(d5);
-		list3.add(d5);
+		list3.add(d6);
+		
+		list3.add(d7);
+		list3.add(d7);
+		list3.add(d7);
+		list3.add(d7);
+		list3.add(d7);
 		
 		List<Department> list4 = new ArrayList<Department>();
 		list4.add(d1);
 		list4.add(d2);
 		list4.add(d3);
-		list4.add(d5);
-		list4.add(d5);
-		list4.add(d5);
+		
+		list4.add(d7);
+		list4.add(d7);
+		list4.add(d7);
 		
 		Employee e1 = new Employee("Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse");
 		Employee e2 = new Employee("Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse");
 		Employee e3 = new Employee("Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse");
 		Employee e4 = new Employee("Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet");
 		Employee e5 = new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse");
+		Employee e6 = new Employee("","","","","","");
 		
 		List<Employee> list5 = new ArrayList<Employee>();
 		list5.add(e1);
-		list5.add(e2);
+		list5.add(e3);
+		list5.add(e4);
+		
+		list5.add(e6);
+		list5.add(e6);
+		
 		
 		List<Employee> list6 = new ArrayList<Employee>();
-		list6.add(e3);
 		list6.add(e1);
+		list6.add(e3);
+		list6.add(e4);
+		list6.add(e2);
+		
+		list5.add(e6);
 		
 		List<Employee> list7 = new ArrayList<Employee>();
-		list7.add(e4);
+		list7.add(e5);
+		
+		list5.add(e6);
+		list5.add(e6);
+		list5.add(e6);
+		list5.add(e6);
 		
 		List<Employee> list8 = new ArrayList<Employee>();
 		list8.add(e1);
 		list8.add(e2);
 		list8.add(e3);
+		
+		list5.add(e6);
+		list5.add(e6);
 		
 		if (locationmanagement.findAll().iterator().hasNext()) {
 			return;
