@@ -1,14 +1,25 @@
 package factory.model;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+@Entity
 public class Employee {
 
-	String workplace;
-	String name;
-	String firstname;
-	String salary;
-	String mail;
-	String address;
+	@Id 
+	@GeneratedValue
+	private Long id;
+	private String workplace;
+	private String name;
+	private String firstname;
+	private String salary;
+	private String mail;
+	private String address;
 	
+	public Employee(){}
 	
 	public Employee(String workplace, String name, String firstname,
 			String salary, String mail, String address) {
