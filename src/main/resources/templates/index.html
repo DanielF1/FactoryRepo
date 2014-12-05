@@ -43,6 +43,12 @@
 				</ul>
 			</div>
 			
+			<div class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
+				<ul>
+					<li><a href="http://localhost:8080/form?error=date">Weinanlieferung</a></li>
+				</ul>
+			</div>
+			
 		</div>
 	</body>
 </html>

@@ -30,7 +30,9 @@ public class WineGrowerController {
 		}
 
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
-	public String Show(ModelMap model, @RequestParam("error") String error) {
+	public String Show(ModelMap model
+			,@RequestParam("error") String error
+			) {
 		model.addAttribute("locations", locationmanagement.findAll());
 		switch (error) {
 		case "date":
@@ -52,7 +54,6 @@ public class WineGrowerController {
 		try {
 			this.date = formatter.parse(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			return "redirect:form?error=date";
 		}
 		this.place = place;
