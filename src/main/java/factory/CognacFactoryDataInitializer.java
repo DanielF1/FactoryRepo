@@ -101,7 +101,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list2.add(d7);
 		list2.add(d7);
 		list2.add(d7);
-		list2.add(d7);
+
 		
 		List<Department> list3 = new ArrayList<Department>();
 		list3.add(d6);
@@ -133,7 +133,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list5.add(e3);
 		list5.add(e4);
 		
-		list5.add(e6);
+		list5.add(e5);
 		list5.add(e6);
 		
 		
@@ -149,17 +149,17 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list7.add(e5);
 		
 		list5.add(e6);
-		list5.add(e6);
-		list5.add(e6);
-		list5.add(e6);
+//		list5.add(e8);
+//		list5.add(e8);
+//		list5.add(e8);
 		
 		List<Employee> list8 = new ArrayList<Employee>();
 		list8.add(e1);
 		list8.add(e2);
 		list8.add(e3);
 		
-		list5.add(e6);
-		list5.add(e6);
+//		list5.add(e9);
+//		list5.add(e9);
 		
 		if (locationmanagement.findAll().iterator().hasNext()) {
 			return;

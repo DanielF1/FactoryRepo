@@ -19,6 +19,7 @@ public class Employee {
 	private String mail;
 	private String address;
 	
+	@Deprecated
 	public Employee(){}
 	
 	public Employee(String workplace, String name, String firstname,
