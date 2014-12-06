@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountIdentifier;
@@ -31,31 +34,34 @@ import factory.model.Sortiment;
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
 
+	private final Inventory<InventoryItem> inventory;
 	private final Locationmanagement locationmanagement;
 	private final UserAccountManager userAccountManager;
 	private final Sortiment sortiment;
 	private final CookBook cookbook;
-	private final BarrelList barrelstock;
+	private final BarrelList barrelList;
 //	private final BarrelStock_Inter barrelstock_inter;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
-			Sortiment sortiment, CookBook cookbook, BarrelList barrelstock/**//* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
+
+			Sortiment sortiment, CookBook cookbook, Inventory<InventoryItem> inventory,BarrelList barrelList) {
+
 
 
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbook, "CookBook must not be null!");
+		Assert.notNull(inventory, "Inventory must not be null!");
+		Assert.notNull(barrelList, "Inventory must not be null!");
 		
 		this.userAccountManager = userAccountManager;
 		this.locationmanagement = locationmanagement;	
 		this.sortiment = sortiment;
 		this.cookbook = cookbook;
-
-		this.barrelstock = barrelstock;
-//		this.barrelstock_inter = barrelstock_inter;
-//		Inventory<InventoryItem> inventory;
-//		this.barrelList = barrelList;
+		this.inventory = inventory;
+		this.barrelList = barrelList;
+	
 	}
 
 	@Override
@@ -64,11 +70,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		initializeUsers(userAccountManager);
 		initializeSortiment();
 		initializeCookBook(cookbook);
-		initializeBarrelStock(barrelstock);
 //		initializeStock2(stock2);
-//		initializeBarrelList(barrelList);
+		initializeBarrelList(barrelList);
 	}
 	
+
 	private void initializeLocList(Locationmanagement locationmanagement) {
 
 		Department d1 = new Department("Flaschenlager");
@@ -180,7 +186,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		UserAccount brewerAccount = userAccountManager.create("braumeister", "123", new Role("ROLE_BREWER"));
 		userAccountManager.save(brewerAccount);
 		
-		UserAccount salesmanAccount = userAccountManager.create("verkäufer", "123", new Role("ROLE_SALESMAN"));
+		UserAccount salesmanAccount = userAccountManager.create("verkaeufer", "123", new Role("ROLE_SALESMAN"));
 		userAccountManager.save(salesmanAccount);
 		
 		UserAccount warehousemanAccount = userAccountManager.create("lagerist", "123", new Role("ROLE_WAREHOUSEMAN"));
@@ -211,11 +217,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
 		
 
-//		for (Article article : sortiment.findAll()) {
-//			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
-//			inventory.save(inventoryItem);
-//				}
-//		
+		for (Article article : sortiment.findAll()) {
+			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
+			inventory.save(inventoryItem);
+				}
+		
 	}
 
 	private void initializeCookBook(CookBook cookbook) 
@@ -272,7 +278,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 //		barrelstock_inter.save(new BarrelStock(barrelMap));
 //	
 //	}
-	private void initializeBarrelStock(BarrelList barrelList) {
+	private void initializeBarrelList(BarrelList barrelList) {
 
 		if (barrelList.findAll().iterator().hasNext()) {
 			System.out.println("Rep ist nicht leer!!");
