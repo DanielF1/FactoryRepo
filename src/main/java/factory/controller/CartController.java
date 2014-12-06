@@ -39,16 +39,14 @@ public class CartController {
 	 
 	 
 	 // Einzelne Artikel sollen im Warenkorb gelöscht werden
-	 @RequestMapping(value = "/article/{id}", method = RequestMethod.POST)
-	    public String deleteArticle(@PathVariable Long pid, @RequestParam("pid") Article article, @ModelAttribute Cart cart) {
+	 @RequestMapping(value = "/article/{pid}", method = RequestMethod.GET)
+	    public String deleteArticle(@PathVariable Long pid, Article article) {
 	    	
 		 article.delete(pid);
-			
+		
 			return "redirect:/warenkorb";
 	    }
-
-	 
-	    
+    
 	    @RequestMapping(value="/kaufen", method=RequestMethod.POST)   
 	    public String Buy(){
 	    	

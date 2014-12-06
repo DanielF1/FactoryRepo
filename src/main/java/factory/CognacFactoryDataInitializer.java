@@ -180,7 +180,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		UserAccount brewerAccount = userAccountManager.create("braumeister", "123", new Role("ROLE_BREWER"));
 		userAccountManager.save(brewerAccount);
 		
-		UserAccount salesmanAccount = userAccountManager.create("verkäufer", "123", new Role("ROLE_SALESMAN"));
+		UserAccount salesmanAccount = userAccountManager.create("verkaeufer", "123", new Role("ROLE_SALESMAN"));
 		userAccountManager.save(salesmanAccount);
 		
 		UserAccount warehousemanAccount = userAccountManager.create("lagerist", "123", new Role("ROLE_WAREHOUSEMAN"));

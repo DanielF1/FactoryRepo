@@ -25,6 +25,13 @@
 					<li><a href="adminloclist.html">Standortübersicht</a></li>
 				</ul>
 			</div>
+			
+			<div class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">	
+				<ul>
+					<li><a href="bestellungen.html">Bestellungen</a></li>
+				</ul>
+			</div>
+			
 			<div class="salespoint" sec:authorize="hasRole('ROLE_CUSTOMER')">
 				<ul>
 					<li><a href="loclist.html">Standortübersicht</a></li>
