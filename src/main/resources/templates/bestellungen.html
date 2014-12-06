@@ -14,6 +14,17 @@
            </tr>
         </thead>
         
+        <table>
+      	  	<tr th:each="orderline : ${cart} ">
+					<td th:text="${orderline.name}"></td>
+					<td th:text="${orderline.alter}"></td>
+					<td th:text="${orderline.alkoholgehalt}"></td>
+					<td th:text="${orderline.volumen}"></td>
+					<td th:text="${orderline.cognacart}"></td>
+					<td th:text="${orderline.price}"></td>
+					<td th:text="${orderline.quantity}"></td>
+			</tr>
+		</table>
 
  </body>
  </html>

@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountIdentifier;
@@ -31,6 +34,7 @@ import factory.model.Sortiment;
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
 
+	private final Inventory<InventoryItem> inventory;
 	private final Locationmanagement locationmanagement;
 	private final UserAccountManager userAccountManager;
 	private final Sortiment sortiment;
@@ -40,21 +44,22 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
-			Sortiment sortiment, CookBook cookbook, BarrelStock barrelstock/**//* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
+			Sortiment sortiment, CookBook cookbook, BarrelStock barrelstock, Inventory<InventoryItem> inventory/**//* BarrelList barrelList*/) {
 
 
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbook, "CookBook must not be null!");
+		Assert.notNull(inventory, "Inventory must not be null!");
 		
 		this.userAccountManager = userAccountManager;
 		this.locationmanagement = locationmanagement;	
 		this.sortiment = sortiment;
 		this.cookbook = cookbook;
-
+		this.inventory = inventory;
 		this.barrelstock = barrelstock;
+		
 //		this.barrelstock_inter = barrelstock_inter;
-//		Inventory<InventoryItem> inventory;
 //		this.barrelList = barrelList;
 	}
 
@@ -69,6 +74,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 //		initializeBarrelList(barrelList);
 	}
 	
+
 	private void initializeLocList(Locationmanagement locationmanagement) {
 
 		Department d1 = new Department("Flaschenlager");
@@ -211,11 +217,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
 		
 
-//		for (Article article : sortiment.findAll()) {
-//			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
-//			inventory.save(inventoryItem);
-//				}
-//		
+		for (Article article : sortiment.findAll()) {
+			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
+			inventory.save(inventoryItem);
+				}
+		
 	}
 
 	private void initializeCookBook(CookBook cookbook) 
