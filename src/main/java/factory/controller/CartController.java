@@ -37,6 +37,8 @@ public class CartController {
 			return "redirect:/sortiment";
 	    }
 	 
+	 
+	 // Einzelne Artikel sollen im Warenkorb gelöscht werden
 	 @RequestMapping(value = "/article/{id}", method = RequestMethod.POST)
 	    public String deleteArticle(@PathVariable Long pid, @RequestParam("pid") Article article, @ModelAttribute Cart cart) {
 	    	
