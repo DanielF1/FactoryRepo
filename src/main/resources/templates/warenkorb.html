@@ -30,7 +30,7 @@
 				<td align="center" th:text="${cartItem.product.price}"></td>
 				<td align="center" th:text="${cartItem.quantity}"></td>		
 				
-				<td><form method="post" th:action="@{/loeschen}">
+				<td><form method="get" th:action="@{/article}">
                  	<input type="hidden" name="pid" th:value="${cartItem.product.identifier}" />
                		<button type="submit">L&ouml;schen</button> 	
           		</form></td>
