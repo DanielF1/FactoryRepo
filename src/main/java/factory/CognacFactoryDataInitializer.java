@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
 
 import factory.model.Article;
 import factory.model.Barrel;
-import factory.model.BarrelStock;
+import factory.model.BarrelList;
 import factory.model.CookBook;
 import factory.model.Department;
 import factory.model.Employee;
@@ -35,12 +35,12 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final Sortiment sortiment;
 	private final CookBook cookbook;
-	private final BarrelStock barrelstock;
+	private final BarrelList barrelstock;
 //	private final BarrelStock_Inter barrelstock_inter;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
-			Sortiment sortiment, CookBook cookbook, BarrelStock barrelstock/**//* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
+			Sortiment sortiment, CookBook cookbook, BarrelList barrelstock/**//* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
 
 
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
@@ -272,7 +272,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 //		barrelstock_inter.save(new BarrelStock(barrelMap));
 //	
 //	}
-	private void initializeBarrelStock(BarrelStock barrelList) {
+	private void initializeBarrelStock(BarrelList barrelList) {
 
 		if (barrelList.findAll().iterator().hasNext()) {
 			System.out.println("Rep ist nicht leer!!");
@@ -280,7 +280,12 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		}
 		
 		barrelList.save(new Barrel("Destillat A", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
 		barrelList.save(new Barrel("Destillat A", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat B", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat B", 7 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+
 		//	barrelList.save(new Barrel(2L,LocalDate.parse("2007-12-03"), BarrelContentType.Wein, 20,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03") ));
 //		barrelList.save(new Barrel(3L,LocalDate.parse("2007-12-03"), BarrelContentType.Wein, 20,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03") ));
 		//barrelList.save(new Barrel(4L,sdf.parse("04.04.2013"), "Wein", 20,sdf.parse("04.04.2013"), sdf.parse("01.01.2014") ));
