@@ -7,10 +7,10 @@ import java.time.LocalDate;
 public class BarrelMaker {
 	private MasterBrewer masterbrewer;
 
-	private BarrelStorageArea barrelstoragearea;
+	private BarrelStock barrelstock;
 	
-	public BarrelMaker(BarrelStorageArea barrelstoragearea) {
-		this.barrelstoragearea = barrelstoragearea;
+	public BarrelMaker(BarrelStock barrelstoragearea) {
+		this.barrelstock = barrelstock;
 	}
 
 	public void registriereBraumeister(MasterBrewer masterbrewer) {
@@ -18,7 +18,7 @@ public class BarrelMaker {
 	}
 
 	public Barrel erzeugeFass() {
-		Barrel barrel = new Barrel("", 0,LocalDate.now(),LocalDate.now(), LocalDate.now().plusDays(2));
+		Barrel barrel = new Barrel("", 0,LocalDate.now(),LocalDate.now().plusDays(2), LocalDate.now().plusDays(2));
 		return barrel;
 	}
 	
@@ -36,7 +36,7 @@ public class BarrelMaker {
 			return;
 		} 
 		// Es hat funktioniert
-		barrelstoragearea.deleteBarrel(fass.getId());
-		barrelstoragearea.saveBarrel(neuesFass);
+		barrelstock.deleteBarrel(fass.getId());
+		barrelstock.saveBarrel(neuesFass);
 	}
 }

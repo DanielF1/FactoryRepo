@@ -28,50 +28,6 @@ public class ManagementController {
 		public ManagementController(Locationmanagement locationmanagement) {
 			this.locationmanagement = locationmanagement;
 		}
-
-
-		@RequestMapping(value="/eingabe", method=RequestMethod.GET)
-	    public String Anzeige() {
-	        return "eingabe";
-	    }
-
-		
-	    @RequestMapping(value="/ausgabe", method=RequestMethod.POST)
-	    public String Standortausgabe(	@RequestParam ("name") String name,
-	    								@RequestParam ("address") String address,
-	    								@RequestParam ("city") String city,
-	    								@RequestParam ("telefon") String telefon,
-	    								@RequestParam ("mail") String mail,
-	    								@RequestParam ("employees") List<Employee> employees,
-	    								@RequestParam ("departments") List<Department> departments) {
-	        
-	    	Location location = new Location(name, address, city, telefon, mail, employees, departments);
-	    	
-	    	locationmanagement.save(location);
-	    	
-	    	return "ausgabe";
-	    }
-	    
-	    @RequestMapping(value = "/loeschen", method = RequestMethod.GET)
-		public String standortLöschen(ModelMap modelMap){
-	    	
-	    	modelMap.addAttribute("locations", locationmanagement.findAll());
-	    	
-			return "loeschen";
-		}
-	    
-	    @RequestMapping(value = "/ausgabe2", method = RequestMethod.POST)
-		public String löschen(@RequestParam ("name") String name){
-	    	
-	    	for(Location location : locationmanagement.findAll())
-			{
-				if(location.getName().equals(name)){
-					locationmanagement.delete(location);
-				}
-			}
-	    	
-	    	return "ausgabe2";
-		}
 	    
 	    @RequestMapping(value = "/loclist", method = RequestMethod.GET)
 		public String standortUebersicht(ModelMap modelMap){

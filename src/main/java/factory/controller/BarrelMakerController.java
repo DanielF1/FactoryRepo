@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import factory.model.Barrel;
+import factory.model.BarrelList;
 import factory.model.BarrelStock;
-import factory.model.BarrelStorageArea;
 import factory.model.validation.InsertBarrel;
 
 
 @Controller
 @PreAuthorize("hasRole('ROLE_BARRELMAKER') || hasRole('ROLE_BREWER')")
 public class BarrelMakerController {
-	BarrelStorageArea barrelstoragearea;
+	BarrelStock barrelstock;
 
 	@Autowired
-	public BarrelMakerController(BarrelStock barrelstock) {
-		this.barrelstoragearea = new BarrelStorageArea(barrelstock);
+	public BarrelMakerController(BarrelList barrellist) {
+		this.barrelstock = new BarrelStock(barrellist);
 	}
 
 	@RequestMapping("/BarrelList")
 	public String barrel(ModelMap modelMap) {
-		Iterable<Barrel> barrels = this.barrelstoragearea.getAllBarrels();
+		Iterable<Barrel> barrels = this.barrelstock.getAllBarrels();
 		System.out.print("11111111111111");
 		modelMap.addAttribute("BarrelList", barrels);
 
@@ -50,7 +50,7 @@ public class BarrelMakerController {
 	}
 		
 		Barrel barrel = new Barrel(content,amount,birthdate_of_barrel, death_of_barrel,lastFill);
-		barrelstoragearea.saveBarrel(barrel);
+		barrelstock.saveBarrel(barrel);
 		return "redirect:/BarrelList";
 	}
 
@@ -63,14 +63,14 @@ public class BarrelMakerController {
 	@RequestMapping(value = "/deleteBarrel", params = "Id")
 	public String deleteBarrel(@RequestParam("Id") Long Id, ModelMap modelMap) {
 
-		barrelstoragearea.deleteBarrel(Id);
+		barrelstock.deleteBarrel(Id);
 
 		return "redirect:/BarrelList";
 	}
 	@RequestMapping(value = "/putBarrelstogether")
 	public String putBarrelsTogether(ModelMap modelMap) {
 
-		barrelstoragearea.getMasterBrewer().zusammenschuetten();
+		barrelstock.getMasterBrewer().zusammenschuetten();
 
 		return "redirect:/BarrelList";
 	}

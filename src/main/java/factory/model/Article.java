@@ -1,6 +1,8 @@
 package factory.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import org.joda.money.Money;
 import org.salespointframework.catalog.Product;
@@ -22,7 +24,7 @@ public class Article extends Product{
 			
 		}
 		
-		public Article(String image, String name, String alter, Money preis, String alkoholgehalt, String volumen, String cognacart) {
+		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, String volumen, String cognacart) {
 			
 			super(name, preis, Units.METRIC);
 			
@@ -31,10 +33,10 @@ public class Article extends Product{
 			this.alkoholgehalt = alkoholgehalt;
 			this.volumen = volumen;
 			this.cognacart = cognacart;
-		
 
 		}
 		
+	
 		
 		public String getImage(){
 			return this.image;
@@ -90,5 +92,9 @@ public class Article extends Product{
 		public void setCognacart(String Cognacart){
 			
 			this.cognacart=Cognacart;
+		}
+
+		public void delete(Long id) {
+			
 		}		
 }

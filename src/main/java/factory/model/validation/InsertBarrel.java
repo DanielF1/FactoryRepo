@@ -2,19 +2,17 @@ package factory.model.validation;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 public class InsertBarrel {
 	
 	@NotNull(message = "Required field")
 	private Long Id;
 	private String content;
 	private double amount;
-	@NotEmpty (message = "Required field")
+	@NotNull (message = "Required field")
 	private String birthdate_of_barrel;
-	@NotEmpty (message = "Required field")
+	@NotNull (message = "Required field")
 	private String death_of_barrel;
-	@NotEmpty (message = "Required field")
+	@NotNull (message = "Required field")
 	private String lastFill;
 	public Long getId() {
 		return Id;

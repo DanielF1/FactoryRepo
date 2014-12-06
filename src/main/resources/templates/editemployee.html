@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	</head>
+
+	<body>
+
+		  <table>
+               <thead>
+				<tr>
+					<th>Mitarbeiter in diesem Standort</th>
+				</tr>
+			</thead>
+					<tr th:each="emp : ${location.employees}" style="list-style-type:none">
+	 					<td th:text="${emp.workplace}"></td>
+
+<!-- Button zum Bearbeiten eines Mitarbeiters.. kommt noch ;)  -->
+<!-- 						<td> -->
+<!-- 						<form method="get" role="form" th:action="@{/editemployee/} + ${emp.id}"> -->
+<!-- 							<button  type="submit">Bearbeiten</button> -->
+<!-- 						</form> -->
+<!-- 						</td> -->
+
+					</tr>	
+            </table>
+    </body>
+</html>

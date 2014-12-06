@@ -17,14 +17,21 @@
 			<p sec:authorize="isAuthenticated()" th:text="${'Moin ' + #authentication?.name}"></p>
 			<p sec:authorize="!isAuthenticated()">you are logged out</p>
 			
-			<div class="salespoint" sec:authorize="hasRole('ROLE_BOSS')">	
+			<div class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">	
 				<ul>
-					<li><a href="register.html">New Customer?</a></li>
-					<li><a href="eingabe.html">Hinzufügen</a></li>
-					<li><a href="loeschen.html">Löschen</a></li>
+					<li><a href="eingabe.html">Standort hinzufügen</a></li>
+					<li><a href="loeschen.html">Standort löschen</a></li>
 					<li><a href="adminloclist.html">Standortübersicht</a></li>
+					<li><a href="employeelist.html">Mitarbeiterübersicht</a></li>
 				</ul>
 			</div>
+			
+			<div class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">	
+				<ul>
+					<li><a href="bestellungen.html">Bestellungen</a></li>
+				</ul>
+			</div>
+			
 			<div class="salespoint" sec:authorize="hasRole('ROLE_CUSTOMER')">
 				<ul>
 					<li><a href="loclist.html">Standortübersicht</a></li>
@@ -46,6 +53,13 @@
 			<div class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
 				<ul>
 					<li><a href="http://localhost:8080/form?error=date">Weinanlieferung</a></li>
+				</ul>
+			</div>
+			
+			<div class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
+				<ul>
+					<li><a href="register.html">Register new Customer</a></li>
+					
 				</ul>
 			</div>
 			

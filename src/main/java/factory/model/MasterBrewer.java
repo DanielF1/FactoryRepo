@@ -6,10 +6,10 @@ import java.util.List;
 
 public class MasterBrewer {
 
-	private BarrelStorageArea barrelstoragearea;
+	private BarrelStock barrelstock;
 
-	public MasterBrewer(BarrelStorageArea barrelstoragearea) {
-		this.barrelstoragearea  = barrelstoragearea;
+	public MasterBrewer(BarrelStock barrelstock) {
+		this.barrelstock  = barrelstock;
 	}
 
 	public boolean gibtAltesFass(Barrel altesFass, Barrel neuesFass) {
@@ -21,7 +21,7 @@ public class MasterBrewer {
 	}
 
 	public void zusammenschuetten() {
-		Iterable<Barrel> allBarrels = barrelstoragearea.getAllBarrels();
+		Iterable<Barrel> allBarrels = barrelstock.getAllBarrels();
 		HashMap<String, List<Barrel>> map = new HashMap<String, List<Barrel>>();
 		// Nur barrels mit Inhalt einer Art und GLEICHEN ALTER finden
 
@@ -39,7 +39,7 @@ public class MasterBrewer {
 			// String zu Date, oder Alter oder ... ändern
 			HashMap<String, List<Barrel>> inhaltMap = new HashMap<String, List<Barrel>>();
 			for (Barrel barrel : list) {
-				// bearbeiten zu Hause Alter finden oder so
+				// bearbeiten Alter finden 
 				String hausaufgabe = barrel.getContent().toString();
 				if (!inhaltMap.containsKey(hausaufgabe)) {
 					inhaltMap.put(hausaufgabe, new ArrayList<Barrel>());
@@ -68,7 +68,7 @@ public class MasterBrewer {
 				amount = hilfsFass;
 			barrel.setAmount(amount);
 			hilfsFass -= amount;
-			barrelstoragearea.saveBarrel(barrel);
+			barrelstock.saveBarrel(barrel);
 		}
 	}
 }

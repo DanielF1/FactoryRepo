@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountIdentifier;
@@ -18,7 +21,7 @@ import org.springframework.util.Assert;
 
 import factory.model.Article;
 import factory.model.Barrel;
-import factory.model.BarrelStock;
+import factory.model.BarrelList;
 import factory.model.CookBook;
 import factory.model.Department;
 import factory.model.Employee;
@@ -31,31 +34,34 @@ import factory.model.Sortiment;
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
 
+	private final Inventory<InventoryItem> inventory;
 	private final Locationmanagement locationmanagement;
 	private final UserAccountManager userAccountManager;
 	private final Sortiment sortiment;
 	private final CookBook cookbook;
-	private final BarrelStock barrelstock;
+	private final BarrelList barrelList;
 //	private final BarrelStock_Inter barrelstock_inter;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
-			Sortiment sortiment, CookBook cookbook, BarrelStock barrelstock/**//* Inventory<InventoryItem> inventory, BarrelList barrelList*/) {
+
+			Sortiment sortiment, CookBook cookbook, Inventory<InventoryItem> inventory,BarrelList barrelList) {
+
 
 
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbook, "CookBook must not be null!");
+		Assert.notNull(inventory, "Inventory must not be null!");
+		Assert.notNull(barrelList, "Inventory must not be null!");
 		
 		this.userAccountManager = userAccountManager;
 		this.locationmanagement = locationmanagement;	
 		this.sortiment = sortiment;
 		this.cookbook = cookbook;
-
-		this.barrelstock = barrelstock;
-//		this.barrelstock_inter = barrelstock_inter;
-//		Inventory<InventoryItem> inventory;
-//		this.barrelList = barrelList;
+		this.inventory = inventory;
+		this.barrelList = barrelList;
+	
 	}
 
 	@Override
@@ -64,11 +70,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		initializeUsers(userAccountManager);
 		initializeSortiment();
 		initializeCookBook(cookbook);
-		initializeBarrelStock(barrelstock);
 //		initializeStock2(stock2);
-//		initializeBarrelList(barrelList);
+		initializeBarrelList(barrelList);
 	}
 	
+
 	private void initializeLocList(Locationmanagement locationmanagement) {
 
 		Department d1 = new Department("Flaschenlager");
@@ -123,39 +129,38 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Employee e5 = new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse");
 		Employee e6 = new Employee("","","","","","");
 		
+		
 		List<Employee> list5 = new ArrayList<Employee>();
 		list5.add(e1);
 		list5.add(e3);
-		list5.add(e4);
-		
-		list5.add(e5);
+		list5.add(e4);	
 		list5.add(e6);
-		
-		
+		list5.add(e6);
+	
+
 		List<Employee> list6 = new ArrayList<Employee>();
 		list6.add(e1);
 		list6.add(e3);
 		list6.add(e4);
 		list6.add(e2);
-		
-		list5.add(e6);
+		list6.add(e6);
+
 		
 		List<Employee> list7 = new ArrayList<Employee>();
 		list7.add(e5);
-		
-		list5.add(e6);
-//		list5.add(e8);
-//		list5.add(e8);
-//		list5.add(e8);
+		list7.add(e6);
+		list7.add(e6);
+		list7.add(e6);
+		list7.add(e6);
+
 		
 		List<Employee> list8 = new ArrayList<Employee>();
 		list8.add(e1);
 		list8.add(e2);
 		list8.add(e3);
-		
-//		list5.add(e9);
-//		list5.add(e9);
-		
+		list8.add(e6);
+		list8.add(e6);
+	
 		if (locationmanagement.findAll().iterator().hasNext()) {
 			return;
 		}
@@ -170,17 +175,17 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private void initializeUsers(UserAccountManager userAccountManager) {
 
 
-		if (userAccountManager.get(new UserAccountIdentifier("boss")).isPresent()) {
+		if (userAccountManager.get(new UserAccountIdentifier("admin")).isPresent()) {
 			return;
 		}
 
-		UserAccount adminAccount = userAccountManager.create("admin", "123", new Role("ROLE_BOSS"));
+		UserAccount adminAccount = userAccountManager.create("admin", "123", new Role("ROLE_ADMIN"));
 		userAccountManager.save(adminAccount);
 
 		UserAccount brewerAccount = userAccountManager.create("braumeister", "123", new Role("ROLE_BREWER"));
 		userAccountManager.save(brewerAccount);
 		
-		UserAccount salesmanAccount = userAccountManager.create("verkäufer", "123", new Role("ROLE_SALESMAN"));
+		UserAccount salesmanAccount = userAccountManager.create("verkaeufer", "123", new Role("ROLE_SALESMAN"));
 		userAccountManager.save(salesmanAccount);
 		
 		UserAccount warehousemanAccount = userAccountManager.create("lagerist", "123", new Role("ROLE_WAREHOUSEMAN"));
@@ -188,6 +193,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		UserAccount winegrowerAccount = userAccountManager.create("weinbauer", "123", new Role("ROLE_WINEGROWER"));
 		userAccountManager.save(winegrowerAccount);
+		
 		UserAccount barrelmakerAccount = userAccountManager.create("fassbinder", "123", new Role("ROLE_BARRELMAKER"));
 		userAccountManager.save(barrelmakerAccount);
 		
@@ -211,11 +217,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
 		
 
-//		for (Article article : sortiment.findAll()) {
-//			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
-//			inventory.save(inventoryItem);
-//				}
-//		
+		for (Article article : sortiment.findAll()) {
+			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
+			inventory.save(inventoryItem);
+				}
+		
 	}
 
 	private void initializeCookBook(CookBook cookbook) 
@@ -272,7 +278,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 //		barrelstock_inter.save(new BarrelStock(barrelMap));
 //	
 //	}
-	private void initializeBarrelStock(BarrelStock barrelList) {
+	private void initializeBarrelList(BarrelList barrelList) {
 
 		if (barrelList.findAll().iterator().hasNext()) {
 			System.out.println("Rep ist nicht leer!!");
@@ -280,7 +286,12 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		}
 		
 		barrelList.save(new Barrel("Destillat A", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
 		barrelList.save(new Barrel("Destillat A", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat B", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat B", 7 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+
 		//	barrelList.save(new Barrel(2L,LocalDate.parse("2007-12-03"), BarrelContentType.Wein, 20,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03") ));
 //		barrelList.save(new Barrel(3L,LocalDate.parse("2007-12-03"), BarrelContentType.Wein, 20,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03") ));
 		//barrelList.save(new Barrel(4L,sdf.parse("04.04.2013"), "Wein", 20,sdf.parse("04.04.2013"), sdf.parse("01.01.2014") ));

@@ -5,8 +5,9 @@
 	</head>
 
 	<body>
+		<div th:each="loc : ${locations} ">
+		<p th:text="${loc.name}"></p>
 		<table>			
-		<caption>Mitarbeiter</caption>
 			<thead>
 				<tr>
 					<th>Beschäftigung</th>
@@ -17,26 +18,23 @@
 					<th>Adresse</th>
 				</tr>
 			</thead>
-								
-				<tr th:each="loc : ${locations} ">
-					<td>
-					<ul th:each="employee : ${loc.employees}" style="list-style-type:none">
-						<li>
-							<span th:text="${employee.workplace}"></span>
-							<span th:text="${employee.name}"></span>
-							<span th:text="${employee.firstname}"></span>
-							<span th:text="${employee.salary}"></span>
-							<span th:text="${employee.mail}"></span>
-							<span th:text="${employee.address}"></span>			
-						</li>
-					</ul>
-					</td>
-					<td>
-					<form method="get" role="form" th:action="@{/edit/} + ${loc.id}">
-						<button  type="submit">Bearbeiten</button>
-					</form>
-					</td>
-				</tr>
-		</table>	
+					<tr th:each="employee : ${loc.employees}">
+	 					<td th:text="${employee.workplace}"></td>
+						<td th:text="${employee.name}"></td>
+						<td th:text="${employee.firstname}"></td>
+						<td th:text="${employee.salary}"></td>
+						<td th:text="${employee.mail}"></td>
+						<td th:text="${employee.address}"></td>			
+
+<!-- Nur zum Testen eingebaut -->
+<!-- 						<td> -->
+<!-- 						<form method="get" role="form" th:action="@{/editemployee/} + ${loc.id}"> -->
+<!-- 							<button  type="submit">Bearbeiten</button> -->
+<!-- 						</form> -->
+<!-- 						</td> -->
+					</tr>
+		</table>
+		<p>__</p>
+		</div>
 	</body>
 </html>

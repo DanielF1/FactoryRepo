@@ -5,8 +5,7 @@
 	</head>
 
 	<body>
-		<table>			
-		<caption>Standorte</caption>
+		<table border="3">			
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -42,15 +41,36 @@
 					</ul>
 					</td>
 					<td>
-					<form method="get" role="form" th:action="@{/edit/} + ${loc.id}">
-						<button  type="submit">Bearbeiten</button>
+					<form method="get" role="form" th:action="@{/editlocation/} + ${loc.id}">
+						<button  type="submit">Standort bearbeiten</button>
 					</form>
 					</td>
+					
+<!-- Buttons bekommen noch eine Funktion					 -->
+<!-- 					<td> -->
+<!-- 					<form method="get" role="form" th:action="@{/editemployee/} + ${loc.id}"> -->
+<!-- 						<button  type="submit">Mitarbeiter bearbeiten</button> -->
+<!-- 					</form> -->
+<!-- 					</td> -->
+<!-- 					<td> -->
+<!-- 					<form method="get" role="form" th:action="@{/edit/} + ${loc.id}"> -->
+<!-- 						<button  type="submit">Abteilungen bearbeiten</button> -->
+<!-- 					</form> -->
+<!-- 					</td> -->
+					
+<!-- 		löschen noch nicht funktionsfähig implementiert -->
+<!-- 					<td> -->
+<!-- 					<form method="post" role="form" th:action="@{/delete/} + ${loc.id}"> -->
+<!-- 						<button  type="submit">Standort löschen</button> -->
+<!-- 					</form> -->
+<!-- 					</td> -->
+				
+				
 				</tr>
 		</table>
 
 		<div class="search-group">
-			<form method="post" role="form" th:action="@{/uebersicht}">
+			<form method="post" role="form" th:action="@{/adminloclist}">
 				<input name="searchTerm" type="text" placeholder="Search"/>
 				<input type="hidden" value="Senden" />
 			</form>
