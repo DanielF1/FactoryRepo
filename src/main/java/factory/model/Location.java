@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-//import businessModel.Location;
-
 @Entity
 public class Location {
 	
@@ -35,13 +33,15 @@ public class Location {
 		this.mail = mail;
 		this.employees = employees;
 		this.departments = departments;	
+
 //		if (this.containsProductionmanagement()){
 //			this.productionManagement = new ProductionManagement();
 //		}
+
 	}
 	
-	
 
+	Location(){}
 	
 	public String getName(){
 		return name;
@@ -131,7 +131,20 @@ public class Location {
 //			if (location.containsProductionmanagement())
 //				result.add(location);
 //		return result;
+
+	
+	//prüft alle Locations die Produktionsmanagement haben und gibt sie aus
+//	public WineDepartment getWineDepartment() {
+//		Department wineDepartment = null;
+//		for (Department department : departments) {
+//			if (department.hasWine())
+//				wineDepartment = department;
+//		}
+//		if (wineDepartment == null)
+//			return null;
+//		return (WineDepartment) wineDepartment;
 //	}
+	
 //	public void addDepartment(Department department) {
 //		departments.add(department);
 //
