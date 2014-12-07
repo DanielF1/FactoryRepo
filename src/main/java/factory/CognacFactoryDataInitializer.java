@@ -285,12 +285,15 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 			return;
 		}
 		
-		barrelList.save(new Barrel("Destillat A", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
-		barrelList.save(new Barrel("", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
-		barrelList.save(new Barrel("Destillat A", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
-		barrelList.save(new Barrel("Destillat B", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
-		barrelList.save(new Barrel("Destillat B", 7 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
-		barrelList.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat A", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03")));
+		barrelList.save(new Barrel("Destillat A", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03")));
+		barrelList.save(new Barrel("Destillat B", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat B", 7 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03")));
+		barrelList.save(new Barrel("Destillat C", 10 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2011-12-03")));
+		barrelList.save(new Barrel("Destillat C", 9 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-03")));
+		barrelList.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03")));
+		barrelList.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03")));
 
 		//	barrelList.save(new Barrel(2L,LocalDate.parse("2007-12-03"), BarrelContentType.Wein, 20,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03") ));
 //		barrelList.save(new Barrel(3L,LocalDate.parse("2007-12-03"), BarrelContentType.Wein, 20,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03") ));

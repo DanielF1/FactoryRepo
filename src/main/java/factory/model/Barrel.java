@@ -16,7 +16,6 @@ public class Barrel {
 	private LocalDate death_of_barrel;
 	private LocalDate lastFill;
 	
-	
 	public Barrel(String content, double amount, LocalDate birthdate_of_barrel,
 					LocalDate death_of_barrel, LocalDate lastFill)
 	{
@@ -86,6 +85,16 @@ public class Barrel {
 	public void setLastFill(LocalDate lastFill) {
 		this.lastFill = lastFill;
 	}
-
+	public int getDateCount(){
+		int datecount =0;
+	while (getLastFill().compareTo(LocalDate.now())<0){
+		datecount++;
+		setLastFill(getLastFill().plusDays(1));
+	}
+	if (datecount>=360)
+	{datecount = 360;}
+	else {datecount =0;}
+	return datecount;
+	}
 	
 }

@@ -1,11 +1,12 @@
 package factory.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class MasterBrewer {
-
+	public static int datecount=0;
 	private BarrelStock barrelstock;
 
 	public MasterBrewer(BarrelStock barrelstock) {
@@ -26,29 +27,34 @@ public class MasterBrewer {
 		// Nur barrels mit Inhalt einer Art und GLEICHEN ALTER finden
 
 		for (Barrel barrel : allBarrels) {
+			if (barrel.getDeath_of_barrel().compareTo(LocalDate.now())>=0&&!barrel.getContent().equals("")){
 			String inhalt = barrel.getContent();
 			if (!map.containsKey(inhalt)) {
 				map.put(inhalt, new ArrayList<Barrel>());
 			}
 			map.get(inhalt).add(barrel);
+			}
 		}
 
 		for (String key : map.keySet()) {
 			List<Barrel> list = map.get(key);
-
+		
 			// String zu Date, oder Alter oder ... ändern
-			HashMap<String, List<Barrel>> inhaltMap = new HashMap<String, List<Barrel>>();
+			HashMap<Integer, List<Barrel>> alterMap = new HashMap<Integer, List<Barrel>>();
 			for (Barrel barrel : list) {
 				// bearbeiten Alter finden 
-				String hausaufgabe = barrel.getContent().toString();
-				if (!inhaltMap.containsKey(hausaufgabe)) {
-					inhaltMap.put(hausaufgabe, new ArrayList<Barrel>());
+				if (barrel.getDateCount()==360){
+				int dateCount = barrel.getDateCount();
+				
+				if (!alterMap.containsKey(dateCount)) {
+					alterMap.put(dateCount, new ArrayList<Barrel>());
 				}
-				inhaltMap.get(hausaufgabe).add(barrel);
+					alterMap.get(dateCount).add(barrel);	
+				}
 			}
 
-			for (String key1 : inhaltMap.keySet()) {
-				schuette(inhaltMap.get(key1));
+			for (Integer key1 : alterMap.keySet()) {
+				schuette(alterMap.get(key1));
 			}
 
 		}
@@ -68,6 +74,8 @@ public class MasterBrewer {
 				amount = hilfsFass;
 			barrel.setAmount(amount);
 			hilfsFass -= amount;
+			if (barrel.getAmount()==0)
+				barrel.setContent("");
 			barrelstock.saveBarrel(barrel);
 		}
 	}
