@@ -1,6 +1,5 @@
 package factory.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,7 +25,7 @@ public class Location {
 	private List<Employee> employees;
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Department> departments;
-	private ProductionManagement productionManagement;
+//	private ProductionManagement productionManagement;
 
 	public Location(String name, String address, String city, String telefon, String mail, List<Employee> employees, List<Department> departments){
 		this.name = name;
@@ -36,9 +35,9 @@ public class Location {
 		this.mail = mail;
 		this.employees = employees;
 		this.departments = departments;	
-		if (this.containsProductionmanagement()){
-			this.productionManagement = new ProductionManagement();
-		}
+//		if (this.containsProductionmanagement()){
+//			this.productionManagement = new ProductionManagement();
+//		}
 	}
 	
 	
@@ -108,20 +107,20 @@ public class Location {
 		return departments;
 	}
 	// check if this Location contains Production management Department
-	public boolean containsProductionmanagement(){
-		for (Department dept: this.departments){
-			if (dept.getName().contains("Produ")){
-				return true;
-			}
-		}
-		return false;
-	}
+//	public boolean containsProductionmanagement(){
+//		for (Department dept: this.departments){
+//			if (dept.getName().contains("Produ")){
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 	//
-	public ProductionManagement getProductionManagementDepartment (){
-		
-		return this.productionManagement;
-	}
+//	public ProductionManagement getProductionManagementDepartment (){
+//		
+//		return this.productionManagement;
+//	}
 	
 	
 	//für Liste von Locations mit Productionmanagement

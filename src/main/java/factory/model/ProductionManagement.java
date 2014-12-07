@@ -22,30 +22,30 @@ public class ProductionManagement {
 	}
 	
 	
-	public int countCapacityInHektoLiter (){
-		return daysTillAprilTheFirst() / 2 * VOLUME_HEKTOLITERS_IN_TWO_DAYS;
-		
-	}
-    private	int wineQuantity;
-    
-	public boolean isOverflow (int hektoliters){
-		return wineQuantity > countCapacityInHektoLiter() ? true : false;
-	}
-		
-	public int overflowQuantity (int quantity){
-		return wineQuantity - countCapacityInHektoLiter();
-	}
-	
-	public void deliverWine (int quantity){
-		wineQuantity+= quantity;
-	}
-	
-
-	public int getWineQuantity() {
-		return wineQuantity;
-	}
-
-	
+//	public int countCapacityInHektoLiter (){
+//		return daysTillAprilTheFirst() / 2 * VOLUME_HEKTOLITERS_IN_TWO_DAYS;
+//		
+//	}
+//    private	int wineQuantity;
+//    
+//	public boolean isOverflow (int hektoliters){
+//		return wineQuantity > countCapacityInHektoLiter() ? true : false;
+//	}
+//		
+//	public int overflowQuantity (int quantity){
+//		return wineQuantity - countCapacityInHektoLiter();
+//	}
+//	
+//	public void deliverWine (int quantity){
+//		wineQuantity+= quantity;
+//	}
+//	
+//
+//	public int getWineQuantity() {
+//		return wineQuantity;
+//	}
+//
+//	
 	
 	
 }
