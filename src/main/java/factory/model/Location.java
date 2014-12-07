@@ -1,5 +1,6 @@
 package factory.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+//import businessModel.Location;
 
 @Entity
 public class Location {
@@ -23,7 +26,7 @@ public class Location {
 	private List<Employee> employees;
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Department> departments;
-	
+	private ProductionManagement productionManagement;
 
 	public Location(String name, String address, String city, String telefon, String mail, List<Employee> employees, List<Department> departments){
 		this.name = name;
@@ -33,10 +36,13 @@ public class Location {
 		this.mail = mail;
 		this.employees = employees;
 		this.departments = departments;	
+		if (this.containsProductionmanagement()){
+			this.productionManagement = new ProductionManagement();
+		}
 	}
 	
+	
 
-	Location(){}
 	
 	public String getName(){
 		return name;
@@ -101,19 +107,32 @@ public class Location {
 	public List<Department> getDepartments() {
 		return departments;
 	}
+	// check if this Location contains Production management Department
+	public boolean containsProductionmanagement(){
+		for (Department dept: this.departments){
+			if (dept.getName().contains("Produ")){
+				return true;
+			}
+		}
+		return false;
+	}
 	
-	//prüft alle Locations die Produktionsmanagement haben und gibt sie aus
-//	public WineDepartment getWineDepartment() {
-//		Department wineDepartment = null;
-//		for (Department department : departments) {
-//			if (department.hasWine())
-//				wineDepartment = department;
-//		}
-//		if (wineDepartment == null)
-//			return null;
-//		return (WineDepartment) wineDepartment;
+	//
+	public ProductionManagement getProductionManagementDepartment (){
+		
+		return this.productionManagement;
+	}
+	
+	
+	//für Liste von Locations mit Productionmanagement
+//	public static List<Location> getLocationsListWithProductionManagement(/*List<Location> locations*/){
+		//List<Location> locations = locationmanagement.findAll(); obratitca co vsemu spisku
+//		List<Location> result = new ArrayList<Location>();
+//		for(Location location : locations)
+//			if (location.containsProductionmanagement())
+//				result.add(location);
+//		return result;
 //	}
-	
 //	public void addDepartment(Department department) {
 //		departments.add(department);
 //
