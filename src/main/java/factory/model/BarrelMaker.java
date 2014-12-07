@@ -9,7 +9,7 @@ public class BarrelMaker {
 
 	private BarrelStock barrelstock;
 	
-	public BarrelMaker(BarrelStock barrelstoragearea) {
+	public BarrelMaker(BarrelStock barrelstock) {
 		this.barrelstock = barrelstock;
 	}
 
@@ -18,7 +18,7 @@ public class BarrelMaker {
 	}
 
 	public Barrel erzeugeFass() {
-		Barrel barrel = new Barrel("", 0,LocalDate.now(),LocalDate.now().plusDays(2), LocalDate.now().plusDays(2));
+		Barrel barrel = new Barrel("", 0,LocalDate.now(),LocalDate.now().plusDays(2), LocalDate.now());
 		return barrel;
 	}
 	
