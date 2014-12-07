@@ -66,7 +66,8 @@ public class WineGrowerController {
 
 		model.addAttribute("quantity", this.quantity);
 		model.addAttribute("date", this.date);
-		model.addAttribute("place", this.place);
+		model.addAttribute("location", loc);
+		model.addAttribute("transport", transport);
 		return "LF_result";
 	}
 

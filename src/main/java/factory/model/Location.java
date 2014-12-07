@@ -162,19 +162,24 @@ public class Location {
 		if (!dept.isOverflow(quantity, date)) {
 			dept.deliverWine(quantity);
 			return null;
-		}
+		} else {
 
+		int overflow = this.productionManagement.overflowQuantity(quantity, date);
+		dept.deliverWine(quantity - overflow);
+		quantity = overflow;} 
+		
 		for (Location loc : Location.getLocationsListWithProductionManagement()) {
 			ProductionManagement locDept = loc.getProductionManagementDepartment();
 			if (!locDept.isOverflow(quantity, date)) {
-				
 				locDept.deliverWine(quantity);
 				Transport transport = new Transport(this, loc, quantity);
 				return transport;
 			}
 		}
 		
-		dept.deliverWine(quantity);
+		// Der Rest kommt doch in selektierte Location
+		dept.deliverWine(quantity );
+		
 		return null;
 	}
 
