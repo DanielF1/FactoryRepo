@@ -1,10 +1,13 @@
 package factory.model;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ProductionManagement {
@@ -12,34 +15,42 @@ public class ProductionManagement {
 	@Id 
 	@GeneratedValue
 	private Long id;
+	
 	private static final int DAY_IN_MILLIS = 24 * 3600 * 1000;
 	private static final int VOLUME_HEKTOLITERS_IN_TWO_DAYS = 24;
 	
-	
-	public int daysTillAprilTheFirst(){
+/*
+ * Datum wäre gut ;)
+ */
+	public long daysTillAprilTheFirst(Date date){
 		Calendar cal = Calendar.getInstance();
-		long nowMillis = cal.getTimeInMillis();
-		int curYear = cal.get(Calendar.YEAR);
+		Calendar delDate = Calendar.getInstance();
+		delDate.setTime(date);
+//		int curYear = cal.get(Calendar.YEAR); // Das aktuelle Jahr, oder das Jahr von date?
+		int curYear = delDate.get(Calendar.YEAR); // Das aktuelle Jahr, oder das Jahr von date?
 		int curMonth = cal.get(Calendar.MONTH);
 		cal.set(curYear + (curMonth >= Calendar.APRIL ? 1:0), Calendar.APRIL, 1, 0, 0, 0);
 		long thenMillis = cal.getTimeInMillis();
-		int daysBetweenDates = (int) (thenMillis - nowMillis) / DAY_IN_MILLIS;
-		
-		return daysBetweenDates;	
+		long daysBetweenDates = (thenMillis - delDate.getTimeInMillis()) ;
+		return TimeUnit.DAYS.convert(daysBetweenDates, TimeUnit.MILLISECONDS);
+//		return daysBetweenDates;	
 	}
 
-	public int countCapacityInHektoLiter (){
-		return daysTillAprilTheFirst() / 2 * VOLUME_HEKTOLITERS_IN_TWO_DAYS;
+	public int countCapacityInHektoLiter (Date date){
+		long daysTillAprilTheFirst = daysTillAprilTheFirst(date);
+		long s = daysTillAprilTheFirst / 2 * VOLUME_HEKTOLITERS_IN_TWO_DAYS;
+		return (int)s;
 		
 	}
     private	int wineQuantity;
     
-	public boolean isOverflow (int hektoliters){
-		return wineQuantity > countCapacityInHektoLiter() ? true : false;
+	public boolean isOverflow (int hektoliters, Date date){
+		int countCapacityInHektoLiter = countCapacityInHektoLiter(date);
+		return wineQuantity+hektoliters > countCapacityInHektoLiter ? true : false;
 	}
 		
-	public int overflowQuantity (int quantity){
-		return wineQuantity - countCapacityInHektoLiter();
+	public int overflowQuantity (int quantity, Date date){
+		return wineQuantity - countCapacityInHektoLiter(date);
 	}
 	
 	public void deliverWine (int quantity){
@@ -50,5 +61,6 @@ public class ProductionManagement {
 	public int getWineQuantity() {
 		return wineQuantity;
 	}
+
 
 }

@@ -23,6 +23,7 @@
 					<li><a href="loeschen.html">Standort löschen</a></li>
 					<li><a href="adminloclist.html">Standortübersicht</a></li>
 					<li><a href="employeelist.html">Mitarbeiterübersicht</a></li>
+					<li><a href="locationwithwine">Weinmenge</a></li>
 				</ul>
 			</div>
 			
@@ -52,7 +53,9 @@
 			
 			<div class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
 				<ul>
-					<li><a href="http://localhost:8080/form?error=date">Weinanlieferung</a></li>
+					<li><a href="http://localhost:8080/form">Weinanlieferung</a></li>
+					<li><a href="locationwithwine">Weinmenge</a></li>
+					
 				</ul>
 			</div>
 			

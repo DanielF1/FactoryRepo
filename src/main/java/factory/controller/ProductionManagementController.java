@@ -1,41 +1,30 @@
 package factory.controller;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import factory.model.Location;
 import factory.model.ProductionManagement;
 import factory.model.Transport;
 
-/*
-
+@Controller
 public class ProductionManagementController {
 
+	@RequestMapping(value = "/locationwithwine", method = RequestMethod.GET)
+	public String specification(ModelMap model)		 {
+
+		model.addAttribute("locations", Location.getLocationsListWithProductionManagement());
+		return "locationwithwine";
+	}
+	
+	
 	// if overflow
 	
-	public Transport deliverWine(int quantity, Date date, Location location){
-	//		throws Exception {
-	//	ProductionManagement dept = location.getWineDepartment();
-	//	if (dept == null)
-	//		throw new Exception();
-		// if Oberflow
-		ProductionManagement dept = location.getProductionManagementDepartment();
-		if (!dept.isOverflow(quantity)) {
-			dept.deliverWine(quantity);
-			return null;
-		}
-
-		for (Location loc : Location.getLocationsListWithProductionManagement()) {
-			ProductionManagement locDept = loc.getProductionManagementDepartment();
-			if (!locDept.isOverflow(quantity)) {
-				
-				locDept.deliverWine(quantity);
-				Transport transport = new Transport(location, loc, quantity);
-				return transport;
-			}
-		}
-		
-		dept.deliverWine(quantity);
-		return null;
-	}
-}	
-
-*/
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	</head>
+
+	<body>
+		<table border="3">			
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Addresse</th>
+					<th>Weinmenge</th>
+				</tr>
+			</thead>
+								
+				<tr th:each="loc : ${locations} ">
+					<td th:text="${loc.name}">Name</td>
+					<td th:text="${loc.address}">Straße</td>
+				<td th:text="${loc.getWineQuantity()}">Wein</td>
+				</tr>
+		</table>
+
+		<div class="search-group">
+			<form method="post" role="form" th:action="@{/adminloclist}">
+				<input name="searchTerm" type="text" placeholder="Search"/>
+				<input type="hidden" value="Senden" />
+			</form>
+		</div>
+		
+	</body>
+</html>

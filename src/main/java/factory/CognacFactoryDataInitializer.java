@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.money.Money;
+import org.neo4j.cypher.internal.compiler.v2_1.docbuilders.logicalPlanDocBuilder;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -47,9 +48,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 
 			Sortiment sortiment, CookBook cookbook, Inventory<InventoryItem> inventory,BarrelList barrelList) {
 
-
-
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
+		Location.locationmanagement = locationmanagement;
+
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbook, "CookBook must not be null!");
 		Assert.notNull(inventory, "Inventory must not be null!");
