@@ -6,23 +6,25 @@
 
 	<body>
 
-		  <table>
-               <thead>
-				<tr>
-					<th>Mitarbeiter in diesem Standort</th>
-				</tr>
-			</thead>
-					<tr th:each="emp : ${location.employees}" style="list-style-type:none">
-	 					<td th:text="${emp.workplace}"></td>
+		
+					<h2>Mitarbeiter in diesem Standort</h2>
+				
+					<div th:each="emp : ${location.employees}">
+	 					<h4 th:text="${emp.workplace}"></h4>
+	 					<p th:text="${emp.name}"></p>
+	 					<p th:text="${emp.firstname}"></p>
+	 					<p th:text="${emp.salary}"></p>
+	 					<p th:text="${emp.mail}"></p>
+	 					<p th:text="${emp.address}"></p>
+	 					<p>__</p>
 
-<!-- Button zum Bearbeiten eines Mitarbeiters.. kommt noch ;)  -->
+<!-- Button Speichern der Daten eines Mitarbeiters.. kommt noch ;)  -->
 <!-- 						<td> -->
 <!-- 						<form method="get" role="form" th:action="@{/editemployee/} + ${emp.id}"> -->
-<!-- 							<button  type="submit">Bearbeiten</button> -->
+<!-- 							<button  type="submit">Änderungen speichern</button> -->
 <!-- 						</form> -->
 <!-- 						</td> -->
 
-					</tr>	
-            </table>
+					</div>	
     </body>
 </html>

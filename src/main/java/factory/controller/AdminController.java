@@ -135,26 +135,26 @@ class AdminController {
 		@RequestMapping(value="/editlocation", method = RequestMethod.POST)
 		public String editLocation(	@RequestParam("telefon")String telefon,
 									@RequestParam("mail") String mail,
-									@RequestParam("employees") String[] employees,
-									@RequestParam("departments") String[] departments, 
+									//@RequestParam("employees") String[] employees,
+									//@RequestParam("departments") String[] departments, 
 									@RequestParam("id") Long id){
 			
 			Location location = locationmanagement.findOne(id);
 			location.setTelefon(telefon);
 			location.setMail(mail);
 			
-			List<Employee> emp = new ArrayList<Employee>();
-			for(String e : employees){
-				emp.add(new Employee(e, "", "", "", "", ""));
-			}
-			location.setEmployees(emp);
-
-			
-			List<Department> dep = new ArrayList<Department>();
-			for(String s : departments){
-				dep.add(new Department(s));
-			}
-			location.setDepartments(dep);
+//			List<Employee> emp = new ArrayList<Employee>();
+//			for(String e : employees){
+//				emp.add(new Employee(e, "", "", "", "", ""));
+//			}
+//			location.setEmployees(emp);
+//
+//			
+//			List<Department> dep = new ArrayList<Department>();
+//			for(String s : departments){
+//				dep.add(new Department(s));
+//			}
+//			location.setDepartments(dep);
 
 			locationmanagement.save(location);
 			return "redirect:/adminloclist";
@@ -163,13 +163,17 @@ class AdminController {
 		
 		//Controller für Mitarbeiterbearbeitung.. kommt noch
 		
-//		 @RequestMapping(value="/editemployee/{id}", method = RequestMethod.GET)
-//		 public String editEmployee(@PathVariable Long id, Model model){	
-//			
-//			model.addAttribute("location" ,locationmanagement.findOne(id));
-//			 
-//			return "editemployee";
-//			}
+		 @RequestMapping(value="/editemployee/{id}", method = RequestMethod.GET)
+		 public String editEmployee(@PathVariable Long id, Model model){	
+			
+			
+			model.addAttribute("location" ,locationmanagement.findOne(id)); 
+			 
+			//Location location = locationmanagement.findOne(id);
+			//model.addAttribute("employees", location.getEmployees());
+			 
+			return "editemployee";
+			}
 		
 		
 		//alle Arbeiter in allen Standorten in der Übersicht
