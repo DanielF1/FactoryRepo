@@ -67,6 +67,14 @@ public class ManagementController {
 		}
 	//Search END
 		
+		//für Liste von Locations mit Productionmanagement
+//		public List<Location> getLocationWithWine(){
+//			List<Location> result = new ArrayList<Location>();
+//			for(Location location : locations)
+//				if (location.getWineDepartment()!= null)
+//					result.add(location);
+//			return result;
+//		}
 		
 		
 }
