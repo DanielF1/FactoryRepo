@@ -10,13 +10,13 @@
 					<h2>Mitarbeiter in diesem Standort</h2>
 				
 					<div th:each="emp : ${location.employees}">
-	 					<h4 th:text="${emp.workplace}"></h4>
-	 					<p th:text="${emp.name}"></p>
-	 					<p th:text="${emp.firstname}"></p>
-	 					<p th:text="${emp.salary}"></p>
-	 					<p th:text="${emp.mail}"></p>
-	 					<p th:text="${emp.address}"></p>
-	 					<p>__</p>
+	 					<table><thead th:text="${emp.workplace}"></thead>
+	 					<tr><td><input type="text" name="name" th:value="${emp.name}"/></td></tr>
+	 					<tr><td><input type="text" name="firstname" th:value="${emp.firstname}"/></td></tr>
+	 					<tr><td><input type="text" name="salary" th:value="${emp.salary}"/></td></tr>
+	 					<tr><td><input type="text" name="mail" th:value="${emp.mail}"/></td></tr>
+	 					<tr><td><input type="text" name="address" th:value="${emp.address}"/></td></tr>
+	 					
 
 <!-- Button Speichern der Daten eines Mitarbeiters.. kommt noch ;)  -->
 <!-- 						<td> -->
@@ -24,7 +24,7 @@
 <!-- 							<button  type="submit">Änderungen speichern</button> -->
 <!-- 						</form> -->
 <!-- 						</td> -->
-
+						</table>
 					</div>	
     </body>
 </html>

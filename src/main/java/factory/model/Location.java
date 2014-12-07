@@ -25,6 +25,9 @@ public class Location {
 	private List<Department> departments;
 //	private ProductionManagement productionManagement;
 
+	@Deprecated
+	public Location (){}
+	
 	public Location(String name, String address, String city, String telefon, String mail, List<Employee> employees, List<Department> departments){
 		this.name = name;
 		this.address = address;
