@@ -8,7 +8,6 @@ public class ProductionManagement {
 	private static final int VOLUME_HEKTOLITERS_IN_TWO_DAYS = 24;
 	
 	
-	
 	public int daysTillAprilTheFirst(){
 		Calendar cal = Calendar.getInstance();
 		long nowMillis = cal.getTimeInMillis();
