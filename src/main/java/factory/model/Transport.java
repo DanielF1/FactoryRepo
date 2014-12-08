@@ -6,12 +6,23 @@ public class Transport {
 		id = 27;
 		source = src;
 		destination = dst;
-		menge = quantity;
+		this.setQuantity(quantity);
 	}
 
 	int id;
-	int menge;
-	Location source;
-	Location destination;
+	private int quantity;
+	private Location source;
+	private Location destination;
 
+	public Location getDestination() {
+		return destination;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 }

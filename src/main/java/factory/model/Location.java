@@ -49,9 +49,9 @@ public class Location {
 
 	}
 
-	public int getWineQuantity() {
-		return getProductionManagementDepartment().getWineQuantity();
-	}
+//	public int getWineQuantity() {
+//		return getProductionManagementDepartment().getWineQuantity();
+//	}
 
 	public String getName() {
 		return name;
@@ -114,23 +114,23 @@ public class Location {
 	}
 
 	// check if this Location contains Production management Department
-	public boolean containsProductionmanagement() {
-		for (Department dept : this.departments) {
-			if (dept.getName().contains("Produ")) { // :-(
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public ProductionManagement getProductionManagementDepartment() {
-		if (this.productionManagement == null)
-			if (this.containsProductionmanagement()) {
-				this.productionManagement = new ProductionManagement();
-			}
-		return this.productionManagement;
-	}
-
+//	public boolean containsProductionmanagement() {
+//		for (Department dept : this.departments) {
+//			if (dept.getName().contains("Produ")) { // :-(
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+//
+//	public ProductionManagement getProductionManagementDepartment() {
+//		if (this.productionManagement == null)
+//			if (this.containsProductionmanagement()) {
+//				this.productionManagement = new ProductionManagement();
+//			}
+//		return this.productionManagement;
+//	}
+//
 	// für Liste von Locations mit Productionmanagement
 //	public static List<Location> getLocationsListWithProductionManagement() {
 //		Iterable<Location> locations = locationRepository.findAll();
@@ -140,31 +140,36 @@ public class Location {
 //				result.add(location);
 //		return result;
 //	}
-	
-
+//	
+//	
 //	public Transport deliverWine(int quantity, Date date){
-//	//		throws Exception {
-//	//	ProductionManagement dept = location.getWineDepartment();
-//	//	if (dept == null)
-//	//		throw new Exception();
+//			throws Exception {
+//		ProductionManagement dept = location.getWineDepartment();
+//		if (dept == null)
+//			throw new Exception();
 //		
 //		ProductionManagement dept = getProductionManagementDepartment();
 //		if (!dept.isOverflow(quantity, date)) {
 //			dept.deliverWine(quantity);
 //			return null;
-//		}
+//		} else {
 //
+//		int overflow = this.productionManagement.overflowQuantity(quantity, date);
+//		dept.deliverWine(quantity - overflow);
+//		quantity = overflow;} 
+//		
 //		for (Location loc : Location.getLocationsListWithProductionManagement()) {
 //			ProductionManagement locDept = loc.getProductionManagementDepartment();
 //			if (!locDept.isOverflow(quantity, date)) {
-//				
 //				locDept.deliverWine(quantity);
 //				Transport transport = new Transport(this, loc, quantity);
 //				return transport;
 //			}
 //		}
 //		
-//		dept.deliverWine(quantity);
+//		// Der Rest kommt doch in selektierte Location
+//		dept.deliverWine(quantity );
+//		
 //		return null;
 //	}
 //
@@ -173,7 +178,7 @@ public class Location {
 //	}
 //
 //	public void Save() {
-//		locationRepository.save(this);
+//		locationmanagement.save(this);
 //	}
 
 }

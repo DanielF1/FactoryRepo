@@ -10,7 +10,6 @@ import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountIdentifier;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import factory.model.Article;
+import factory.model.ArticleRepository;
 import factory.model.Barrel;
 import factory.model.BarrelList;
 import factory.model.CookBook;
@@ -31,7 +31,6 @@ import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.Recipe;
-import factory.model.Sortiment;
 
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
@@ -41,7 +40,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final DepartmentRepository departmentRepository;
 	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
-	private final Sortiment sortiment; 							// ist ein Repository für articles
+	private final ArticleRepository articleRepository;
+
 	private final CookBook cookbook;
 	private final BarrelList barrelList;
 //	private final BarrelStock_Inter barrelstock_inter;
@@ -51,11 +51,12 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										LocationRepository locationRepository, 
 										DepartmentRepository departmentRepository,
 										EmployeeRepository employeeRepository,
-										Sortiment sortiment, 
+										ArticleRepository articleRepository,
 										CookBook cookbook, 
 										Inventory<InventoryItem> inventory,
 										BarrelList barrelList) {
 
+		
 		Assert.notNull(locationRepository, "LocationRepository must not be null!");
 		Assert.notNull(departmentRepository, "DepartmentRepository must not be null!");
 		Assert.notNull(employeeRepository, "EmployeeRepository must not be null!");
@@ -65,10 +66,12 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Assert.notNull(barrelList, "Barrellist must not be null!");
 		
 		this.userAccountManager = userAccountManager;
+
 		this.locationRepository = locationRepository;	
 		this.departmentRepository = departmentRepository;
 		this.employeeRepository = employeeRepository;
-		this.sortiment = sortiment;
+		this.articleRepository = articleRepository;
+
 		this.cookbook = cookbook;
 //		this.inventory = inventory;
 		this.barrelList = barrelList;
@@ -188,21 +191,23 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		// Die Bilder sind von der Internetseite: http://www.spirituosentheke.de 
 		
-		sortiment.save(new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac"));
-		sortiment.save(new Article("chatelier", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac"));
-		sortiment.save(new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac"));
-		sortiment.save(new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %","0,7 Liter","Cognac"));
-		sortiment.save(new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac"));
+		articleRepository.save(new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac"));
+		articleRepository.save(new Article("chatelier", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac"));
+		articleRepository.save(new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac"));
+		articleRepository.save(new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %","0,7 Liter","Cognac"));
+		articleRepository.save(new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac"));
 
 		
 		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
 		
 
-//		for (Article article : sortiment.findAll()) {
+
+//		for (Article article : articleRepository.findAll()) {
 //			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
 //			inventory.save(inventoryItem);
 //				}
 //		
+
 	}
 
 	private void initializeCookBook(CookBook cookbook) 

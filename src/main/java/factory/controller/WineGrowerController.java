@@ -1,5 +1,11 @@
 //package factory.controller;
 //
+//
+//import java.text.DateFormat;
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
+//
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.ModelMap;
@@ -7,14 +13,7 @@
 //import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
 //
-//import java.text.DateFormat;
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-//import java.util.Optional;
-//
 //import factory.model.Location;
-//import factory.model.LocationRepository;
 //import factory.model.Transport;
 //
 //@Controller
@@ -24,11 +23,11 @@
 //	private Date date;
 //	private String place;
 //
-//	private final LocationRepository locationRepository;
+//	private final Locationmanagement locationmanagement;
 //
 //	@Autowired
-//	public WineGrowerController(LocationRepository locationRepository) {
-//		this.locationRepository = locationRepository;
+//	public WineGrowerController(Locationmanagement locationmanagement) {
+//		this.locationmanagement = locationmanagement;
 //	}
 //
 //	@RequestMapping(value = "/form", method = RequestMethod.GET)
@@ -66,7 +65,8 @@
 //
 //		model.addAttribute("quantity", this.quantity);
 //		model.addAttribute("date", this.date);
-//		model.addAttribute("place", this.place);
+//		model.addAttribute("location", loc);
+//		model.addAttribute("transport", transport);
 //		return "LF_result";
 //	}
 //

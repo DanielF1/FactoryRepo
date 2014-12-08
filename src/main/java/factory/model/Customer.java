@@ -7,33 +7,30 @@ import javax.persistence.OneToOne;
 
 import org.salespointframework.useraccount.UserAccount;
 
-// (｡◕‿◕｡)
-// Salespoint bietet nur eine UserAccount Verwaltung, für weitere Attribute sollte eine extra Klasse geschriebenw werden 
-// Unser Kunde hat noch eine Adresse, das bietet der UserAccount nicht
-// Um den Customer in die Datenbank zu bekommen, schreiben wir ein CustomerRepository 
-
 @Entity
 
-public class NormalUser {
+public class Customer {
 
 	@Id
 	@GeneratedValue
 	private long id;
-
+	private String name;
+	private String firstname;
 	private String address;
 
-	// (｡◕‿◕｡)
-	// Jedem Customer ist genau ein UserAccount zugeordnet, um später über den UserAccount an den Customer zu kommen, speichern wir den hier
 	@OneToOne
 	private UserAccount userAccount;
 
 	@Deprecated
-	protected NormalUser() {
+	protected Customer() {
 	}
 
-	public NormalUser(UserAccount userAccount, String address) {
+	public Customer(UserAccount userAccount, String address, String name, String firstname) {
 		this.userAccount = userAccount;
 		this.address = address;
+		this.name = name;
+		this.firstname = firstname;
+		
 	}
 
 	public String getAddress() {
@@ -46,6 +43,22 @@ public class NormalUser {
 
 	public UserAccount getUserAccount() {
 		return userAccount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 }

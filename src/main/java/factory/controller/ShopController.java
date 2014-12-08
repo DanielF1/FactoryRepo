@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import factory.model.Article;
-import factory.model.Sortiment;
+import factory.model.ArticleRepository;
 
 @Controller
 @SessionAttributes("cart")
 public class ShopController {
 	
 	private final Inventory<InventoryItem> inventory;
-	private final Sortiment sortiment;
+	private final ArticleRepository articleRepository;
 	
 	@Autowired
-	public ShopController(Sortiment sortiment, Inventory<InventoryItem> inventory){
-		this.sortiment = sortiment;
+	public ShopController(ArticleRepository articleRepository, Inventory<InventoryItem> inventory){
+		this.articleRepository = articleRepository;
 		this.inventory = inventory;
 	}
 
@@ -36,7 +36,7 @@ public class ShopController {
 	    public String Willkommen(Model model) {
 	    	
 	    	
-	    	model.addAttribute("articles", sortiment.findAll());
+	    	model.addAttribute("articles", articleRepository.findAll());
 	    	
 		
 	        return "sortiment";

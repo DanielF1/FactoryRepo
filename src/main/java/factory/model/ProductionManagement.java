@@ -49,7 +49,7 @@ public class ProductionManagement {
 	}
 		
 	public int overflowQuantity (int quantity, Date date){
-		return wineQuantity - countCapacityInHektoLiter(date);
+		return quantity - (countCapacityInHektoLiter(date) - wineQuantity);
 	}
 	
 	public void deliverWine (int quantity){
