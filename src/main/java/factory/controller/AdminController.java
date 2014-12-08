@@ -40,25 +40,25 @@ class AdminController {
 	}
 
 		
-	 @RequestMapping(value = "/adminloclist", method = RequestMethod.GET)
+	 @RequestMapping(value = "/adminLocList", method = RequestMethod.GET)
 		public String standortUebersicht(ModelMap modelMap){
 	    	
 	    	modelMap.addAttribute("locations", locationRepository.findAll());
 	    	
-			return "adminloclist";
+			return "adminLocList";
 		}
 	
 	 
 	  //Search START
-		@RequestMapping(value = "/adminloclist", method = RequestMethod.POST)
+		@RequestMapping(value = "/adminLocList", method = RequestMethod.POST)
 		public String goToFilteredLocations(@RequestParam("searchTerm") String searchTerm, RedirectAttributes redirectAttrs)
 		{		
 			redirectAttrs.addAttribute("term", searchTerm);
-			return "redirect:/adminloclist/{term}";
+			return "redirect:/adminLocList/{term}";
 		}
 
 		//show result
-		@RequestMapping(value = "/adminloclist/{term}")
+		@RequestMapping(value = "/adminLocList/{term}")
 		public String showFilteredLocations(@PathVariable("term") String searchTerm, ModelMap modelMap, RedirectAttributes redirectAttrs)
 		{		
 			List<Location> resultList = new ArrayList<>();
@@ -74,17 +74,17 @@ class AdminController {
 			
 			modelMap.addAttribute("locations", resultList);
 			
-			return "adminloclist";
+			return "adminLocList";
 		}
 	//Search END
 
 				
-		@RequestMapping(value="/eingabe", method=RequestMethod.GET)
-	    public String Anzeige() {
-	        return "eingabe";
+		@RequestMapping(value="/addLocation", method=RequestMethod.GET)
+	    public String addLocation() {
+	        return "addLocation";
 	    }
 	
-	    @RequestMapping(value="/ausgabe", method=RequestMethod.POST)
+	    @RequestMapping(value="/addedLocation", method=RequestMethod.POST)
 	    public String Standortausgabe(	@RequestParam ("name") String name,
 	    								@RequestParam ("address") String address,
 	    								@RequestParam ("city") String city,
@@ -98,32 +98,18 @@ class AdminController {
 	    	
 	    	locationRepository.save(location);
 	    	
-	    	return "ausgabe";
+	    	return "addedLocation";
 	    }
 	    
-	    //LÖSCHEN EINES STANDORTES (funzt noch nicht :D )
-	    
-//	    @RequestMapping(value="/delete/{id}", method = RequestMethod.POST)
-//		public String deleteLocation(@PathVariable Long id, Model model){
-//			
-//			Location location = locationmanagement.findOne(id);
-//			
-//			locationmanagement.delete(location);
-//			
-//			model.addAttribute("locations", locationmanagement.findAll());
-//			
-//			return "redirect:/adminloclist";
-//		}
-	    
-	    @RequestMapping(value="/editlocation/{id}", method = RequestMethod.GET)
+	    @RequestMapping(value="/editLocation/{id}", method = RequestMethod.GET)
 		public String editLocations(@PathVariable Long id, Model model){
 			
 			model.addAttribute("location" ,locationRepository.findOne(id));
 			
-			return "editlocation";
+			return "editLocation";
 		}
 				
-		@RequestMapping(value="/editlocation", method = RequestMethod.POST)
+		@RequestMapping(value="/editLocation", method = RequestMethod.POST)
 		public String editLocation(	@RequestParam("name") String name,
 									@RequestParam("address") String address,
 									@RequestParam("city") String city,
@@ -154,7 +140,7 @@ class AdminController {
 //			location.setDepartments(dep);
 
 			locationRepository.save(location);
-			return "redirect:/adminloclist";
+			return "redirect:/adminLocList";
 		}
 
 		
@@ -170,15 +156,15 @@ class AdminController {
 		
 		 
 		 
-		@RequestMapping(value="/editemployee/{id}", method = RequestMethod.GET)
+		@RequestMapping(value="/editEmployee/{id}", method = RequestMethod.GET)
 		public String editEmployee(@PathVariable Long id, Model model){
 				
 			model.addAttribute("employee", employeeRepository.findOne(id));
 			
-			return "editemployee";
+			return "editEmployee";
 		} 
 		 
-		@RequestMapping(value="/editemployee", method = RequestMethod.POST)
+		@RequestMapping(value="/editEmployee", method = RequestMethod.POST)
 		public String editEmployee(	@RequestParam("id") Long id,
 									@RequestParam("workplace") String workplace,
 									@RequestParam("name") String name,
@@ -198,17 +184,17 @@ class AdminController {
 			
 			employeeRepository.save(employee);
 			
-			return "redirect:/adminloclist";
+			return "redirect:/adminLocList";
 			}
 		 
 		
 		//Übersicht aller Arbeiter in allen Standorten
 		
-	    @RequestMapping(value = "/employeelist", method = RequestMethod.GET)
+	    @RequestMapping(value = "/employeeList", method = RequestMethod.GET)
 		public String mitarbeiterUebersicht(ModelMap modelMap){
 	    	
 	    	modelMap.addAttribute("employees", employeeRepository.findAll());
 	    	
-			return "employeelist";
+			return "employeeList";
 		}   
 }
