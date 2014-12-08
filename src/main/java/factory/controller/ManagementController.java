@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,25 +13,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import factory.model.Department;
-import factory.model.Employee;
 import factory.model.Location;
-import factory.model.Locationmanagement;
+import factory.model.LocationRepository;
 
 @Controller
 public class ManagementController {
 	
-	private final Locationmanagement locationmanagement;
+	private final LocationRepository locationRepository;
 	
 		@Autowired
-		public ManagementController(Locationmanagement locationmanagement) {
-			this.locationmanagement = locationmanagement;
+		public ManagementController(LocationRepository locationRepository) {
+			this.locationRepository = locationRepository;
 		}
 	    
 	    @RequestMapping(value = "/loclist", method = RequestMethod.GET)
 		public String standortUebersicht(ModelMap modelMap){
 	    	
-	    	modelMap.addAttribute("locations", locationmanagement.findAll());
+	    	modelMap.addAttribute("locations", locationRepository.findAll());
 	    	
 			return "loclist";
 		}
@@ -51,7 +48,7 @@ public class ManagementController {
 		public String showFilteredLocations(@PathVariable("term") String searchTerm, ModelMap modelMap, RedirectAttributes redirectAttrs)
 		{		
 			List<Location> resultList = new ArrayList<>();
-			for(Location location : locationmanagement.findAll())
+			for(Location location : locationRepository.findAll())
 			{
 				if(location.getName().equals(searchTerm)){resultList.add(location);}
 				if(location.getAddress().equals(searchTerm)){resultList.add(location);}

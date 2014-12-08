@@ -46,19 +46,20 @@
 					</form>
 					</td>
 					
-<!-- Buttons bekommen noch eine Funktion					 -->
 					<td>
-					<form method="get" role="form" th:action="@{/editemployee/} + ${loc.id}">
-						<button  type="submit">Mitarbeiter bearbeiten</button>
+					<form method="get" role="form" th:action="@{/employees/} + ${loc.id}">
+						<button  type="submit">Mitarbeiteransicht</button>
 					</form>
 					</td>
+					
+					<!-- Button bekommt noch eine Funktion-->
 <!-- 					<td> -->
 <!-- 					<form method="get" role="form" th:action="@{/edit/} + ${loc.id}"> -->
 <!-- 						<button  type="submit">Abteilungen bearbeiten</button> -->
 <!-- 					</form> -->
 <!-- 					</td> -->
 					
-<!-- 		löschen noch nicht funktionsfähig implementiert -->
+<!--  löschen noch nicht funktionsfähig implementiert.. ist nur kann-kriterium, deswegen als letztes zu beachten -->
 <!-- 					<td> -->
 <!-- 					<form method="post" role="form" th:action="@{/delete/} + ${loc.id}"> -->
 <!-- 						<button  type="submit">Standort löschen</button> -->

@@ -1,15 +1,14 @@
 package factory.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +30,12 @@ public class Location {
 	private List<Department> departments;
 	@OneToOne(cascade = CascadeType.ALL)
 	private ProductionManagement productionManagement;
-	@OneToOne
-	public static Locationmanagement locationmanagement;
-
+	
+	
 	@Deprecated
 	public Location() {
 	}
 
-	@Autowired
-	public Location(Locationmanagement locationmanagement) {
-		Location.locationmanagement = locationmanagement;
-	}
 
 	public Location(String name, String address, String city, String telefon,
 			String mail, List<Employee> employees, List<Department> departments) {
@@ -81,10 +75,6 @@ public class Location {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public void setName(String name) {
@@ -142,48 +132,48 @@ public class Location {
 	}
 
 	// für Liste von Locations mit Productionmanagement
-	public static List<Location> getLocationsListWithProductionManagement() {
-		Iterable<Location> locations = locationmanagement.findAll();
-		List<Location> result = new ArrayList<Location>();
-		for (Location location : locations)
-			if (location.containsProductionmanagement())
-				result.add(location);
-		return result;
-	}
+//	public static List<Location> getLocationsListWithProductionManagement() {
+//		Iterable<Location> locations = locationRepository.findAll();
+//		List<Location> result = new ArrayList<Location>();
+//		for (Location location : locations)
+//			if (location.containsProductionmanagement())
+//				result.add(location);
+//		return result;
+//	}
 	
 
-	public Transport deliverWine(int quantity, Date date){
-	//		throws Exception {
-	//	ProductionManagement dept = location.getWineDepartment();
-	//	if (dept == null)
-	//		throw new Exception();
-		
-		ProductionManagement dept = getProductionManagementDepartment();
-		if (!dept.isOverflow(quantity, date)) {
-			dept.deliverWine(quantity);
-			return null;
-		}
-
-		for (Location loc : Location.getLocationsListWithProductionManagement()) {
-			ProductionManagement locDept = loc.getProductionManagementDepartment();
-			if (!locDept.isOverflow(quantity, date)) {
-				
-				locDept.deliverWine(quantity);
-				Transport transport = new Transport(this, loc, quantity);
-				return transport;
-			}
-		}
-		
-		dept.deliverWine(quantity);
-		return null;
-	}
-
-	public static Location getLocationById(long id) {
-		return locationmanagement.findOne(id);
-	}
-
-	public void Save() {
-		locationmanagement.save(this);
-	}
+//	public Transport deliverWine(int quantity, Date date){
+//	//		throws Exception {
+//	//	ProductionManagement dept = location.getWineDepartment();
+//	//	if (dept == null)
+//	//		throw new Exception();
+//		
+//		ProductionManagement dept = getProductionManagementDepartment();
+//		if (!dept.isOverflow(quantity, date)) {
+//			dept.deliverWine(quantity);
+//			return null;
+//		}
+//
+//		for (Location loc : Location.getLocationsListWithProductionManagement()) {
+//			ProductionManagement locDept = loc.getProductionManagementDepartment();
+//			if (!locDept.isOverflow(quantity, date)) {
+//				
+//				locDept.deliverWine(quantity);
+//				Transport transport = new Transport(this, loc, quantity);
+//				return transport;
+//			}
+//		}
+//		
+//		dept.deliverWine(quantity);
+//		return null;
+//	}
+//
+//	public static Location getLocationById(long id) {
+//		return locationRepository.findOne(id);
+//	}
+//
+//	public void Save() {
+//		locationRepository.save(this);
+//	}
 
 }

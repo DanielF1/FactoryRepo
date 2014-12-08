@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.money.Money;
-import org.neo4j.cypher.internal.compiler.v2_1.docbuilders.logicalPlanDocBuilder;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -25,49 +24,60 @@ import factory.model.Barrel;
 import factory.model.BarrelList;
 import factory.model.CookBook;
 import factory.model.Department;
+import factory.model.DepartmentRepository;
 import factory.model.Employee;
+import factory.model.EmployeeRepository;
 import factory.model.Ingredient;
 import factory.model.Location;
-import factory.model.Locationmanagement;
+import factory.model.LocationRepository;
 import factory.model.Recipe;
 import factory.model.Sortiment;
 
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
 
-	private final Inventory<InventoryItem> inventory;
-	private final Locationmanagement locationmanagement;
+//	private final Inventory<InventoryItem> inventory;
+	private final LocationRepository locationRepository;
+	private final DepartmentRepository departmentRepository;
+	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
-	private final Sortiment sortiment;
+	private final Sortiment sortiment; 							// ist ein Repository für articles
 	private final CookBook cookbook;
 	private final BarrelList barrelList;
 //	private final BarrelStock_Inter barrelstock_inter;
 
 	@Autowired
-	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
+	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, 
+										LocationRepository locationRepository, 
+										DepartmentRepository departmentRepository,
+										EmployeeRepository employeeRepository,
+										Sortiment sortiment, 
+										CookBook cookbook, 
+										Inventory<InventoryItem> inventory,
+										BarrelList barrelList) {
 
-			Sortiment sortiment, CookBook cookbook, Inventory<InventoryItem> inventory,BarrelList barrelList) {
-
-		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
-		Location.locationmanagement = locationmanagement;
-
+		Assert.notNull(locationRepository, "LocationRepository must not be null!");
+		Assert.notNull(departmentRepository, "DepartmentRepository must not be null!");
+		Assert.notNull(employeeRepository, "EmployeeRepository must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbook, "CookBook must not be null!");
 		Assert.notNull(inventory, "Inventory must not be null!");
-		Assert.notNull(barrelList, "Inventory must not be null!");
+		Assert.notNull(barrelList, "Barrellist must not be null!");
 		
 		this.userAccountManager = userAccountManager;
-		this.locationmanagement = locationmanagement;	
+		this.locationRepository = locationRepository;	
+		this.departmentRepository = departmentRepository;
+		this.employeeRepository = employeeRepository;
 		this.sortiment = sortiment;
 		this.cookbook = cookbook;
-		this.inventory = inventory;
+//		this.inventory = inventory;
 		this.barrelList = barrelList;
 	
 	}
 
 	@Override
 	public void initialize() {
-		initializeLocList(locationmanagement);
+		initializeLocList(locationRepository, departmentRepository, employeeRepository);
 		initializeUsers(userAccountManager);
 		initializeSortiment();
 		initializeCookBook(cookbook);
@@ -76,100 +86,70 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	}
 	
 
-	private void initializeLocList(Locationmanagement locationmanagement) {
+	private void initializeLocList(LocationRepository locationRepository, DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
 
-		Department d1 = new Department("Flaschenlager");
-		Department d2 = new Department("Fasslager");
-		Department d3 = new Department("Weinlager");
-		Department d4 = new Department("Produktion");
-		Department d5 = new Department("Verkauf");
-		Department d6 = new Department("Verwaltung");
-		Department d7 = new Department("");
+		Department d1 = departmentRepository.save(new Department("Flaschenlager"));
+		Department d2 = departmentRepository.save(new Department("Fasslager"));
+		Department d3 = departmentRepository.save(new Department("Weinlager"));
+		Department d4 = departmentRepository.save(new Department("Produktion"));
+		Department d5 = departmentRepository.save(new Department("Verkauf"));
+		Department d6 = departmentRepository.save(new Department("Verwaltung"));
 		
-		List<Department> list1 = new ArrayList<Department>();
-		list1.add(d1);
-		list1.add(d4);
+		List<Department> list5 = new ArrayList<Department>();
+		list5.add(d1);
+		list5.add(d4);
+		list5.add(d5);
 		
-		list1.add(d7);
-		list1.add(d7);
-		list1.add(d7);
-		list1.add(d7);
-		
-		List<Department> list2 = new ArrayList<Department>();
-		list2.add(d2);
-		list2.add(d4);
-		list2.add(d5);
-		
-		list2.add(d7);
-		list2.add(d7);
-		list2.add(d7);
-
-		
-		List<Department> list3 = new ArrayList<Department>();
-		list3.add(d6);
-		
-		list3.add(d7);
-		list3.add(d7);
-		list3.add(d7);
-		list3.add(d7);
-		list3.add(d7);
-		
-		List<Department> list4 = new ArrayList<Department>();
-		list4.add(d1);
-		list4.add(d2);
-		list4.add(d3);
-		
-		list4.add(d7);
-		list4.add(d7);
-		list4.add(d7);
-		
-		Employee e1 = new Employee("Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse");
-		Employee e2 = new Employee("Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse");
-		Employee e3 = new Employee("Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse");
-		Employee e4 = new Employee("Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet");
-		Employee e5 = new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse");
-		Employee e6 = new Employee("","","","","","");
-		
-		
-		List<Employee> list5 = new ArrayList<Employee>();
-		list5.add(e1);
-		list5.add(e3);
-		list5.add(e4);	
-		list5.add(e6);
-		list5.add(e6);
+		List<Department> list6 = new ArrayList<Department>();
+		list6.add(d2);
+		list6.add(d3);
 	
-
-		List<Employee> list6 = new ArrayList<Employee>();
-		list6.add(e1);
-		list6.add(e3);
-		list6.add(e4);
-		list6.add(e2);
-		list6.add(e6);
-
+		List<Department> list7 = new ArrayList<Department>();
+		list7.add(d6);
 		
-		List<Employee> list7 = new ArrayList<Employee>();
-		list7.add(e5);
-		list7.add(e6);
-		list7.add(e6);
-		list7.add(e6);
-		list7.add(e6);
-
+		List<Department> list8 = new ArrayList<Department>();
+		list8.add(d1);
+		list8.add(d4);
+		list8.add(d5);
+		list8.add(d2);
 		
-		List<Employee> list8 = new ArrayList<Employee>();
-		list8.add(e1);
-		list8.add(e2);
-		list8.add(e3);
-		list8.add(e6);
-		list8.add(e6);
+		
+		
+		Employee e1 = employeeRepository.save(new Employee("Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse"));
+		Employee e2 = employeeRepository.save(new Employee("Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse"));
+		Employee e3 = employeeRepository.save(new Employee("Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse"));
+		Employee e4 = employeeRepository.save(new Employee("Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet"));
+		Employee e5 = employeeRepository.save(new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse"));
+		
+		
+		List<Employee> list1 = new ArrayList<Employee>();
+		list1.add(e1);
+		list1.add(e4);
+		list1.add(e3);
+		
+		List<Employee> list2 = new ArrayList<Employee>();
+		list2.add(e2);
+		list2.add(e3);
+		list2.add(e4);
+		
+		List<Employee> list3 = new ArrayList<Employee>();
+		list3.add(e5);
+		
+		
+		List<Employee> list4 = new ArrayList<Employee>();
+		list4.add(e1);
+		list4.add(e3);
+		
+		
 	
-		if (locationmanagement.findAll().iterator().hasNext()) {
+		if (locationRepository.findAll().iterator().hasNext()) {
 			return;
 		}
 
-		locationmanagement.save(new Location("Standort 1","Klausstrasse 1", "0999 Klaushausen", "81906666", "klaus@klaus.de", list5, list1));
-		locationmanagement.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", list6, list2));
-		locationmanagement.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", list7, list3));
-		locationmanagement.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", list8, list4));
+		locationRepository.save(new Location("Standort 1","Klausstrasse 1", "0999 Klaushausen", "81906666", "klaus@klaus.de", list1, list5));
+		locationRepository.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", list2, list6));
+		locationRepository.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", list3, list7));
+		locationRepository.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", list4, list8));
 		
 	}
 	
@@ -218,11 +198,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
 		
 
-		for (Article article : sortiment.findAll()) {
-			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
-			inventory.save(inventoryItem);
-				}
-		
+//		for (Article article : sortiment.findAll()) {
+//			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
+//			inventory.save(inventoryItem);
+//				}
+//		
 	}
 
 	private void initializeCookBook(CookBook cookbook) 

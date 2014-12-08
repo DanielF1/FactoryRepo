@@ -16,37 +16,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.Department;
 import factory.model.Employee;
+import factory.model.EmployeeRepository;
 import factory.model.Location;
-import factory.model.Locationmanagement;
-import factory.model.NormalUserRepository;
+import factory.model.LocationRepository;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 class AdminController {
 
-	private final Locationmanagement locationmanagement;
-	private final NormalUserRepository customerRepository;
-
+	private final LocationRepository locationRepository;
+	private final EmployeeRepository employeeRepository;
 	
 	@Autowired
-	public AdminController(Locationmanagement locationmanagement, NormalUserRepository customerRepository) {
+	public AdminController(LocationRepository locationRepository, EmployeeRepository employeeRepository) {
 
-		this.locationmanagement = locationmanagement;
-		this.customerRepository = customerRepository;
+		this.locationRepository = locationRepository;
+		this.employeeRepository = employeeRepository;
 	}
 
-	@RequestMapping("/customers")
-	public String customers(ModelMap modelMap) {
-
-		modelMap.addAttribute("customerList", customerRepository.findAll());
-
-		return "customers";	
-	}
-	
+		
 	 @RequestMapping(value = "/adminloclist", method = RequestMethod.GET)
 		public String standortUebersicht(ModelMap modelMap){
 	    	
-	    	modelMap.addAttribute("locations", locationmanagement.findAll());
+	    	modelMap.addAttribute("locations", locationRepository.findAll());
 	    	
 			return "adminloclist";
 		}
@@ -65,7 +57,7 @@ class AdminController {
 		public String showFilteredLocations(@PathVariable("term") String searchTerm, ModelMap modelMap, RedirectAttributes redirectAttrs)
 		{		
 			List<Location> resultList = new ArrayList<>();
-			for(Location location : locationmanagement.findAll())
+			for(Location location : locationRepository.findAll())
 			{
 				if(location.getName().equals(searchTerm)){resultList.add(location);}
 				if(location.getAddress().equals(searchTerm)){resultList.add(location);}
@@ -92,21 +84,14 @@ class AdminController {
 	    								@RequestParam ("address") String address,
 	    								@RequestParam ("city") String city,
 	    								@RequestParam ("telefon") String telefon,
-	    								@RequestParam ("mail") String mail/*,
-	    								@RequestParam ("employees") List<Employee> employees,
-	    								@RequestParam ("departments") List<Department> departments*/) {
+	    								@RequestParam ("mail") String mail) {
 	    	
-	    	List<Employee> employees = new ArrayList<Employee>();
-	    	Employee employee = new Employee("","","","","","");
-	    	employees.add(employee);
+	    	List<Employee> emp = new ArrayList<Employee>();
+	    	List<Department> dep = new ArrayList<Department>();
+	    
+	    	Location location = new Location(name, address, city, telefon, mail, emp, dep);
 	    	
-	    	List<Department> departments = new ArrayList<Department>();
-	    	Department department = new Department("");
-	    	departments.add(department);
-	    	
-	    	Location location = new Location(name, address, city, telefon, mail, employees, departments);
-	    	
-	    	locationmanagement.save(location);
+	    	locationRepository.save(location);
 	    	
 	    	return "ausgabe";
 	    }
@@ -128,18 +113,25 @@ class AdminController {
 	    @RequestMapping(value="/editlocation/{id}", method = RequestMethod.GET)
 		public String editLocations(@PathVariable Long id, Model model){
 			
-			model.addAttribute("location" ,locationmanagement.findOne(id));
+			model.addAttribute("location" ,locationRepository.findOne(id));
+			
 			return "editlocation";
 		}
 				
 		@RequestMapping(value="/editlocation", method = RequestMethod.POST)
-		public String editLocation(	@RequestParam("telefon")String telefon,
+		public String editLocation(	@RequestParam("name") String name,
+									@RequestParam("address") String address,
+									@RequestParam("city") String city,
+									@RequestParam("telefon")String telefon,
 									@RequestParam("mail") String mail,
 									//@RequestParam("employees") String[] employees,
 									//@RequestParam("departments") String[] departments, 
 									@RequestParam("id") Long id){
 			
-			Location location = locationmanagement.findOne(id);
+			Location location = locationRepository.findOne(id);
+			location.setName(name);
+			location.setAddress(address);
+			location.setCity(city);
 			location.setTelefon(telefon);
 			location.setMail(mail);
 			
@@ -156,31 +148,61 @@ class AdminController {
 //			}
 //			location.setDepartments(dep);
 
-			locationmanagement.save(location);
+			locationRepository.save(location);
 			return "redirect:/adminloclist";
 		}
 
 		
-		//Controller für Mitarbeiterbearbeitung.. kommt noch
+		//Mitarbeiterbearbeitung von 1 Standort
 		
-		 @RequestMapping(value="/editemployee/{id}", method = RequestMethod.GET)
-		 public String editEmployee(@PathVariable Long id, Model model){	
+		 @RequestMapping(value="/employees/{id}", method = RequestMethod.GET)
+		 public String editEmployees(@PathVariable Long id, Model model){	
 			
-			
-			model.addAttribute("location" ,locationmanagement.findOne(id)); 
+			model.addAttribute("location", locationRepository.findOne(id));
 			 
-			//Location location = locationmanagement.findOne(id);
-			//model.addAttribute("employees", location.getEmployees());
-			 
-			return "editemployee";
+			return "employees";
 			}
 		
+		 
+		 
+		@RequestMapping(value="/editemployee/{id}", method = RequestMethod.GET)
+		public String editEmployee(@PathVariable Long id, Model model){
+				
+			model.addAttribute("employee", employeeRepository.findOne(id));
+			
+			return "editemployee";
+		} 
+		 
+		@RequestMapping(value="/editemployee", method = RequestMethod.POST)
+		public String editEmployee(	@RequestParam("id") Long id,
+									@RequestParam("workplace") String workplace,
+									@RequestParam("name") String name,
+									@RequestParam("firstname") String firstname,
+									@RequestParam("salary") String salary,
+									@RequestParam("mail") String mail,
+									@RequestParam("address") String address
+									){
+			
+			Employee employee = employeeRepository.findOne(id);
+			employee.setWorkplace(workplace);
+			employee.setName(name);
+			employee.setFirstname(firstname);
+			employee.setSalary(salary);
+			employee.setMail(mail);
+			employee.setAddress(address);
+			
+			employeeRepository.save(employee);
+			
+			return "redirect:/adminloclist";
+			}
+		 
 		
-		//alle Arbeiter in allen Standorten in der Übersicht
+		//Übersicht aller Arbeiter in allen Standorten
+		
 	    @RequestMapping(value = "/employeelist", method = RequestMethod.GET)
 		public String mitarbeiterUebersicht(ModelMap modelMap){
 	    	
-	    	modelMap.addAttribute("locations", locationmanagement.findAll());
+	    	modelMap.addAttribute("employees", employeeRepository.findAll());
 	    	
 			return "employeelist";
 		}   

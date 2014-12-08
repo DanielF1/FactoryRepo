@@ -6,25 +6,20 @@
 
 	<body>
 
-		
-					<h2>Mitarbeiter in diesem Standort</h2>
-				
-					<div th:each="emp : ${location.employees}">
-	 					<table><thead th:text="${emp.workplace}"></thead>
-	 					<tr><td><input type="text" name="name" th:value="${emp.name}"/></td></tr>
-	 					<tr><td><input type="text" name="firstname" th:value="${emp.firstname}"/></td></tr>
-	 					<tr><td><input type="text" name="salary" th:value="${emp.salary}"/></td></tr>
-	 					<tr><td><input type="text" name="mail" th:value="${emp.mail}"/></td></tr>
-	 					<tr><td><input type="text" name="address" th:value="${emp.address}"/></td></tr>
-	 					
-
-<!-- Button Speichern der Daten eines Mitarbeiters.. kommt noch ;)  -->
-<!-- 						<td> -->
-<!-- 						<form method="get" role="form" th:action="@{/editemployee/} + ${emp.id}"> -->
-<!-- 							<button  type="submit">Änderungen speichern</button> -->
-<!-- 						</form> -->
-<!-- 						</td> -->
-						</table>
-					</div>	
-    </body>
+		<form method="post" th:action="@{/editemployee}">
+            <table>
+                <tr><td>Arbeitsplatz: </td><td><input type="text" name="workplace" th:value="${employee.workplace}"/></td></tr>
+                <tr><td>Name: </td><td><input type="text" name="name" th:value="${employee.name}"/></td></tr>
+                <tr><td>Vorname: </td><td><input type="text" name="firstname" th:value="${employee.firstname}"/></td></tr>
+                <tr><td>Gehalt: </td><td><input type="text" name="salary" th:value="${employee.salary}"/></td></tr>
+                <tr><td>E-Mail: </td><td><input type="text" name="mail" th:value="${employee.mail}"/></td></tr>
+                <tr><td>Anschrift: </td><td><input type="text" name="address" th:value="${employee.address}"/></td></tr>
+            	
+            	<tr><td><input name="id" type="hidden" th:value="${employee.id}"/></td></tr>
+                <tr><td><button type="submit">Speichern!</button></td></tr>
+                
+           	</table>
+           	
+        </form>
+	</body>
 </html>

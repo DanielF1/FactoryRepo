@@ -68,5 +68,8 @@ public class Employee {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
 }

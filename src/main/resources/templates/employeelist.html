@@ -5,26 +5,14 @@
 	</head>
 
 	<body>
-		<div th:each="loc : ${locations} ">
-		<p th:text="${loc.name}"></p>
-		<table>			
-			<thead>
-				<tr>
-					<th>Beschäftigung</th>
-					<th>Nachname</th>
-					<th>Vorname</th>
-					<th>Gehalt</th>
-					<th>E-Mail</th>
-					<th>Adresse</th>
-				</tr>
-			</thead>
-					<tr th:each="employee : ${loc.employees}">
-	 					<td th:text="${employee.workplace}"></td>
-						<td th:text="${employee.name}"></td>
-						<td th:text="${employee.firstname}"></td>
-						<td th:text="${employee.salary}"></td>
-						<td th:text="${employee.mail}"></td>
-						<td th:text="${employee.address}"></td>			
+		<div th:each="employee : ${employees} ">
+		<table>		
+	 		<tr><td>Beschäftigung</td><td th:text="${employee.workplace}"></td></tr>
+			<tr><td>Nachname</td><td th:text="${employee.name}"></td></tr>
+			<tr><td>Vorname</td><td th:text="${employee.firstname}"></td></tr>
+			<tr><td>Gehalt</td><td th:text="${employee.salary}"></td></tr>
+			<tr><td>E-Mail</td><td th:text="${employee.mail}"></td></tr>
+			<tr><td>Adresse</td><td th:text="${employee.address}"></td></tr>			
 
 <!-- Nur zum Testen eingebaut -->
 <!-- 						<td> -->
@@ -32,7 +20,6 @@
 <!-- 							<button  type="submit">Bearbeiten</button> -->
 <!-- 						</form> -->
 <!-- 						</td> -->
-					</tr>
 		</table>
 		<p>__</p>
 		</div>
