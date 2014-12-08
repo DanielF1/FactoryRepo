@@ -5,27 +5,25 @@
 	</head>
 
 	<body>
-
-		
-					<h2>Mitarbeiter in diesem Standort</h2>
-				
-					<div th:each="emp : ${location.employees}">
-	 					<table border="5">
-	 					<tr><td th:text="${emp.workplace}"></td></tr>
-	 					<tr><td th:text="${emp.name}"></td></tr>
-	 					<tr><td th:text="${emp.firstname}"></td></tr>
-	 					<tr><td th:text="${emp.salary}"></td></tr>
-	 					<tr><td th:text="${emp.mail}"></td></tr>
-	 					<tr><td th:text="${emp.address}"></td></tr>
-	 					
-
-	<!-- Button Speichern der Daten eines Mitarbeiters  -->
-						<tr><td>
+		<h2>Mitarbeiter in diesem Standort</h2>	
+			<div th:each="emp : ${location.employees}">
+				<table border="5">
+					<tr><td th:text="${emp.workplace}"></td></tr>
+ 					<tr><td th:text="${emp.name}"></td></tr>
+ 					<tr><td th:text="${emp.firstname}"></td></tr>
+ 					<tr><td th:text="${emp.salary}"></td></tr>
+ 					<tr><td th:text="${emp.mail}"></td></tr>
+ 					<tr><td th:text="${emp.address}"></td></tr> 					
+					<tr><td>
 						<form method="get" role="form" th:action="@{/editEmployee/} + ${emp.id}">
 							<button  type="submit">Bearbeiten</button>
 						</form>
-						</td></tr>
-						</table>
-					</div>	
-    </body>
+					</td></tr>
+				</table>
+			</div>
+			
+			<form method="get" role="form" th:action="@{/addEmployee/} + ${location.id}">
+				<button type="submit">Mitarbeiter hinzufügen</button>
+			</form>
+	</body>
 </html>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.Department;
+import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.EmployeeRepository;
 import factory.model.Location;
@@ -28,13 +29,15 @@ class AdminController {
 
 	private final LocationRepository locationRepository;
 	private final EmployeeRepository employeeRepository;
+	private final DepartmentRepository departmentRepository;
 	private final CustomerRespository customerRepository;
 	
 	@Autowired
-	public AdminController(LocationRepository locationRepository, EmployeeRepository employeeRepository, CustomerRespository customerRepository) {
+	public AdminController(LocationRepository locationRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, CustomerRespository customerRepository) {
 
 		this.locationRepository = locationRepository;
 		this.employeeRepository = employeeRepository;
+		this.departmentRepository = departmentRepository;
 		this.customerRepository = customerRepository;
 		
 	}
@@ -154,8 +157,6 @@ class AdminController {
 			return "employees";
 			}
 		
-		 
-		 
 		@RequestMapping(value="/editEmployee/{id}", method = RequestMethod.GET)
 		public String editEmployee(@PathVariable Long id, Model model){
 				
@@ -187,7 +188,43 @@ class AdminController {
 			return "redirect:/adminLocList";
 			}
 		 
+		@RequestMapping(value="/addEmployee/{id}", method=RequestMethod.GET)
+	    public String addEmployee(@PathVariable Long id, Model model) {
+			model.addAttribute("id", id);
+	        return "addEmployee";
+	    }
 		
+		@RequestMapping(value="/addedEmployee", method=RequestMethod.POST)
+	    public String addedEmployee(	@RequestParam ("id") Long id,
+	    								@RequestParam ("workplace") String workplace,
+	    								@RequestParam ("name") String name,
+	    								@RequestParam ("firstname") String firstname,
+	    								@RequestParam ("salary") String salary,
+	    								@RequestParam ("mail") String mail,
+	    								@RequestParam ("address") String address) {
+	    	
+	    	Employee employee = new Employee(workplace, name, firstname, salary, mail, address);
+	    	employeeRepository.save(employee);
+	    	Location location = locationRepository.findOne(id);
+	    	location.getEmployees().add(employee);
+	    	locationRepository.save(location);
+	    	
+	    	
+	    	return "redirect:/adminLocList";
+	    }
+		
+		 @RequestMapping(value="/editDepartments/{id}", method = RequestMethod.GET)
+		 public String editDepartments(@PathVariable Long id, Model model){	
+			
+			model.addAttribute("location", locationRepository.findOne(id));
+			 
+			return "editDepartments";
+			}
+		 
+		 
+		 
+		 
+		 
 		//Übersicht aller Arbeiter in allen Standorten
 		
 	    @RequestMapping(value = "/employeeList", method = RequestMethod.GET)
@@ -196,5 +233,7 @@ class AdminController {
 	    	modelMap.addAttribute("employees", employeeRepository.findAll());
 	    	
 			return "employeeList";
-		}   
+		}
+	    
+	   
 }
