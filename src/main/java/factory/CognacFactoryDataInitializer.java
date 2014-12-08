@@ -30,7 +30,7 @@ import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.Locationmanagement;
 import factory.model.Recipe;
-import factory.model.Sortiment;
+import factory.model.ArticleRepository;
 
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
@@ -38,7 +38,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final Inventory<InventoryItem> inventory;
 	private final Locationmanagement locationmanagement;
 	private final UserAccountManager userAccountManager;
-	private final Sortiment sortiment;
+	private final ArticleRepository articleRepository;
 	private final CookBook cookbook;
 	private final BarrelList barrelList;
 //	private final BarrelStock_Inter barrelstock_inter;
@@ -46,7 +46,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, Locationmanagement locationmanagement, 
 
-			Sortiment sortiment, CookBook cookbook, Inventory<InventoryItem> inventory,BarrelList barrelList) {
+			ArticleRepository articleRepository, CookBook cookbook, Inventory<InventoryItem> inventory,BarrelList barrelList) {
 
 		Assert.notNull(locationmanagement, "LocationManagement must not be null!");
 		Location.locationmanagement = locationmanagement;
@@ -58,7 +58,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		this.userAccountManager = userAccountManager;
 		this.locationmanagement = locationmanagement;	
-		this.sortiment = sortiment;
+		this.articleRepository = articleRepository;
 		this.cookbook = cookbook;
 		this.inventory = inventory;
 		this.barrelList = barrelList;
@@ -208,17 +208,17 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		// Die Bilder sind von der Internetseite: http://www.spirituosentheke.de 
 		
-		sortiment.save(new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac"));
-		sortiment.save(new Article("chatelier", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac"));
-		sortiment.save(new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac"));
-		sortiment.save(new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %","0,7 Liter","Cognac"));
-		sortiment.save(new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac"));
+		articleRepository.save(new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac"));
+		articleRepository.save(new Article("chatelier", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac"));
+		articleRepository.save(new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac"));
+		articleRepository.save(new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %","0,7 Liter","Cognac"));
+		articleRepository.save(new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac"));
 
 		
 		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
 		
 
-		for (Article article : sortiment.findAll()) {
+		for (Article article : articleRepository.findAll()) {
 			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
 			inventory.save(inventoryItem);
 				}

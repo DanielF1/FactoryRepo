@@ -18,18 +18,18 @@ import factory.model.Department;
 import factory.model.Employee;
 import factory.model.Location;
 import factory.model.Locationmanagement;
-import factory.model.NormalUserRepository;
+import factory.model.CustomerRespository;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 class AdminController {
 
 	private final Locationmanagement locationmanagement;
-	private final NormalUserRepository customerRepository;
+	private final CustomerRespository customerRepository;
 
 	
 	@Autowired
-	public AdminController(Locationmanagement locationmanagement, NormalUserRepository customerRepository) {
+	public AdminController(Locationmanagement locationmanagement, CustomerRespository customerRepository) {
 
 		this.locationmanagement = locationmanagement;
 		this.customerRepository = customerRepository;
