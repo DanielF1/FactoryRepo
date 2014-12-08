@@ -41,7 +41,7 @@
 					</ul>
 					</td>
 					<td>
-					<form method="get" role="form" th:action="@{/editlocation/} + ${loc.id}">
+					<form method="get" role="form" th:action="@{/editLocation/} + ${loc.id}">
 						<button  type="submit">Standort bearbeiten</button>
 					</form>
 					</td>
@@ -58,20 +58,11 @@
 <!-- 						<button  type="submit">Abteilungen bearbeiten</button> -->
 <!-- 					</form> -->
 <!-- 					</td> -->
-					
-<!--  löschen noch nicht funktionsfähig implementiert.. ist nur kann-kriterium, deswegen als letztes zu beachten -->
-<!-- 					<td> -->
-<!-- 					<form method="post" role="form" th:action="@{/delete/} + ${loc.id}"> -->
-<!-- 						<button  type="submit">Standort löschen</button> -->
-<!-- 					</form> -->
-<!-- 					</td> -->
-				
-				
 				</tr>
 		</table>
 
 		<div class="search-group">
-			<form method="post" role="form" th:action="@{/adminloclist}">
+			<form method="post" role="form" th:action="@{/adminLocList}">
 				<input name="searchTerm" type="text" placeholder="Search"/>
 				<input type="hidden" value="Senden" />
 			</form>
