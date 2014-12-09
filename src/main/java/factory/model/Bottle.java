@@ -8,21 +8,12 @@ import javax.persistence.Id;
 public class Bottle {
 	private @Id @GeneratedValue Long id;
 	private double amount;
-	private int quantity;
-	private BottleType type;
-	
-	public static enum BottleType 
-	{
-		EMPTY, FULL;
-	}
 	
 	/*
 	 * Konstruktor
 	 */
-	public Bottle(double amount, BottleType type){
+	public Bottle(double amount){
 		this.amount = amount;
-//		this.quantity = quantity;
-		this.type = type;
 	}
 	
 	Bottle(){}
@@ -30,16 +21,6 @@ public class Bottle {
 	/*
 	 * Getter & Setter
 	 */
-	
-	public BottleType getType() 
-	{
-		return type;
-	}
-
-	public void setType(BottleType type) 
-	{
-		this.type = type;
-	}
 	
 	public Long getId() 
 	{
@@ -59,13 +40,5 @@ public class Bottle {
 	public void setAmount(double amount) 
 	{
 		this.amount = amount;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 }

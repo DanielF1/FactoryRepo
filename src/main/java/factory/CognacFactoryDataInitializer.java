@@ -22,7 +22,10 @@ import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;
 import factory.model.BarrelList;
-import factory.model.CookBook;
+import factory.model.Bottle;
+import factory.model.BottleStock;
+import factory.model.BottleStockList;
+import factory.model.CookBookRepository;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
@@ -42,8 +45,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final ArticleRepository articleRepository;
 
-	private final CookBook cookbook;
+	private final CookBookRepository cookbookrepository;
 	private final BarrelList barrelList;
+	private final BottleStockList bottlestocklist;
 //	private final BarrelStock_Inter barrelstock_inter;
 
 	@Autowired
@@ -52,18 +56,20 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										DepartmentRepository departmentRepository,
 										EmployeeRepository employeeRepository,
 										ArticleRepository articleRepository,
-										CookBook cookbook, 
+										CookBookRepository cookbookrepository, 
 										Inventory<InventoryItem> inventory,
-										BarrelList barrelList) {
+										BarrelList barrelList,
+										BottleStockList bottlestocklist) {
 
 		
 		Assert.notNull(locationRepository, "LocationRepository must not be null!");
 		Assert.notNull(departmentRepository, "DepartmentRepository must not be null!");
 		Assert.notNull(employeeRepository, "EmployeeRepository must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
-		Assert.notNull(cookbook, "CookBook must not be null!");
+		Assert.notNull(cookbookrepository, "CookBook must not be null!");
 		Assert.notNull(inventory, "Inventory must not be null!");
 		Assert.notNull(barrelList, "Barrellist must not be null!");
+		Assert.notNull(bottlestocklist, "Bottle Stock must not be null!");
 		
 		this.userAccountManager = userAccountManager;
 
@@ -71,10 +77,10 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.departmentRepository = departmentRepository;
 		this.employeeRepository = employeeRepository;
 		this.articleRepository = articleRepository;
-
-		this.cookbook = cookbook;
+		this.cookbookrepository = cookbookrepository;
 //		this.inventory = inventory;
 		this.barrelList = barrelList;
+		this.bottlestocklist = bottlestocklist;
 	
 	}
 
@@ -83,9 +89,10 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		initializeLocList(locationRepository, departmentRepository, employeeRepository);
 		initializeUsers(userAccountManager);
 		initializeSortiment();
-		initializeCookBook(cookbook);
+		initializeCookBook(cookbookrepository);
 //		initializeStock2(stock2);
 		initializeBarrelList(barrelList);
+		initializeBottlestock(bottlestocklist);
 	}
 	
 
@@ -210,7 +217,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 
 	}
 
-	private void initializeCookBook(CookBook cookbook) 
+	private void initializeCookBook(CookBookRepository cookbookrepository) 
 	{
 		
 		Ingredient i1 = new Ingredient("Destillat A", 2000, "Liter");
@@ -223,7 +230,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		mapIngredients1.add(i2);
 		mapIngredients1.add(i3);
 		
-		cookbook.save(new Recipe("Cognac A", mapIngredients1));
+		cookbookrepository.save(new Recipe("Cognac A", mapIngredients1));
 		
 		Ingredient i4 = new Ingredient("Destillat B", 140, "Liter");
 		Ingredient i5 = new Ingredient("Destillat T", 20, "Liter");
@@ -235,7 +242,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		mapIngredients2.add(i5);
 		mapIngredients2.add(i6);
 		
-		cookbook.save(new Recipe("Cognac B", mapIngredients2));
+		cookbookrepository.save(new Recipe("Cognac B", mapIngredients2));
 		
 		Ingredient i7 = new Ingredient("Destillat A", 140, "Liter");
 		Ingredient i8 = new Ingredient("Destillat C", 20, "Liter");
@@ -247,23 +254,29 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		mapIngredients3.add(i8);
 		mapIngredients3.add(i9);
 		
-		cookbook.save(new Recipe("Cognac C", mapIngredients3));		
+		cookbookrepository.save(new Recipe("Cognac C", mapIngredients3));		
 	}
 	
 
-//	public void initializeBarrelStock() 
-//	{
-//		List<Barrel> barrelMap = new ArrayList<Barrel>();
-//		
-//		barrelMap.add(new Barrel("Destillat A", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03")));
-//		barrelMap.add(new Barrel("Destillat B", 20 ,LocalDate.parse("2008-11-04"),LocalDate.parse("2009-12-03"), LocalDate.parse("2008-12-04")));
-//		barrelMap.add(new Barrel("Destillat C", 20 ,LocalDate.parse("2010-12-03"),LocalDate.parse("2012-12-31"), LocalDate.parse("2011-12-11")));
-//		barrelMap.add(new Barrel("Destillat D", 20 ,LocalDate.parse("2011-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2011-12-03")));
-//		barrelMap.add(new Barrel("Destillat E", 20 ,LocalDate.parse("2011-12-23"),LocalDate.parse("2017-01-03"), LocalDate.parse("2011-12-30")));
-//		
-//		barrelstock_inter.save(new BarrelStock(barrelMap));
-//	
-//	}
+	void initializeBottlestock(BottleStockList bottlestocklist) 
+	{
+
+		Bottle b1 = new Bottle(0.7);
+		Bottle b2 = new Bottle(0.7);
+		Bottle b3 = new Bottle(0.3);
+		
+		List<Bottle> empty = new ArrayList<Bottle>();
+		List<Bottle> full = new ArrayList<Bottle>();
+		
+		empty.add(b1);
+		empty.add(b3);
+		full.add(b2);
+		
+//		stock2.save(new BottleStock("Lager A", 100, empty, 20, full));
+		bottlestocklist.save(new BottleStock("Bottle Stock A", empty, full));
+	}
+	
+	
 	private void initializeBarrelList(BarrelList barrelList) {
 
 		if (barrelList.findAll().iterator().hasNext()) {
@@ -281,10 +294,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrelList.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03")));
 		barrelList.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03")));
 
-		//	barrelList.save(new Barrel(2L,LocalDate.parse("2007-12-03"), BarrelContentType.Wein, 20,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03") ));
-//		barrelList.save(new Barrel(3L,LocalDate.parse("2007-12-03"), BarrelContentType.Wein, 20,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03") ));
-		//barrelList.save(new Barrel(4L,sdf.parse("04.04.2013"), "Wein", 20,sdf.parse("04.04.2013"), sdf.parse("01.01.2014") ));
-		
 		System.out.println("0000000000000000000000000000000000000000000000000000000000000000000000000000");
 		
 	}

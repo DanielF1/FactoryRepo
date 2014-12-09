@@ -174,26 +174,25 @@
 					</form>
 				</div>
 			    <!-- /recipe details -->
+			    
 			</td>
 			
 		</tr>
 		<tr>	
 			<td>
+			
 				<!-- Fasslager -->
 				<h1>Fasslager</h1>
-					<div class="pull-left" th:each="barrelstock : ${stocks}">
-						<ul>
-							<li th:text="${barrelstock.name}">text</li>
-							<ul th:each="barrel : ${barrelstock.barrels}">
-								<li>
-									<span>Inhalt:</span> <span th:text="${barrel.content}"></span> 
-									<span>Volumen:</span> <span th:text="${barrel.amount}"></span> 									
-									<span>Zustand:</span> <span th:text="${barrel.type}"></span> 
-								</li>
-							</ul>
+					<div class="pull-left">
+						<ul th:each="maxstore : ${barrelstock_store}">
+							<li>
+								<span>Inhalt:</span> <span th:text="${maxstore.content}"></span> 
+								<span>Menge:</span> <span th:text="${maxstore.amount}"></span> 									
+							</li>
 						</ul>
 					</div>
 				<!-- /Fasslager -->
+				
 			</td>
 			<td>
 				<h1>Hochzeit</h1>
@@ -231,36 +230,35 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
+		<tr  th:each="bottlestocks : ${bottlestock}">
+		
+			<!-- Flaschenlager -->
 			<td>
-				<!-- Flaschenlager -->
-				<h1>Flaschenlager</h1>
+				<h1>Flaschenlager - Leere Flaschen</h1>
 				
-					<div class="pull-left" th:each="bottlestock : ${bottleStocks}">
-						<ul>
-							<li th:text="${bottlestock.name}">text</li>
-							
-							<li><ul>
-								<li><span>Anzahl leerer Flaschen:</span> <span th:text="${bottlestock.quantity_empty}"></span></li>
-								<li th:each="empty, it : ${bottlestock.emptybottles}">
-									<span>Volumen:</span> <span th:text="${amount}"></span> <br/>			
-									<span>Zustand:</span> <span th:text="${type}"></span> 
-								</li>
-							</ul></li>
-							<li><ul>
-								<li><span>Anzahl voller Flaschen:</span> <span th:text="${bottlestock.quantity_full}"></span></li>
-								<li th:each="full : ${fullbottles}">
-									<span>Volumen:</span> <span th:text="${amount}"></span> <br/>			
-									<span>Zustand:</span> <span th:text="${type}"></span> 
-								</li>
-							</ul></li>
-						</ul>
-					</div>
-				<!-- /Flaschenlager -->
+				<div class="pull-left">
+					<ul>
+						<li><span>Anzahl leerer Flaschen:</span> <span th:text="${bottlestocks.quantity_empty}"></span></li>
+						<ul th:each="bottle : ${bottlestocks.emptybottles}">
+							<li><span>Volumen:</span> <span th:text="${bottle.amount}"></span></li>	
+						</ul>		
+					</ul>
+				</div>	
 			</td>
 			<td>
-				<h3>Leer :)</h3>
+				<h1>Flaschenlager - Volle Flaschen</h1>
+				
+				<div class="pull-left">
+					<ul>
+						<li><span>Anzahl voller Flaschen:</span> <span th:text="${bottlestocks.quantity_full}"></span></li>
+						<ul th:each="bottle : ${bottlestocks.fullbottles}">
+							<li><span>Volumen:</span> <span th:text="${bottle.amount}"></span></li>	
+						</ul>		
+					</ul>
+				</div>	
 			</td>
+			<!-- /Flaschenlager -->
+			
 		</tr>
 	</table>
 

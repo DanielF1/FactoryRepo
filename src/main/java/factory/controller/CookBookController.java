@@ -1,41 +1,55 @@
 package factory.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+
+
+
 import factory.model.Barrel;
+import factory.model.BarrelList;
+import factory.model.BarrelStock;
+//import factory.model.BarrelStockList;
+//import factory.model.BarrelStockList;
 import factory.model.Bottle;
-import factory.model.CookBook;
+import factory.model.BottleStock;
+import factory.model.BottleStockList;
+import factory.model.CookBookRepository;
 import factory.model.Ingredient;
+import factory.model.MaxStore;
 import factory.model.Recipe;
 
 
 @Controller
 public class CookBookController {
 	
-	private final CookBook cookbook;
-//	private final Stock stock;
-//	private Stock2 stock2;
+	private final CookBookRepository cookbookrepository;
+	private BottleStockList bottlestocklist;
+//	MaxStore maxstore;
+	BarrelStock barrelstock;
+//	BottleStock bottlestock;
 	
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
-	List<Bottle> mapBottle = new ArrayList<Bottle>();
-	List<Barrel> mapBarrel = new ArrayList<Barrel>();
 	
 	@Autowired 
-	public CookBookController(CookBook cookbook)
+	public CookBookController(CookBookRepository cookbookrepository, BottleStockList bottlestocklist, BarrelList barrellist)
 	{
-		this.cookbook = cookbook;
-//		this.stock = stock;
-//		this.stock2 = stock2;
+		this.cookbookrepository = cookbookrepository;
+		this.bottlestocklist = bottlestocklist;
+		this.barrelstock = new BarrelStock (barrellist);
 	}
 	
 	/*
@@ -44,19 +58,46 @@ public class CookBookController {
 	@RequestMapping(value = "/cookbook", method = RequestMethod.GET)
 	public String Book(Model model) 
 	{
-		model.addAttribute("recipes", cookbook.findAll());
-//		model.addAttribute("stocks", stock.findAll());
-//		model.addAttribute("bottleStocks", stock2.findAll());
-	
-//		System.out.println(cookbook.findAll());
+		List<MaxStore> maxstorelist = new ArrayList<MaxStore>();
+		Iterable<Barrel> allBarrels = barrelstock.getAllBarrels();
+		HashMap<String, List<Barrel>> map = new HashMap<String, List<Barrel>>();
+		// Nur barrels mit Inhalt einer Art und GLEICHEN ALTER finden
+
+		for (Barrel barrel : allBarrels) {
+			String inhalt = barrel.getContent();
+			if (!map.containsKey(inhalt)) {
+				map.put(inhalt, new ArrayList<Barrel>());}
+			map.get(inhalt).add(barrel);
+			
+		}
+
+		for (String key : map.keySet()) {
+		List<Barrel> list = map.get(key);
+				double rechnen = 0;
+			for (Barrel barrel: list){
+				
+				rechnen +=barrel.getAmount();
+			}
+			MaxStore maxstore = new MaxStore(key,rechnen);
+			maxstorelist.add(maxstore);
+			System.out.println(maxstore);
+			}
 		
+
+		
+		model.addAttribute("recipes", cookbookrepository.findAll());
+		model.addAttribute("barrelstock_store", maxstorelist);
+//		model.addAttribute("barrelstock_store", barrelstock.getAllBarrels());
+		System.out.println("test: " + maxstorelist);
+		model.addAttribute("bottlestock", bottlestocklist.findAll());
+
 		return "cookbook";
 	}
 	
 	
 	/*
 	 * save new entry
-	 */
+	
 //	@RequestMapping(value="/seed", params={"save"})
 //	public String saveSeedstarter(
 //	        final Recipe recipe, final Ingredient ingredient, final BindingResult bindingResult, final ModelMap model) {
@@ -88,7 +129,8 @@ public class CookBookController {
 //        this.cookbook.save(recipe);
 //        return "redirect:/sg/add";
 //    }
-    
+     */
+
 	@RequestMapping(value = "/cookbook/addRecipe", method = RequestMethod.POST)
 	public String addRecipe(@RequestParam("name") String name, 
 							@RequestParam("ingridientName") String ingredientName,
@@ -110,7 +152,7 @@ public class CookBookController {
 //		map1.add(i4);	
 //		map1.add(i5);
 		
-		cookbook.save(new Recipe(name, mapIngredient));
+		cookbookrepository.save(new Recipe(name, mapIngredient));
 		mapIngredient = new ArrayList<Ingredient>();
 		
 		return "redirect:/cookbook";
@@ -120,12 +162,12 @@ public class CookBookController {
 	/*
 	 * check empty bottles
 	 */
-	public int checkEmptyBottles(int missedBottles, double maxDestillate, Long id)
-	{
-		int bottles = 0;
-		int missedBottle = missedBottles;
-		
-//		for(BottleStock bottlestock : stock2.findAll())
+//	public int checkEmptyBottles(int missedBottles, double maxDestillate, Long id)
+//	{
+//		int bottles = 0;
+//		int missedBottle = missedBottles;
+//
+//		for(BottleStock bottlestock : bottlestocklist.findAll())
 //		{
 //			for(Bottle bottle : bottlestock.getEmptybottles())
 //			{
@@ -149,64 +191,58 @@ public class CookBookController {
 //				{
 //					missedBottle = (int) (bottles - quantity_empty);
 //					
-//				} // /if
+//				}
 //				else
 //				{
-//					for(BarrelStock barrelstock : stock.findAll())
+////					for(BarrelStock barrelstock : barrelstocklist.findAll())
 //					{
-//						if(barrelstock.getName().equals("Lager A"))
-//						{
-//							for(Barrel barrel : barrelstock.getBarrels())
-//							{ 
-//								for(Recipe selectedRecipe : cookbook.findById(id))
-//								{	
-//									for(Ingredient ingredient : selectedRecipe.getIngredients())
+//						for(MaxStore maxstore : barrelstock.getMaxstorelist())
+//						{ 
+//							for(Recipe selectedRecipe : cookbook.findById(id))
+//							{	
+//								for(Ingredient ingredient : selectedRecipe.getIngredients())
+//								{
+//									if(maxstore.getContent().equals(ingredient.getName()))
 //									{
-//										if(barrel.getContent().equals(ingredient.getName()))
-//										{
-//											/*
-//											 * update barrels
-//											 */
-//											double newAmount = barrel.getAmount() - ingredient.getAmount();
-//											barrel.setAmount(newAmount);
-//								
-//											/*
-//											 * update empty bottles
-//											 */
-//											bottlestock.setQuantity_empty(quantity_empty - bottles);
-//											bottlestock.setQuantity_full(quantity_full + bottles);
-//											
-//											stock2.save(bottlestock);
-//											
-//										} // /if
-//									} // /for
+//										/*
+//										 * update barrels
+//										 */
+//										double newAmount = maxstore.getAmount() - ingredient.getAmount();
+//										maxstore.setAmount(newAmount);
+//							
+//										/*
+//										 * update empty bottles
+//										 */
+//										bottlestock.setQuantity_empty(quantity_empty - bottles);
+//										bottlestock.setQuantity_full(quantity_full + bottles);
+//																					
+//									} // /if
 //								} // /for
 //							} // /for
-//						} // /if
-//					} // /for	
+//						} // /for
+//					} // /for
 //				} // /else
 //
 //			} // /for
-//		} // /for
-		
-		return missedBottle;
-	}
-	
-	
-	/*
-	 * pick a recipe and create a new Cognac, 
-	 * if the inventory checks send their okay 
-	 */
-	@RequestMapping(value="/cookbook/wedding/{id}", method = RequestMethod.GET)
-	public String wedding(@PathVariable("id") Long id, Model model)
-	{
-		int i = 0; 
-		int not_enough = 0;
-		double maxDestillate = 0;
-
-		/*
-		 * calculate, if there is enough ingredients, or not
-		 */
+//		}
+//		return missedBottle;
+//	}
+//	
+//	
+//	/*
+//	 * pick a recipe and create a new Cognac, 
+//	 * if the inventory checks send their okay 
+//	 */
+//	@RequestMapping(value="/cookbook/wedding/{id}", method = RequestMethod.GET)
+//	public String wedding(@PathVariable("id") Long id, Model model)
+//	{
+//		int i = 0; 
+//		int not_enough = 0;
+//		double maxDestillate = 0;
+//
+//		/*
+//		 * calculate, if there is enough ingredients, or not
+//		 */
 //		for(Recipe recipe: cookbook.findById(id))
 //		{
 //			if(recipe.getId() == id)
@@ -219,15 +255,15 @@ public class CookBookController {
 //				model.addAttribute("selected_name", recipe.getName());
 //				model.addAttribute("selected_ingredients", recipe.getIngredients());
 //				
-//				for(BarrelStock barrelstock : stock.findAll())
+////				for(BarrelStock barrelstock : barrelstocklist.findAll())
 //				{
-//					for(Barrel barrel : barrelstock.getBarrels())
+//					for(MaxStore maxstore : barrelstock.getMaxstorelist())
 //					{	
 //						for(Ingredient ingredient : recipe.getIngredients())
 //						{		
-//							if(barrel.getContent().equals(ingredient.getName()))
+//							if(maxstore.getContent().equals(ingredient.getName()))
 //							{
-//								double barrelContentAmount = barrel.getAmount();
+//								double barrelContentAmount = maxstore.getAmount();
 //								double ingridientDistillateAmount = ingredient.getAmount();
 //								
 //								if(ingridientDistillateAmount > barrelContentAmount)
@@ -249,48 +285,49 @@ public class CookBookController {
 //								break;
 //								
 //							} // /if
-//							
-////							if(!ingredient.getName().equals(barrel.getContent()))
-////							{
-////								model.addAttribute("not_exist_" + j, "Die Zutat '" + ingredient.getName() + "' ist nicht vorhanden.");
-////								not_enough++;
-////								j++;
-////								
-////								System.out.println("out: " + ingredient.getName().equals(barrel.getContent().isEmpty()));
-////								System.out.println("out: " + ingredient.getName());
-////								System.out.println("out: " + barrel.getContent());
-////							}
-//							
-//		
+//								
+//	//							if(!ingredient.getName().equals(barrel.getContent()))
+//	//							{
+//	//								model.addAttribute("not_exist_" + j, "Die Zutat '" + ingredient.getName() + "' ist nicht vorhanden.");
+//	//								not_enough++;
+//	//								j++;
+//	//								
+//	//								System.out.println("out: " + ingredient.getName().equals(barrel.getContent().isEmpty()));
+//	//								System.out.println("out: " + ingredient.getName());
+//	//								System.out.println("out: " + barrel.getContent());
+//	//							}
+//						
+//	
 //						} // /for
 //					} // /for
-//						
 //				} // /for
+//						
+//			} // /if
 //					
-//				/*
-//				 * if enough distillate then check empty bottles
-//				 */
-//				if(not_enough == 0)
+//			
+//			/*
+//			 * if enough distillate then check empty bottles
+//			 */
+//			if(not_enough == 0)
+//			{
+//				int missedBottles = 0;
+//				
+//				if(checkEmptyBottles(missedBottles, maxDestillate, id) > 0)
 //				{
-//					int missedBottles = 0;
-//					
-//					if(checkEmptyBottles(missedBottles, maxDestillate, id) > 0)
-//					{
-//						model.addAttribute("not_enough_bottles",  "Nicht genug leere Flaschen vorhanden. Es fehlen noch " 
-//											+ checkEmptyBottles(missedBottles, maxDestillate, id) + " Flaschen.");
-//					}
-//					
-//				} // /if
+//					model.addAttribute("not_enough_bottles",  "Nicht genug leere Flaschen vorhanden. Es fehlen noch " 
+//										+ checkEmptyBottles(missedBottles, maxDestillate, id) + " Flaschen.");
+//				}
+//				
 //			} // /if		
 //		} // /for
-		
-		model.addAttribute("selectedRecipe", cookbook.findById(id));
-		model.addAttribute("recipes", cookbook.findAll());
-//		model.addAttribute("stocks", stock.findAll());
-//		model.addAttribute("bottleStocks", stock2.findAll());
-		
-		return "cookbook";
-	}
+//		
+//		model.addAttribute("selectedRecipe", cookbook.findById(id));
+//		model.addAttribute("recipes", cookbook.findAll());
+////		model.addAttribute("stocks", stock.findAll());
+////		model.addAttribute("bottleStocks", stock2.findAll());
+//		
+//		return "cookbook";
+//	}
 	
 	
 	/*
@@ -300,9 +337,9 @@ public class CookBookController {
 	public String recipeDetails(@PathVariable("id") Long id, Model model)
 	{
 
-		model.addAttribute("selectedRecipe", cookbook.findById(id));
+		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
 		
-		model.addAttribute("recipes", cookbook.findAll());
+		model.addAttribute("recipes", cookbookrepository.findAll());
 //		model.addAttribute("stocks", stock.findAll());
 //		model.addAttribute("bottleStocks", stock2.findAll());
 		
@@ -351,7 +388,7 @@ public class CookBookController {
 	@RequestMapping(value = "/cookbook/delete/{id}/{term}")
 	public String removeRecipe(@PathVariable Long id)
 	{		
-		cookbook.delete(id);
+		cookbookrepository.delete(id);
 		return "redirect:/cookbook";
 	}
 

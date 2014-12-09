@@ -7,7 +7,7 @@ public class BarrelStock {
 	BarrelList barrelstock;
 	private BarrelMaker barrelmaker;
 	private MasterBrewer barrelbrewer;
-
+	
 	public BarrelStock(BarrelList barrelstock) {
 		this.barrelstock = barrelstock;
 		barrelmaker = new BarrelMaker(this);

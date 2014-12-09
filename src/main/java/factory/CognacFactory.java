@@ -20,10 +20,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 @EnableAutoConfiguration
 @EntityScan(basePackageClasses = { Salespoint.class, CognacFactory.class })
 @EnableJpaRepositories(basePackageClasses = { Salespoint.class, CognacFactory.class })
-
-
-
-@Import({ SalespointWebConfiguration.class })
 @ComponentScan
 public class CognacFactory {
 
