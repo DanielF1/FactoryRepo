@@ -1,73 +1,109 @@
-//package factory.controller;
-//
-//
-//import java.text.DateFormat;
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.ModelMap;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestMethod;
-//import org.springframework.web.bind.annotation.RequestParam;
-//
-//import factory.model.Location;
-//import factory.model.Transport;
-//
-//@Controller
-//public class WineGrowerController {
-//
-//	private int quantity;
-//	private Date date;
-//	private String place;
-//
-//	private final Locationmanagement locationmanagement;
-//
-//	@Autowired
-//	public WineGrowerController(Locationmanagement locationmanagement) {
-//		this.locationmanagement = locationmanagement;
-//	}
-//
-//	@RequestMapping(value = "/form", method = RequestMethod.GET)
-//	public String Show(ModelMap model,
-//			@RequestParam(required = false) final String error) {
-//		model.addAttribute("locations",	Location.getLocationsListWithProductionManagement());
-//		if (error != null)
-//			switch (error) {
-//			case "date":
-//				model.addAttribute("error",	"Das Datum muss folgendes Format haben : YYYY-MM-DD");
-//				break;
-//			}
-//		return "lieferungForm";
-//	}
-//
-//	@RequestMapping(value = "/LF_result", method = RequestMethod.POST)
-//	public String specification(ModelMap model,
-//			@RequestParam("quantity") int quantity,
-//			@RequestParam("date") String date, @RequestParam("place") long place) {
-//		this.quantity = quantity;
-//		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//
-//		try {
-//			this.date = formatter.parse(date);
-//		} catch (ParseException e) {
-//			return "redirect:form?error=date";
-//		}
-//		// this.place = place;
-//
-//		// deliver wine!
-//		Location loc = Location.getLocationById(place);
-//		Transport transport = loc.deliverWine(quantity, this.date);
-//
-//		loc.Save();
-//
-//		model.addAttribute("quantity", this.quantity);
-//		model.addAttribute("date", this.date);
-//		model.addAttribute("location", loc);
-//		model.addAttribute("transport", transport);
-//		return "LF_result";
-//	}
-//
-//}
+package factory.controller;
+
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import factory.model.Location;
+import factory.model.LocationManagement;
+import factory.model.LocationRepository;
+import factory.model.TransportRepository;
+
+@Controller
+public class WineGrowerController {
+
+	private int quantity;
+	private Date date;
+	private final LocationRepository locationRepository;
+	private final TransportRepository transportRepository;
+	private static final int DAY_IN_MILLIS = 24 * 3600 * 1000;
+	private static final int VOLUME_HEKTOLITERS_IN_TWO_DAYS = 24;
+
+	@Autowired
+	public WineGrowerController(LocationRepository locationRepository, TransportRepository transportRepository) {
+		this.locationRepository = locationRepository;
+		this.transportRepository = transportRepository;
+	}
+
+	
+	
+	
+	@RequestMapping(value = "/form", method = RequestMethod.GET)
+	public String Show(ModelMap model,
+			@RequestParam(required = false) final String error) {
+		
+			String Searchterm = "Produktion";
+		
+			List<Location> resultList = new ArrayList<>();
+			for(Location location : locationRepository.findAll())
+			{
+				if(location.getDepartments().contains(Searchterm)){resultList.add(location);}
+			}
+		model.addAttribute("locations", resultList);
+		
+			if (error != null)
+				switch (error) {
+				case "date":
+					model.addAttribute("error",	"Das Datum muss folgendes Format haben : YYYY-MM-DD");
+				break;
+				}
+			
+		return "lieferungForm";
+	}
+
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value = "/LF_result", method = RequestMethod.POST)
+	public String specification(ModelMap model,
+			@RequestParam("quantity") int quantity,
+			@RequestParam("date") String date, @RequestParam("place") long id) {
+		this.quantity = quantity;
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+		try {
+			this.date = formatter.parse(date);
+		} catch (ParseException e) {
+			return "redirect:form?error=date";
+		}
+		// this.place = place;
+
+		// deliver wine!
+//		LocationManagement locationmanagement;
+//		locationmanagement.deliverWine(quantity, this.date);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		model.addAttribute("quantity", this.quantity);
+		model.addAttribute("date", this.date);
+//		model.addAttribute("location", locationmanagement);
+//		model.addAttribute("transport", transportRepository.findOne(arg0));
+		return "LF_result";
+	}
+
+	
+	
+	
+}

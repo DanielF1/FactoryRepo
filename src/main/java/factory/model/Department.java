@@ -11,7 +11,17 @@ public class Department {
 	@GeneratedValue
 	private Long id;
 	private String name;
+	private double quantity;
+	private double capacity;
 	
+	public double getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(double capacity) {
+		this.capacity = capacity;
+	}
+
 	@Deprecated
 	public Department(){}
 
@@ -25,6 +35,14 @@ public class Department {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
 	}
 	
 }

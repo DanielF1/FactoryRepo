@@ -26,8 +26,7 @@ public class Location {
 	private List<Employee> employees;
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Department> departments;
-	@OneToOne(cascade = CascadeType.ALL)
-	private ProductionManagement productionManagement;
+
 	
 	
 	@Deprecated
@@ -111,72 +110,5 @@ public class Location {
 		return departments;
 	}
 
-	// check if this Location contains Production management Department
-//	public boolean containsProductionmanagement() {
-//		for (Department dept : this.departments) {
-//			if (dept.getName().contains("Produ")) { // :-(
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-//
-//	public ProductionManagement getProductionManagementDepartment() {
-//		if (this.productionManagement == null)
-//			if (this.containsProductionmanagement()) {
-//				this.productionManagement = new ProductionManagement();
-//			}
-//		return this.productionManagement;
-//	}
-//
-	// für Liste von Locations mit Productionmanagement
-//	public static List<Location> getLocationsListWithProductionManagement() {
-//		Iterable<Location> locations = locationRepository.findAll();
-//		List<Location> result = new ArrayList<Location>();
-//		for (Location location : locations)
-//			if (location.containsProductionmanagement())
-//				result.add(location);
-//		return result;
-//	}
-//	
-//	
-//	public Transport deliverWine(int quantity, Date date){
-//			throws Exception {
-//		ProductionManagement dept = location.getWineDepartment();
-//		if (dept == null)
-//			throw new Exception();
-//		
-//		ProductionManagement dept = getProductionManagementDepartment();
-//		if (!dept.isOverflow(quantity, date)) {
-//			dept.deliverWine(quantity);
-//			return null;
-//		} else {
-//
-//		int overflow = this.productionManagement.overflowQuantity(quantity, date);
-//		dept.deliverWine(quantity - overflow);
-//		quantity = overflow;} 
-//		
-//		for (Location loc : Location.getLocationsListWithProductionManagement()) {
-//			ProductionManagement locDept = loc.getProductionManagementDepartment();
-//			if (!locDept.isOverflow(quantity, date)) {
-//				locDept.deliverWine(quantity);
-//				Transport transport = new Transport(this, loc, quantity);
-//				return transport;
-//			}
-//		}
-//		
-//		// Der Rest kommt doch in selektierte Location
-//		dept.deliverWine(quantity );
-//		
-//		return null;
-//	}
-//
-//	public static Location getLocationById(long id) {
-//		return locationRepository.findOne(id);
-//	}
-//
-//	public void Save() {
-//		locationmanagement.save(this);
-//	}
-
+	
 }

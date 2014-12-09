@@ -18,7 +18,7 @@
 				<td>Standort</td>
 				<td>
 				<select name="place">
-						<option th:each=" item : ${locations}" th:text="${item.getId()}"></option>
+						<option th:each=" item : ${locations}" th:text="${item.name}"></option>
 				</select></td>
 			</tr>
 			<tr>
