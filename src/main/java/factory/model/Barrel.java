@@ -86,19 +86,21 @@ public class Barrel {
 		this.lastFill = lastFill;
 	}
 	
-	public int getDateCount(){
+	public int getAlter(){
 		int datecount =0;
+		int ANZAHL_TAGE_IM_JAHR = 365;
+		int Alter =0 ;
 		while (getLastFill().compareTo(LocalDate.now())<0){
 			datecount++;
 			setLastFill(getLastFill().plusDays(1));
 		}	
-		if (datecount>=360)
+		if (datecount>=ANZAHL_TAGE_IM_JAHR)
 		{
-			datecount = 360;
+			Alter = datecount/ANZAHL_TAGE_IM_JAHR;
 			}
 			else {setLastFill(LocalDate.now().minusDays(datecount));
-				datecount =0;}
-		return datecount;
+				Alter =0;}
+		return Alter;
 	}
 	
 }

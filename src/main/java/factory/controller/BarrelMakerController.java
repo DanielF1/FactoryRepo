@@ -68,7 +68,25 @@ public class BarrelMakerController {
 	@RequestMapping(value = "/deleteBarrel", params = "Id")
 	public String deleteBarrel(@RequestParam("Id") Long Id, ModelMap modelMap) {
 
-		barrelstock.deleteBarrel(Id);
+//		barrelstock.deleteBarrel(Id);
+		Barrel barrel = barrelstock.findOneBarrel(Id);
+		// Fass ist leer
+		if (barrel.getDeath_of_barrel().compareTo(LocalDate.now())<=0)
+		{
+			// Fass Ablaufdateum ist in der Vergangenheit
+			if (barrel.getContent().equals("")) {
+				barrelstock.deleteOne(Id);
+			}
+			else{
+				Barrel newbarrel = new Barrel("", 0,LocalDate.now(),LocalDate.now().plusDays(2), LocalDate.now());
+				newbarrel.setContent(barrel.getContent());
+				newbarrel.setAmount(barrel.getAmount());
+				barrel.setContent("");
+				barrel.setAmount(0);
+				barrelstock.deleteOne(barrel.getId());
+				barrelstock.saveBarrel(newbarrel);
+		}
+		}
 
 		return "redirect:/BarrelList";
 	}
@@ -98,13 +116,13 @@ public class BarrelMakerController {
 			HashMap<Integer, List<Barrel>> alterMap = new HashMap<Integer, List<Barrel>>();
 			for (Barrel barrel : list) {
 				// bearbeiten Alter finden 
-				if (barrel.getDateCount()==360){
-				int dateCount = barrel.getDateCount();
+				if (barrel.getAlter()>=1){
+				int alter = barrel.getAlter();
 				
-				if (!alterMap.containsKey(dateCount)) {
-					alterMap.put(dateCount, new ArrayList<Barrel>());
+				if (!alterMap.containsKey(alter)) {
+					alterMap.put(alter, new ArrayList<Barrel>());
 				}
-					alterMap.get(dateCount).add(barrel);	
+					alterMap.get(alter).add(barrel);	
 				}
 			}
 
