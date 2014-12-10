@@ -89,17 +89,13 @@ public class Barrel {
 	public int getAlter(){
 		int datecount =0;
 		int ANZAHL_TAGE_IM_JAHR = 365;
-		int Alter =0 ;
+		int Alter ;
 		while (getLastFill().compareTo(LocalDate.now())<0){
 			datecount++;
 			setLastFill(getLastFill().plusDays(1));
 		}	
-		if (datecount>=ANZAHL_TAGE_IM_JAHR)
-		{
-			Alter = datecount/ANZAHL_TAGE_IM_JAHR;
-			}
-			else {setLastFill(LocalDate.now().minusDays(datecount));
-				Alter =0;}
+			Alter = datecount/ANZAHL_TAGE_IM_JAHR;			
+		System.out.println(getContent() + getAmount()+ " Date count" + datecount + " alter" + Alter);
 		return Alter;
 	}
 	

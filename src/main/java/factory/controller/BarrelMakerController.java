@@ -100,7 +100,10 @@ public class BarrelMakerController {
 		// Nur barrels mit Inhalt einer Art und GLEICHEN ALTER finden
 
 		for (Barrel barrel : allBarrels) {
-			if (barrel.getDeath_of_barrel().compareTo(LocalDate.now())>=0&&!barrel.getContent().equals("")){
+			if (barrel.getDeath_of_barrel().compareTo(LocalDate.now())>=0
+					&&barrel.getLastFill().compareTo(LocalDate.now().minusDays(365))<=0
+					&&!barrel.getContent().equals("")
+					&&barrel.getAmount()!=0){
 			String inhalt = barrel.getContent();
 			if (!map.containsKey(inhalt)) {
 				map.put(inhalt, new ArrayList<Barrel>());
@@ -116,14 +119,11 @@ public class BarrelMakerController {
 			HashMap<Integer, List<Barrel>> alterMap = new HashMap<Integer, List<Barrel>>();
 			for (Barrel barrel : list) {
 				// bearbeiten Alter finden 
-				if (barrel.getAlter()>=1){
-				int alter = barrel.getAlter();
-				
+					int alter = barrel.getAlter();
 				if (!alterMap.containsKey(alter)) {
 					alterMap.put(alter, new ArrayList<Barrel>());
-				}
+					}
 					alterMap.get(alter).add(barrel);	
-				}
 			}
 
 			for (Integer key1 : alterMap.keySet()) {
