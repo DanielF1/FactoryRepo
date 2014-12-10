@@ -10,6 +10,7 @@ import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountIdentifier;
@@ -38,7 +39,7 @@ import factory.model.Recipe;
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
 
-//	private final Inventory<InventoryItem> inventory;
+	private final Inventory<InventoryItem> inventory;
 	private final LocationRepository locationRepository;
 	private final DepartmentRepository departmentRepository;
 	private final EmployeeRepository employeeRepository;
@@ -78,7 +79,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.employeeRepository = employeeRepository;
 		this.articleRepository = articleRepository;
 		this.cookbookrepository = cookbookrepository;
-//		this.inventory = inventory;
+		this.inventory = inventory;
 		this.barrelList = barrelList;
 		this.bottlestocklist = bottlestocklist;
 	
@@ -198,16 +199,38 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		// Die Bilder sind von der Internetseite: http://www.spirituosentheke.de 
 		
-		articleRepository.save(new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac"));
-		articleRepository.save(new Article("chatelier", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac"));
-		articleRepository.save(new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac"));
-		articleRepository.save(new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %","0,7 Liter","Cognac"));
-		articleRepository.save(new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac"));
 
+		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac");
+		articleRepository.save(article1);
+		
+		Article article2 = new Article("chatelier", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac");
+		articleRepository.save(article2);
+		
+		Article article3 = new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac");
+		articleRepository.save(article3);
+		
+		Article article4 = new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %","0,7 Liter","Cognac");
+		articleRepository.save(article4);
+		
+		Article article5 = new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac");
+		articleRepository.save(article5);
+		
+		InventoryItem i1 = new InventoryItem(article1, Units.TEN);
+		inventory.save(i1);
+		
+		InventoryItem i2 = new InventoryItem(article2, Units.TEN);
+		inventory.save(i2);
+		
+		InventoryItem i3 = new InventoryItem(article3, Units.TEN);
+		inventory.save(i3);
+		
+		InventoryItem i4 = new InventoryItem(article4, Units.TEN);
+		inventory.save(i4);
+		
+		InventoryItem i5 = new InventoryItem(article5, Units.TEN);
+		inventory.save(i5);
 		
 		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
-		
-
 
 //		for (Article article : articleRepository.findAll()) {
 //			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);

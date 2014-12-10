@@ -67,7 +67,7 @@ public class CartController {
 	 }
 	 
 	 
-	    @RequestMapping(value="/kaufen", method=RequestMethod.POST)   
+	    @RequestMapping(value="/checkout", method=RequestMethod.POST)   
 	    public String Buy(@ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount){
 	    	
 	    	return userAccount.map(account -> {
@@ -82,7 +82,7 @@ public class CartController {
 
 					cart.clear();
 
-					return "redirect:/sortiment";
+					return "redirect:/";
 				}).orElse("redirect:/warenkorb");
 		}
 	

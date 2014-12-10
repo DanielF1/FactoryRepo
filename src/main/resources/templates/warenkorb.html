@@ -32,17 +32,15 @@
 				
 				<td><form method="get" th:action="@{/article/} + ${cartItem.identifier}">
 					<button type="submit">L&ouml;schen</button>
-				</form></td>
-				
-							
+				</form></td>				
 			</tr>	
-			</table>
+	</table>
 					
-			<form method="post" action="kaufen">
+			<form method="post" th:action="@{/checkout}">
                 <button type="submit">Artikel kaufen</button>
-            </form>
+           	</form>>
 					
-            <!--Warenkorb wird verworfen -->
+           			 <!--Warenkorb wird verworfen -->
 			<form method="post" th:action="@{cart/clear}">
 				<button name="searchterm">Warenkorb verwerfen</button>
 			</form>
