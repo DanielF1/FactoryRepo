@@ -7,12 +7,5 @@
 	<p th:text="${date}"></p>
 	<p>Standort:</p>
 	<p th:text="${location.name}"></p>
-	<div th:if="${transport}">
-		<p>Lieferung wird aufgeteilt</p>
-		<p>
-			<span th:text="${transport.destination.name}">Standort</span>: <span
-				th:text="${transport.quantity}"></span> Liter
-		</p>
-	</div>
 </body>
 </html>

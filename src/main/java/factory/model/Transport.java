@@ -11,13 +11,15 @@ public class Transport {
 	@Id 
 	@GeneratedValue
 	private Long id;
-	private int quantity;
-	private Location source;
-	private Location destination;
+	private String sort;
+	private double quantity;
+	private Long source;
+	private Long destination;
 	
 	public Transport(){}
 	
-	public Transport(Location source, Location destination, int quantity) {
+	public Transport(String sort, double quantity, Long source, Long destination) {
+		this.sort = sort;
 		this.source = source;
 		this.destination = destination;
 		this.quantity = quantity;
@@ -25,27 +27,35 @@ public class Transport {
 
 	
 
-	public Location getDestination() {
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public Long getDestination() {
 		return destination;
 	}
 
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public Location getSource() {
+	public Long getSource() {
 		return source;
 	}
 	
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 
-	public void setSource(Location source) {
+	public void setSource(Long source) {
 		this.source = source;
 	}
 
-	public void setDestination(Location destination) {
+	public void setDestination(Long destination) {
 		this.destination = destination;
 	}
 }

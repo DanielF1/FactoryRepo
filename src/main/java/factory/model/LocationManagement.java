@@ -15,15 +15,17 @@ public class LocationManagement {
 	
 	private final LocationRepository locationRepository;
 	private final DepartmentRepository departmentRepository;
+	private final TransportRepository transportRepository;
 	private static final int DAY_IN_MILLIS = 24 * 3600 * 1000;
 	private static final int VOLUME_HEKTOLITERS_IN_TWO_DAYS = 24;
-	private double quantity = 0;
+	
 	
 	@Autowired
-	public LocationManagement(LocationRepository locationRepository, DepartmentRepository departmentRepository, double quantity){
+	public LocationManagement(LocationRepository locationRepository, DepartmentRepository departmentRepository, TransportRepository transportRepository){
 		this.locationRepository = locationRepository;
 		this.departmentRepository = departmentRepository;
-		this.quantity = quantity;
+		this.transportRepository = transportRepository;
+
 	}
 	
 //	// check if this Location contains Production management Department
@@ -49,11 +51,15 @@ public class LocationManagement {
 		Location location = locationRepository.findOne(id);
 	
 		List<Department> deps = location.getDepartments();
-			for(Department dep : deps){
-				if(dep.getName().equals("Produktion")){
-					return dep;}
-			}
-			return null;
+			
+			
+				for(Department dep : deps){
+					if(dep.getName().equals("Produktion")){
+						return dep;
+						
+					}break;
+				}
+		return null;
 		}
 	
 
@@ -68,24 +74,29 @@ public class LocationManagement {
 		}
 		
 		
-		public Transport deliverWine(double newQuantity, Date date, Long id){
+		public Transport deliverWine(double newQuantity, Date date, Long lid){
 			
-			
-			Department dept = getProductionDepartment(id);
+		
+			Department dept = getProductionDepartment(lid);
+			Long id = dept.getId();
 			
 			double oldQuantity = dept.getQuantity();
 			
 			//kein Überschuss
 			if (!isOverflow(oldQuantity, newQuantity, date)) {
-				deliverWine(oldQuantity, newQuantity);
+				deliverWine(oldQuantity, newQuantity, dept);
 				return null;
 			} else {
 			// Überschuss - rechnen Überschuss
 			double overflow = overflowQuantity(oldQuantity, newQuantity, date);
-			deliverWine( oldQuantity, quantity - overflow);
-			quantity = overflow;
-			verteile(overflow, date);
+			
+			verteile(overflow, date, id);
 			}
+			
+			
+			
+			
+			
 			
 			
 			
@@ -107,11 +118,15 @@ public class LocationManagement {
 			return null;
 		}
 		
-		public void verteile(double quantiy, Date date){
+		public void verteile(double quantity, Date date, Long firstLocation){
 			Long id = findMaxCapacity();
 			// TODO: if id -1 ... Kein Platz mehr!
-			deliverWine(quantity, date, id)	;		
 			
+				if(id == -1){
+					deliverWine(quantity, date, firstLocation);
+				}
+			deliverWine(quantity, date, id);
+			transportRepository.save(new Transport("Wein", quantity, firstLocation, id));
 		}
 		
 		public Long findMaxCapacity(){
@@ -169,22 +184,21 @@ public class LocationManagement {
 			double countCapacityInHektoLiter = countCapacityInHektoLiter(date);
 			return oldQuantity + newQuantity > countCapacityInHektoLiter ? true : false;
 		}
+		
+//		double freeCapacity(double quantity, Date date){
+//			double freeCapacity = countCapacityInHektoLiter(date) - quantity;
+//			return freeCapacity;
+//		}
 			
 		public double overflowQuantity (double oldQuantity, double newQuantity, Date date){
 			return (oldQuantity + newQuantity - (countCapacityInHektoLiter(date)));
 		}
 		
-		public void deliverWine (double oldQuantity, double newQuantity){
+		public void deliverWine (double oldQuantity, double newQuantity, Department dept){
 			double quantity = oldQuantity + newQuantity;
-			this.quantity = quantity;
+			dept.setQuantity(quantity);
+			double newCapacity = dept.getCapacity() - quantity;
+			dept.setCapacity(newCapacity);
 		}
 		
-
-		public double getWineQuantity() {
-			return quantity;
-		}
-
-
-	
-	
 }

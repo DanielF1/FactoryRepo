@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import factory.model.Department;
 import factory.model.Location;
 import factory.model.LocationManagement;
 import factory.model.LocationRepository;
@@ -23,17 +24,19 @@ import factory.model.TransportRepository;
 @Controller
 public class WineGrowerController {
 
-	private int quantity;
+	
 	private Date date;
 	private final LocationRepository locationRepository;
 	private final TransportRepository transportRepository;
+	private final LocationManagement locationManagement;
 	private static final int DAY_IN_MILLIS = 24 * 3600 * 1000;
 	private static final int VOLUME_HEKTOLITERS_IN_TWO_DAYS = 24;
 
 	@Autowired
-	public WineGrowerController(LocationRepository locationRepository, TransportRepository transportRepository) {
+	public WineGrowerController(LocationRepository locationRepository, TransportRepository transportRepository, LocationManagement locationManagement) {
 		this.locationRepository = locationRepository;
 		this.transportRepository = transportRepository;
+		this.locationManagement = locationManagement;
 	}
 
 	
@@ -43,12 +46,15 @@ public class WineGrowerController {
 	public String Show(ModelMap model,
 			@RequestParam(required = false) final String error) {
 		
-			String Searchterm = "Produktion";
+			String term = "Produktion";
 		
 			List<Location> resultList = new ArrayList<>();
 			for(Location location : locationRepository.findAll())
 			{
-				if(location.getDepartments().contains(Searchterm)){resultList.add(location);}
+				for(Department dep : location.getDepartments()){
+					if(dep.getName().equals(term)){resultList.add(location);}
+				}
+//				if(location.getDepartments().contains(Searchterm)){resultList.add(location);}
 			}
 		model.addAttribute("locations", resultList);
 		
@@ -69,10 +75,13 @@ public class WineGrowerController {
 	
 	
 	@RequestMapping(value = "/LF_result", method = RequestMethod.POST)
-	public String specification(ModelMap model,
-			@RequestParam("quantity") int quantity,
-			@RequestParam("date") String date, @RequestParam("place") long id) {
-		this.quantity = quantity;
+	public String specification(ModelMap modelMap,
+			@RequestParam("quantity") double quantity,
+			@RequestParam("date") String date, @RequestParam("id")  String location) {
+		
+		Location loc = locationRepository.findByName(location);
+		Long id = loc.getId();
+		
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
@@ -88,6 +97,7 @@ public class WineGrowerController {
 		
 		
 		
+		locationManagement.deliverWine(quantity, this.date , id);
 		
 		
 		
@@ -96,10 +106,9 @@ public class WineGrowerController {
 		
 		
 		
-		model.addAttribute("quantity", this.quantity);
-		model.addAttribute("date", this.date);
-//		model.addAttribute("location", locationmanagement);
-//		model.addAttribute("transport", transportRepository.findOne(arg0));
+		modelMap.addAttribute("quantity", quantity);
+		modelMap.addAttribute("date", this.date);
+		modelMap.addAttribute("location", locationRepository.findOne(id));
 		return "LF_result";
 	}
 

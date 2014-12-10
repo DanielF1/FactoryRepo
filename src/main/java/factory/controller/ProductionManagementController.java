@@ -25,9 +25,8 @@ public class ProductionManagementController {
 	}
 
 	@RequestMapping(value = "/locationwithwine", method = RequestMethod.GET)
-	public String specification(ModelMap modelMap)		 {
+	public String specification(ModelMap modelMap){
 
-		
 		String Searchterm = "Produktion";
 		
 		List<Location> resultList = new ArrayList<>();

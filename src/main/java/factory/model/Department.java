@@ -14,19 +14,17 @@ public class Department {
 	private double quantity;
 	private double capacity;
 	
-	public double getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(double capacity) {
-		this.capacity = capacity;
-	}
-
 	@Deprecated
 	public Department(){}
 
 	public Department(String name) {
 		this.name = name;
+	}
+	
+	public Department(String name, double quantity, double capacity) {
+		this.name = name;
+		this.quantity = quantity;
+		this.capacity = capacity;
 	}
 
 	public String getName() {
@@ -44,5 +42,16 @@ public class Department {
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
+
+	public Long getId() {
+		return id;
+	}
 	
+	public double getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(double capacity) {
+		this.capacity = capacity;
+	}
 }

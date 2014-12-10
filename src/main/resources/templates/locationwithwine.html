@@ -17,7 +17,7 @@
 				<tr th:each="loc : ${locations} ">
 					<td th:text="${loc.name}">Name</td>
 					<td th:text="${loc.address}">Straße</td>
-				<td th:text="${loc.getWineQuantity()}">Wein</td>
+				<td th:text="${loc.quantity}">Wein</td>
 				</tr>
 		</table>
 
