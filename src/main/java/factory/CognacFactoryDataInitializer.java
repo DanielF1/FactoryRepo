@@ -234,8 +234,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 //		for (Article article : articleRepository.findAll()) {
 //			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
 //			inventory.save(inventoryItem);
-//				}
-//		
+//				}		
 
 	}
 

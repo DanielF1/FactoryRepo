@@ -8,6 +8,7 @@
 	<div class="all">
 		<header>
 			<h2 th:text="#{orders.title}">Bestellungen</h2>
+		
 		</header>
 		
 		<div class="content">
@@ -17,7 +18,10 @@
 					<tr>
 						<th th:text="#{orders.date}">Datum</th>
 						<th th:text="#{orders.customer}">Kunde</th>
-						<th th:text="#{orders.payed}">Bezahlt</th>
+						<th th:text="#{orders.payed}">Gezahlt</th>
+						<th th:text="#{orders.paymethode}">Bezahlmethode</th>
+						<th th:text="#{orders.state}">Bestellstatus</th>						
+						<th th:text="#{orders.article}">Artikel</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -25,6 +29,9 @@
 							<td th:text="${order.dateCreated}" ></td>
 							<td th:text="${order.userAccount.identifier}"></td>
 							<td th:text="${order.totalPrice}"></td>
+							<td th:text="${order.PaymentMethod}"></td>
+							<td th:text="${order.OrderStatus}"></td>
+							<td th:text="${order.identifier}"></td>
 						</tr>
 				</tbody>
 			</table>
