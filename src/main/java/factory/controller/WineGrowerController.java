@@ -99,13 +99,6 @@ public class WineGrowerController {
 		
 		locationManagement.deliverWine(quantity, this.date , id);
 		
-		
-		
-		
-		
-		
-		
-		
 		modelMap.addAttribute("quantity", quantity);
 		modelMap.addAttribute("date", this.date);
 		modelMap.addAttribute("location", locationRepository.findOne(id));
