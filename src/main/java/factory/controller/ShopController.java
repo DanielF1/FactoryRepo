@@ -50,6 +50,7 @@ public class ShopController {
 	    	Quantity quantity = item.map(InventoryItem::getQuantity).orElse(Units.ZERO);
 	    	
 	    	model.addAttribute("article", article);
+	    	model.addAttribute("quantity", quantity);
 	    	
 			return "detail";
 		}

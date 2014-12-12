@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -26,22 +25,22 @@
 
 					<!-- Log in / Log out navigation -->
 					
-						<form class="form-inline" role="form" th:action="@{/login}" method="post" >
-						 	<div class="form-group" sec:authorize="!isAuthenticated()">
-						   		<label class="sr-only" for="username">Username</label>
-						    	<input type="text" class="form-control" id="username" name="username" 
-						    		autofocus="autofocus" placeholder="Username" />
-						  	</div>
-						 	<div class="form-group" sec:authorize="!isAuthenticated()">
-						    	<label for="password" class="sr-only">Password</label>
-						    	<input type="password" class="form-control" id="password" 
-						    	name="password" placeholder="Password" />
-						  	</div>
-						  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">
-						  		Log in</button>
-						  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="isAuthenticated()">
-						  		Log out</button>
-						</form>
+					<form class="form-inline" role="form" th:action="@{/login}" method="post" >
+					 	<div class="form-group" sec:authorize="!isAuthenticated()">
+					   		<label class="sr-only" for="username">Username</label>
+					    	<input type="text" class="form-control" id="username" name="username" 
+					    		autofocus="autofocus" placeholder="Username" />
+					  	</div>
+					 	<div class="form-group" sec:authorize="!isAuthenticated()">
+					    	<label for="password" class="sr-only">Password</label>
+					    	<input type="password" class="form-control" id="password" 
+					    	name="password" placeholder="Password" />
+					  	</div>
+					  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">
+					  		Log in</button>
+					  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="isAuthenticated()">
+					  		Log out</button>
+					</form>
 
 					<!-- Log in / Log out navigation -->
 
@@ -81,17 +80,9 @@
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 							<a href="orders.html">Bestellungen</a>
 						</li>
-						<!-- /Advanced salesman navigation -->
-						
-						<!-- Advanced salesman navigation -->
+
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 							<a href="register.html">Register new Customer</a>
-						</li>
-						<!-- /Advanced salesman navigation -->
-						
-						<!-- Advanced salesman navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="customerlist.html">Customerlist</a>
 						</li>
 						<!-- /Advanced salesman navigation -->
 
@@ -128,6 +119,27 @@
 
 				<div class="col-lg-2"></div>
 			</div>
+
+			<div class="row">
+				<div class="col-lg-2">	</div>
+				<div class="col-lg-8">
+					<table class="table table-condensed">
+						<tr class="success">	
+							<th>Nachname</th>
+							<th>Vorname</th>
+							<th>Adresse</th>
+
+						</tr>
+						<tr th:each="customer : ${customerlist}">
+							<td th:text="${customer.name}"></td>
+							<td th:text="${customer.firstname}"></td>
+							<td th:text="${customer.address}"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-lg-2">	</div>
+			</div>
+
 		</div>
 	</div>
 	<!-- /Container -->

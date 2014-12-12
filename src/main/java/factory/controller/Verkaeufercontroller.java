@@ -17,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import factory.model.Customer;
 import factory.model.CustomerRepository;
@@ -42,8 +43,8 @@ public class Verkaeufercontroller {
 		this.inventory = inventory;
 		this.userAccountManager = userAccountManager;
 		this.customerRepository = customerRepository;
-		
-	}
+	}	
+	
 	
 	@RequestMapping("/orders")
 	public String orders(ModelMap modelMap) {
@@ -51,6 +52,14 @@ public class Verkaeufercontroller {
 		modelMap.addAttribute("ordersCompleted", orderManager.find(OrderStatus.COMPLETED));
 
 		return "orders";
+	}
+	
+	@RequestMapping(value = "/customerlist", method = RequestMethod.GET)
+	public String customerlist(ModelMap modelMap) {
+
+		modelMap.addAttribute("customerlist", customerRepository.findAll());
+
+		return "customerlist";
 	}
 
 	@RequestMapping("/registerNew")
