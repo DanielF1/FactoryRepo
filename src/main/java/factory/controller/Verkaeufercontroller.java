@@ -54,7 +54,7 @@ public class Verkaeufercontroller {
 		return "orders";
 	}
 	
-	@RequestMapping(value = "/customerlist", method = RequestMethod.GET)
+	@RequestMapping("/customerlist")
 	public String customerlist(ModelMap modelMap) {
 
 		modelMap.addAttribute("customerlist", customerRepository.findAll());
