@@ -14,7 +14,7 @@ public class Customer {
 	@Id
 	@GeneratedValue
 	private long id;
-	private String name;
+	private String familyname;
 	private String firstname;
 	private String address;
 
@@ -25,14 +25,14 @@ public class Customer {
 	protected Customer() {
 	}
 
-	public Customer(UserAccount userAccount, String address, String name, String firstname) {
+	public Customer(UserAccount userAccount, String address, String familyname, String firstname) {
 		this.userAccount = userAccount;
 		this.address = address;
-		this.name = name;
+		this.familyname = familyname;
 		this.firstname = firstname;
 		
 	}
-
+	
 	public String getAddress() {
 		return address;
 	}
@@ -45,12 +45,12 @@ public class Customer {
 		return userAccount;
 	}
 
-	public String getName() {
-		return name;
+	public String getFamilyName() {
+		return familyname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFamilyName(String familyname) {
+		this.familyname = familyname;
 	}
 
 	public String getFirstname() {

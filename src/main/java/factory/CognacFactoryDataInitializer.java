@@ -27,6 +27,8 @@ import factory.model.Bottle;
 import factory.model.BottleStock;
 import factory.model.BottleStockList;
 import factory.model.CookBookRepository;
+import factory.model.Customer;
+import factory.model.CustomerRepository;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
@@ -44,6 +46,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final DepartmentRepository departmentRepository;
 	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
+	private final CustomerRepository customerRepository;
 	private final ArticleRepository articleRepository;
 
 	private final CookBookRepository cookbookrepository;
@@ -52,7 +55,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 //	private final BarrelStock_Inter barrelstock_inter;
 
 	@Autowired
-	public CognacFactoryDataInitializer(UserAccountManager userAccountManager, 
+	public CognacFactoryDataInitializer(UserAccountManager userAccountManager,
+										CustomerRepository customerRepository,
 										LocationRepository locationRepository, 
 										DepartmentRepository departmentRepository,
 										EmployeeRepository employeeRepository,
@@ -73,7 +77,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Assert.notNull(bottlestocklist, "Bottle Stock must not be null!");
 		
 		this.userAccountManager = userAccountManager;
-
+		this.customerRepository = customerRepository;
 		this.locationRepository = locationRepository;	
 		this.departmentRepository = departmentRepository;
 		this.employeeRepository = employeeRepository;
@@ -87,8 +91,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 
 	@Override
 	public void initialize() {
-		initializeLocList(locationRepository, departmentRepository, employeeRepository);
-		initializeUsers(userAccountManager);
+		initializeLocationsAndUsers(locationRepository, departmentRepository, employeeRepository, userAccountManager, customerRepository);
 		initializeSortiment();
 		initializeCookBook(cookbookrepository);
 //		initializeStock2(stock2);
@@ -97,18 +100,57 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	}
 	
 
-	private void initializeLocList(LocationRepository locationRepository, DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
+	private void initializeLocationsAndUsers(	LocationRepository locationRepository, 
+												DepartmentRepository departmentRepository, 
+												EmployeeRepository employeeRepository, 
+												UserAccountManager userAccountManager, 
+												CustomerRepository customerRepository) {
 
+		
+		
+		if (userAccountManager.get(new UserAccountIdentifier("admin")).isPresent()) {
+			return;
+		}
+
+		//Accounts for Employees
+		
+		UserAccount adminAccount = userAccountManager.create("admin", "123", new Role("ROLE_ADMIN"));
+		userAccountManager.save(adminAccount);
+		UserAccount brewerAccount = userAccountManager.create("braumeister", "123", new Role("ROLE_BREWER"));
+		userAccountManager.save(brewerAccount);
+		UserAccount salesmanAccount = userAccountManager.create("verkaeufer", "123", new Role("ROLE_SALESMAN"));
+		userAccountManager.save(salesmanAccount);
+		UserAccount warehousemanAccount = userAccountManager.create("lagerist", "123", new Role("ROLE_WAREHOUSEMAN"));
+		userAccountManager.save(warehousemanAccount);
+		UserAccount winegrowerAccount = userAccountManager.create("weinbauer", "123", new Role("ROLE_WINEGROWER"));
+		userAccountManager.save(winegrowerAccount);
+		UserAccount barrelmakerAccount = userAccountManager.create("fassbinder", "123", new Role("ROLE_BARRELMAKER"));
+		userAccountManager.save(barrelmakerAccount);
+		
+		
+		//Accounts for Customers
+		
+		final Role userRole = new Role("ROLE_CUSTOMER");
+
+		UserAccount ua1 = userAccountManager.create("hans", "123", userRole);
+		userAccountManager.save(ua1);
+		
+		Customer c1 = new Customer(ua1,"Salami", "Hans", "Wurststraße");
+		customerRepository.save(c1);
+		
+		
+		//Inizialize Departments
+		
 		Department d1 = departmentRepository.save(new Department("Flaschenlager"));
 		Department d2 = departmentRepository.save(new Department("Fasslager"));
-		Department d4 = departmentRepository.save(new Department("Produktion", 0, 100));
+		Department d4 = departmentRepository.save(new Department("Produktion"));
 		Department d5 = departmentRepository.save(new Department("Verkauf"));
 		Department d6 = departmentRepository.save(new Department("Verwaltung"));
 		
 		List<Department> list5 = new ArrayList<Department>();
-		list5.add(d1);
-		list5.add(d4);
 		list5.add(d5);
+		list5.add(d4);
+		list5.add(d2);
 		
 		List<Department> list6 = new ArrayList<Department>();
 		list6.add(d2);
@@ -124,12 +166,13 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list8.add(d2);
 		
 		
+		//Inizialize Employees
 		
-		Employee e1 = employeeRepository.save(new Employee("Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse"));
-		Employee e2 = employeeRepository.save(new Employee("Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse"));
-		Employee e3 = employeeRepository.save(new Employee("Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse"));
-		Employee e4 = employeeRepository.save(new Employee("Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet"));
-		Employee e5 = employeeRepository.save(new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse"));
+		Employee e1 = employeeRepository.save(new Employee("Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse", warehousemanAccount));
+		Employee e2 = employeeRepository.save(new Employee("Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse", salesmanAccount));
+		Employee e3 = employeeRepository.save(new Employee("Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse", barrelmakerAccount));
+		Employee e4 = employeeRepository.save(new Employee("Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet", brewerAccount));
+		Employee e5 = employeeRepository.save(new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse", adminAccount));
 		
 		
 		List<Employee> list1 = new ArrayList<Employee>();
@@ -151,6 +194,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list4.add(e3);
 		
 		
+		//Inizialize Locations
 	
 		if (locationRepository.findAll().iterator().hasNext()) {
 			return;
@@ -160,38 +204,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		locationRepository.save(new Location("Standort 2","Klausstrasse 2", "0997 Klausberg", "81904446", "klaus1klaus@klaus.de", list2, list6));
 		locationRepository.save(new Location("Standort 3","Klausstrasse 3", "0998 Klaustal", "9454366", "klaus@haus.com", list3, list7));
 		locationRepository.save(new Location("Standort 4","Klausstrasse 4", "0996 Klausklausen", "8231611", "KLAUS@klaus.de", list4, list8));
-		
-	}
-	
-	private void initializeUsers(UserAccountManager userAccountManager) {
 
-
-		if (userAccountManager.get(new UserAccountIdentifier("admin")).isPresent()) {
-			return;
-		}
-
-		UserAccount adminAccount = userAccountManager.create("admin", "123", new Role("ROLE_ADMIN"));
-		userAccountManager.save(adminAccount);
-
-		UserAccount brewerAccount = userAccountManager.create("braumeister", "123", new Role("ROLE_BREWER"));
-		userAccountManager.save(brewerAccount);
-		
-		UserAccount salesmanAccount = userAccountManager.create("verkaeufer", "123", new Role("ROLE_SALESMAN"));
-		userAccountManager.save(salesmanAccount);
-		
-		UserAccount warehousemanAccount = userAccountManager.create("lagerist", "123", new Role("ROLE_WAREHOUSEMAN"));
-		userAccountManager.save(warehousemanAccount);
-		
-		UserAccount winegrowerAccount = userAccountManager.create("weinbauer", "123", new Role("ROLE_WINEGROWER"));
-		userAccountManager.save(winegrowerAccount);
-		
-		UserAccount barrelmakerAccount = userAccountManager.create("fassbinder", "123", new Role("ROLE_BARRELMAKER"));
-		userAccountManager.save(barrelmakerAccount);
-		
-		final Role userRole = new Role("ROLE_CUSTOMER");
-
-		UserAccount ua1 = userAccountManager.create("hans", "123", userRole);
-		userAccountManager.save(ua1);
 	}
 
 	public void initializeSortiment() {

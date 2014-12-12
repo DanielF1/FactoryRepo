@@ -8,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import factory.model.DepartmentRepository;
 import factory.model.Location;
 import factory.model.LocationRepository;
 
@@ -16,12 +15,11 @@ import factory.model.LocationRepository;
 public class ProductionManagementController {
 	
 	private final LocationRepository locationRepository;
-	private final DepartmentRepository departmentrepository;
+	
 	
 	@Autowired
-	public ProductionManagementController(LocationRepository locationRepository, DepartmentRepository departmentRepository) {
+	public ProductionManagementController(LocationRepository locationRepository) {
 		this.locationRepository = locationRepository;
-		this.departmentrepository = departmentRepository;
 	}
 
 	@RequestMapping(value = "/locationwithwine", method = RequestMethod.GET)

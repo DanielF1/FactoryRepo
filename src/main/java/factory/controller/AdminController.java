@@ -3,6 +3,7 @@ package factory.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ import factory.model.Employee;
 import factory.model.EmployeeRepository;
 import factory.model.Location;
 import factory.model.LocationRepository;
-import factory.model.CustomerRespository;
+import factory.model.CustomerRepository;
 
 
 @Controller
@@ -30,15 +31,17 @@ class AdminController {
 	private final LocationRepository locationRepository;
 	private final EmployeeRepository employeeRepository;
 	private final DepartmentRepository departmentRepository;
-	private final CustomerRespository customerRepository;
+	private final CustomerRepository customerRepository;
+	private final UserAccountManager userAccountManager;
 	
 	@Autowired
-	public AdminController(LocationRepository locationRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, CustomerRespository customerRepository) {
+	public AdminController(LocationRepository locationRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, CustomerRepository customerRepository, UserAccountManager userAccountManager) {
 
 		this.locationRepository = locationRepository;
 		this.employeeRepository = employeeRepository;
 		this.departmentRepository = departmentRepository;
 		this.customerRepository = customerRepository;
+		this.userAccountManager = userAccountManager;
 		
 	}
 
@@ -194,36 +197,61 @@ class AdminController {
 	        return "addEmployee";
 	    }
 		
-		@RequestMapping(value="/addedEmployee", method=RequestMethod.POST)
-	    public String addedEmployee(	@RequestParam ("id") Long id,
-	    								@RequestParam ("workplace") String workplace,
-	    								@RequestParam ("name") String name,
-	    								@RequestParam ("firstname") String firstname,
-	    								@RequestParam ("salary") String salary,
-	    								@RequestParam ("mail") String mail,
-	    								@RequestParam ("address") String address) {
-	    	
-	    	Employee employee = new Employee(workplace, name, firstname, salary, mail, address);
-	    	employeeRepository.save(employee);
-	    	Location location = locationRepository.findOne(id);
-	    	location.getEmployees().add(employee);
-	    	locationRepository.save(location);
-	    	
-	    	
-	    	return "redirect:/adminLocList";
-	    }
+//		@RequestMapping(value="/addedEmployee", method=RequestMethod.POST)
+//	    public String addedEmployee(	@RequestParam ("id") Long id,
+//	    								@RequestParam ("workplace") String workplace,
+//	    								@RequestParam ("name") String name,
+//	    								@RequestParam ("firstname") String firstname,
+//	    								@RequestParam ("salary") String salary,
+//	    								@RequestParam ("mail") String mail,
+//	    								@RequestParam ("address") String address) {
+//	    	
+//			
+//			
+//	    	Employee employee = new Employee(workplace, name, firstname, salary, mail, address, userAccount);
+//	    	employeeRepository.save(employee);
+//	    	Location location = locationRepository.findOne(id);
+//	    	location.getEmployees().add(employee);
+//	    	locationRepository.save(location);
+//	    	
+//	    	
+//	    	return "redirect:/adminLocList";
+//	    }
 		
 		 @RequestMapping(value="/editDepartments/{id}", method = RequestMethod.GET)
 		 public String editDepartments(@PathVariable Long id, Model model){	
 			
 			model.addAttribute("location", locationRepository.findOne(id));
-			 
+			model.addAttribute("id", id);
+			
 			return "editDepartments";
 			}
 		 
-		 
-		 
-		 
+//		 @RequestMapping(value="/addDepartment", method=RequestMethod.GET)
+//		    public String addDepartment(@RequestParam ("id") Long id, @RequestParam ("sort") String sort, Model model) {
+//				model.addAttribute("id", id);
+//		        return "addDepartment";
+//		    }
+			
+			@RequestMapping(value="/addDepartment", method=RequestMethod.POST)
+		    public String addedDepartment(	@RequestParam ("id") Long id,
+		    								@RequestParam ("sort") String sort) {
+				
+				Department department = new Department(sort);
+				Location location = locationRepository.findOne(id);
+				
+				for(Department dep : location.getDepartments()){
+					if(dep.getName().equals(department.getName())){
+						return "redirect:/adminLocList";
+					}
+				}	
+					departmentRepository.save(department);
+					location.getDepartments().add(department);
+					locationRepository.save(location);	
+				return "redirect:/adminLocList";
+			}
+				
+				
 		 
 		//Übersicht aller Arbeiter in allen Standorten
 		

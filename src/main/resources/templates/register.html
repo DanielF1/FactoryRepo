@@ -19,20 +19,31 @@
 							<p>Einige Angaben sind nicht korrekt.</p>
 						</div>
 						
-						<label for="name">Name</label>
+						<label for="name">Benutzername</label>
 						<input id="name" th:field="*{name}" th:errorclass="fieldError" type="text" name="name" />
-						<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Der Name darf nicht leer sein.</p>
+						<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Der Benutzername darf nicht leer sein.</p>
 						<br />
 						
 						<label for="password">Passwort</label>
 						<input id="password" th:field="*{password}" th:errorclass="fieldError" type="text" name="password" /><br /> 
 						<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Das Passwort darf nicht leer sein.</p>
 						
-<!-- 						<br /> -->
-<!-- 						<label for="address">Straße</label> -->
-<!-- 						<input id="address" th:field="*{address}" th:errorclass="fieldError" type="text" name="address" /> -->
-<!-- 						<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Die Adresse darf nicht leer sein.</p> -->
-					
+						<br />
+						<label for="familyname">Nachname</label>
+						<input id="familyname" th:field="*{familyname}" th:errorclass="fieldError" type="text" name="familyname" />
+						<p th:if="${#fields.hasErrors('familyname')}" th:errors="*{familyname}">Der Vorname darf nicht leer sein.</p>
+						<br />
+						
+						<br />
+						<label for="firstname">Vorname</label>
+						<input id="firstname" th:field="*{firstname}" th:errorclass="fieldError" type="text" name="firstname" />
+						<p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Der Vorname darf nicht leer sein.</p>
+						<br />
+						
+						<br />
+						<label for="address">Addresse</label>
+						<input id="address" th:field="*{address}" th:errorclass="fieldError" type="text" name="address" />
+						<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Die Adresse darf nicht leer sein.</p>
 						<br />
 						<input type="submit" value="Registrieren" />
 					</fieldset>

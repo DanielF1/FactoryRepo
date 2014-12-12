@@ -4,6 +4,10 @@ package factory.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import org.apache.catalina.User;
+import org.salespointframework.useraccount.UserAccount;
 
 
 @Entity
@@ -22,16 +26,28 @@ public class Employee {
 	@Deprecated
 	public Employee(){}
 	
+	@OneToOne
+	private UserAccount userAccount;
+	
 	public Employee(String workplace, String name, String firstname,
-			String salary, String mail, String address) {
+			String salary, String mail, String address, UserAccount userAccount) {
 		this.workplace = workplace;
 		this.name = name;
 		this.firstname = firstname;
 		this.salary = salary;
 		this.mail = mail;
 		this.address = address;
+		this.userAccount = userAccount;
 	}
 	
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
+
 	public String getWorkplace() {
 		return workplace;
 	}
