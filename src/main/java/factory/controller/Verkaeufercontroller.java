@@ -10,6 +10,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import factory.model.CustomerRespository;
 
 
 @Controller
@@ -18,12 +21,16 @@ public class Verkaeufercontroller {
 	
 	private final OrderManager<Order> orderManager;
 	private final Inventory<InventoryItem> inventory;
+	private final CustomerRespository customerRepository;
 	
 	@Autowired
-	public Verkaeufercontroller(OrderManager<Order> orderManager, Inventory<InventoryItem> inventory) {
+	public Verkaeufercontroller(OrderManager<Order> orderManager,
+								Inventory<InventoryItem> inventory,
+								CustomerRespository customerRepository) {
 
 		this.orderManager = orderManager;
 		this.inventory = inventory;
+		this.customerRepository = customerRepository;
 	
 	}
 	
@@ -33,6 +40,14 @@ public class Verkaeufercontroller {
 		modelMap.addAttribute("ordersCompleted", orderManager.find(OrderStatus.COMPLETED));
 
 		return "orders";
+	}
+	
+	@RequestMapping(value = "/customerlist", method = RequestMethod.GET)
+	public String customerlist(ModelMap modelMap) {
+
+		modelMap.addAttribute("customerlist", customerRepository.findAll());
+
+		return "customerlist";
 	}
 
 

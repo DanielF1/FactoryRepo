@@ -20,9 +20,7 @@ public class Article extends Product{
 		private String cognacart;
 
 
-		public Article(){
-			
-		}
+		public Article(){}
 		
 		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, String volumen, String cognacart) {
 			
