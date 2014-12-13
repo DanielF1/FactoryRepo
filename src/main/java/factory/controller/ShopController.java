@@ -31,6 +31,12 @@ public class ShopController {
 		this.inventory = inventory;
 	}
 
+	
+		@RequestMapping({ "/", "/index" })
+		public String start() {
+			return "index";
+		}
+	
 		
 	    @RequestMapping(value="/sortiment", method=RequestMethod.GET)
 	    public String Willkommen(Model model) {

@@ -138,6 +138,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Customer c1 = new Customer(ua1,"Dittrich", "Günther", "Hauptstraße 5");
 		customerRepository.save(c1);
 		
+		
 		//Inizialize Departments
 		
 		Department d1 = departmentRepository.save(new Department("Flaschenlager"));
@@ -167,11 +168,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		//Inizialize Employees
 		
-		Employee e1 = employeeRepository.save(new Employee("Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse", warehousemanAccount));
-		Employee e2 = employeeRepository.save(new Employee("Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse", salesmanAccount));
-		Employee e3 = employeeRepository.save(new Employee("Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse", barrelmakerAccount));
-		Employee e4 = employeeRepository.save(new Employee("Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet", brewerAccount));
-		Employee e5 = employeeRepository.save(new Employee("Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse", adminAccount));
+		Employee e1 = employeeRepository.save(new Employee(warehousemanAccount, "Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse"));
+		Employee e2 = employeeRepository.save(new Employee(salesmanAccount, "Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse"));
+		Employee e3 = employeeRepository.save(new Employee(barrelmakerAccount, "Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse"));
+		Employee e4 = employeeRepository.save(new Employee(brewerAccount, "Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet"));
+		Employee e5 = employeeRepository.save(new Employee(adminAccount, "Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse"));
 		
 		
 		List<Employee> list1 = new ArrayList<Employee>();

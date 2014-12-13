@@ -19,9 +19,9 @@ public class LocationManagement {
 	private static final int VOLUME_HEKTOLITERS_IN_TWO_DAYS = 24;
 
 	@Autowired
-	public LocationManagement(LocationRepository locationRepository,
-			DepartmentRepository departmentRepository,
-			TransportRepository transportRepository) {
+	public LocationManagement(	LocationRepository locationRepository,
+								DepartmentRepository departmentRepository,
+								TransportRepository transportRepository) {
 		this.locationRepository = locationRepository;
 		this.departmentRepository = departmentRepository;
 		this.transportRepository = transportRepository;

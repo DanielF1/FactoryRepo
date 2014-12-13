@@ -17,7 +17,6 @@ public class Customer {
 	private String familyname;
 	private String firstname;
 	private String address;
-
 	@OneToOne
 	private UserAccount userAccount;
 
@@ -25,7 +24,7 @@ public class Customer {
 	protected Customer() {
 	}
 
-	public Customer(UserAccount userAccount, String address, String familyname, String firstname) {
+	public Customer(UserAccount userAccount, String familyname, String firstname, String address) {
 		this.userAccount = userAccount;
 		this.address = address;
 		this.familyname = familyname;
@@ -41,15 +40,11 @@ public class Customer {
 		this.address = address;
 	}
 
-	public UserAccount getUserAccount() {
-		return userAccount;
-	}
-
-	public String getFamilyName() {
+	public String getFamilyname() {
 		return familyname;
 	}
 
-	public void setFamilyName(String familyname) {
+	public void setFamilyname(String familyname) {
 		this.familyname = familyname;
 	}
 
@@ -61,4 +56,15 @@ public class Customer {
 		this.firstname = firstname;
 	}
 
+	public long getId() {
+		return id;
+	}
+	
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+	
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
 }

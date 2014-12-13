@@ -2,8 +2,6 @@ package factory.controller;
 
 import javax.validation.Valid;
 
-import org.salespointframework.inventory.Inventory;
-import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
@@ -17,7 +15,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import factory.model.Customer;
 import factory.model.CustomerRepository;
@@ -29,18 +26,15 @@ import factory.model.validation.RegistrationForm;
 public class Verkaeufercontroller {
 	
 	private final OrderManager<Order> orderManager;
-	private final Inventory<InventoryItem> inventory;
 	private final UserAccountManager userAccountManager;
 	private final CustomerRepository customerRepository;
 	
 	@Autowired
-	public Verkaeufercontroller(OrderManager<Order> orderManager, 
-								Inventory<InventoryItem> inventory, 
+	public Verkaeufercontroller(OrderManager<Order> orderManager,
 								UserAccountManager userAccountManager,
 								CustomerRepository customerRepository) {
 
 		this.orderManager = orderManager;
-		this.inventory = inventory;
 		this.userAccountManager = userAccountManager;
 		this.customerRepository = customerRepository;
 	}	

@@ -127,20 +127,22 @@
 						<tr class="success">	
 							<th>Benutzername</th>
 							<th>Nachname</th>
+							<th>Vorname</th>
 							<th>Adresse</th>
 							<th></th>
 						</tr>
 						
 						<tr th:each="customer : ${customerlist}">
 							<td th:text="${customer.userAccount.identifier}"></td>
-							<td th:text="${customer.address}"></td>
+							<td th:text="${customer.familyname}"></td>
 							<td th:text="${customer.firstname}"></td>
+							<td th:text="${customer.address}"></td>
 								
 						<!-- ID ÜBERGABE FUNKTIONIERT NOCH NICHT -->		
- 						<td><form method="get" th:action="@{/sortiment/} + ${customer.id}"> 
- 							<button type="submit">für diesen Kunden einkaufen</button> 
- 							</form>
-						</td>	 
+ 							<td><form method="get" th:action="@{/sortiment/} + ${customer.id}"> 
+ 								<button type="submit">für diesen Kunden einkaufen</button> 
+ 								</form>
+							</td>	 
 								
 						</tr>
 					</table>
