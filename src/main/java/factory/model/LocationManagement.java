@@ -28,7 +28,7 @@ public class LocationManagement {
 
 	}
 
-	// // check if this Location contains Production management Department
+	// check if this Location contains Production management Department
 	public boolean containsProductionmanagement(Location location) {
 
 		for (Department dept : location.getDepartments()) {
@@ -47,6 +47,7 @@ public class LocationManagement {
 	// return this.productionManagement;
 	// }
 
+	// return production in the location
 	public Department getProductionDepartment(Long id) {
 		Location location = locationRepository.findOne(id);
 		List<Department> deps = location.getDepartments();
@@ -58,7 +59,7 @@ public class LocationManagement {
 		return null;
 	}
 
-	// for Location List with production
+	// Location List with production
 	public List<Location> getLocationsListWithProductionManagement() {
 		List<Location> result = new ArrayList<Location>();
 		for (Location location : locationRepository.findAll()) {
@@ -75,18 +76,21 @@ public class LocationManagement {
 		Long id = dept.getId();
 		double oldQuantity = dept.getQuantity();
 
-		// no overflow in depart...
+		// no overflow in department
 		if (!isOverflow(oldQuantity, deliveredAmount, date)) {
 			deliverWine(oldQuantity, deliveredAmount, dept);
 			return null;
 		} else {
 			// count overflow
 			double overflow = overflowQuantity(oldQuantity, deliveredAmount, date);
+			
+			// deliver wine (under overflow)
+			deliverWine(oldQuantity, deliveredAmount - overflow, dept);
 
 			Transport ret = distributeOverflowWine(overflow, date, id);
-
+			
 			if (ret == null) {
-				// Nichts weg
+				
 				deliverWine(oldQuantity, deliveredAmount, dept);
 			}
 			// else {
@@ -137,6 +141,7 @@ public class LocationManagement {
 		for (Location location : getLocationsListWithProductionManagement()) {
 			for (Department department : location.getDepartments()) {
 				if (department.getName().equals("Produktion")) {
+					// # TODO count capacity
 					if (department.getCapacity() - department.getQuantity() > freeCapacity) {
 						freeCapacity = department.getCapacity()
 								- department.getQuantity();
@@ -185,15 +190,16 @@ public class LocationManagement {
 	// return freeCapacity;
 	// }
 
-	public double overflowQuantity(double oldQuantity, double newQuantity,
+	public double overflowQuantity(double oldQuantity, double deliveredAmount,
 			Date date) {
-		return (oldQuantity + newQuantity - (countCapacityInHektoLiter(date)));
+		return (oldQuantity + deliveredAmount - (countCapacityInHektoLiter(date)));
 	}
 
 	public void deliverWine(double oldQuantity, double newQuantity,
 			Department dept) {
 		double quantity = oldQuantity + newQuantity;
 		dept.setQuantity(quantity);
+		// #TODO count capacity
 		double newCapacity = dept.getCapacity() - quantity;
 		dept.setCapacity(newCapacity);
 	}
