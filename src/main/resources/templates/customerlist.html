@@ -54,71 +54,12 @@
 					<ul class="nav nav-pills">
 						<li role="presentation" class="active"><a href="index.html">Home</a></li>
 						<li role="presentation"><a href="sortiment.html">Sortiment</a></li>
+						<li role="presentation"><a href="warenkorb.html">Warenkorb</a></li>
+						<li role="presentation"><a href="orders.html">Bestellungen</a></li>
+						<li role="presentation"><a href="register.html">Kundenregistrierung</a></li>
 
-						<!-- Advanced administrator navigation -->
-						<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-					   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
-					      		Standort <span class="caret"></span>
-					    	</a>
-					    	<ul class="dropdown-menu" role="menu">
-						    	<li><a href="addLocation.html">Standort hinzufügen</a></li>
-						    	<li><a href="adminLocList.html">Standortübersicht</a></li>
-							</ul>
-						</li>
-
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="employeeList.html">Mitarbeiterübersicht</a>
-						</li>
-
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="locationwithwine">Weinmenge</a>
-						</li>
-						<!-- /Advanced administrator navigation -->
-
-
-						<!-- Advanced salesman navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="orders.html">Bestellungen</a>
-						</li>
-
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="register.html">Register new Customer</a>
-						</li>
-						<!-- /Advanced salesman navigation -->
-
-
-						<!-- Advanced brewer navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
-							<a href="cookbook.html">Rezepte</a>
-						</li>
-
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
-							<a href="BarrelList.html">BarrelList</a>
-						</li>
-						<!-- /Advanced brewer navigation -->
-
-
-						<!-- Advanced barrelmaker navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
-							<a href="BarrelList.html">BarrelList</a>
-						</li>
-						<!-- /Advanced barrelmaker navigation -->
-
-
-						<!-- Advanced winegrower navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
-							<a href="http://localhost:8080/form">Weinanlieferung</a>
-						</li>
-
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
-							<a href="locationwithwine">Weinmenge</a>
-						</li>
-						<!-- /Advanced winegrower navigation -->
-					</ul>
-				</div>
-
-				<div class="col-lg-2"></div>
-			</div>
+			
+			<h2 align="center">Kundenliste</h2>
 
 			<div class="row">
 				<div class="col-lg-2">	</div>
@@ -148,17 +89,19 @@
 					</table>
 				</div>
 				<div class="col-lg-2">	</div>
-			</div>
-
 		</div>
-	</div>
 	<!-- /Container -->
-
-</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../resources/js/bootstrap.min.js"></script>
-</body>
+
+					</ul>
+			</div>
+			</div>
+			</div>
+		</div>
+		</div>
+	</body>
 </html>
