@@ -17,10 +17,10 @@ public class Recipe {
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private  List<Ingredient> ingredients = new ArrayList<Ingredient>();
+	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
 	
 	/*
-	 * Konstruktor
+	 * constructor
 	 */
 	public Recipe(String name, List<Ingredient> map1){
 		this.name = name;
@@ -30,7 +30,7 @@ public class Recipe {
 	Recipe(){}
 	
 	/*
-	 * Getter & Setter
+	 * getter & setter
 	 */
 	public String getName(){
 		return name;

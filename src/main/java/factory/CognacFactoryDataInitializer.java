@@ -303,23 +303,23 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	void initializeBottlestock(BottleStockList bottlestocklist) 
 	{
 
-		Bottle b1 = new Bottle(0.7);
-		Bottle b2 = new Bottle(0.7);
-		Bottle b3 = new Bottle(0.7);
-		Bottle b4 = new Bottle(0.7);
-		Bottle b5 = new Bottle(0.7);
-		Bottle b6 = new Bottle(0.3);
+		Bottle b1 = new Bottle("Delamain Vesper", 0.7);
+		Bottle b2 = new Bottle("", 0.7);
+		Bottle b3 = new Bottle("", 0.7);
+		Bottle b4 = new Bottle("", 0.7);
+		Bottle b5 = new Bottle("", 0.7);
+		Bottle b6 = new Bottle("", 0.3);
 		
 		List<Bottle> empty = new ArrayList<Bottle>();
 		List<Bottle> full = new ArrayList<Bottle>();
 		
-		empty.add(b1);
+		empty.add(b2);
 		empty.add(b3);
 		empty.add(b4);
 		empty.add(b5);
 		empty.add(b6);
 		
-		full.add(b2);
+		full.add(b1);
 		
 //		stock2.save(new BottleStock("Lager A", 100, empty, 20, full));
 		bottlestocklist.save(new BottleStock("Bottle Stock A", empty, full));

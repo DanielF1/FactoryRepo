@@ -18,10 +18,10 @@ public class BottleStock {
 	private int quantity_full;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private  List<Bottle> emptybottles = new ArrayList<Bottle>();
+	private static List<Bottle> emptybottles = new ArrayList<Bottle>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private  List<Bottle> fullbottles = new ArrayList<Bottle>();
+	private static  List<Bottle> fullbottles = new ArrayList<Bottle>();
 	
 	public BottleStock(String name, List<Bottle> emptybottles, List<Bottle> fullbottles)
 	{
@@ -50,7 +50,7 @@ public class BottleStock {
 		this.name = name;
 	}
 
-	public List<Bottle> getEmptybottles() {
+	public static List<Bottle> getEmptybottles() {
 		return emptybottles;
 	}
 	
@@ -58,7 +58,7 @@ public class BottleStock {
 		this.emptybottles = emptybottles;
 	}
 
-	public List<Bottle> getFullbottles() {
+	public static List<Bottle> getFullbottles() {
 		return fullbottles;
 	}
 
@@ -80,5 +80,12 @@ public class BottleStock {
 
 	public void setQuantity_full(int quantity_full) {
 		this.quantity_full = quantity_full;
+	}
+
+
+
+	public static void remove(Bottle bottle) {
+		
+		
 	}
 }
