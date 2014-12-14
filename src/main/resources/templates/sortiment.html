@@ -3,8 +3,7 @@
 <head>
 	<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="../resources/css/styleVerkauf.css" />
 </head>
 
 
@@ -124,26 +123,26 @@
 						<!-- /Advanced winegrower navigation -->
 					</ul>
 				</div>
-						
-						
-						
-   	
-   				<h2><i>Willkommen in unserem Artikelkatalog</i></h2>
 
- 
+		<div class="col">
+  			<div class="col-xs-10 col-md-20">
+
 			<a th:each="article : ${articles}" th:href="@{'/detail/' + ${article.identifier}}" href="detail.html">
-					<div class="content">  
+					<div class="article">  
 					
 						<h4 th:text="${article.name}"></h4>
 						<img th:src="@{'/resources/img/cover/' + ${article.image} + '.jpg'}" class="thumbnail" src="../resources/img/cover/nopic.jpg" alt=""/>
+						<div class="text">
 						<p th:text="${article.alter}"></p>
 						<p th:text="${article.alkoholgehalt}"></p>
 						<p th:text="${article.volumen}"></p>
 						<p th:text="${article.cognacart}"></p>
-						<p th:text="${article.price}"></p>	
-						
+						<p th:text="${article.price}"></p>		
+						</div>
 					</div>
 				</a>
+				</div>
+				 </div>
 				
 <!-- 				<form  method="get" action="warenkorb"> -->
 <!-- 					<button name="searchterm">Zum Warenkorb</button> -->

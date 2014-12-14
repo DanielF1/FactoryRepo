@@ -229,6 +229,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Article article5 = new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac");
 		articleRepository.save(article5);
 		
+		Article article6 = new Article("monnet", "Monnet Cognac", "5 Jahre", Money.of(EUR, 26.95), "40,0 %","0,7 Liter","Cognac");
+		articleRepository.save(article6); 		
+				
 		InventoryItem i1 = new InventoryItem(article1, Units.TEN);
 		inventory.save(i1);
 		
@@ -243,6 +246,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		InventoryItem i5 = new InventoryItem(article5, Units.TEN);
 		inventory.save(i5);
+		
+		InventoryItem i6 = new InventoryItem(article6, Units.TEN);
+		inventory.save(i6);
 		
 		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
 
