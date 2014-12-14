@@ -1,8 +1,6 @@
 package factory.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 import org.joda.money.Money;
 import org.salespointframework.catalog.Product;

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.AdminTasksManager;
-import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.EmployeeRepository;
 import factory.model.Location;
@@ -162,8 +161,10 @@ class AdminController {
 		 
 		@RequestMapping(value="/addEmployee/{id}", method=RequestMethod.GET)
 	    public String addEmployee(@PathVariable Long id, Model model) {
+			
 			model.addAttribute("id", id);
-	        return "addEmployee";
+	        
+			return "addEmployee";
 	    }
 		
 		@RequestMapping(value="/addedEmployee", method=RequestMethod.POST)
@@ -181,16 +182,33 @@ class AdminController {
 			
 	    	return "redirect:/adminLocList";
 	    }
-		
+	
 		@RequestMapping(value="/editDepartments/{id}", method = RequestMethod.GET)
 		public String editDepartments(@PathVariable Long id, Model model){	
 			
 			model.addAttribute("location", locationRepository.findOne(id));
-			model.addAttribute("id", id);
 			
 			return "editDepartments";
 			}
-		 	
+	
+		@RequestMapping(value="/editOneDep/{id}", method = RequestMethod.GET)
+		public String editOneDepartment(@PathVariable Long id, Model model){	
+			
+			model.addAttribute("dep", departmentRepository.findOne(id));
+			
+			return "editOneDep";
+		}
+		
+		@RequestMapping(value="/editDepartment", method = RequestMethod.POST)
+		public String editDep(	@RequestParam("id") Long id,
+								@RequestParam("quantity") double quantity,
+								@RequestParam("capacity") double capacity){
+			
+			adminTasksManager.editDepartment(id, quantity, capacity);
+			
+			return "redirect:/adminLocList";
+			}
+		
 		@RequestMapping(value="/addDepartment", method=RequestMethod.POST)
 		public String addedDepartment(	@RequestParam ("id") Long id,
 		   								@RequestParam ("sort") String sort) {
@@ -199,17 +217,26 @@ class AdminController {
 				
 			return result;
 		}
-			
-		
+
 		//Übersicht aller Arbeiter in allen Standorten
 		
 	    @RequestMapping(value = "/employeeList", method = RequestMethod.GET)
-		public String mitarbeiterUebersicht(ModelMap modelMap){
+		public String employeeList(ModelMap modelMap){
 	    	
 	    	modelMap.addAttribute("employees", employeeRepository.findAll());
 	    	
 			return "employeeList";
 		}
-	    
-	   
+	  
+	//
+	//Funktion um Mitarbeiter zu entlassen ist unvollständig und muss erweitert werden,
+	//da nicht nur aus dem EmployeeRepo sondern auch aus der Liste gelöscht werden muss
+	//
+//	    @RequestMapping(value = "/dismissEmployee/{id}", method = RequestMethod.GET)
+//		public String dismissEmployee(@PathVariable Long id){
+//	    	
+//	    	adminTasksManager.dismissEmployee(id);
+//	    	
+//			return "employeeList";
+//		}
 }

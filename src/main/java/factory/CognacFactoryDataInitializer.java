@@ -141,20 +141,22 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		//Inizialize Departments
 		
-		Department d1 = departmentRepository.save(new Department("Flaschenlager"));
-		Department d2 = departmentRepository.save(new Department("Fasslager"));
-		Department d4 = departmentRepository.save(new Department("Produktion"));
+		Department d1 = departmentRepository.save(new Department("Flaschenlager", 100));
+		Department d2 = departmentRepository.save(new Department("Fasslager", 200));
+		Department d3 = departmentRepository.save(new Department("Weinlager", 300));
+		Department d4 = departmentRepository.save(new Department("Produktion", 0, 100));
 		Department d5 = departmentRepository.save(new Department("Verkauf"));
 		Department d6 = departmentRepository.save(new Department("Verwaltung"));
 		
 		List<Department> list5 = new ArrayList<Department>();
 		list5.add(d5);
 		list5.add(d4);
-		list5.add(d2);
+		list5.add(d3);
 		
 		List<Department> list6 = new ArrayList<Department>();
 		list6.add(d2);
 		list6.add(d5);
+		
 	
 		List<Department> list7 = new ArrayList<Department>();
 		list7.add(d6);
@@ -163,7 +165,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list8.add(d1);
 		list8.add(d4);
 		list8.add(d5);
-		list8.add(d2);
+		list8.add(d3);
 		
 		
 		//Inizialize Employees

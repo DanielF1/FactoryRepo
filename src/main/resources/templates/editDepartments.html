@@ -5,11 +5,18 @@
 	</head>
 
 	<body>
-		<h4 th:text="${location.name}"></h4>
+		<h4>Abteilungen in diesem Standort</h4>
 		<div th:each="dep : ${location.departments}">
 			<table>
 				<tr>
 					<td th:text="${dep.name}"></td>
+					<td th:text="${dep.quantity}"></td>
+					<td th:text="${dep.capacity}"></td>
+					<td>
+						<form method="get" role="form" th:action="@{/editOneDep/} + ${dep.id}">
+							<button type="submit">Bearbeiten</button>
+						</form>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -22,7 +29,7 @@
 					<option>Verwaltung</option>
 					<option>Produktion</option>
 				</select>
-				<input name="id" type="hidden" th:value="${id}"/>
+				<input name="id" type="hidden" th:value="${location.id}"/>
 				<button type="submit">Abteilung hinzufügen</button>
 			</form>
             

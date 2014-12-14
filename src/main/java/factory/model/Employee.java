@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import org.apache.catalina.User;
 import org.salespointframework.useraccount.UserAccount;
 
 

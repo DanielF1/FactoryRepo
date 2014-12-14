@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	</head>
+
+	<body>
+
+		<form method="post" th:action="@{/editDepartment}">
+            <table>
+                <tr><td>Abteilung: </td><td th:text="${dep.name}"></td></tr>
+                <tr><td>Lagerbestand: </td><td><input type="text" name="quantity" th:value="${dep.quantity}"/></td></tr>
+                <tr><td>Produktionsauslastung: </td><td><input type="text" name="capacity" th:value="${dep.capacity}"/></td></tr>
+            	
+            	<tr><td><input name="id" type="hidden" th:value="${dep.id}"/></td></tr>
+                <tr><td><button type="submit">Speichern!</button></td></tr>
+                
+           	</table>
+           	
+        </form>
+	</body>
+</html>

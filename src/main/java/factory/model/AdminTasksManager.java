@@ -140,6 +140,22 @@ public class AdminTasksManager {
 		employeeRepository.save(employee);
 	}
 	
+	public void dismissEmployee(Long id){
+		Employee employee = employeeRepository.findOne(id);
+		employeeRepository.delete(employee);
+		
+	}
+	
+	
+	public void editDepartment(Long id, double quantity, double capacity){
+		
+		Department department = departmentRepository.findOne(id);
+		department.setQuantity(quantity);
+		department.setCapacity(capacity);
+		
+		departmentRepository.save(department);
+	}
+	
 	public String addDepartment(Long id, String sort){
 		
 		Department department = new Department(sort);
