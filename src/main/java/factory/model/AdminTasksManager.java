@@ -147,14 +147,14 @@ public class AdminTasksManager {
 	}
 	
 	
-	public void editDepartment(Long id, double quantity, double capacity){
-		
-		Department department = departmentRepository.findOne(id);
-		department.setQuantity(quantity);
-		department.setCapacity(capacity);
-		
-		departmentRepository.save(department);
-	}
+//	public void editDepartment(Long id, double quantity, double capacity){
+//		
+//		Department department = departmentRepository.findOne(id);
+//		department.setQuantity(quantity);
+//		department.setCapacity(capacity);
+//		
+//		departmentRepository.save(department);
+//	}
 	
 	public String addDepartment(Long id, String sort){
 		

@@ -1,26 +1,26 @@
 package factory.model;
 
-public class WineStock {
-	private double quantity; //Wert gibt an, wie viele Einheiten sich im Lager befinden
-	private double capacity; //Wert gibt an, wie viel Produktionskapazität noch vorhanden ist
+import javax.persistence.Entity;
+
+@Entity
+public class WineStock extends Department {
 	
-	public WineStock(double quantity, double capacity) {
-		this.quantity = quantity;
-		this.capacity = capacity;
-	}
+	private double amount;
 	
-	public double getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-	public double getCapacity() {
-		return capacity;
-	}
-	public void setCapacity(double capacity) {
-		this.capacity = capacity;
-	}
+	@Deprecated
+	public WineStock() {}
 	
+	public WineStock(String name, double amount) {
 	
+		super(name);
+		this.amount = amount;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
 }

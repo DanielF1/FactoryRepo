@@ -11,9 +11,7 @@ public class Department {
 	@GeneratedValue
 	private Long id;
 	private String name;
-	private double quantity; //Wert gibt an, wie viele Einheiten sich im Lager befinden
-	private double capacity; //Wert gibt an, wie viel Produktionskapazität noch vorhanden ist
-	
+
 	@Deprecated
 	public Department(){}
 
@@ -21,17 +19,6 @@ public class Department {
 		this.name = name;
 	}
 	
-	public Department(String name, double capacity) {
-		this.name = name;
-		this.capacity = capacity;
-	}
-	
-	public Department(String name, double quantity, double capacity) {
-		this.name = name;
-		this.quantity = quantity;
-		this.capacity = capacity;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -40,23 +27,7 @@ public class Department {
 		this.name = name;
 	}
 
-	public double getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-
 	public Long getId() {
 		return id;
-	}
-	
-	public double getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(double capacity) {
-		this.capacity = capacity;
 	}
 }

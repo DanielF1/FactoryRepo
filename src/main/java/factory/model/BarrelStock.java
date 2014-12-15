@@ -1,27 +1,31 @@
 package factory.model;
 
+import java.util.List;
 
-public class BarrelStock {
-	BarrelList barrellist;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+@Entity
+public class BarrelStock extends Department {
 	
-	public BarrelStock(BarrelList barrellist) {
-		this.barrellist = barrellist;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Barrel> barrels;
+	
+	@Deprecated
+	public BarrelStock() {}
+	
+	public BarrelStock(String name, List<Barrel> mapBarrels){
+		
+		super(name);
+		this.barrels = mapBarrels;
+	}
+	
+	public List<Barrel> getBarrels() {
+		return barrels;
 	}
 
-	public Iterable<Barrel> getAllBarrels() {
-		return barrellist.findAll();
+	public void setBarrels(List<Barrel> barrels) {
+		this.barrels = barrels;
 	}
-    
-	public Barrel findOneBarrel(Long Id){
-		return barrellist.findOne(Id);
-	}
-	
-	public void deleteOne(Long Id){
-		barrellist.delete(Id);
-	}
-	
-	public void saveBarrel(Barrel barrel) {
-		barrellist.save(barrel);
-	}
-
 }

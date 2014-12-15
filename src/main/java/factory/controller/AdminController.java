@@ -52,7 +52,7 @@ class AdminController {
 		public String standortUebersicht(ModelMap modelMap){
 	    	
 	    	modelMap.addAttribute("locations", locationRepository.findAll());
-	    	
+	    	System.out.println(locationRepository.findAll());
 			return "adminLocList";
 		}
 	
@@ -101,7 +101,7 @@ class AdminController {
 	    	
 	    	adminTasksManager.addLocation(name, address, city, telefon, mail);
 	    		    	
-	    	return "addedLocation";
+	    	return "redirect:/adminLocList";
 	    }
 	    
 	    @RequestMapping(value="/editLocation/{id}", method = RequestMethod.GET)
@@ -199,15 +199,15 @@ class AdminController {
 			return "editOneDep";
 		}
 		
-		@RequestMapping(value="/editDepartment", method = RequestMethod.POST)
-		public String editDep(	@RequestParam("id") Long id,
-								@RequestParam("quantity") double quantity,
-								@RequestParam("capacity") double capacity){
-			
-			adminTasksManager.editDepartment(id, quantity, capacity);
-			
-			return "redirect:/adminLocList";
-			}
+//		@RequestMapping(value="/editDepartment", method = RequestMethod.POST)
+//		public String editDep(	@RequestParam("id") Long id,
+//								@RequestParam("quantity") double quantity,
+//								@RequestParam("capacity") double capacity){
+//			
+//			adminTasksManager.editDepartment(id, quantity, capacity);
+//			
+//			return "redirect:/adminLocList";
+//			}
 		
 		@RequestMapping(value="/addDepartment", method=RequestMethod.POST)
 		public String addedDepartment(	@RequestParam ("id") Long id,

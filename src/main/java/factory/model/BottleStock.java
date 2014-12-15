@@ -1,54 +1,33 @@
 package factory.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class BottleStock {
-
-	private @Id @GeneratedValue Long id;
-	private String name;
+public class BottleStock extends Department{
+	
 	private int quantity_empty;
 	private int quantity_full;
+	@OneToMany(cascade = CascadeType.ALL)
 
+	private static List<Bottle> emptybottles;	
 	@OneToMany(cascade = CascadeType.ALL)
-	private static List<Bottle> emptybottles = new ArrayList<Bottle>();
+	private static List<Bottle> fullbottles;
+
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	private static  List<Bottle> fullbottles = new ArrayList<Bottle>();
+	@Deprecated
+	public BottleStock(){}
 	
-	public BottleStock(String name, List<Bottle> emptybottles, List<Bottle> fullbottles)
-	{
-		this.name = name;
+	public BottleStock(String name, List<Bottle> emptybottles, List<Bottle> fullbottles){
+		
+		super(name);
 		this.emptybottles = emptybottles;
 		this.fullbottles = fullbottles;
 	}
 
-
-
-	BottleStock(){}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public static List<Bottle> getEmptybottles() {
 		return emptybottles;
@@ -80,12 +59,5 @@ public class BottleStock {
 
 	public void setQuantity_full(int quantity_full) {
 		this.quantity_full = quantity_full;
-	}
-
-
-
-	public static void remove(Bottle bottle) {
-		
-		
 	}
 }
