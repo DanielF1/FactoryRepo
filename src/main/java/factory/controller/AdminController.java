@@ -101,7 +101,7 @@ class AdminController {
 	    	
 	    	adminTasksManager.addLocation(name, address, city, telefon, mail);
 	    		    	
-	    	return "addedLocation";
+	    	return "redirect:/adminLocList";
 	    }
 	    
 	    @RequestMapping(value="/editLocation/{id}", method = RequestMethod.GET)

@@ -57,6 +57,12 @@
 						
 					
 						<!-- Advanced administrator navigation -->
+						
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
+							<a href="orders.html">Bestellungen</a>
+						</li>
+						
+						
 						<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
 					   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
 					      		Standort <span class="caret"></span>
@@ -72,8 +78,11 @@
 						</li>
 
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="locationwithwine">Weinmenge</a>
+							<a href="locationwithwine.html">Weinmenge</a>
 						</li>
+						
+						
+						
 						<!-- /Advanced administrator navigation -->
 
 
@@ -117,7 +126,7 @@
 						</li>
 
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
-							<a href="locationwithwine">Weinmenge</a>
+							<a href="locationwithwine.html">Weinmenge</a>
 						</li>
 						<!-- /Advanced winegrower navigation -->
 					</ul>
@@ -130,7 +139,7 @@
 
    	<div th:unless="${cart.empty}"> 
    	
-	<table align="center" style="width:95%">
+	<table align="center" style="width:70%">
 	 		
  		<thead>
            <tr>
@@ -165,7 +174,7 @@
 			</tr>	
 	</table>
 				
-	<table>		
+	<table >		
 					
 			<form method="post" th:action="@{/checkout}">
                 <button type="submit" class="btn btn-default btn-lg">
@@ -181,8 +190,8 @@
 			
 	</table>	
 				
-			 <p align="right">Gesamtsumme:</p>
-			 <p align="right" th:text="${cart.price}"></p>
+			 <p align="center" >Gesamtsumme:</p>
+			 <p align="center" th:text="${cart.price}"></p>
 	</div>
 	
 <!-- 			<form method="get" action="/sortiment"> -->

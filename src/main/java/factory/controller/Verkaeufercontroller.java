@@ -22,7 +22,7 @@ import factory.model.validation.RegistrationForm;
 
 
 @Controller
-@PreAuthorize("hasRole('ROLE_SALESMAN')")
+@PreAuthorize("hasRole('ROLE_SALESMAN') || hasRole('ROLE_ADMIN')" )
 public class Verkaeufercontroller {
 	
 	private final OrderManager<Order> orderManager;
