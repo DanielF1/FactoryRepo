@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.Barrel;
-import factory.model.BarrelList;
+import factory.model.BarrelRepository;
 import factory.model.BarrelStock;
 import factory.model.Bottle;
 import factory.model.BottleStock;
-import factory.model.BottleStockList;
 import factory.model.CookBookRepository;
+import factory.model.Department;
+import factory.model.DepartmentRepository;
 import factory.model.Ingredient;
+import factory.model.LocationRepository;
 import factory.model.MaxStore;
 import factory.model.Recipe;
 
@@ -29,18 +31,21 @@ import factory.model.Recipe;
 public class CookBookController {
 	
 	private final CookBookRepository cookbookrepository;
-	private BottleStockList bottlestocklist;
-	BarrelStock barrelstock;
+	private final DepartmentRepository departmentRepository;
+	private final LocationRepository locationRepository;
+	
+//	BarrelStock barrelstock;
+//	BottleStock bottlestock;
 
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 	
 	
 	@Autowired 
-	public CookBookController(CookBookRepository cookbookrepository, BottleStockList bottlestocklist, BarrelList barrellist)
+	public CookBookController(CookBookRepository cookbookrepository, DepartmentRepository departmentRepository, LocationRepository locationRepository)
 	{
 		this.cookbookrepository = cookbookrepository;
-		this.bottlestocklist = bottlestocklist;
-		this.barrelstock = new BarrelStock (barrellist);
+		this.departmentRepository = departmentRepository;
+		this.locationRepository = locationRepository;
 	}
 	
 	
@@ -50,7 +55,10 @@ public class CookBookController {
 	public List<MaxStore> calcMaxStore()
 	{
 		List<MaxStore> maxstorelist = new ArrayList<MaxStore>();
-		Iterable<Barrel> allBarrels = barrelstock.getAllBarrels();
+		
+		
+		
+		List<Barrel> allBarrels = barrelstock.getBarrels();
 		
 		/*
 		 * HashMap: return a sorted list 
@@ -107,7 +115,7 @@ public class CookBookController {
 	{
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
-		model.addAttribute("bottlestock", bottlestocklist.findAll());
+		model.addAttribute("bottlestock", bottlestock.getEmptybottles());
 
 		return "cookbook";
 	}
@@ -186,8 +194,6 @@ public class CookBookController {
 		int missedBottle = missedBottles;
 		
 
-		for(BottleStock bottlestock : bottlestocklist.findAll())
-		{
 			int quantity_empty = bottlestock.getQuantity_empty();
 			
 			for(Bottle bottle : bottlestock.getEmptybottles())
@@ -213,7 +219,6 @@ public class CookBookController {
 				}
 			}
 	
-		}
 		
 		return missedBottle;
 	}
@@ -326,7 +331,7 @@ public class CookBookController {
 									
 									while(newAmount > 0)
 									{
-										for(Barrel barrel : barrelstock.getAllBarrels())
+										for(Barrel barrel : barrelstock.getBarrels())
 										{
 											if((barrel.getContent().equals(maxstore.getContent())) & (barrel.getAmount() > 0))
 											{
@@ -337,7 +342,7 @@ public class CookBookController {
 												{
 													barrel.setAmount(0);
 													System.out.println("4: " + barrel.getAmount());
-													barrelstock.saveBarrel(barrel);
+//													barrelstock.saveBarrel(barrel);
 													newAmount = newAmount - barrelAmount;
 													System.out.println("5: " + newAmount);
 												}
@@ -345,7 +350,7 @@ public class CookBookController {
 												{
 													barrel.setAmount(barrelAmount - newAmount);
 													System.out.println("6: " + barrel.getAmount());
-													barrelstock.saveBarrel(barrel);
+//													barrelstock.saveBarrel(barrel);
 													newAmount = 0;
 													break;
 												}
@@ -383,7 +388,7 @@ public class CookBookController {
 		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
-		model.addAttribute("bottlestock", bottlestocklist.findAll());
+//		model.addAttribute("bottlestock", bottlestocklist.findAll());
 		
 		return "cookbook";
 	}
@@ -400,7 +405,7 @@ public class CookBookController {
 	
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
-		model.addAttribute("bottlestock", bottlestocklist.findAll());
+//		model.addAttribute("bottlestock", bottlestocklist.findAll());
 		
 		return "cookbook";
 	}

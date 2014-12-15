@@ -1,53 +1,29 @@
 package factory.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class BottleStock {
-
-	private @Id @GeneratedValue Long id;
-	private String name;
+public class BottleStock extends Department{
+	
 	private int quantity_empty;
 	private int quantity_full;
-
 	@OneToMany(cascade = CascadeType.ALL)
-	private  List<Bottle> emptybottles = new ArrayList<Bottle>();
-	
+	private  List<Bottle> emptybottles;	
 	@OneToMany(cascade = CascadeType.ALL)
-	private  List<Bottle> fullbottles = new ArrayList<Bottle>();
+	private  List<Bottle> fullbottles;
 	
-	public BottleStock(String name, List<Bottle> emptybottles, List<Bottle> fullbottles)
-	{
-		this.name = name;
+	@Deprecated
+	public BottleStock(){}
+	
+	public BottleStock(String name, List<Bottle> emptybottles, List<Bottle> fullbottles){
+		
+		super(name);
 		this.emptybottles = emptybottles;
 		this.fullbottles = fullbottles;
-	}
-
-
-
-	BottleStock(){}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public List<Bottle> getEmptybottles() {

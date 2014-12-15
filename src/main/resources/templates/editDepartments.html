@@ -10,8 +10,6 @@
 			<table>
 				<tr>
 					<td th:text="${dep.name}"></td>
-					<td th:text="${dep.quantity}"></td>
-					<td th:text="${dep.capacity}"></td>
 					<td>
 						<form method="get" role="form" th:action="@{/editOneDep/} + ${dep.id}">
 							<button type="submit">Bearbeiten</button>

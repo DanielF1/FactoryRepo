@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import videoshop.AbstractIntegrationTests;
 import factory.model.Barrel;
-import factory.model.BarrelList;
+import factory.model.BarrelRepository;
 
 
 public class BarrelListTest extends AbstractIntegrationTests {
 	
 	@Autowired
-	BarrelList barrellist;
+	BarrelRepository barrellist;
 	
 	@Test
 	public void test() {
