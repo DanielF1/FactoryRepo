@@ -120,6 +120,11 @@
 
 
 						<!-- Advanced brewer navigation -->
+						
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+							<a href="warenkorb.html">Warenkorb</a>
+						</li>
+						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
 							<a href="cookbook.html">Rezepte</a>
 						</li>
@@ -132,8 +137,9 @@
 
 						<!-- Advanced barrelmaker navigation -->
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
-							<a href="BarrelList.html">BarrelList</a>
+							<a href="warenkorb.html">Warenkorb</a>
 						</li>
+						
 						<!-- /Advanced barrelmaker navigation -->
 
 

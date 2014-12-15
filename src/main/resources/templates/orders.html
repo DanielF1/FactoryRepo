@@ -6,7 +6,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
 
-    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../resources/css/styleLocation.css" rel="stylesheet" />
 </head>
 
 
@@ -87,10 +87,8 @@
 						
 						<!-- /Advanced administrator navigation -->
 
-
-						<!-- Advanced salesman navigation -->
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="orders.html">Bestellungen</a>
+							<a href="warenkorb.html">Warenkorb</a>
 						</li>
 
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
@@ -139,12 +137,12 @@
 	<div class="all">
 		<header>
 		
-			<h2 th:text="#{orders.title}">Bestellungen</h2>
+<!-- 			<h2 th:text="#{orders.title}">Bestellungen</h2> -->
 		
 		</header>
 		
-		<div class="content">
-			<table>
+		<div class="B">
+			<table border="1">
 				<caption th:text="#{orders.completed}"></caption>
 				<thead>
 					<tr>
