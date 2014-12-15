@@ -4,6 +4,11 @@
 	<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<link rel="stylesheet" type="text/css" href="../resources/css/styleVerkauf.css" />
+	
+	 <link href="../resources/css/header.css" rel="stylesheet" />
+
+	<img src="../resources/img/cover/wein.jpg" width="1348" height="250" alt="Wein"/>
+	
 </head>
 
 
@@ -131,7 +136,7 @@
 					<div class="article">  
 					
 						<h4 th:text="${article.name}"></h4>
-						<img th:src="@{'/resources/img/cover/' + ${article.image} + '.jpg'}" class="thumbnail" src="../resources/img/cover/nopic.jpg" alt=""/>
+						<img  th:src="@{'/resources/img/cover/' + ${article.image} + '.jpg'}" class="thumbnail" src="../resources/img/cover/nopic.jpg" alt=""/>
 						<div class="text">
 						<p th:text="${article.alter}"></p>
 						<p th:text="${article.alkoholgehalt}"></p>
