@@ -12,7 +12,6 @@ public class BottleStock extends Department{
 	private int quantity_empty;
 	private int quantity_full;
 	@OneToMany(cascade = CascadeType.ALL)
-
 	private static List<Bottle> emptybottles;	
 	@OneToMany(cascade = CascadeType.ALL)
 	private static List<Bottle> fullbottles;

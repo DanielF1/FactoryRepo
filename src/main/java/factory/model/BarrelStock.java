@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 public class BarrelStock extends Department {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Barrel> barrels;
+	private static List<Barrel> barrels;
 	
 	@Deprecated
 	public BarrelStock() {}
@@ -22,7 +22,7 @@ public class BarrelStock extends Department {
 		this.barrels = mapBarrels;
 	}
 	
-	public List<Barrel> getBarrels() {
+	public static List<Barrel> getBarrels() {
 		return barrels;
 	}
 
