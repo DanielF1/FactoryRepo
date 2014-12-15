@@ -199,9 +199,12 @@ public class LocationManagement {
 			Department dept) {
 		double quantity = oldQuantity + newQuantity;
 		dept.setQuantity(quantity);
+		System.out.println("wine: " + quantity);
+		System.out.println("wine2: " + dept.getQuantity());
 		// #TODO count capacity
 		double newCapacity = dept.getCapacity() - quantity;
 		dept.setCapacity(newCapacity);
 	}
+	
 
 }

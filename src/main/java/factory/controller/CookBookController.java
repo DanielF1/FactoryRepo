@@ -3,7 +3,12 @@ package factory.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Quantity;
+import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import factory.model.Article;
+import factory.model.ArticleRepository;
 import factory.model.Barrel;
 import factory.model.BarrelList;
 import factory.model.BarrelStock;
@@ -31,16 +38,21 @@ public class CookBookController {
 	private final CookBookRepository cookbookrepository;
 	private BottleStockList bottlestocklist;
 	BarrelStock barrelstock;
+	private final Inventory<InventoryItem> inventory;
+	private final ArticleRepository articlerepository;
 
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 	
 	
 	@Autowired 
-	public CookBookController(CookBookRepository cookbookrepository, BottleStockList bottlestocklist, BarrelList barrellist)
+	public CookBookController(CookBookRepository cookbookrepository, BottleStockList bottlestocklist,
+			BarrelList barrellist, Inventory<InventoryItem> inventory, ArticleRepository articlerepository)
 	{
 		this.cookbookrepository = cookbookrepository;
 		this.bottlestocklist = bottlestocklist;
 		this.barrelstock = new BarrelStock (barrellist);
+		this.inventory = inventory;
+		this.articlerepository = articlerepository;
 	}
 	
 	
@@ -368,6 +380,19 @@ public class CookBookController {
 												
 												Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
 												BottleStock.getFullbottles().add(b1);
+												
+										    	for(Article article : articlerepository.findAll())
+										    	{
+										    		if(article.getName().equals(recipe.getName()))
+										    		{
+										    			Optional<InventoryItem> item = inventory.findByProductIdentifier(article.getIdentifier());
+										    	    	Quantity quantity = item.map(InventoryItem::getQuantity).orElse(Units.ZERO);
+										    	    	
+										    	    	quantity.getAmount().plus();
+
+										    		}
+										    	}
+
 											}
 										}
 										else

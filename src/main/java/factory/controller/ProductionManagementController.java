@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import factory.model.Department;
 import factory.model.Location;
 import factory.model.LocationRepository;
 
@@ -30,7 +31,13 @@ public class ProductionManagementController {
 		List<Location> resultList = new ArrayList<>();
 		for(Location location : locationRepository.findAll())
 		{
-			if(location.getDepartments().contains(Searchterm)){resultList.add(location);}
+			for(Department department : location.getDepartments())
+			{
+				if(department.getName().contains(Searchterm))
+				{
+					resultList.add(location);
+				}
+			}
 		}
 		
 		modelMap.addAttribute("locations", resultList);

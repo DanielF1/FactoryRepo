@@ -52,7 +52,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final CookBookRepository cookbookrepository;
 	private final BarrelList barrelList;
 	private final BottleStockList bottlestocklist;
-//	private final BarrelStock_Inter barrelstock_inter;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager,
@@ -94,7 +93,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		initializeLocationsAndUsers(locationRepository, departmentRepository, employeeRepository, userAccountManager, customerRepository);
 		initializeSortiment();
 		initializeCookBook(cookbookrepository);
-//		initializeStock2(stock2);
 		initializeBarrelList(barrelList);
 		initializeBottlestock(bottlestocklist);
 	}
@@ -144,7 +142,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Department d1 = departmentRepository.save(new Department("Flaschenlager", 100));
 		Department d2 = departmentRepository.save(new Department("Fasslager", 200));
 		Department d3 = departmentRepository.save(new Department("Weinlager", 300));
-		Department d4 = departmentRepository.save(new Department("Produktion", 0, 100));
+		Department d4 = departmentRepository.save(new Department("Produktion", 230, 100));
 		Department d5 = departmentRepository.save(new Department("Verkauf"));
 		Department d6 = departmentRepository.save(new Department("Verwaltung"));
 		
@@ -321,7 +319,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		full.add(b1);
 		
-//		stock2.save(new BottleStock("Lager A", 100, empty, 20, full));
 		bottlestocklist.save(new BottleStock("Bottle Stock A", empty, full));
 	}
 	
