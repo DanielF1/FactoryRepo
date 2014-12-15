@@ -136,9 +136,11 @@
 					</ul>
 				</div>
 
-    	<h3><i>Willkommen im Warenkorb</i></h3>  
+
+<h2>Willkommen im Warenkorb</h2>
 
    	<div th:unless="${cart.empty}"> 
+   	
    	
 	<table align="center" style="width:70%">
 	 		
@@ -191,7 +193,7 @@
 			
 	</table>	
 				
-			 <p align="center" >Gesamtsumme:</p>
+			 <p align="center"  ><b>Gesamtsumme:</b></p>
 			 <p align="center" th:text="${cart.price}"></p>
 	</div>
 	
