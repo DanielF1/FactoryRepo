@@ -4,6 +4,10 @@
 	<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<link rel="stylesheet" type="text/css" href="../resources/css/styleVerkauf.css" />
+	
+	 <link href="../resources/css/header.css" rel="stylesheet" />
+
+	<img src="../resources/img/cover/wein.jpg" width="1348" height="250" alt="Wein"/>
 </head>
 
 
@@ -11,7 +15,7 @@
 <div class="main-wrapper">
 	<!-- Header -->
 	<div class="header">
-		<div class="header-title">Cognac Fabrik Feuerwasser</div>
+		<div class="header-title">Cognac Fabrik <br/> Feuerwasser</div>
 	</div>
 	<!-- /Header -->
 
@@ -19,8 +23,8 @@
 	<div class="main-container content">
 		<div class="col-lg-12">
 			<div class="row">
-				<div class="col-lg-7">	</div>
-				<div class="col-lg-5">	
+				<div class="col-lg-10">	</div>
+				<div class="col-lg-20">	
 
 					<!-- Log in / Log out navigation -->
 					
@@ -43,91 +47,91 @@
 
 					<!-- Log in / Log out navigation -->
 
-				</div>
-			</div>
+<!-- 				</div> -->
+<!-- 			</div> -->
 
-			<div class="row">
-				<div class="col-lg-2"></div>
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col-lg-2"></div> -->
 
-				<div class="col-lg-8">
-					<ul class="nav nav-pills">
-						<li role="presentation" class="active"><a href="index.html">Home</a></li>
-						<li role="presentation"><a href="sortiment.html">Sortiment</a></li>
-						<li role="presentation"><a href="warenkorb.html">Warenkorb</a></li>
+<!-- 				<div class="col-lg-8"> -->
+<!-- 					<ul class="nav nav-pills"> -->
+<!-- 						<li role="presentation" class="active"><a href="index.html">Home</a></li> -->
+<!-- 						<li role="presentation"><a href="sortiment.html">Sortiment</a></li> -->
+<!-- 						<li role="presentation"><a href="warenkorb.html">Warenkorb</a></li> -->
 						
 						
 						
-						<!-- Advanced administrator navigation -->
+<!-- 						Advanced administrator navigation -->
 						
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="orders.html">Bestellungen</a>
-						</li>
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+<!-- 							<a href="orders.html">Bestellungen</a> -->
+<!-- 						</li> -->
 						
-						<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-					   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
-					      		Standort <span class="caret"></span>
-					    	</a>
-					    	<ul class="dropdown-menu" role="menu">
-						    	<li><a href="addLocation.html">Standort hinzufügen</a></li>
-						    	<li><a href="adminLocList.html">Standortübersicht</a></li>
-							</ul>
-						</li>
+<!-- 						<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+<!-- 					   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true"> -->
+<!-- 					      		Standort <span class="caret"></span> -->
+<!-- 					    	</a> -->
+<!-- 					    	<ul class="dropdown-menu" role="menu"> -->
+<!-- 						    	<li><a href="addLocation.html">Standort hinzufügen</a></li> -->
+<!-- 						    	<li><a href="adminLocList.html">Standortübersicht</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
 
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="employeeList.html">Mitarbeiterübersicht</a>
-						</li>
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+<!-- 							<a href="employeeList.html">Mitarbeiterübersicht</a> -->
+<!-- 						</li> -->
 
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="locationwithwine">Weinmenge</a>
-						</li>
-						<!-- /Advanced administrator navigation -->
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+<!-- 							<a href="locationwithwine">Weinmenge</a> -->
+<!-- 						</li> -->
+<!-- 						/Advanced administrator navigation -->
 
 
-						<!-- Advanced salesman navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="orders.html">Bestellungen</a>
-						</li>
+<!-- 						Advanced salesman navigation -->
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
+<!-- 							<a href="orders.html">Bestellungen</a> -->
+<!-- 						</li> -->
 
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="register.html">Kundenregistrierung</a>
-						</li>
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
+<!-- 							<a href="register.html">Kundenregistrierung</a> -->
+<!-- 						</li> -->
 						
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="customerlist.html">Kundenliste</a>
-						</li>
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
+<!-- 							<a href="customerlist.html">Kundenliste</a> -->
+<!-- 						</li> -->
 											
-						<!-- /Advanced salesman navigation -->
+<!-- 						/Advanced salesman navigation -->
 
 
-						<!-- Advanced brewer navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
-							<a href="cookbook.html">Rezepte</a>
-						</li>
+<!-- 						Advanced brewer navigation -->
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')"> -->
+<!-- 							<a href="cookbook.html">Rezepte</a> -->
+<!-- 						</li> -->
 
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
-							<a href="BarrelList.html">BarrelList</a>
-						</li>
-						<!-- /Advanced brewer navigation -->
-
-
-						<!-- Advanced barrelmaker navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
-							<a href="BarrelList.html">BarrelList</a>
-						</li>
-						<!-- /Advanced barrelmaker navigation -->
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')"> -->
+<!-- 							<a href="BarrelList.html">BarrelList</a> -->
+<!-- 						</li> -->
+<!-- 						/Advanced brewer navigation -->
 
 
-						<!-- Advanced winegrower navigation -->
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
-							<a href="http://localhost:8080/form">Weinanlieferung</a>
-						</li>
+<!-- 						Advanced barrelmaker navigation -->
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')"> -->
+<!-- 							<a href="BarrelList.html">BarrelList</a> -->
+<!-- 						</li> -->
+<!-- 						/Advanced barrelmaker navigation -->
 
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
-							<a href="locationwithwine.html">Weinmenge</a>
-						</li>
-						<!-- /Advanced winegrower navigation -->
-					</ul>
-				</div>
+
+<!-- 						Advanced winegrower navigation -->
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')"> -->
+<!-- 							<a href="http://localhost:8080/form">Weinanlieferung</a> -->
+<!-- 						</li> -->
+
+<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')"> -->
+<!-- 							<a href="locationwithwine.html">Weinmenge</a> -->
+<!-- 						</li> -->
+<!-- 						/Advanced winegrower navigation -->
+<!-- 					</ul> -->
+<!-- 				</div> -->
 				
 		<h3>Abteilungen in diesem Standort</h3>
 		<div  th:each="dep : ${location.departments}">
@@ -157,6 +161,8 @@
 			</form>
             
             </div>
+            </div>
+            
             </div>
             </div>
             </div>
