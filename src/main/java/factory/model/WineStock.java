@@ -23,5 +23,4 @@ public class WineStock extends Department {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-
 }

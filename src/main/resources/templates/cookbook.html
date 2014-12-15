@@ -129,6 +129,10 @@
 
 						<!-- Advanced brewer navigation -->
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+							<a href="cookbook.html">Destillation</a>
+						</li>
+
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
 							<a href="cookbook.html">Rezepte</a>
 						</li>
 
@@ -249,14 +253,31 @@
 									</ul>
 								</ul>
 
-								<button class="btn btn-default">Herstellen</button><br/><br/>
-
+								<select name="selected_bottle_amount">
+									<option value="0.3">0.3</option>
+									<option value="0.7">0.7</option>
+								</select>
+								
+								<button class="btn btn-default">Herstellen</button><br/>
+						
 								<span th:text="${not_enough_0}"></span><br/><span th:text="${not_enough_1}"></span><br/>
 								<span th:text="${not_enough_2}"></span><br/><span th:text="${not_enough_3}"></span><br/>
 								<span th:text="${not_enough_4}"></span><br/><span th:text="${not_enough_5}"></span><br/>
 						
 								<span th:text="${not_enough_bottles}"></span>
 							</form>
+							
+							<!-- buy bottles -->
+							<form th:method="get" th:action="@{/cookbook/buy/bottles}">
+								<select name="bottlesToBuyAmount">
+									<option value="0.3">0.3</option>
+									<option value="0.7">0.7</option>
+									<option value="1.0">1.0</option>
+								</select>
+								<input type="number" name="bottlesToBuyNumber" min="1" placeholder="Flaschenanzahl"/>
+								<button class="btn btn-default">Flaschen bestellen</button><br/><br/>
+							</form>
+							<!-- /buy bottles -->
 						</div>
 				    	<!-- /recipe details -->
 				    </div>
@@ -295,12 +316,24 @@
 							<th>Anzahl leerer Flaschen</th>
 							<th>Volumen</th>
 						</tr>
+<<<<<<< HEAD
 						<tr th:each="bottle : ${bottlestock}">
 							<td><span th:text="${bottle.amount}"></span></td>
+=======
+						<tr th:each="bottlestocks : ${bottlestock}">
+							<td><span th:text="${bottlestocks.quantity_empty}"></span></td>
+							<td>
+								<div th:each="bottle : ${bottlestocks.emptybottles}">
+									<span th:text="${bottle.amount}"></span>
+								</div>
+								
+							</td>
+>>>>>>> origin/master
 						</tr>
 					</table>
 				</div>
 
+<<<<<<< HEAD
 <!-- 				<div class="col-lg-4"> -->
 <!-- 					<table class="table table-condensed"> -->
 <!-- 						<tr class="success"> -->
@@ -313,6 +346,25 @@
 <!-- 						</tr> -->
 <!-- 					</table> -->
 <!-- 				</div> -->
+=======
+				<div class="col-lg-4">
+					<table class="table table-condensed">
+						<tr class="success">
+							<th>Anzahl voller Flaschen</th>
+							<th>Volumen</th>
+						</tr>
+						<tr th:each="bottlestocks : ${bottlestock}">
+							<td><span th:text="${bottlestocks.quantity_full}"></span></td>
+							<td>
+								<div th:each="bottle : ${bottlestocks.fullbottles}">
+									<span th:text="${bottle.name}"></span>
+									<span th:text="${bottle.amount}"></span>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+>>>>>>> origin/master
 
 				<div class="col-lg-2"></div>
 			</div>

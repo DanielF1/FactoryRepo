@@ -7,19 +7,22 @@ import javax.persistence.Id;
 @Entity
 public class Bottle {
 	private @Id @GeneratedValue Long id;
+	private String name;
 	private double amount;
 	
 	/*
-	 * Konstruktor
+	 * constructor
 	 */
-	public Bottle(double amount){
+	public Bottle(String name, double amount)
+	{
+		this.name = name;
 		this.amount = amount;
 	}
 	
 	Bottle(){}
 	
 	/*
-	 * Getter & Setter
+	 * getter & setter
 	 */
 	
 	public Long getId() 
@@ -40,5 +43,13 @@ public class Bottle {
 	public void setAmount(double amount) 
 	{
 		this.amount = amount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

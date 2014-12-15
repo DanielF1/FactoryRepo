@@ -71,14 +71,14 @@ public class CookBookController {
 		 */
 		for (Barrel barrel : allBarrels) 
 		{
-			String inhalt = barrel.getContent();
+			String content = barrel.getContent();
 			
-			if (!map.containsKey(inhalt)) 
+			if (!map.containsKey(content)) 
 			{
-				map.put(inhalt, new ArrayList<Barrel>());
+				map.put(content, new ArrayList<Barrel>());
 			}
 			
-			map.get(inhalt).add(barrel);
+			map.get(content).add(barrel);
 			
 		}
 
@@ -89,15 +89,15 @@ public class CookBookController {
 		{
 			
 			List<Barrel> list = map.get(key);
-			double rechnen = 0;
+			double maxAmount = 0;
 			
 			for (Barrel barrel: list)
 			{
 				
-				rechnen +=barrel.getAmount();
+				maxAmount += barrel.getAmount();
 			}
 			
-			MaxStore maxstore = new MaxStore(key,rechnen);
+			MaxStore maxstore = new MaxStore(key, maxAmount);
 			
 			maxstorelist.add(maxstore);
 			
@@ -188,38 +188,50 @@ public class CookBookController {
 	/*
 	 * check empty bottles
 	 */
-	public int checkEmptyBottles(int missedBottles, double maxDestillate, Long id)
+	public int checkEmptyBottles(int missedBottles, double maxDestillate, Long id, double selectedBottleAmount)
 	{
-		int bottles = 0;
+		int existingBottles = 0;
+		int neededBottles = 0;
 		int missedBottle = missedBottles;
-		
 
+<<<<<<< HEAD
 			int quantity_empty = bottlestock.getQuantity_empty();
 			
+=======
+		/*
+		 * calculate the number of needed bottles that we have in stock
+		 */
+		for(BottleStock bottlestock : bottlestocklist.findAll())
+		{
+>>>>>>> origin/master
 			for(Bottle bottle : bottlestock.getEmptybottles())
 			{
-				double amount = bottle.getAmount();
-	
-				/*
-				 * calculate the necessary bottles
-				 */
-				bottles = (int) (maxDestillate / amount);
-				System.out.println("need-bottles: " + bottles);
-				
-				/*
-				 * check, if there is a lack of empty bottles
-				 * 
-				 * if true: send error message
-				 * else: create new Cognac and update the new resources 
-				 */
-				if(quantity_empty < bottles)
+				if(bottle.getAmount() == selectedBottleAmount)
 				{
-					missedBottle = (int) (bottles - quantity_empty);
-					
+					existingBottles ++;
 				}
+				
 			}
+<<<<<<< HEAD
 	
+=======
+		}
+>>>>>>> origin/master
 		
+		
+		/*
+		 * calculate the necessary bottles
+		 */
+		neededBottles = (int) (maxDestillate / selectedBottleAmount);
+
+		/*
+		 * check, if there is a lack of empty bottles
+		 */
+		if(existingBottles < neededBottles)
+		{
+			missedBottle = (int) (neededBottles - existingBottles);
+		}
+
 		return missedBottle;
 	}
 	
@@ -229,71 +241,66 @@ public class CookBookController {
 	 * if the inventory checks send their okay 
 	 */
 	@RequestMapping(value="/cookbook/wedding/{id}", method = RequestMethod.GET)
-	public String wedding(@PathVariable("id") Long id, Model model, BottleStock bottlestock, Bottle bottle)
+	public String wedding(@PathVariable("id") Long id, Model model,	@RequestParam("selected_bottle_amount") double selected_bottle_amount)
 	{
 		int i = 0; 
+		int j = 0;
 		int not_enough = 0;
 		double maxDestillate = 0;
+		double selectedBottleAmount = selected_bottle_amount;
 
+		
 		/*
-		 * calculate, if there is enough ingredients, or not
+		 * calculate, if there are enough ingredients
 		 */
 		for(Recipe recipe: cookbookrepository.findById(id))
 		{
 			if(recipe.getId() == id)
 			{
-				
-				int ingredientsCheck = recipe.getIngredients().size();
-				System.out.println("Max_Ingredients: " + ingredientsCheck);
-				
-				
 				model.addAttribute("selected_name", recipe.getName());
 				model.addAttribute("selected_ingredients", recipe.getIngredients());
 				
-//				for(BarrelStock barrelstock : barrelstocklist.findAll())
-				{
-					for(MaxStore maxstore : calcMaxStore())
-					{	
-						for(Ingredient ingredient : recipe.getIngredients())
-						{		
-							if(maxstore.getContent().equals(ingredient.getName()))
+				for(MaxStore maxstore : calcMaxStore())
+				{	
+					for(Ingredient ingredient : recipe.getIngredients())
+					{		
+						if(maxstore.getContent().equals(ingredient.getName()))
+						{
+							double barrelContentAmount = maxstore.getAmount();
+							double ingridientDistillateAmount = ingredient.getAmount();
+							
+							if(ingridientDistillateAmount > barrelContentAmount)
 							{
-								double barrelContentAmount = maxstore.getAmount();
-								double ingridientDistillateAmount = ingredient.getAmount();
+								model.addAttribute("not_enough_" + i, "Nicht genug " + ingredient.getName() + " vorhanden."
+										+ " Es fehlen noch " + (ingridientDistillateAmount - barrelContentAmount) + " Liter.");
 								
-								if(ingridientDistillateAmount > barrelContentAmount)
-								{
-									model.addAttribute("not_enough_" + i, "Nicht genug " + ingredient.getName() + " vorhanden."
-											+ " Es fehlen noch " + (ingridientDistillateAmount - barrelContentAmount) + " Liter.");
-									
-									not_enough++;
-									
-								} // /if
-								
-								if((ingridientDistillateAmount < barrelContentAmount) || (ingridientDistillateAmount == barrelContentAmount))
-								{
-									maxDestillate = maxDestillate + ingridientDistillateAmount;
-									System.out.println("maxDestillate: " + maxDestillate);
-								}
-								
-								i++;
-								break;
+								not_enough++;
 								
 							} // /if
-								
-	//							if(!ingredient.getName().equals(barrel.getContent()))
-	//							{
-	//								model.addAttribute("not_exist_" + j, "Die Zutat '" + ingredient.getName() + "' ist nicht vorhanden.");
-	//								not_enough++;
-	//								j++;
-	//								
-	//								System.out.println("out: " + ingredient.getName().equals(barrel.getContent().isEmpty()));
-	//								System.out.println("out: " + ingredient.getName());
-	//								System.out.println("out: " + barrel.getContent());
-	//							}
-						
-	
-						} // /for
+							
+							if((ingridientDistillateAmount < barrelContentAmount) || (ingridientDistillateAmount == barrelContentAmount))
+							{
+								maxDestillate = maxDestillate + ingridientDistillateAmount;
+							}
+							
+							i++;
+							break;
+							
+						} // /if
+							
+//						if(!maxstore.getContent().contains(ingredient.getName()))
+//						{
+//							model.addAttribute("not_exist_" + j, "Die Zutat '" + ingredient.getName() + "' ist nicht vorhanden.");
+//							not_enough++;
+//							j++;
+//							
+//							System.out.println("out: " + ingredient.getName());
+//							System.out.println("out: " + maxstore.getContent());
+//							
+//
+//						}
+					
+
 					} // /for
 				} // /for
 						
@@ -307,13 +314,13 @@ public class CookBookController {
 			{				
 				int missedBottles = 0;
 				
-				if(checkEmptyBottles(missedBottles, maxDestillate, id) > 0)
+				if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount) > 0)
 				{
 					model.addAttribute("not_enough_bottles",  "Nicht genug leere Flaschen vorhanden. Es fehlen noch " 
-										+ checkEmptyBottles(missedBottles, maxDestillate, id) + " Flaschen.");
+										+ checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount) + " Flaschen.");
 				}
 				
-				if(checkEmptyBottles(missedBottles, maxDestillate, id) == 0)
+				if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount) == 0)
 				{
 					for(MaxStore maxstore : calcMaxStore())
 					{ 
@@ -327,7 +334,7 @@ public class CookBookController {
 									 * update barrels
 									 */
 									double newAmount = ingredient.getAmount();
-									System.out.println("1: " + newAmount);
+//									System.out.println("1: " + newAmount);
 									
 									while(newAmount > 0)
 									{
@@ -335,48 +342,71 @@ public class CookBookController {
 										{
 											if((barrel.getContent().equals(maxstore.getContent())) & (barrel.getAmount() > 0))
 											{
-												System.out.println("2: " + barrel.getContent());
+//												System.out.println("2: " + barrel.getContent());
 												double barrelAmount = barrel.getAmount();
-												System.out.println("3: " + barrelAmount);
+//												System.out.println("3: " + barrelAmount);
 												if((barrelAmount - newAmount) <= 0)
 												{
 													barrel.setAmount(0);
+<<<<<<< HEAD
 													System.out.println("4: " + barrel.getAmount());
 //													barrelstock.saveBarrel(barrel);
+=======
+//													System.out.println("4: " + barrel.getAmount());
+													barrelstock.saveBarrel(barrel);
+>>>>>>> origin/master
 													newAmount = newAmount - barrelAmount;
-													System.out.println("5: " + newAmount);
+//													System.out.println("5: " + newAmount);
 												}
 												else
 												{
 													barrel.setAmount(barrelAmount - newAmount);
+<<<<<<< HEAD
 													System.out.println("6: " + barrel.getAmount());
 //													barrelstock.saveBarrel(barrel);
+=======
+//													System.out.println("6: " + barrel.getAmount());
+													barrelstock.saveBarrel(barrel);
+>>>>>>> origin/master
 													newAmount = 0;
+													
 													break;
 												}
-											}
-										}
-
-									}
+											} // /if
+										} // /for
+									} // /while
 										
 							
 									/*
 									 * update empty and full bottles
 									 */
-//									bottlestock.setQuantity_empty(quantity_empty - bottles);
-//									bottlestock.setQuantity_full(quantity_full + bottles);
-									double ingredientAmount = ingredient.getAmount();
-									double amount = bottle.getAmount();
 									int bottles = 0;
+									bottles = (int) (maxDestillate / selectedBottleAmount);
 
-									bottles = (int) (maxDestillate / amount);
-									
-									for(int j = 0; j < bottles; j++)
+									List<Object> toRemove = new ArrayList<Object>();
+
+									for(Bottle bottle : BottleStock.getEmptybottles())
 									{
-										bottlestock.getEmptybottles().remove(bottle);
+										if(bottles > 0)
+										{
+											if(selectedBottleAmount == bottle.getAmount())
+											{
+												toRemove.add(bottle);
+												
+												Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
+												BottleStock.getFullbottles().add(b1);
+											}
+										}
+										else
+										{
+											break;
+										}
+										
+										bottles--;
 									}
 									
-																				
+									BottleStock.getEmptybottles().removeAll(toRemove);
+									
 								} // /if
 							} // /for
 						} // /for
@@ -429,4 +459,24 @@ public class CookBookController {
 		return "redirect:/cookbook";
 	}
 
+	
+	/*
+	 * buy bottles
+	 */
+	@RequestMapping(value="/cookbook/buy/bottles", method = RequestMethod.GET)
+	public String buyBottles(	@RequestParam("bottlesToBuyAmount") double bottlesToBuyAmount, 
+								@RequestParam("bottlesToBuyNumber") int bottlesToBuyNumber, Model model)
+	{	
+		for(int i = 0; i < bottlesToBuyNumber; i++)
+		{
+			Bottle b1 = new Bottle("", bottlesToBuyAmount);
+			BottleStock.getEmptybottles().add(b1);
+		}
+
+		model.addAttribute("recipes", cookbookrepository.findAll());
+		model.addAttribute("barrelstock_store", calcMaxStore());
+		model.addAttribute("bottlestock", bottlestocklist.findAll());
+		
+		return "cookbook";
+	}
 }

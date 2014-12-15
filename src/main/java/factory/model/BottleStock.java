@@ -12,9 +12,11 @@ public class BottleStock extends Department{
 	private int quantity_empty;
 	private int quantity_full;
 	@OneToMany(cascade = CascadeType.ALL)
+
 	private  List<Bottle> emptybottles;	
 	@OneToMany(cascade = CascadeType.ALL)
 	private  List<Bottle> fullbottles;
+
 	
 	@Deprecated
 	public BottleStock(){}
@@ -25,6 +27,7 @@ public class BottleStock extends Department{
 		this.emptybottles = emptybottles;
 		this.fullbottles = fullbottles;
 	}
+
 
 	public List<Bottle> getEmptybottles() {
 		return emptybottles;
