@@ -332,21 +332,20 @@
 						<tr th:each="bottle : ${bottlestock}">
 							<td><span th:text="${bottle.amount}"></span></td>
 
-						<tr th:each="bottlestocks : ${bottlestock}">
-							<td><span th:text="${bottlestocks.quantity_empty}"></span></td>
-							<td>
-								<div th:each="bottle : ${bottlestocks.emptybottles}">
-									<span th:text="${bottle.amount}"></span>
-								</div>
+<!-- 						<tr th:each="bottlestocks : ${bottlestock}"> -->
+<!-- 							<td><span th:text="${bottlestocks.quantity_empty}"></span></td> -->
+<!-- 							<td> -->
+<!-- 								<div th:each="bottle : ${bottlestocks.emptybottles}"> -->
+<!-- 									<span th:text="${bottle.amount}"></span> -->
+<!-- 								</div> -->
 								
-							</td>
+<!-- 							</td> -->
 
 						</tr>
 					</table>
 				</div>
 
-
-<!-- 				<div class="col-lg-4"> -->
+				<div class="col-lg-4">
 <!-- 					<table class="table table-condensed"> -->
 <!-- 						<tr class="success"> -->
 <!-- 							<th>Anzahl voller Flaschen</th> -->
@@ -354,27 +353,14 @@
 <!-- 						</tr> -->
 <!-- 						<tr th:each="bottlestocks : ${bottlestock}"> -->
 <!-- 							<td><span th:text="${bottlestocks.quantity_full}"></span></td> -->
-<!-- 							<td th:each="bottle : ${bottlestocks.fullbottles}"><span th:text="${bottle.amount}"></span></td> -->
+<!-- 							<td> -->
+<!-- 								<div th:each="bottle : ${bottlestocks.fullbottles}"> -->
+<!-- 									<span th:text="${bottle.name}"></span> -->
+<!-- 									<span th:text="${bottle.amount}"></span> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
 <!-- 						</tr> -->
 <!-- 					</table> -->
-<!-- 				</div> -->
-
-				<div class="col-lg-4">
-					<table class="table table-condensed">
-						<tr class="success">
-							<th>Anzahl voller Flaschen</th>
-							<th>Volumen</th>
-						</tr>
-						<tr th:each="bottlestocks : ${bottlestock}">
-							<td><span th:text="${bottlestocks.quantity_full}"></span></td>
-							<td>
-								<div th:each="bottle : ${bottlestocks.fullbottles}">
-									<span th:text="${bottle.name}"></span>
-									<span th:text="${bottle.amount}"></span>
-								</div>
-							</td>
-						</tr>
-					</table>
 				</div>
 
 

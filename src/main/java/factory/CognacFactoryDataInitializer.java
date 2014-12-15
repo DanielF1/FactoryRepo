@@ -24,7 +24,6 @@ import factory.model.Accountancy;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;
-import factory.model.BarrelRepository;
 import factory.model.BarrelStock;
 import factory.model.Bottle;
 import factory.model.BottleStock;
@@ -54,7 +53,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final CustomerRepository customerRepository;
 	private final ArticleRepository articleRepository;
 	private final CookBookRepository cookbookrepository;
-	private final BarrelRepository barrelRepository;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager,
@@ -64,8 +62,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										EmployeeRepository employeeRepository,
 										ArticleRepository articleRepository,
 										CookBookRepository cookbookrepository, 
-										Inventory<InventoryItem> inventory,
-										BarrelRepository barrelRepository) {
+										Inventory<InventoryItem> inventory) {
 
 		
 		Assert.notNull(locationRepository, "LocationRepository must not be null!");
@@ -74,7 +71,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbookrepository, "CookBook must not be null!");
 		Assert.notNull(inventory, "Inventory must not be null!");
-		Assert.notNull(barrelRepository, "Barrellist must not be null!");
 		
 		this.userAccountManager = userAccountManager;
 		this.customerRepository = customerRepository;
@@ -84,7 +80,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.articleRepository = articleRepository;
 		this.cookbookrepository = cookbookrepository;
 		this.inventory = inventory;
-		this.barrelRepository = barrelRepository;
 	}
 
 	@Override
@@ -93,8 +88,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 											departmentRepository, 
 											employeeRepository, 
 											userAccountManager, 
-											customerRepository, 
-											barrelRepository);
+											customerRepository);
 		
 		initializeSortiment(inventory);
 		initializeCookBook(cookbookrepository);
@@ -105,8 +99,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 													DepartmentRepository departmentRepository, 
 													EmployeeRepository employeeRepository, 
 													UserAccountManager userAccountManager, 
-													CustomerRepository customerRepository,
-													BarrelRepository barrelRepository) {
+													CustomerRepository customerRepository) {
 		
 		if (userAccountManager.get(new UserAccountIdentifier("admin")).isPresent()) {
 			return;
@@ -119,7 +112,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		UserAccount brewerAcc = userAccountManager.create("braumeister1", "123", new Role("ROLE_BREWER"));
 		userAccountManager.save(brewerAcc);
 		UserAccount brewerAcc2 = userAccountManager.create("braumeister2", "123", new Role("ROLE_BREWER"));
-		userAccountManager.save(brewerAcc);
+		userAccountManager.save(brewerAcc2);
 		UserAccount salesmanAcc = userAccountManager.create("verkaeufer1", "123", new Role("ROLE_SALESMAN"));
 		userAccountManager.save(salesmanAcc);
 		UserAccount salesmanAcc2 = userAccountManager.create("verkaeufer2", "123", new Role("ROLE_SALESMAN"));
@@ -153,23 +146,23 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		//Inizialize Departments
 	
-		if (barrelRepository.findAll().iterator().hasNext()) {
-			System.out.println("Repo ist nicht leer!!");
-			return;
-		}
+//		if (barrelRepository.findAll().iterator().hasNext()) {
+//			System.out.println("Repo ist nicht leer!!");
+//			return;
+//		}
 
-		Barrel br1 = barrelRepository.save(new Barrel("Destillat A", 5 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03")));
-		Barrel br2 = barrelRepository.save(new Barrel("Destillat A", 5 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03")));
-		Barrel br3 = barrelRepository.save(new Barrel("Destillat A", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03")));
-		Barrel br4 = barrelRepository.save(new Barrel("", 0 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03")));
-		Barrel br5 = barrelRepository.save(new Barrel("Destillat A", 5 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03")));
-		Barrel br6 = barrelRepository.save(new Barrel("Destillat A", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03")));
-		Barrel br7 = barrelRepository.save(new Barrel("Destillat B", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03")));
-		Barrel br8 = barrelRepository.save(new Barrel("Destillat B", 7 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03")));
-		Barrel br9 = barrelRepository.save(new Barrel("Destillat C", 10 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2011-12-03")));
-		Barrel br10 = barrelRepository.save(new Barrel("Destillat C", 9 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-03")));
-		Barrel br11 = barrelRepository.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03")));
-		Barrel br12 = barrelRepository.save(new Barrel("Destillat C", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03")));
+		Barrel br1 = new Barrel("Destillat A", 5 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"));
+		Barrel br2 = new Barrel("Destillat A", 5 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"));
+		Barrel br3 = new Barrel("Destillat A", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"));
+		Barrel br4 = new Barrel("", 0 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"));
+		Barrel br5 = new Barrel("Destillat A", 5 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"));
+		Barrel br6 = new Barrel("Destillat A", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"));
+		Barrel br7 = new Barrel("Destillat B", 12 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"));
+		Barrel br8 = new Barrel("Destillat B", 7 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"));
+		Barrel br9 = new Barrel("Destillat C", 10 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2011-12-03"));
+		Barrel br10 = new Barrel("Destillat C", 9 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-03"));
+		Barrel br11 = new Barrel("Destillat C", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"));
+		Barrel br12 = new Barrel("Destillat C", 12 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"));
 
 		List<Barrel> barrels = new ArrayList<Barrel>();
 		barrels.add(br1);
@@ -185,7 +178,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrels.add(br11);
 		barrels.add(br12);
 		
-		barrelRepository.save(Arrays.asList(br1, br2, br3, br4, br5, br6, br7, br8, br9, br10, br11, br12));
+//		barrelRepository.save(Arrays.asList(br1, br2, br3, br4, br5, br6, br7, br8, br9, br10, br11, br12));
 		
 		Bottle b1 = new Bottle("", 0.7);
 		Bottle b2 = new Bottle("", 0.7);

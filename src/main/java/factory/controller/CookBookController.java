@@ -21,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;
-import factory.model.BarrelRepository;
 import factory.model.BarrelStock;
 import factory.model.Bottle;
 import factory.model.BottleStock;
@@ -40,6 +39,7 @@ public class CookBookController {
 	private final CookBookRepository cookbookrepository;
 
 	BarrelStock barrelstock;
+	BottleStock bottlestock;
 //	private final Inventory<InventoryItem> inventory;
 //	private final ArticleRepository articlerepository;
 
@@ -65,10 +65,8 @@ public class CookBookController {
 	public List<MaxStore> calcMaxStore()
 	{
 		List<MaxStore> maxstorelist = new ArrayList<MaxStore>();
-		
-		
-		
-		List<Barrel> allBarrels = barrelstock.getBarrels();
+
+//		List<Barrel> barrels = barrelstock.getBarrels();
 		
 		/*
 		 * HashMap: return a sorted list 
@@ -79,7 +77,7 @@ public class CookBookController {
 		/*
 		 * sort all barrels
 		 */
-		for (Barrel barrel : allBarrels) 
+		for (Barrel barrel : barrelstock.getBarrels()) 
 		{
 			String content = barrel.getContent();
 			
@@ -125,7 +123,7 @@ public class CookBookController {
 	{
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
-//		model.addAttribute("bottlestock", bottlestock.getEmptybottles());
+		model.addAttribute("bottlestock", bottlestock.getEmptybottles());
 
 		return "cookbook";
 	}
