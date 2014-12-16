@@ -137,8 +137,6 @@
 				</div>
 
 
-<h2>Willkommen im Warenkorb</h2>
-
    	<div th:unless="${cart.empty}"> 
    	
    	
@@ -201,14 +199,16 @@
 <!-- 				<button name="searchTerm">Artikel Hinzuf&uuml;gen</button> -->
 <!-- 			</form> -->
 		
+		<div class="B">
+		
 		<p align="center" th:if="${cart.empty}" th:text="#{cart.empty}">Leer</p>
+		</div>
+		
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../resources/js/bootstrap.min.js"></script>
 
-
-		
 		</div>
 		</div>
 		</div>

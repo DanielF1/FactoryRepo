@@ -141,19 +141,14 @@
 					</ul>
 				</div>
 						
-						
-						
-						
-						
-						
-						
-<h3>Registrierung</h3>
 
 		<div class="content">
 			<div class="salespoint">
 
 				<form method="post" action="/registerNew" th:object="${registrationForm}">
-					
+				
+				
+				<div class="B">	
 					<fieldset>
 						<legend th:value="Benutzerkonto">Benutzerkonto</legend>
 						
@@ -161,34 +156,35 @@
 							<p>Einige Angaben sind nicht korrekt.</p>
 						</div>
 						
-						<label for="name">Benutzername</label>
+						<label for="name">Benutzername</label><br/>
 						<input id="name" th:field="*{name}" th:errorclass="fieldError" type="text" name="name" />
 						<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Der Benutzername darf nicht leer sein.</p>
 						<br />
 						
-						<label for="password">Passwort</label>
+						<label for="password">Passwort</label><br/>
 						<input id="password" th:field="*{password}" th:errorclass="fieldError" type="text" name="password" /><br /> 
 						<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Das Passwort darf nicht leer sein.</p>
 						
 						<br />
-						<label for="familyname">Nachname</label>
+						<label for="familyname">Nachname</label><br/>
 						<input id="familyname" th:field="*{familyname}" th:errorclass="fieldError" type="text" name="familyname" />
 						<p th:if="${#fields.hasErrors('familyname')}" th:errors="*{familyname}">Der Vorname darf nicht leer sein.</p>
 						<br />
 						
 						<br />
-						<label for="firstname">Vorname</label>
+						<label for="firstname">Vorname</label><br/>
 						<input id="firstname" th:field="*{firstname}" th:errorclass="fieldError" type="text" name="firstname" />
 						<p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Der Vorname darf nicht leer sein.</p>
 						<br />
 						
 						<br />
-						<label for="address">Addresse</label>
+						<label for="address">Addresse</label><br/>
 						<input id="address" th:field="*{address}" th:errorclass="fieldError" type="text" name="address" />
-						<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Die Adresse darf nicht leer sein.</p>
+						<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Die Adresse darf nicht leer sein.</p><br/>
 						<br />
 						<input type="submit" value="Registrieren" />
 					</fieldset>
+					</div>
 				</form>
 			</div>
 	

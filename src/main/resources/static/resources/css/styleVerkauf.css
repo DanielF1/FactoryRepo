@@ -126,6 +126,24 @@ div.text{
     font-variant:small-caps
 }
 
+div.B{
+	
+	padding: 10px;
+	margin-top: 60px;
+	margin-right: 500px;
+	margin-left: 500px;
+}
+
+
+div.C{
+	
+	padding: 10px;
+	margin-top: 60px;
+	margin-right: 300px;
+	margin-left: 300px;
+}
+
+
 
 mark {
   color: #000;

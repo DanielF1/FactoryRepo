@@ -8,7 +8,11 @@
 	 <link href="../resources/css/header.css" rel="stylesheet" />
 
 	<img src="../resources/img/cover/wein.jpg" width="1348" height="250" alt="Wein"/>
-    
+    	<style type="text/css">
+	  
+		.button_color{color:green!important}
+		
+	</style>
 </head>
 <body>
 <div class="main-wrapper">
@@ -32,6 +36,7 @@
 						   		<label class="sr-only" for="username">Username</label>
 						    	<input type="text" class="form-control" id="username" name="username" 
 						    		autofocus="autofocus" placeholder="Username" />
+	
 						  	</div>
 						 	<div class="form-group" sec:authorize="!isAuthenticated()">
 						    	<label for="password" class="sr-only">Password</label>
@@ -55,7 +60,7 @@
 
 				<div class="col-lg-8">
 					<ul class="nav nav-pills">
-						<li role="presentation" class="active"><a href="index.html">Home</a></li>
+						<li role="presentation" class="active button_color"><a href="index.html">Home</a></li>
 						<li role="presentation"><a href="sortiment.html">Sortiment</a></li>
 
 						<!-- Advanced administrator navigation -->
@@ -72,7 +77,7 @@
 						    	<li><a href="addLocation.html">Standort hinzufügen</a></li>
 						    	<li><a href="adminLocList.html">Standortübersicht</a></li>
 							</ul>
-						</li>
+						</li>							
 
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
 							<a href="employeeList.html">Mitarbeiterübersicht</a>
@@ -109,8 +114,6 @@
 
 
 						<!-- Advanced brewer navigation -->
-						
-						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
 							<a href="cookbook.html">Rezepte</a>
 						</li>
