@@ -235,13 +235,13 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Department> list5 = new ArrayList<Department>();
 		list5.add(d1);
-		list5.add(d4);
+		list5.add(d5);
 		list5.add(d8);
 		list5.add(d9);
 		
 		List<Department> list6 = new ArrayList<Department>();
 		list6.add(d2);
-		list6.add(d5);
+		list6.add(d4);
 		list6.add(d9);
 	
 		List<Department> list7 = new ArrayList<Department>();
