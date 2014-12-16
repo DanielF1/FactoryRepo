@@ -8,6 +8,7 @@ import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

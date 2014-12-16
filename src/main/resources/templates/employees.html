@@ -135,10 +135,8 @@
 						<!-- /Advanced winegrower navigation -->
 					</ul>
 				</div>
-		<h2 align="left">Mitarbeiter in diesem Standort</h2>
-		
-			
-			<div class="B" th:each="emp : ${location.employees}">
+	
+			<div class="H" th:each="emp : ${location.employees}">
 				<table>
 					<tr><td th:text="${emp.workplace}"></td></tr>
  					<tr><td th:text="${emp.name}"></td></tr>

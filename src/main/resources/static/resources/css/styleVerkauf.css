@@ -174,6 +174,39 @@ div.I{
 	margin-left: 780px;
 }
 
+div.K{
+	
+	padding: 10px;
+	margin-top: 10px;
+	margin-right: 100px;
+	margin-left: 300px;
+}
+
+div.L{
+	float:left;
+	padding: 10px;
+	margin-top: 30px;
+	margin-right: 400px;
+	margin-left: 400px;
+}
+
+
+div.M{
+	
+	margin-top: 100px;
+	margin-left: 100px;
+	margin-right: 100px;
+	
+}
+
+div.N{
+	
+	padding: 10px;
+	margin-top: 50px;
+	margin-right: 300px;
+	margin-left: 300px;
+}
+
 mark {
   color: #000;
   background: #ff0;

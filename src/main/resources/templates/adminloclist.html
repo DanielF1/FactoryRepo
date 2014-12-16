@@ -64,10 +64,6 @@
 						<!-- Advanced administrator navigation -->
 						
 							<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="warenkorb.html">Warenkorb</a>
-						</li>
-						
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
 							<a href="orders.html">Bestellungen</a>
 						</li>
 						
@@ -86,25 +82,37 @@
 						</li>
 
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="locationwithwine.html">Weinmenge</a>
+							<a href="locationwithwine">Weinmenge</a>
 						</li>
-						
-						
 						<!-- /Advanced administrator navigation -->
 
 
 						<!-- Advanced salesman navigation -->
+						
+							<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
+							<a href="warenkorb.html">Warenkorb</a>
+						</li>
+						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 							<a href="orders.html">Bestellungen</a>
 						</li>
-
+						<!-- /Advanced salesman navigation -->
+						
+						<!-- Advanced salesman navigation -->
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 							<a href="register.html">Kundenregistrierung</a>
+						</li>
+						<!-- /Advanced salesman navigation -->
+						
+						<!-- Advanced salesman navigation -->
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
+							<a href="customerlist.html">Kundenliste</a>
 						</li>
 						<!-- /Advanced salesman navigation -->
 
 
 						<!-- Advanced brewer navigation -->
+						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
 							<a href="cookbook.html">Rezepte</a>
 						</li>
@@ -116,6 +124,7 @@
 
 
 						<!-- Advanced barrelmaker navigation -->
+						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
 							<a href="BarrelList.html">BarrelList</a>
 						</li>
@@ -123,6 +132,7 @@
 
 
 						<!-- Advanced winegrower navigation -->
+						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
 							<a href="http://localhost:8080/form">Weinanlieferung</a>
 						</li>
@@ -133,9 +143,7 @@
 						<!-- /Advanced winegrower navigation -->
 					</ul>
 				</div>
-
-				<div class="col-lg-2"></div>
-			</div>
+				
 <div class="D">
 			<div class="row">
 				<div class="col-lg-1">	</div>
@@ -217,5 +225,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../resources/js/bootstrap.min.js"></script>
+</div>
 </body>
 </html>

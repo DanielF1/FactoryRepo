@@ -128,8 +128,16 @@
 						<!-- /Advanced winegrower navigation -->
 					</ul>
 				</div>
+				
+	<div class="N">
+			<table>
+				<thead>
+				<div class="row">
+				<div class="col-lg-2">	</div>
+				<div class="col-lg-8">
+					<table class="table table-condensed" style="width:100%">
+						<tr class="success">			
 
-				<div>
 				<table class="table table-condensed">
 						<tr class="success">	
 							<th>Name</th>
@@ -139,6 +147,7 @@
 							<th>Cognacart</th>
 							<th>Preis</th>
 							<th>Anzahl</th>
+							<th></th>
 						</tr>
 						<tr th:each="article : ${articles} ">
 							<td th:text="${article.name}">Name</td>
@@ -151,17 +160,14 @@
 								<form method="post" action="/warenkorb">
 									<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" />
 									<input type="hidden" name="pid" th:value="${article.identifier}" /> 
-									<button class="btn btn-default" type="submit">
-									<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Artikel hinzuf&uuml;gen</button>
+									<td><button class="btn btn-default" type="submit">
+									<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Artikel hinzuf&uuml;gen</button></td>
 								</form>
 							</td>							
 						</tr>
 					</table>
-					<form  method="get" action="/warenkorb">
-					<button  class="btn btn-default btn-lg">
-					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Zum Warenkorb gehen</button>
-					</form>
-				</div>
+					</tr>
+					</table>
 					
 				</div>
 				 </div>
@@ -175,10 +181,14 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../resources/js/bootstrap.min.js"></script>
 
+			</thead>
+			</table>
 			
 		</div>
 		</div>
-		
+		</div>
+		</div>
+		</div>
 	</body>
 </html>
 			

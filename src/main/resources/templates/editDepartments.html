@@ -6,8 +6,9 @@
 	<link rel="stylesheet" type="text/css" href="../resources/css/styleVerkauf.css" />
 	
 	 <link href="../resources/css/header.css" rel="stylesheet" />
-
+	
 	<img src="../resources/img/cover/wein.jpg" width="1348" height="250" alt="Wein"/>
+
 </head>
 
 
@@ -47,8 +48,8 @@
 
 					<!-- Log in / Log out navigation -->
 
-<!-- 				</div> -->
-<!-- 			</div> -->
+				</div>
+			</div>
 
 <!-- 			<div class="row"> -->
 <!-- 				<div class="col-lg-2"></div> -->
@@ -57,11 +58,10 @@
 <!-- 					<ul class="nav nav-pills"> -->
 <!-- 						<li role="presentation" class="active"><a href="index.html">Home</a></li> -->
 <!-- 						<li role="presentation"><a href="sortiment.html">Sortiment</a></li> -->
-<!-- 						<li role="presentation"><a href="warenkorb.html">Warenkorb</a></li> -->
 						
 						
 						
-<!-- 						Advanced administrator navigation -->
+<!-- 						Advanced administrator navigation --> 
 						
 <!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
 <!-- 							<a href="orders.html">Bestellungen</a> -->
@@ -84,10 +84,10 @@
 <!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
 <!-- 							<a href="locationwithwine">Weinmenge</a> -->
 <!-- 						</li> -->
-<!-- 						/Advanced administrator navigation -->
+<!-- 					/Advanced administrator navigation --> 
 
 
-<!-- 						Advanced salesman navigation -->
+<!-- 						Advanced salesman navigation --> 
 <!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
 <!-- 							<a href="orders.html">Bestellungen</a> -->
 <!-- 						</li> -->
@@ -100,10 +100,10 @@
 <!-- 							<a href="customerlist.html">Kundenliste</a> -->
 <!-- 						</li> -->
 											
-<!-- 						/Advanced salesman navigation -->
+<!--  						/Advanced salesman navigation --> 
 
 
-<!-- 						Advanced brewer navigation -->
+<!--  						Advanced brewer navigation --> 
 <!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')"> -->
 <!-- 							<a href="cookbook.html">Rezepte</a> -->
 <!-- 						</li> -->
@@ -111,17 +111,17 @@
 <!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')"> -->
 <!-- 							<a href="BarrelList.html">BarrelList</a> -->
 <!-- 						</li> -->
-<!-- 						/Advanced brewer navigation -->
+<!--  						/Advanced brewer navigation --> 
 
 
-<!-- 						Advanced barrelmaker navigation -->
+<!--  						Advanced barrelmaker navigation --> 
 <!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')"> -->
 <!-- 							<a href="BarrelList.html">BarrelList</a> -->
 <!-- 						</li> -->
-<!-- 						/Advanced barrelmaker navigation -->
+<!--  						/Advanced barrelmaker navigation --> 
 
 
-<!-- 						Advanced winegrower navigation -->
+<!--  						Advanced winegrower navigation --> 
 <!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')"> -->
 <!-- 							<a href="http://localhost:8080/form">Weinanlieferung</a> -->
 <!-- 						</li> -->
@@ -129,12 +129,12 @@
 <!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')"> -->
 <!-- 							<a href="locationwithwine.html">Weinmenge</a> -->
 <!-- 						</li> -->
-<!-- 						/Advanced winegrower navigation -->
+<!--  						/Advanced winegrower navigation --> 
 <!-- 					</ul> -->
 <!-- 				</div> -->
 				
-		<h3>Abteilungen in diesem Standort</h3>
-		<div  th:each="dep : ${location.departments}">
+
+		<div class="L" th:each="dep : ${location.departments}">
 			<table>
 				<tr>
 					<td th:text="${dep.name}"></td>
@@ -147,25 +147,25 @@
 				</tr>
 			</table>
 		</div>
+		
+		<div class="M">
 			<form method="post" role="form" th:action="@{/addDepartment/}">
 				<select name="sort">
-					<option>Weinlager</option>
-					<option>Flaschenlager</option>
-					<option>Fasslager</option>
-					<option>Verkauf</option>
-					<option>Verwaltung</option>
-					<option>Produktion</option>
+					<option>Weinlager </option>
+					<option>Flaschenlager </option>
+					<option>Fasslager </option>
+					<option>Verkauf </option>
+					<option>Verwaltung </option>
+					<option>Produktion </option>
 				</select>
 				<input name="id" type="hidden" th:value="${location.id}"/>
 				<button type="submit">Abteilung hinzufügen</button>
 			</form>
+            </div>
+            </div>
+            </div>
             
             </div>
-            </div>
             
-            </div>
-            </div>
-            </div>
-         
-	</body>	
+	</body>
 </html>

@@ -4,7 +4,11 @@
 	<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <link href="../resources/css/styleLocation.css" rel="stylesheet" />
+    <link href="../resources/css/styleVerkauf.css" rel="stylesheet" />
+    
+      <link href="../resources/css/header.css" rel="stylesheet" />
+
+	<img src="../resources/img/cover/wein.jpg" width="1348" height="250" alt="Wein"/>
 </head>
 
 
@@ -12,7 +16,7 @@
 <div class="main-wrapper">
 	<!-- Header -->
 	<div class="header">
-		<div class="header-title">Cognac Fabrik Feuerwasser</div>
+		<div class="header-title">Cognac Fabrik <br/> Feuerwasser</div>
 	</div>
 	<!-- /Header -->
 
@@ -20,8 +24,8 @@
 	<div class="main-container content">
 		<div class="col-lg-12">
 			<div class="row">
-				<div class="col-lg-7">	</div>
-				<div class="col-lg-5">	
+				<div class="col-lg-10">	</div>
+				<div class="col-lg-20">	
 
 					<!-- Log in / Log out navigation -->
 					
@@ -133,7 +137,7 @@
 <!-- 				</div> -->
 
 		<form method="post" th:action="@{/editEmployee}">
-		<div class="B">
+		<div class="K">
             <table>
                 <tr><td>Arbeitsplatz: </td><td><input type="text" name="workplace" th:value="${employee.workplace}"/></td></tr>
                 <tr><td>Name: </td><td><input type="text" name="name" th:value="${employee.name}"/></td></tr>

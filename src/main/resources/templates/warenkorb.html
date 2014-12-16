@@ -91,6 +91,11 @@
 
 
 						<!-- Advanced salesman navigation -->
+						
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
+							<a href="saleSortiment.html">Schnellauswahl</a>
+						</li>
+						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 							<a href="orders.html">Bestellungen</a>
 						</li>
@@ -137,7 +142,7 @@
 				</div>
 
 
-   	<div th:unless="${cart.empty}"> 
+ <div th:unless="${cart.empty}"> 
    	
    	<div class="G">
    	

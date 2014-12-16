@@ -98,7 +98,7 @@ div.C{
 
 div.D{
 
-	padding: 10px;
+	padding: 40px;
 	margin-top: 20px;
 	margin-left: -100px;
 	margin-right: 200px;
@@ -127,6 +127,17 @@ div.G{
 	margin-top: 80px;
 	margin-left: 150px;
 	margin-right: 150px;
+
+}
+
+
+div.H{
+
+	float: left;
+	padding: 10px;
+	margin-top: 20px;
+	margin-right: 100px;
+	margin-left: 100px;
 
 }
 
