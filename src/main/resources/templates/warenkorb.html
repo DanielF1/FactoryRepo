@@ -175,24 +175,50 @@
 			</tr>	
 	</table>
 				
-	<table >		
-					
-			<form method="post" th:action="@{/checkout}">
-                <button type="submit" class="btn btn-default btn-lg">
-                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Kaufen</button>
-           	</form>
-					
+			
+			
+			<div sec:authorize="!hasRole('ROLE_SALESMAN')">	
+				<form method="post" th:action="@{/checkout}">
+            	    <button type="submit" class="btn btn-default btn-lg">
+            	    <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Kaufen</button>
+           		</form>
+			</div>			
            			 <!--Warenkorb wird verworfen -->
 			<form method="post" th:action="@{cart/clear}">
 			
 				<button class="btn btn-default btn-lg" name="searchterm">
 				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Warenkorb verwerfen</button>
 			</form>
-			
-	</table>	
+				
 				
 			 <p align="center"><b>Gesamtsumme:</b></p>
 			 <p align="center" th:text="${cart.price}"></p>
+	
+			<div sec:authorize="hasRole('ROLE_SALESMAN')">
+			<table class="table table-condensed">
+						<tr class="success">
+							<th>Benutzername</th>
+							<th>Nachname</th>
+							<th>Vorname</th>
+							<th>Adresse</th>
+							<th></th>
+						</tr>
+						
+						<tr th:each="customer : ${customerlist}">
+							<td th:text="${customer.userAccount.identifier}"></td>
+							<td th:text="${customer.familyname}"></td>
+							<td th:text="${customer.firstname}"></td>
+							<td th:text="${customer.address}"></td>
+							<td>
+ 								<form method="post" th:action="@{/saleCheckout}">
+ 									<input name="id" type="hidden" th:value="${customer.userAccount.identifier}"/>
+               						<button type="submit" class="btn btn-default btn-lg">
+                					<span class="glyphicon glyphicon-usd" aria-hidden="true"></span>für Kunden bestellen</button>
+           						</form>
+           					</td>	
+						</tr>
+					</table>
+			</div>
 	</div>
 	
 <!-- 			<form method="get" action="/sortiment"> -->

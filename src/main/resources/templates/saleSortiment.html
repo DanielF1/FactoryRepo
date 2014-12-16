@@ -148,8 +148,7 @@
 							<td th:text="${article.cognacart}"></td>
 							<td th:text="${article.price}"></td>
 							<td>
-								<form method="post" th:action="@{/saleCart}">
-									<input type="hidden" name="customerid" th:value="${customerid}" /> 
+								<form method="post" action="/warenkorb">
 									<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" />
 									<input type="hidden" name="pid" th:value="${article.identifier}" /> 
 									<button class="btn btn-default" type="submit">
@@ -159,7 +158,7 @@
 						</tr>
 					</table>
 					<form  method="get" action="/warenkorb">
-					<button  class="btn btn-default btn-lg" name="searchterm">
+					<button  class="btn btn-default btn-lg">
 					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Zum Warenkorb gehen</button>
 					</form>
 				</div>

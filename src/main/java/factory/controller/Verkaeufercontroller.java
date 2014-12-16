@@ -92,22 +92,9 @@ public class Verkaeufercontroller {
 	@RequestMapping(value = "/saleSortiment", method = RequestMethod.GET)
 	public String buyForCustomer(Model model){
 		
-		//Customer customer = customerRepository.findOne(id);
 		model.addAttribute("articles", articleRepository.findAll());
 		
 		return "saleSortiment";
 	}
-	
-	 @RequestMapping(value = "/saleCart", method = RequestMethod.POST)
-	    public String addForCustomer(	@RequestParam("customerid") Long id, 
-	    								@RequestParam("pid") Article article, 
-	    								@RequestParam("number") int number, 
-	    								@ModelAttribute Cart cart) {
-	    	
-			Quantity quantity = Units.of(number);
-			cart.addOrUpdateItem(article, quantity);
-			
-			
-			return "redirect:/saleSortiment/{customerid}";
-	    }
+
 }
