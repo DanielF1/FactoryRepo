@@ -139,11 +139,14 @@
 
    	<div th:unless="${cart.empty}"> 
    	
+   	<div class="G">
    	
-	<table align="center" style="width:70%">
-	 		
- 		<thead>
-           <tr>
+   	<thead>
+				<div class="row">
+				<div class="col-lg-2">	</div>
+				<div class="col-lg-8">
+					<table class="table table-condensed" style="width:95%">
+						<tr class="success">
 
             <th>Name</th>
         	<th>Alter</th>
@@ -152,9 +155,8 @@
         	<th>Cognacart</th>
         	<th>Preis pro St&uuml;ck</th>
         	<th>Anzahl</th>
+        	<th></th>
            </tr>
-        </thead>  
-   
         	<tr th:each=" cartItem : ${cart}">
 
 				<td align="center" th:text="${cartItem.product.name}"></td>
@@ -164,31 +166,39 @@
 				<td align="center" th:text="${cartItem.product.cognacart}"></td>
 				<td align="center" th:text="${cartItem.product.price}"></td>
 				<td align="center" th:text="${cartItem.quantity}"></td>		
-				
-				
-	
-	
+
 				<td><form method="get" th:action="@{/article/} + ${cartItem.identifier}">
 					<button type="submit" class="btn btn-default btn-lg">
 					 <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
 				</form></td>				
-			</tr>	
+			</tr>			
 	</table>
-				
-			
-			
+	</div>
+					
+						
+
+		</div>
+		</thead>
+		</div>
+		
+	
+	<div class="H">	
+	
+					
 			<div sec:authorize="!hasRole('ROLE_SALESMAN')">	
 				<form method="post" th:action="@{/checkout}">
             	    <button type="submit" class="btn btn-default btn-lg">
             	    <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Kaufen</button>
            		</form>
-			</div>			
+			</div>
+					
            			 <!--Warenkorb wird verworfen -->
 			<form method="post" th:action="@{cart/clear}">
 			
 				<button class="btn btn-default btn-lg" name="searchterm">
 				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Warenkorb verwerfen</button>
 			</form>
+
 				
 				
 			 <p align="center"><b>Gesamtsumme:</b></p>
@@ -219,6 +229,14 @@
 						</tr>
 					</table>
 			</div>
+		</div>	
+		
+		
+		<div class="I">
+			 <p><b>Gesamtsumme:</b></p>
+			 <p th:text="${cart.price}"></p>
+		</div>
+>>>>>>> origin/master
 	</div>
 	
 <!-- 			<form method="get" action="/sortiment"> -->

@@ -155,15 +155,19 @@
 					</ul>
 				</div>
 				
-		<div class="C">		
-		<table border="1">			
+		<div class="G">					
 			<thead>
-				<tr>
+				<div class="row">
+				<div class="col-lg-2">	</div>
+				<div class="col-lg-8">
+					<table class="table table-condensed">
+						<tr class="success">
+				
 					<th>Name </th>
 					<th>Adresse </th>
 					<th>Weinmenge </th>
 				</tr>
-			</thead>
+				
 								
 				<tr th:each="loc : ${locations} ">
 					<td th:text="${loc.name}">Name</td>
@@ -173,8 +177,12 @@
 							<span th:text="${department.quantity}">Wein</span>
 						</div>
 					</td> 
-				</tr>
-		</table>
+				</tr>			
+	</table>
+				</div>
+				</div>
+				
+			</thead>
 		</div>
 
 	</div>
