@@ -10,13 +10,11 @@ import org.salespointframework.quantity.Units;
 @Entity
 public class Article extends Product{
 	
-	
 		private String image;
 		private String alter;
 		private String alkoholgehalt;
 		private String volumen;
 		private String cognacart;
-
 
 		public Article(){}
 		
@@ -24,15 +22,12 @@ public class Article extends Product{
 			
 			super(name, preis, Units.METRIC);
 			
-			this.image=image;
+			this.image = image;
 			this.alter = alter;
 			this.alkoholgehalt = alkoholgehalt;
 			this.volumen = volumen;
 			this.cognacart = cognacart;
-
 		}
-		
-	
 		
 		public String getImage(){
 			return this.image;
@@ -42,9 +37,7 @@ public class Article extends Product{
 			
 			this.image=Image;
 		}
-		
-
-			
+	
 		public String getAlter(){
 			return this.alter;
 		}
@@ -59,8 +52,7 @@ public class Article extends Product{
 			
 			this.alter=Alter;
 		}
-		
-	
+
 		public String getAlkoholgehalt(){
 			return this.alkoholgehalt;
 		}
@@ -69,8 +61,7 @@ public class Article extends Product{
 			
 			this.alkoholgehalt=Alkoholgehalt;
 		}
-		
-		
+	
 		public String getVolumen(){
 			return this.volumen;
 		}
@@ -79,8 +70,7 @@ public class Article extends Product{
 			
 			this.volumen=Volumen;
 		}
-		
-		
+	
 		public String getCognacart(){
 			return this.cognacart;
 		}

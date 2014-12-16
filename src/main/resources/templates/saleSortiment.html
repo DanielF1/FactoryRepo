@@ -8,17 +8,15 @@
 	 <link href="../resources/css/header.css" rel="stylesheet" />
 
 	<img src="../resources/img/cover/wein.jpg" width="1348" height="250" alt="Wein"/>
-    	<style type="text/css">
-	  
-		.button_color{color:green!important}
-		
-	</style>
+	
 </head>
+
+
 <body>
 <div class="main-wrapper">
 	<!-- Header -->
 	<div class="header">
-		<div class="header-title" >Cognac Fabrik <br/> Feuerwasser</div>
+		<div class="header-title">Cognac Fabrik <br/>Feuerwasser</div>
 	</div>
 	<!-- /Header -->
 
@@ -26,29 +24,27 @@
 	<div class="main-container content">
 		<div class="col-lg-12">
 			<div class="row">
-				<div class="col-lg-7">	</div>
-				<div class="col-lg-5">	
+				<div class="col-lg-10">	</div>
+				<div class="col-lg-20">		
 
 					<!-- Log in / Log out navigation -->
 					
-						<form class="form-inline" role="form" th:action="@{/login}" method="post" >
-						 	<div class="form-group" sec:authorize="!isAuthenticated()">
-						   		<label class="sr-only" for="username">Username</label>
-						    	<input type="text" class="form-control" id="username" name="username" 
-						    		autofocus="autofocus" placeholder="Username" />
-	
-						  	</div>
-						 	<div class="form-group" sec:authorize="!isAuthenticated()">
-						    	<label for="password" class="sr-only">Password</label>
-						    	<input type="password" class="form-control" id="password" 
-						    	name="password" placeholder="Password" />
-						  	</div>
-						  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">
-						  		Log in</button>
-
-						  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="isAuthenticated()">
-						  		Log out</button>
-						</form>
+					<form class="form-inline" role="form" th:action="@{/login}" method="post" >
+					 	<div class="form-group" sec:authorize="!isAuthenticated()">
+					   		<label class="sr-only" for="username">Username</label>
+					    	<input type="text" class="form-control" id="username" name="username" 
+					    		autofocus="autofocus" placeholder="Username" />
+					  	</div>
+					 	<div class="form-group" sec:authorize="!isAuthenticated()">
+					    	<label for="password" class="sr-only">Password</label>
+					    	<input type="password" class="form-control" id="password" 
+					    	name="password" placeholder="Password" />
+					  	</div>
+					  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">
+					  		Log in</button>
+					  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="isAuthenticated()">
+					  		Log out</button>
+					</form>
 
 					<!-- Log in / Log out navigation -->
 
@@ -60,15 +56,13 @@
 
 				<div class="col-lg-8">
 					<ul class="nav nav-pills">
-						<li role="presentation" class="active button_color"><a href="index.html">Home</a></li>
+						<li role="presentation" class="active"><a href="index.html">Home</a></li>
 						<li role="presentation"><a href="sortiment.html">Sortiment</a></li>
-
+						<li role="presentation"><a href="warenkorb.html">Warenkorb</a></li>
+						
+						
+						
 						<!-- Advanced administrator navigation -->
-						
-							<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
-							<a href="orders.html">Bestellungen</a>
-						</li>
-						
 						<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
 					   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
 					      		Standort <span class="caret"></span>
@@ -77,7 +71,7 @@
 						    	<li><a href="addLocation.html">Standort hinzufügen</a></li>
 						    	<li><a href="adminLocList.html">Standortübersicht</a></li>
 							</ul>
-						</li>							
+						</li>
 
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
 							<a href="employeeList.html">Mitarbeiterübersicht</a>
@@ -90,30 +84,18 @@
 
 
 						<!-- Advanced salesman navigation -->
-						
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="saleSortiment.html">Sortiment</a>
-						</li>
-						
-						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
-							<a href="warenkorb.html">Warenkorb</a>
-						</li>
-						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 							<a href="orders.html">Bestellungen</a>
 						</li>
-						<!-- /Advanced salesman navigation -->
-						
-						<!-- Advanced salesman navigation -->
+
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 							<a href="register.html">Kundenregistrierung</a>
 						</li>
-						<!-- /Advanced salesman navigation -->
 						
-						<!-- Advanced salesman navigation -->
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 							<a href="customerlist.html">Kundenliste</a>
 						</li>
+											
 						<!-- /Advanced salesman navigation -->
 
 
@@ -129,8 +111,6 @@
 
 
 						<!-- Advanced barrelmaker navigation -->
-						
-						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
 							<a href="BarrelList.html">BarrelList</a>
 						</li>
@@ -138,29 +118,68 @@
 
 
 						<!-- Advanced winegrower navigation -->
-						
-						
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
 							<a href="http://localhost:8080/form">Weinanlieferung</a>
 						</li>
 
 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
-							<a href="locationwithwine">Weinmenge</a>
+							<a href="locationwithwine.html">Weinmenge</a>
 						</li>
 						<!-- /Advanced winegrower navigation -->
 					</ul>
 				</div>
 
-
-
+				<div>
+				<table class="table table-condensed">
+						<tr class="success">	
+							<th>Name</th>
+							<th>Alter</th>
+							<th>Alkoholgehalt</th>
+							<th>Volumen</th>
+							<th>Cognacart</th>
+							<th>Preis</th>
+							<th>Anzahl</th>
+						</tr>
+						<tr th:each="article : ${articles} ">
+							<td th:text="${article.name}">Name</td>
+							<td th:text="${article.alter}"></td>
+							<td th:text="${article.alkoholgehalt}"></td>
+							<td th:text="${article.volumen}"></td>
+							<td th:text="${article.cognacart}"></td>
+							<td th:text="${article.price}"></td>
+							<td>
+								<form method="post" th:action="@{/saleCart}">
+									<input type="hidden" name="customerid" th:value="${customerid}" /> 
+									<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" />
+									<input type="hidden" name="pid" th:value="${article.identifier}" /> 
+									<button class="btn btn-default" type="submit">
+									<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Artikel hinzuf&uuml;gen</button>
+								</form>
+							</td>							
+						</tr>
+					</table>
+					<form  method="get" action="/warenkorb">
+					<button  class="btn btn-default btn-lg" name="searchterm">
+					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Zum Warenkorb gehen</button>
+					</form>
+				</div>
+					
+				</div>
+				 </div>
+				
+<!-- 				<form  method="get" action="warenkorb"> -->
+<!-- 					<button name="searchterm">Zum Warenkorb</button> -->
+<!-- 				</form> -->
+			
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../resources/js/bootstrap.min.js"></script>
-</div>
-</div>
-</div>
-</div>
 
-</body>
+			
+		</div>
+		</div>
+		
+	</body>
 </html>
+			

@@ -84,7 +84,7 @@
 							<td th:text="${customer.address}"></td>
 								
 						<!-- ID ÜBERGABE FUNKTIONIERT NOCH NICHT -->		
- 							<td><form method="get" th:action="@{/sortiment/} + ${customer.id}"> 
+ 							<td><form method="get" th:action="@{/saleSortiment/} + ${customer.id}"> 
  								<button type="submit">für diesen Kunden einkaufen</button> 
  								</form>
 							</td>	 
