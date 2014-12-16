@@ -12,7 +12,7 @@ public class Department {
 	private Long id;
 	private String name;
 	private double quantity; //Wert gibt an, wie viele Einheiten sich im Lager befinden
-//	private double capacity; //Wert gibt an, wie viel Produktionskapazität noch vorhanden ist
+	private double capacity; //Wert gibt an, wie viel Produktionskapazität noch vorhanden ist
 
 	@Deprecated
 	public Department(){}
@@ -35,13 +35,13 @@ public class Department {
 		this.quantity = quantity;
 	}
 	
-//	public double getCapacity() {
-//		return capacity;
-//	}
-//
-//	public void setCapacity(double capacity) {
-//		this.capacity = capacity;
-//	}
+	public double getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(double capacity) {
+		this.capacity = capacity;
+	}
 	
 	public Department(String name) {
 		this.name = name;
