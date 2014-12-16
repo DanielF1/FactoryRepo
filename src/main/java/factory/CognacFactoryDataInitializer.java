@@ -40,6 +40,7 @@ import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.Recipe;
 import factory.model.Sale;
+import factory.model.Still;
 import factory.model.WineStock;
 
 @Component
@@ -105,8 +106,10 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 			return;
 		}
 
-		//Accounts for Employees
 		
+		/*
+		 * initialize employee accounts
+		 */
 		UserAccount adminAcc = userAccountManager.create("admin", "123", new Role("ROLE_ADMIN"));
 		userAccountManager.save(adminAcc);
 		UserAccount brewerAcc = userAccountManager.create("braumeister1", "123", new Role("ROLE_BREWER"));
@@ -133,8 +136,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		userAccountManager.save(barrelmakerAcc2);
 		
 		
-		//Accounts for Customers
-		
+		/*
+		 * initialize customer accounts
+		 */
 		final Role userRole = new Role("ROLE_CUSTOMER");
 
 		UserAccount ua1 = userAccountManager.create("hans", "123", userRole);
@@ -144,13 +148,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		customerRepository.save(c1);
 		
 		
-		//Inizialize Departments
-	
-//		if (barrelRepository.findAll().iterator().hasNext()) {
-//			System.out.println("Repo ist nicht leer!!");
-//			return;
-//		}
-
+		/*
+		 * initialize barrels
+		 */
 		Barrel br1 = new Barrel("Destillat A", 5 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"));
 		Barrel br2 = new Barrel("Destillat A", 5 ,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"));
 		Barrel br3 = new Barrel("Destillat A", 20 ,LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"));
@@ -178,10 +178,12 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrels.add(br11);
 		barrels.add(br12);
 		
-//		barrelRepository.save(Arrays.asList(br1, br2, br3, br4, br5, br6, br7, br8, br9, br10, br11, br12));
 		
+		/*
+		 * initialize bottles
+		 */
 		Bottle b1 = new Bottle("", 0.7);
-		Bottle b2 = new Bottle("", 0.7);
+		Bottle b2 = new Bottle("Courvoisier Napoleon", 0.7);
 		Bottle b3 = new Bottle("", 0.7);
 		Bottle b4 = new Bottle("", 0.7);
 		Bottle b5 = new Bottle("" ,0.7);
@@ -199,15 +201,33 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		full.add(b2);
 		
 		
+		/*
+		 * initialize stills
+		 */
+		List<Still> still = new ArrayList<Still>();
 		
+		Still still_1 = new Still(24, false, true);
+		Still still_2 = new Still(24, true, true);
+		Still still_3 = new Still(24, false, false);
+		Still still_4 = new Still(24, true, true);
+		
+		still.add(still_1);
+		still.add(still_2);
+		still.add(still_3);
+		still.add(still_4);
+		
+		
+		/*
+		 * initialize departments
+		 */
 		Department d1 = departmentRepository.save(new BottleStock("FlaschenlagerA", empty, full));
 		Department d2 = departmentRepository.save(new BottleStock("FlaschenlagerB", empty, full));
 		Department d3 = departmentRepository.save(new BarrelStock("FasslagerA", barrels));
 		Department d4 = departmentRepository.save(new BarrelStock("FasslagerB", barrels));
 		Department d5 = departmentRepository.save(new WineStock("WeinlagerA", 300));
 		Department d6 = departmentRepository.save(new WineStock("WeinlagerB", 300));
-		Department d7 = departmentRepository.save(new Production("ProduktionA", 100));
-		Department d8 = departmentRepository.save(new Production("ProduktionB", 100));
+		Department d7 = departmentRepository.save(new Production("ProduktionA", still));
+		Department d8 = departmentRepository.save(new Production("ProduktionB", still));
 		Department d9 = departmentRepository.save(new Sale("VerkaufA"));
 		Department d10 = departmentRepository.save(new Sale("VerkaufB"));
 		Department d11 = departmentRepository.save(new Accountancy("Verwaltung", 0, 0));
@@ -234,8 +254,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list8.add(d10);
 		
 		
-		//Inizialize Employees
-		
+		/*
+		 * initialize employees
+		 */
 		Employee e1 = employeeRepository.save(new Employee(warehousemanAcc, "Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse"));
 		Employee e2 = employeeRepository.save(new Employee(warehousemanAcc2, "Lagerist","Maier","Chris","200","klaus@Mueller.de","Klausstrasse"));
 		Employee e10 = employeeRepository.save(new Employee(warehousemanAcc3, "Lagerist","Maier","Chris","200","klaus@Mueller.de","Klausstrasse"));
@@ -269,8 +290,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list4.add(e10);
 		
 		
-		//Inizialize Locations
-	
+		/*
+		 * initialize locations
+		 */
 		if (locationRepository.findAll().iterator().hasNext()) {
 			return;
 		}
@@ -282,6 +304,10 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 
 	}
 
+	
+	/*
+	 * initialize catalog
+	 */
 	public void initializeSortiment(Inventory<InventoryItem> inventory) {
 		
 		// Die Bilder sind von der Internetseite: http://www.spirituosentheke.de 
@@ -332,6 +358,10 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 
 	}
 
+	
+	/*
+	 * initialize recipes
+	 */
 	private void initializeCookBook(CookBookRepository cookbookrepository) 
 	{
 		

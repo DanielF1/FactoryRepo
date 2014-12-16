@@ -1,0 +1,189 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<!-- JS dependencies -->
+	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
+	<script src="../resources/js/docs.min.js"></script>
+	
+	<!-- CSS dependencies -->
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../resources/css/header.css" rel="stylesheet" />
+</head>
+
+<body>
+
+<div class="main-wrapper">
+
+	<!-- Header -->
+	<div class="header">
+		<div class="header-title">Cognac Shop <br/>Feuerwasser</div>
+	</div>
+	<!-- /Header -->
+
+	<!-- Container -->
+	<div class="main-container content">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-7">	</div>
+				<div class="col-lg-5">	
+
+					<!-- Log in / Log out navigation -->
+					
+					<form class="form-inline" role="form" th:action="@{/login}" method="post" >
+					 	<div class="form-group" sec:authorize="!isAuthenticated()">
+					   		<label class="sr-only" for="username">Username</label>
+					    	<input type="text" class="form-control" id="username" name="username" 
+					    		autofocus="autofocus" placeholder="Username" />
+					  	</div>
+					 	<div class="form-group" sec:authorize="!isAuthenticated()">
+					    	<label for="password" class="sr-only">Password</label>
+					    	<input type="password" class="form-control" id="password" 
+					    	name="password" placeholder="Password" />
+					  	</div>
+					  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">
+					  		Log in</button>
+					  	<button type="submit" class="glyphicon glyphicon-off loginlogout" sec:authorize="isAuthenticated()">
+					  		</button>
+					</form>
+
+					<!-- Log in / Log out navigation -->
+
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-2"></div>
+
+				<!-- navigation -->
+				<div class="col-lg-8">
+					<ul class="nav nav-pills">
+						<li role="presentation" class="active"><a href="index.html">Home</a></li>
+						<li role="presentation"><a href="sortiment.html">Sortiment</a></li>
+
+						<!-- Advanced administrator navigation -->
+						<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
+					   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
+					      		Standort <span class="caret"></span>
+					    	</a>
+					    	<ul class="dropdown-menu" role="menu">
+						    	<li><a href="addLocation.html">Standort hinzufügen</a></li>
+						    	<li><a href="adminLocList.html">Standortübersicht</a></li>
+							</ul>
+						</li>
+
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
+							<a href="employeeList.html">Mitarbeiterübersicht</a>
+						</li>
+
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
+							<a href="locationwithwine">Weinmenge</a>
+						</li>
+						<!-- /Advanced administrator navigation -->
+
+
+						<!-- Advanced salesman navigation -->
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
+							<a href="orders.html">Bestellungen</a>
+						</li>
+
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
+							<a href="register.html">Register new Customer</a>
+						</li>
+						<!-- /Advanced salesman navigation -->
+
+
+						<!-- Advanced brewer navigation -->
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+							<a href="cookbook.html">Destillation</a>
+						</li>
+
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+							<a href="cookbook.html">Rezepte</a>
+						</li>
+
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+							<a href="BarrelList.html">BarrelList</a>
+						</li>
+						<!-- /Advanced brewer navigation -->
+
+
+						<!-- Advanced barrelmaker navigation -->
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
+							<a href="BarrelList.html">BarrelList</a>
+						</li>
+						<!-- /Advanced barrelmaker navigation -->
+
+
+						<!-- Advanced winegrower navigation -->
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
+							<a href="http://localhost:8080/form">Weinanlieferung</a>
+						</li>
+
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
+							<a href="locationwithwine">Weinmenge</a>
+						</li>
+						<!-- /Advanced winegrower navigation -->
+					</ul>
+				</div>
+				<!-- /navigation -->
+				
+				<div class="col-lg-2"></div>
+			</div>
+		<!-- =============================================================================================== -->
+
+			<table class="table table-condensed">
+				<tr class="success">
+					<th><div>Destille</div></th>
+					<th><div>Status</div></th>
+					<th><div></div></th>
+				</tr>
+				<tr th:each="still, it : ${stills}" th:with="index = ${it.count}">
+					<td><span th:text="${index} + '. ' + ${still.amount}"></span></td>
+					<td>
+						<span th:switch="${still.status_one}">
+							<button th:case="true" class="btn btn-success"></button>
+							<button th:case="false" class="btn btn-danger"></button>
+						</span> 
+						<span th:switch="${still.status_two}">
+							<button th:case="true" class="btn btn-success"></button>
+							<button th:case="false" class="btn btn-danger"></button>
+						</span>
+					</td>
+					<td>
+						<form th:method="post" th:action="@{'/distillation/process/' + ${index}}">
+							<button class="btn btn-default">Destillieren</button>
+						</form>
+					</td>
+				</tr>
+
+			</table>
+			<p th:text="${error}"></p><p th:text="${error2}"></p>
+		
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</div>
+	</div>
+	<!-- /Container -->
+
+</div>
+</body>
+</html>

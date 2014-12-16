@@ -5,13 +5,13 @@ import javax.persistence.Entity;
 @Entity
 public class WineStock extends Department {
 	
-	private double amount;
+	private double amount = 300;
 	
 	@Deprecated
 	public WineStock() {}
 	
-	public WineStock(String name, double amount) {
-	
+	public WineStock(String name, double amount) 
+	{
 		super(name);
 		this.amount = amount;
 	}

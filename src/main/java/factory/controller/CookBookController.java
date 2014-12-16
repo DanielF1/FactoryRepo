@@ -65,8 +65,6 @@ public class CookBookController {
 	public List<MaxStore> calcMaxStore()
 	{
 		List<MaxStore> maxstorelist = new ArrayList<MaxStore>();
-
-//		List<Barrel> barrels = barrelstock.getBarrels();
 		
 		/*
 		 * HashMap: return a sorted list 
@@ -119,7 +117,7 @@ public class CookBookController {
 	 * mapping initializes 
 	 */
 	@RequestMapping(value = "/cookbook", method = RequestMethod.GET)
-	public String Book(Model model) 
+	public String book(Model model) 
 	{
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
