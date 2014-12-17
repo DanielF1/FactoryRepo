@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 @Entity
 public class WineStock extends Department {
 	
-	private double amount = 300;
+	private double amount;
 	
 	@Deprecated
 	public WineStock() {}

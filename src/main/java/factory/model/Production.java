@@ -18,7 +18,7 @@ public class Production extends Department {
 	@Deprecated
 	public Production(){}
 	
-	public Production(String name, List<Still> stillMap) {
+	public Production(String name, List<Still> stillMap, double capacity) {
 		
 		super(name);
 		this.capacity = capacity;
