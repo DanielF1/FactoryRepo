@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,6 @@ import factory.model.BarrelStock;
 import factory.model.Bottle;
 import factory.model.BottleStock;
 import factory.model.CookBookRepository;
-import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Ingredient;
 import factory.model.LocationRepository;
@@ -112,7 +110,7 @@ public class CookBookController {
 			for (Barrel barrel: list)
 			{
 				
-				maxAmount += barrel.getBarrel_content_amount();
+				maxAmount += barrel.getBarrel_volume();
 			}
 			
 			MaxStore maxstore = new MaxStore(key, maxAmount);
@@ -355,10 +353,10 @@ public class CookBookController {
 											{
 												for (Barrel barrel : BarrelStock.getBarrels()) 
 												{
-													if((barrel.getContent().equals(maxstore.getContent())) & (barrel.getBarrel_content_amount() > 0))
+													if((barrel.getContent().equals(maxstore.getContent())) & (barrel.getBarrel_volume() > 0))
 													{
 		//												System.out.println("2: " + barrel.getContent());
-														double barrelAmount = barrel.getBarrel_content_amount();
+														double barrelAmount = barrel.getBarrel_volume();
 		//												System.out.println("3: " + barrelAmount);
 														if((barrelAmount - newAmount) <= 0)
 														{

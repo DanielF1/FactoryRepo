@@ -41,11 +41,11 @@
 						</div>
 						
 						<table>
-						<tr>
-						<td><label>ID: </label></td>
-						<td><input id="Id" th:field="*{Id}" th:errorclass="fieldError" type="text" name="Id" />
-						<p th:if="${#fields.hasErrors('Id')}" th:errors="*{Id}">Der ID darf nicht leer sein.</p></td>
-						</tr>
+<!-- 						<tr> -->
+<!-- 						<td><label>ID: </label></td> -->
+<!-- 						<td><input id="Id" th:field="*{Id}" th:errorclass="fieldError" type="text" name="Id" /> -->
+<!-- 						<p th:if="${#fields.hasErrors('Id')}" th:errors="*{Id}">Der ID darf nicht leer sein.</p></td> -->
+<!-- 						</tr> -->
 						
 						<tr>
 						<td><label>Content: </label></td>
@@ -54,30 +54,35 @@
 					
 						
 						<tr>
-						<td><label >Amount: </label></td>
-						<td><input id="Amount" th:field="*{Amount}" type="text" name="Amount" /></td>
+						<td><label >Content_Amount: </label></td>
+						<td><input id="Content_amount" th:field="*{Content_amount}" type="text" name="Content_amount" /></td>
 						</tr>
-						
 						
 						<tr>
-						<td><label>Birthdate_of_barrel: </label></td>
-						<td><input id="Birthdate_of_barrel" th:field="*{Birthdate_of_barrel}" th:errorclass="fieldError" type="date" name="Birthdate_of_barrel" /> 
-						<p th:if="${#fields.hasErrors('Birthdate_of_barrel')}" th:errors="*{Birthdate_of_barrel}">Das Datum darf nicht leer sein.</p></td> 
+						<td><label >Barrel_volume: </label></td>
+						<td><input id="Barrel_volume" th:field="*{Barrel_volume}" th:errorclass="fieldError" type="text" name="Barrel_volume" /> 
+						<p th:if="${#fields.hasErrors('Barrel_volume')}" th:errors="*{Barrel_volume}">Das Datum darf nicht leer sein.</p></td> 
 						</tr>
+						
+<!-- 						<tr> -->
+<!-- 						<td><label>Birthdate_of_barrel: </label></td> -->
+<!-- 						<td><input id="Birthdate_of_barrel" th:field="*{Birthdate_of_barrel}" th:errorclass="fieldError" type="date" name="Birthdate_of_barrel" />  -->
+<!-- 						<p th:if="${#fields.hasErrors('Birthdate_of_barrel')}" th:errors="*{Birthdate_of_barrel}">Das Datum darf nicht leer sein.</p></td>  -->
+<!-- 						</tr> -->
 						
 			
-						<tr>
-						<td><label>Death_of_barrel: </label></td>
-						<td><input id="Death_of_barrel" th:field="*{Death_of_barrel}" th:errorclass="fieldError" type="date" name="Death_of_barrel" ></input>
-						<p th:if="${#fields.hasErrors('Death_of_barrel')}" th:errors="*{Death_of_barrel}">Das Datum darf nicht leer sein.</p> </td>
-						</tr>
+<!-- 						<tr> -->
+<!-- 						<td><label>Death_of_barrel: </label></td> -->
+<!-- 						<td><input id="Death_of_barrel" th:field="*{Death_of_barrel}" th:errorclass="fieldError" type="date" name="Death_of_barrel" ></input> -->
+<!-- 						<p th:if="${#fields.hasErrors('Death_of_barrel')}" th:errors="*{Death_of_barrel}">Das Datum darf nicht leer sein.</p> </td> -->
+<!-- 						</tr> -->
 						
 						
-						<tr>
-						<td><label>Last Fill: </label></td>
-						<td><input id="LastFill" th:field="*{LastFill}" th:errorclass="fieldError" type="date" name="LastFill" ></input>
-						<p th:if="${#fields.hasErrors('LastFill')}" th:errors="*{LastFill}">Das Datum darf nicht leer sein.</p> </td>
-						</tr>
+<!-- 						<tr> -->
+<!-- 						<td><label>Last Fill: </label></td> -->
+<!-- 						<td><input id="LastFill" th:field="*{LastFill}" th:errorclass="fieldError" type="date" name="LastFill" ></input> -->
+<!-- 						<p th:if="${#fields.hasErrors('LastFill')}" th:errors="*{LastFill}">Das Datum darf nicht leer sein.</p> </td> -->
+<!-- 						</tr> -->
 						</table>
 						<input type="submit" value="Insert" />
 						
