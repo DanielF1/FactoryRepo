@@ -4,9 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.web.LoggedIn;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import factory.model.Barrel;
 import factory.model.BarrelStock;
+import factory.model.Department;
+import factory.model.Employee;
+import factory.model.Location;
+import factory.model.LocationRepository;
 import factory.model.validation.InsertBarrel;
 
 
@@ -26,15 +34,38 @@ import factory.model.validation.InsertBarrel;
 @PreAuthorize("hasRole('ROLE_BARRELMAKER') || hasRole('ROLE_BREWER') || hasRole('ROLE_WAREHOUSEMAN')")
 public class BarrelMakerController {
 	
-	BarrelStock barrelstock;
-
-
+	private final LocationRepository locationRepository;
+	
+	@Autowired
+	public BarrelMakerController(LocationRepository locationRepository){
+		this.locationRepository = locationRepository;
+	}
+	
 	@RequestMapping("/BarrelList")
-	public String barrel(ModelMap modelMap) {
+	public String barrel(ModelMap modelMap, @LoggedIn Optional<UserAccount> userAccount) {
 		System.out.print("11111111111111");
+		
+//		for(Location loc : locationRepository.findAll()){
+//			for(Employee e : loc.getEmployees()){
+//				if(e.getUserAccount().equals(userAccount)){
+//					for(Department dep : loc.getDepartments()){
+//						if(dep.getName().contains("Fasslager")){
+//							BarrelStock barrelstock = (BarrelStock) dep;
+//							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 		modelMap.addAttribute("BarrelList", BarrelStock.getBarrels());
-
 		return "BarrelList";
+////						}
+////					}
+////				}
+////			}
+//		}
+		
+		
+		
+		
+		//modelMap.addAttribute("BarrelList", BarrelStock.getBarrels());
+
+//		return "";
 	}
 
 	@RequestMapping("/insertBarrel")
