@@ -90,7 +90,7 @@ public class WineGrowerController {
 //		locationmanagement.deliverWine(quantity, this.date);
 		
 		
-		
+		locationManagement.actualizationCapacity(this.date);
 		locationManagement.deliverWine(quantity, this.date , id);
 		
 		modelMap.addAttribute("quantity", quantity);

@@ -108,5 +108,15 @@ public class Location {
 		return departments;
 	}
 
+	public WineStock getWineStockDepartment() {
+	
+		List<Department> deps = this.getDepartments();
+		for (Department depwein : deps) {
+			if (depwein.getName().contains("Wein")) {
+				return (WineStock)depwein;
+			}
+		}
+		return null;
+	}
 	
 }

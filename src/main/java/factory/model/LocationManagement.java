@@ -147,9 +147,9 @@ public class LocationManagement {
 		Long id = -1L;
 		double freeCapacity = 0;
 		for (Location location : getLocationsListWithProductionManagement()) {
-			for (Department department : location.getDepartments()) {
-				WineStock deptWeinStock = (WineStock) getWineStockDepartment(department.getId());
-				Production deptProduction = (Production) getProductionDepartment(department.getId());
+			//for (Department department : location.getDepartments()) {
+				WineStock deptWeinStock = (WineStock) getWineStockDepartment(location.getId());
+				Production deptProduction = (Production) getProductionDepartment(location.getId());
 					// # TODO count capacity
 					if (deptProduction.getCapacity() - deptWeinStock.getAmount() > freeCapacity) {
 						freeCapacity = deptProduction.getCapacity()
@@ -157,7 +157,7 @@ public class LocationManagement {
 						id = location.getId();
 					}
 			}
-		}
+		//}
 		return id;
 	}
 
@@ -184,6 +184,18 @@ public class LocationManagement {
 		long s = daysTillAprilTheFirst / 2 * VOLUME_HEKTOLITERS_IN_TWO_DAYS;
 		return (int) s;
 
+	}
+	
+	public void actualizationCapacity (Date date){
+		for (Location location : getLocationsListWithProductionManagement()) {
+			Production deptProduction = (Production) getProductionDepartment(location.getId());
+			double capacity = countCapacityInHektoLiter (date);
+			deptProduction.setCapacity(capacity);
+			departmentRepository.save(deptProduction);
+			
+		}
+				
+		
 	}
 
 	public boolean isOverflow(double oldQuantity, double newQuantity, Date date) {

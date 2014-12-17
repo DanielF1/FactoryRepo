@@ -154,9 +154,10 @@
 					<td class="text-center" th:text="${loc.name}">Name</td>
 					<td class="text-center" th:text="${loc.address}">Straße</td>
 					<td class="text-center">
-						<div th:each="department : ${loc.departments}">
-							<span th:text="${department.quantity}">Wein</span>
-						</div>
+							<span th:if="${loc.getWineStockDepartment()}" th:text="${loc.getWineStockDepartment().amount}">Wein</span>
+						<!-- div th:each="department : ${loc.departments}">
+							<span th:if="${department}" th:text="${department.amount}">Wein</span>
+						</div-->
 					</td> 
 				</tr>
 			</table>
