@@ -23,9 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import factory.model.Barrel;
 import factory.model.BarrelStock;
-import factory.model.Department;
-import factory.model.Employee;
-import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.validation.InsertBarrel;
 
@@ -47,25 +44,23 @@ public class BarrelMakerController {
 		
 //		for(Location loc : locationRepository.findAll()){
 //			for(Employee e : loc.getEmployees()){
-//				if(e.getUserAccount().equals(userAccount)){
+//				if(e.getUserAccount() == userAccount.get()){
 //					for(Department dep : loc.getDepartments()){
 //						if(dep.getName().contains("Fasslager")){
 //							BarrelStock barrelstock = (BarrelStock) dep;
 //							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
-		modelMap.addAttribute("BarrelList", BarrelStock.getBarrels());
-		return "BarrelList";
-////						}
-////					}
-////				}
-////			}
+//		modelMap.addAttribute("BarrelList", BarrelStock.getBarrels());
+//		return "BarrelList";
+//						}
+//					}
+//				}
+//			}
 //		}
-		
-		
-		
-		
-		//modelMap.addAttribute("BarrelList", BarrelStock.getBarrels());
+//		
 
-//		return "";
+		modelMap.addAttribute("BarrelList", BarrelStock.getBarrels());
+
+		return "BarrelList";
 	}
 
 	@RequestMapping("/insertBarrel")

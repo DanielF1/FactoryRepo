@@ -177,6 +177,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrels.add(br11);
 		barrels.add(br12);
 		
+
 		
 		/*
 		 * initialize bottles
