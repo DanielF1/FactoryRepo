@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Production extends Department {
 
-//	private double capacity;
+	private double capacity;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private static List<Still> stills;
@@ -18,20 +18,20 @@ public class Production extends Department {
 	@Deprecated
 	public Production(){}
 	
-	public Production(String name, List<Still> stillMap) {
+	public Production(String name, List<Still> stillMap, double capacity) {
 		
 		super(name);
-//		this.capacity = capacity;
+		this.capacity = capacity;
 		this.stills = stillMap;
 	}
 
-//	public double getCapacity() {
-//		return capacity;
-//	}
-//
-//	public void setCapacity(double capacity) {
-//		this.capacity = capacity;
-//	}
+	public double getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(double capacity) {
+		this.capacity = capacity;
+	}
 
 	public static List<Still> getStills() {
 		return stills;
