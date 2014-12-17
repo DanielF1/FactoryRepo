@@ -11,26 +11,29 @@ public class Barrel {
 
 	private @Id @GeneratedValue Long id;
 	private String content;
-	private double amount;
+	private double barrel_amount;
+	private double barrel_content_amount;
 	private LocalDate birthdate_of_barrel;
 	private LocalDate death_of_barrel;
 	private LocalDate lastFill;
 	
-	public Barrel(String content, double amount, LocalDate birthdate_of_barrel,
+	public Barrel(String content, double barrel_amount, double barrel_content_amount, LocalDate birthdate_of_barrel,
 					LocalDate death_of_barrel, LocalDate lastFill)
 	{
 		this.content = content;
-		this.amount = amount;
+		this.barrel_amount = barrel_amount;
+		this.barrel_content_amount = barrel_content_amount;
 		this.birthdate_of_barrel = birthdate_of_barrel;
 		this.death_of_barrel = death_of_barrel;
 		this.lastFill = lastFill;
 	}
 	
-	public Barrel(String content, double amount, String birthdate_of_barrel,
+	public Barrel(String content, double barrel_amount, double barrel_content_amount, String birthdate_of_barrel,
 			String death_of_barrel, String lastFill)
 	{
 		this.content = content;
-		this.amount = amount;
+		this.barrel_amount = barrel_amount;
+		this.barrel_content_amount = barrel_content_amount;
 		this.birthdate_of_barrel = LocalDate.parse(birthdate_of_barrel);
 		this.death_of_barrel = LocalDate.parse(death_of_barrel);
 		this.lastFill = LocalDate.parse(lastFill);
@@ -53,15 +56,7 @@ public class Barrel {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
+	
 	public LocalDate getBirthdate_of_barrel() {
 		return birthdate_of_barrel;
 	}
@@ -86,6 +81,22 @@ public class Barrel {
 		this.lastFill = lastFill;
 	}
 	
+	public double getBarrel_amount() {
+		return barrel_amount;
+	}
+
+	public void setBarrel_amount(double barrel_amount) {
+		this.barrel_amount = barrel_amount;
+	}
+
+	public double getBarrel_content_amount() {
+		return barrel_content_amount;
+	}
+
+	public void setBarrel_content_amount(double barrel_content_amount) {
+		this.barrel_content_amount = barrel_content_amount;
+	}
+
 	public int getAlter(){
 		int datecount =0;
 		int ANZAHL_TAGE_IM_JAHR = 365;
@@ -95,7 +106,7 @@ public class Barrel {
 			setLastFill(getLastFill().plusDays(1));
 		}	
 			Alter = datecount/ANZAHL_TAGE_IM_JAHR;			
-		System.out.println(getContent() + getAmount()+ " Date count" + datecount + " alter" + Alter);
+		System.out.println(getContent() + getBarrel_amount()+ " Date count" + datecount + " alter" + Alter);
 		return Alter;
 	}
 	

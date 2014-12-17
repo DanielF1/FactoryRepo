@@ -82,5 +82,6 @@ public class Article extends Product{
 
 		public void delete(Long id) {
 			
-		}		
+		}	
+
 }

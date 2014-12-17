@@ -16,6 +16,10 @@ public class Still {
 	@Deprecated
 	public Still(){}
 	
+	
+	/*
+	 * getter & setter
+	 */
 	public int getAmount() {
 		return amount;
 	}

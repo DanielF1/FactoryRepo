@@ -40,10 +40,10 @@ public class CookBookController {
 
 	BarrelStock barrelstock;
 	BottleStock bottlestock;
-//	private final Inventory<InventoryItem> inventory;
-//	private final ArticleRepository articlerepository;
+	private final Inventory<InventoryItem> inventory;
+	private final ArticleRepository articlerepository;
 
-	private final DepartmentRepository departmentRepository;
+	private final DepartmentRepository departmentrepository;
 	private final LocationRepository locationRepository;
 
 
@@ -51,11 +51,18 @@ public class CookBookController {
 	
 	
 	@Autowired 
-	public CookBookController(CookBookRepository cookbookrepository, DepartmentRepository departmentRepository, LocationRepository locationRepository)
+	public CookBookController(
+			CookBookRepository cookbookrepository, 
+			DepartmentRepository departmentrepository, 
+			LocationRepository locationRepository,
+			Inventory<InventoryItem> inventory,
+			ArticleRepository articlerepository)
 	{
 		this.cookbookrepository = cookbookrepository;
-		this.departmentRepository = departmentRepository;
+		this.departmentrepository = departmentrepository;
 		this.locationRepository = locationRepository;
+		this.inventory = inventory;
+		this.articlerepository = articlerepository;
 	}
 	
 	
@@ -75,17 +82,22 @@ public class CookBookController {
 		/*
 		 * sort all barrels
 		 */
-		for (Barrel barrel : BarrelStock.getBarrels()) 
-		{
-			String content = barrel.getContent();
-			
-			if (!map.containsKey(content)) 
+//		for(Department departments : departmentrepository.findAll())
+		{ 
+//			if(departments.getName().contains("BarrelStock"))
 			{
-				map.put(content, new ArrayList<Barrel>());
-			}
-			
-			map.get(content).add(barrel);
-			
+				for (Barrel barrel : BarrelStock.getBarrels()) 
+				{
+					String content = barrel.getContent();
+					
+					if (!map.containsKey(content)) 
+					{
+						map.put(content, new ArrayList<Barrel>());
+					}
+					
+					map.get(content).add(barrel);
+				}
+			}			
 		}
 
 		/*
@@ -100,7 +112,7 @@ public class CookBookController {
 			for (Barrel barrel: list)
 			{
 				
-				maxAmount += barrel.getAmount();
+				maxAmount += barrel.getBarrel_content_amount();
 			}
 			
 			MaxStore maxstore = new MaxStore(key, maxAmount);
@@ -337,36 +349,42 @@ public class CookBookController {
 									
 									while(newAmount > 0)
 									{
-										for(Barrel barrel : BarrelStock.getBarrels())
-										{
-											if((barrel.getContent().equals(maxstore.getContent())) & (barrel.getAmount() > 0))
+//										for(Department departments : departmentrepository.findAll())
+										{ 
+//											if(departments.getName().contains("BarrelStock"))
 											{
-//												System.out.println("2: " + barrel.getContent());
-												double barrelAmount = barrel.getAmount();
-//												System.out.println("3: " + barrelAmount);
-												if((barrelAmount - newAmount) <= 0)
+												for (Barrel barrel : BarrelStock.getBarrels()) 
 												{
-													barrel.setAmount(0);
-//													System.out.println("4: " + barrel.getAmount());
-//													barrelstock.saveBarrel(barrel);
-
-													newAmount = newAmount - barrelAmount;
-//													System.out.println("5: " + newAmount);
-												}
-												else
-												{
-													barrel.setAmount(barrelAmount - newAmount);
-
-//													System.out.println("6: " + barrel.getAmount());
-//													barrelstock.saveBarrel(barrel);
-													newAmount = 0;
-													
-													break;
-												}
+													if((barrel.getContent().equals(maxstore.getContent())) & (barrel.getBarrel_content_amount() > 0))
+													{
+		//												System.out.println("2: " + barrel.getContent());
+														double barrelAmount = barrel.getBarrel_content_amount();
+		//												System.out.println("3: " + barrelAmount);
+														if((barrelAmount - newAmount) <= 0)
+														{
+															barrel.setBarrel_content_amount(0);
+		//													System.out.println("4: " + barrel.getAmount());
+		//													barrelstock.saveBarrel(barrel);
+		
+															newAmount = newAmount - barrelAmount;
+		//													System.out.println("5: " + newAmount);
+														}
+														else
+														{
+															barrel.setBarrel_content_amount(barrelAmount - newAmount);
+		
+		//													System.out.println("6: " + barrel.getAmount());
+		//													barrelstock.saveBarrel(barrel);
+															newAmount = 0;
+															
+															break;
+														}
+													} // /if
+												} // /for
 											} // /if
 										} // /for
 									} // /while
-										
+												
 							
 									/*
 									 * update empty and full bottles
@@ -387,17 +405,23 @@ public class CookBookController {
 												Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
 												BottleStock.getFullbottles().add(b1);
 												
-//										    	for(Article article : articlerepository.findAll())
-//										    	{
-//										    		if(article.getName().equals(recipe.getName()))
-//										    		{
-//										    			Optional<InventoryItem> item = inventory.findByProductIdentifier(article.getIdentifier());
-//										    	    	Quantity quantity = item.map(InventoryItem::getQuantity).orElse(Units.ZERO);
-//										    	    	
-//										    	    	quantity.getAmount().plus();
-//
-//										    		}
-//										    	}
+										    	for(Article article : articlerepository.findAll())
+										    	{
+										    		if(article.getName().equals(recipe.getName()))
+										    		{
+										    			System.out.println(article.getName());
+										    			Optional<InventoryItem> item = inventory.findByProductIdentifier(article.getIdentifier());
+										    	    	
+										    			if(!item.isPresent())
+										    				continue;
+										    			
+										    			InventoryItem inventoryItem = item.get();
+										    			System.out.println(inventoryItem);
+										    			inventoryItem.increaseQuantity(Units.ONE);
+										    			System.out.println(inventoryItem.getQuantity());
+
+										    		}
+										    	}
 
 											}
 										}
@@ -405,10 +429,10 @@ public class CookBookController {
 										{
 											break;
 										}
-										
+								
 										bottles--;
 									}
-									
+							
 									BottleStock.getEmptybottles().removeAll(toRemove);
 									
 								} // /if

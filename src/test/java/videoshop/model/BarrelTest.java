@@ -14,9 +14,9 @@ public class BarrelTest extends AbstractIntegrationTests{
 	@Test
 	public void testAlter() {
 //		fail("Not yet implemented");
-		Barrel barrel = new Barrel("Destillat D", 12 ,LocalDate.parse("2007-12-04"),LocalDate.parse("2014-12-30"), LocalDate.parse("2014-12-09"));
+		Barrel barrel = new Barrel("Destillat D",21, 12 ,LocalDate.parse("2007-12-04"),LocalDate.parse("2014-12-30"), LocalDate.parse("2014-12-09"));
 		assertEquals(0,barrel.getAlter());
-		Barrel barrel1 = new Barrel("Destillat D", 12 ,LocalDate.parse("2014-12-04"),LocalDate.parse("2014-12-30"), LocalDate.now().minusDays(365));
+		Barrel barrel1 = new Barrel("Destillat D",18, 12 ,LocalDate.parse("2014-12-04"),LocalDate.parse("2014-12-30"), LocalDate.now().minusDays(365));
 		assertEquals(1,barrel1.getAlter());
 	}
 
