@@ -1,156 +1,159 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-	<meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<link rel="stylesheet" type="text/css" href="../resources/css/styleVerkauf.css" />
-	
-	 <link href="../resources/css/header.css" rel="stylesheet" />
-	
-	<img src="../resources/img/cover/wein.jpg" width="1348" height="250" alt="Wein"/>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Edit Department</title>
 
+	<!-- JS dependencies -->
+	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
+	<script src="../resources/js/docs.min.js"></script>
+	
+	<!-- CSS dependencies -->
+	<link href="../resources/css/style.css" rel="stylesheet" />
 </head>
-
 
 <body>
 <div class="main-wrapper">
 	<!-- Header -->
+
+	<div class="col-lg-7"></div>
+
+	<!-- Log in / Log out navigation -->
+	<div class="col-lg-5 logNavi">	
+		<form class="form-inline" role="form" th:action="@{/login}" method="post" >
+		 	<div class="form-group" sec:authorize="!isAuthenticated()">
+		   		<label class="sr-only" for="username">Username</label>
+		    	<input type="text" class="form-control" id="username" name="username" 
+		    		autofocus="autofocus" placeholder="Username" />
+		  	</div>
+		 	<div class="form-group" sec:authorize="!isAuthenticated()">
+		    	<label for="password" class="sr-only">Password</label>
+		    	<input type="password" class="form-control" id="password" 
+		    	name="password" placeholder="Password" />
+		  	</div>
+
+		  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">
+		  		Log in</button>
+
+		  	<button type="submit" class="btn btn-default pull-right loginlogout" sec:authorize="isAuthenticated()">
+		  		Log out</button>
+		</form>
+	</div>
+	<!-- Log in / Log out navigation -->
+
+	<div class="col-lg-2"></div>
+
+	<!-- navigation -->
+	<!-- 	<div class="col-lg-8 navigation"> -->
+<!-- 		<ul class="nav nav-pills"> -->
+<!-- 			<li role="presentation" class="active button_color"><a href="index.html">Home</a></li> -->
+<!-- 			<li role="presentation"><a href="sortiment.html">Sortiment</a></li> -->
+
+<!-- 			 Advanced administrator navigation --> 
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+<!-- 				<a href="orders.html">Bestellungen</a> -->
+<!-- 			</li> -->
+			
+<!-- 			<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+<!-- 		   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true"> -->
+<!-- 		      		Standort <span class="caret"></span> -->
+<!-- 		    	</a> -->
+<!-- 		    	<ul class="dropdown-menu" role="menu"> -->
+<!-- 			    	<li><a href="addLocation.html">Standort hinzufügen</a></li> -->
+<!-- 			    	<li><a href="adminLocList.html">Standortübersicht</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</li>							 -->
+
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+<!-- 				<a href="employeeList.html">Mitarbeiterübersicht</a> -->
+<!-- 			</li> -->
+
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+<!-- 				<a href="locationwithwine">Weinmenge</a> -->
+<!-- 			</li> -->
+<!-- 			 /Advanced administrator navigation --> 
+
+
+<!-- 			 Advanced salesman navigation -->
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
+<!-- 				<a href="saleSortiment.html">Schnellauswahl</a> -->
+<!-- 			</li> -->
+			
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
+<!-- 				<a href="warenkorb.html">Warenkorb</a> -->
+<!-- 			</li> -->
+			
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
+<!-- 				<a href="orders.html">Bestellungen</a> -->
+<!-- 			</li> -->
+
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
+<!-- 				<a href="register.html">Kundenregistrierung</a> -->
+<!-- 			</li> -->
+
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
+<!-- 				<a href="customerlist.html">Kundenliste</a> -->
+<!-- 			</li> -->
+<!-- 			 /Advanced salesman navigation --> 
+
+
+<!-- 			 Advanced brewer navigation -->
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')"> -->
+<!-- 				<a href="cookbook.html">Rezepte</a> -->
+<!-- 			</li> -->
+
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')"> -->
+<!-- 				<a href="BarrelList.html">BarrelList</a> -->
+<!-- 			</li> -->
+<!-- 			 /Advanced brewer navigation -->
+
+
+<!-- 			 Advanced barrelmaker navigation --> 
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')"> -->
+<!-- 				<a href="BarrelList.html">BarrelList</a> -->
+<!-- 			</li> -->
+<!-- 			 /Advanced barrelmaker navigation -->
+
+
+<!-- 			 Advanced winegrower navigation -->
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')"> -->
+<!-- 				<a href="http://localhost:8080/form">Weinanlieferung</a> -->
+<!-- 			</li> -->
+
+<!-- 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')"> -->
+<!-- 				<a href="locationwithwine">Weinmenge</a> -->
+<!-- 			</li> -->
+<!-- 			 /Advanced winegrower navigation -->
+<!-- 		</ul> -->
+<!-- 	</div> -->
+	<!-- /navigation -->
+
+	<div class="col-lg-2"></div>
+
 	<div class="header">
-		<div class="header-title">Cognac Fabrik <br/> Feuerwasser</div>
+		<div class="header-title">Cognac Shop <br/>Feuerwasser</div>
+		<img src="../resources/img/wein.jpg" class="header"/>
 	</div>
 	<!-- /Header -->
+
 
 	<!-- Container -->
 	<div class="main-container content">
 		<div class="col-lg-12">
-			<div class="row">
-				<div class="col-lg-10">	</div>
-				<div class="col-lg-20">	
+			<div class="col-lg-3"></div>
 
-					<!-- Log in / Log out navigation -->
-					
-					<form class="form-inline" role="form" th:action="@{/login}" method="post" >
-					 	<div class="form-group" sec:authorize="!isAuthenticated()">
-					   		<label class="sr-only" for="username">Username</label>
-					    	<input type="text" class="form-control" id="username" name="username" 
-					    		autofocus="autofocus" placeholder="Username" />
-					  	</div>
-					 	<div class="form-group" sec:authorize="!isAuthenticated()">
-					    	<label for="password" class="sr-only">Password</label>
-					    	<input type="password" class="form-control" id="password" 
-					    	name="password" placeholder="Password" />
-					  	</div>
-					  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">
-					  		Log in</button>
-					  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="isAuthenticated()">
-					  		Log out</button>
-					</form>
-
-					<!-- Log in / Log out navigation -->
-
-				</div>
-			</div>
-
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-lg-2"></div> -->
-
-<!-- 				<div class="col-lg-8"> -->
-<!-- 					<ul class="nav nav-pills"> -->
-<!-- 						<li role="presentation" class="active"><a href="index.html">Home</a></li> -->
-<!-- 						<li role="presentation"><a href="sortiment.html">Sortiment</a></li> -->
-						
-						
-						
-<!-- 						Advanced administrator navigation --> 
-						
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
-<!-- 							<a href="orders.html">Bestellungen</a> -->
-<!-- 						</li> -->
-						
-<!-- 						<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
-<!-- 					   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true"> -->
-<!-- 					      		Standort <span class="caret"></span> -->
-<!-- 					    	</a> -->
-<!-- 					    	<ul class="dropdown-menu" role="menu"> -->
-<!-- 						    	<li><a href="addLocation.html">Standort hinzufügen</a></li> -->
-<!-- 						    	<li><a href="adminLocList.html">Standortübersicht</a></li> -->
-<!-- 							</ul> -->
-<!-- 						</li> -->
-
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
-<!-- 							<a href="employeeList.html">Mitarbeiterübersicht</a> -->
-<!-- 						</li> -->
-
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')"> -->
-<!-- 							<a href="locationwithwine">Weinmenge</a> -->
-<!-- 						</li> -->
-<!-- 					/Advanced administrator navigation --> 
-
-
-<!-- 						Advanced salesman navigation --> 
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
-<!-- 							<a href="orders.html">Bestellungen</a> -->
-<!-- 						</li> -->
-
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
-<!-- 							<a href="register.html">Kundenregistrierung</a> -->
-<!-- 						</li> -->
-						
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')"> -->
-<!-- 							<a href="customerlist.html">Kundenliste</a> -->
-<!-- 						</li> -->
-											
-<!--  						/Advanced salesman navigation --> 
-
-
-<!--  						Advanced brewer navigation --> 
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')"> -->
-<!-- 							<a href="cookbook.html">Rezepte</a> -->
-<!-- 						</li> -->
-
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')"> -->
-<!-- 							<a href="BarrelList.html">BarrelList</a> -->
-<!-- 						</li> -->
-<!--  						/Advanced brewer navigation --> 
-
-
-<!--  						Advanced barrelmaker navigation --> 
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')"> -->
-<!-- 							<a href="BarrelList.html">BarrelList</a> -->
-<!-- 						</li> -->
-<!--  						/Advanced barrelmaker navigation --> 
-
-
-<!--  						Advanced winegrower navigation --> 
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')"> -->
-<!-- 							<a href="http://localhost:8080/form">Weinanlieferung</a> -->
-<!-- 						</li> -->
-
-<!-- 						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')"> -->
-<!-- 							<a href="locationwithwine.html">Weinmenge</a> -->
-<!-- 						</li> -->
-<!--  						/Advanced winegrower navigation --> 
-<!-- 					</ul> -->
-<!-- 				</div> -->
-				
-
-		<div class="L" th:each="dep : ${location.departments}">
-			<table>
+			<div class="col-lg-6">
+			<table class="table table-condensed" th:each="dep : ${location.departments}">
 				<tr>
-					<td th:text="${dep.name}"></td>
-					<td>
-						<form method="get" role="form" th:action="@{/editOneDep/} + ${dep.id}">
-							<button type="submit" class="btn btn-default btn-lg">
-				 			<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Bearbeiten</button>
-						</form>
-					</td>
+					<td class="text-center" th:text="${dep.name}"></td>
 				</tr>
 			</table>
-		</div>
-		
-		<div class="M">
-			<form method="post" role="form" th:action="@{/addDepartment/}">
-				<select name="sort">
+
+			<form class="text-center" method="post" role="form" th:action="@{/addDepartment/}">
+				<select class="text-center" name="sort">
 					<option>Weinlager </option>
 					<option>Flaschenlager </option>
 					<option>Fasslager </option>
@@ -161,11 +164,15 @@
 				<input name="id" type="hidden" th:value="${location.id}"/>
 				<button type="submit">Abteilung hinzufügen</button>
 			</form>
+			<form action="/adminLocList">
+				<button type="submit" class="btn btn-default btn-lg addLocationButton" >
+						<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Zurück
+	            </button>
+            </form>
             </div>
-            </div>
-            </div>
-            
-            </div>
-            
-	</body>
+            <div class="col-lg-3"></div>
+		</div>
+	</div>
+</div>
+</body>
 </html>

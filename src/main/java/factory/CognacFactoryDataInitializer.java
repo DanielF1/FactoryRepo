@@ -226,7 +226,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Department d4 = departmentRepository.save(new BarrelStock("FasslagerB", barrels));
 		Department d5 = departmentRepository.save(new WineStock("WeinlagerA", 300));
 		Department d6 = departmentRepository.save(new WineStock("WeinlagerB", 300));
-		Department d7 = departmentRepository.save(new Production("ProduktionA", still,1000));
+		Department d7 = departmentRepository.save(new Production("ProduktionA", still, 1000));
 		Department d8 = departmentRepository.save(new Production("ProduktionB", still,1000));
 		Department d9 = departmentRepository.save(new Sale("VerkaufA"));
 		Department d10 = departmentRepository.save(new Sale("VerkaufB"));
