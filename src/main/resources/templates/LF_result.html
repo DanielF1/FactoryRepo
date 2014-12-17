@@ -143,12 +143,34 @@
 					</ul>
 				</div>
 
-	<h1>Sie haben folgende Daten abgegeben</h1>
-	<p>Menge:</p>
-	<p th:text="${quantity}"></p>
-	<p>Lieferdatum:</p>
-	<p th:text="${date}"></p>
-	<p>Standort:</p>
-	<p th:text="${location.name}"></p>
+<div class="C">
+   	
+				<div class="row">
+				<div class="col-lg-2">	</div>
+				<div class="col-lg-8">
+					<table class="table table-condensed" style="width:100%">
+						<tr class="success">
+						
+						<th>Menge</th>
+						<th>Lieferdatum</th>
+						<th>Standort</th>
+						</tr>
+
+					<tr >
+						
+						<td th:text="${quantity}"></td>
+						<td th:text="${date}"></td>
+						<td th:text="${location}"></td>
+						
+					</tr>
+	</table>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	
 </body>
 </html>
