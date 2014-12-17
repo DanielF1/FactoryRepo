@@ -38,19 +38,30 @@ public class LocationManagement {
 		}
 		return false;
 	}
-	
+	// ProductionDepartment
 	public Department getProductionDepartment(Long id) {
 		Location location = locationRepository.findOne(id);
 		List<Department> deps = location.getDepartments();
-		for (Department dep : deps) {
-			if (dep.getName().contains("Produktion")) {
-				return dep;
+		for (Department depProd : deps) {
+			if (depProd.getName().contains("Produktion")) {
+				return depProd;
 			}
 		}
 		return null;
 	}
+	
+	//WineStock Department
 
-
+	public Department getWineStockDepartment(Long id) {
+		Location location = locationRepository.findOne(id);
+		List<Department> deps = location.getDepartments();
+		for (Department depwein : deps) {
+			if (depwein.getName().contains("Wein")) {
+				return depwein;
+			}
+		}
+		return null;
+	}
 	// Location List with production
 	public List<Location> getLocationsListWithProductionManagement() {
 		List<Location> result = new ArrayList<Location>();
@@ -64,26 +75,27 @@ public class LocationManagement {
 
 	public Transport deliverWine(double deliveredAmount, Date date, Long lid) {
 			
-		Department dept = getProductionDepartment(lid);
-		Long id = dept.getId();
-		double oldQuantity = dept.getQuantity();
+		WineStock deptWeinStock = (WineStock) getWineStockDepartment(lid);
+		Long id = deptWeinStock.getId();
+		double oldQuantity = deptWeinStock.getAmount();
+		Production deptProduction = (Production) getProductionDepartment (lid);
 
 		// no overflow in department
 		if (!isOverflow(oldQuantity, deliveredAmount, date)) {
-			deliverWine(oldQuantity, deliveredAmount, dept);
+			deliverWine(oldQuantity, deliveredAmount, deptWeinStock,deptProduction);
 			return null;
 		} else {
 			// count overflow
 			double overflow = overflowQuantity(oldQuantity, deliveredAmount, date);
 			
 			// deliver wine (under overflow)
-			deliverWine(oldQuantity, deliveredAmount - overflow, dept);
+			deliverWine(oldQuantity, deliveredAmount - overflow, deptWeinStock, deptProduction);
 
 			Transport ret = distributeOverflowWine(overflow, date, id);
 			
 			if (ret == null) {
 				
-				deliverWine(oldQuantity, deliveredAmount, dept);
+				deliverWine(oldQuantity, overflow, deptWeinStock, deptProduction);
 			}
 			// else {
 			// // Transpoirt wurde erschaffen
@@ -108,20 +120,42 @@ public class LocationManagement {
 		return entity;
 	}
 
+
+//	public Long findMaxCapacity() {
+//		// -1 ==> no more free capacity
+//		Long id = -1L;
+//		double freeCapacity = 0;
+//		for (Location location : getLocationsListWithProductionManagement()) {
+//			for (Department department : location.getDepartments()) {
+//				if (department.getName().contains("Produktion")) {
+//					// # TODO count capacity
+//					if (department.getCapacity() - department.getQuantity() > freeCapacity) {
+//						freeCapacity = department.getCapacity()
+//								- department.getQuantity();
+//						id = location.getId();
+//					}
+//				}
+//			}
+//		}
+//		return id;
+//	}
+	
+	
+	
 	public Long findMaxCapacity() {
 		// -1 ==> no more free capacity
 		Long id = -1L;
 		double freeCapacity = 0;
 		for (Location location : getLocationsListWithProductionManagement()) {
 			for (Department department : location.getDepartments()) {
-				if (department.getName().contains("Produktion")) {
+				WineStock deptWeinStock = (WineStock) getWineStockDepartment(department.getId());
+				Production deptProduction = (Production) getProductionDepartment(department.getId());
 					// # TODO count capacity
-					if (department.getCapacity() - department.getQuantity() > freeCapacity) {
-						freeCapacity = department.getCapacity()
-								- department.getQuantity();
+					if (deptProduction.getCapacity() - deptWeinStock.getAmount() > freeCapacity) {
+						freeCapacity = deptProduction.getCapacity()
+								- deptWeinStock.getAmount();
 						id = location.getId();
 					}
-				}
 			}
 		}
 		return id;
@@ -166,14 +200,14 @@ public class LocationManagement {
 	}
 
 	public void deliverWine(double oldQuantity, double newQuantity,
-			Department dept) {
+			WineStock deptWeinStock, Production deptProduction) {
 		double quantity = oldQuantity + newQuantity;
-		dept.setQuantity(quantity);
-		departmentRepository.save(dept);
+		deptWeinStock.setAmount(quantity);
+		departmentRepository.save(deptWeinStock);
 		// #TODO count capacity
-		double newCapacity = dept.getCapacity() - quantity;
-		dept.setCapacity(newCapacity);
-		departmentRepository.save(dept);
+		double newCapacity = deptProduction.getCapacity() - quantity;
+		deptProduction.setCapacity(newCapacity);
+		departmentRepository.save(deptProduction);
 	}
 
 }
