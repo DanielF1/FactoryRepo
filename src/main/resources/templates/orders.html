@@ -182,7 +182,12 @@
 						
 						
 						<!-- Advanced administrator navigation -->
-
+						
+						<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
+							<a href="orders.html">Bestellungen</a>
+						</li>
+						
+						
 						<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
 					   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
 					      		Standort <span class="caret"></span>

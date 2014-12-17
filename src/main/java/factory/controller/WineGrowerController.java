@@ -95,8 +95,7 @@ public class WineGrowerController {
 		
 		modelMap.addAttribute("quantity", quantity);
 		modelMap.addAttribute("date", this.date);
-		modelMap.addAttribute("location", location);
-		
+		modelMap.addAttribute("location", locationRepository.findOne(id));
 		return "LF_result";
 	}
 
