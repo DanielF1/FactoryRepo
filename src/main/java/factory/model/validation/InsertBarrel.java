@@ -9,21 +9,12 @@ public class InsertBarrel {
 	private double Content_amount;
 	@NotEmpty (message = "Required field")
 	private String Barrel_volume;
-//	@NotEmpty (message = "Required field")
-//	private String Birthdate_of_barrel;
-//	@NotEmpty (message = "Required field")
-//	private String Death_of_barrel;
-//	@NotEmpty (message = "Required field")
-//	private String LastFill;
-	
-	
 	public String getContent() {
 		return Content;
 	}
 	public void setContent(String content) {
 		Content = content;
 	}
-	
 	public double getContent_amount() {
 		return Content_amount;
 	}
@@ -33,9 +24,12 @@ public class InsertBarrel {
 	public String getBarrel_volume() {
 		return Barrel_volume;
 	}
-	public void setBarrel_volume(String Barrel_volume) {
-		this.Barrel_volume = Barrel_volume;
+	public void setBarrel_volume(String barrel_volume) {
+		Barrel_volume = barrel_volume;
 	}
+
+	
+	
 //	public String getBirthdate_of_barrel() {
 //		return Birthdate_of_barrel;
 //	}

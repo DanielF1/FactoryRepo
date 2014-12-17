@@ -40,7 +40,7 @@ public class Barrel {
 			String birthdate_of_barrel,String death_of_barrel, String lastFill,String position)
 	{
 		this.content = content;
-		this.barrel_amount = barrel_amount;
+		this.content_amount = content_amount;
 		this.barrel_volume = Double.parseDouble(barrel_volume);
 		this.manufacturing_date = LocalDate.parse(manufacturing_date);
 		this.birthdate_of_barrel = LocalDate.parse(birthdate_of_barrel);
