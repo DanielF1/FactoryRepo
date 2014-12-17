@@ -168,32 +168,36 @@
 					<tr>
 						<th>ID</th>
 						<th>Content</th>
-						<th>Amount</th>
+						<th>Content_Amount</th>
+						<th>Barrel_Volume</th>
+						<th>Manufacturing_Date</th>
 						<th>Birthdate_of_barrel</th>
 						<th>Death_of_barrel</th>
 						<th>LastFill</th>
+						<th>Position</th>
 						<th sec:authorize="hasRole('ROLE_BARRELMAKER')">Action</th>
 						
 						</tr>
 				</thead>
 				<tbody th:remove="all-but-first">
-						<tr th:each=" Barrel : ${BarrelList}">
-							<td th:text="${Barrel.getId()}">1</td>
-							<td th:text="${Barrel.getContent()}">23</td>
-							<td th:text="${Barrel.getAmount()}">Wein</td>
+						<tr th:each=" Barrel, it: ${BarrelList}" th:with="index=${it.count}">
+							<td th:text="${index}">1</td>
+							<td th:text="${Barrel.getContent()}">Destillat A</td>
+							<td th:text="${Barrel.getContent_amount()}">12,3</td>
+							<td th:text="${Barrel.getBarrel_volume()}">23</td>
+							<td th:text="${Barrel.getManufacturing_date()}">10.10.2012</td>
 							<td th:text="${Barrel.getBirthdate_of_barrel()}">10.10.2012</td>
 							<td th:text="${Barrel.getDeath_of_barrel()}">10.10.2013</td>
-							<td th:text="${Barrel.getLastFill()}">20.10.2014</td>	
+							<td th:text="${Barrel.getLastFill()}">20.10.2014</td>
+							<td th:text="${Barrel.getPosition()}">FLL-R1-1</td>	
 						<td sec:authorize="hasRole('ROLE_BARRELMAKER')">
 						
-						<form method="post" action="/BarrelList">
-						<button type="submit" th:formaction="'deleteBarrel?Id=' + ${Barrel.getId()}" class="btn btn-default btn-lg">
+						<form method="get" th:action="@{'/deleteBarrel/' + ${index}}">
+						<button type="submit" class="btn btn-default btn-lg">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button></form>
 							</td> 
-						
-
-			
-			
+							
+							
 			
       </tr>					
 				</tbody>		
@@ -202,8 +206,17 @@
 			<br/>
 			<div sec:authorize="hasRole('ROLE_BREWER')">
 		<form method="post" action="/putBarrelstogether"><input type="submit" value="zusammen schütten" /></form>
-		</div><div sec:authorize="hasRole('ROLE_BARRELMAKER')">
+		<br/><br/>
+		</div>
+		<div sec:authorize="hasRole('ROLE_BARRELMAKER')">
 		<form method="post" action="/inserted"><input type="submit" value="Fass hinzufügen" /></form>
+		<br/>
+		<br/>
+		</div>
+		<div sec:authorize="hasRole('ROLE_WAREHOUSEMAN')">
+		<form method="post" action="/fassZuordnen"><input type="submit" value="Fass zuordnen" /></form>
+		<br/>
+		<br/>
 		</div>
 		</div>
 	</div>
