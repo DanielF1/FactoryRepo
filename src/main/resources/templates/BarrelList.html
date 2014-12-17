@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <link href="../resources/css/styleVerkauf.css" rel="stylesheet" />
+    <link href="../resources/css/styleLocation.css" rel="stylesheet" />
     
    <link href="../resources/css/header.css" rel="stylesheet" />
 
@@ -157,15 +157,15 @@
 					</ul>
 				</div>
 	
-<div class="all">
-<div class="G">
+
+	<div class="all">
 		
 		<div class="content">
 			<table width="1000">
+				<h3>Barrelliste</h3>
 				
 				<thead>
 					<tr>
-
 						<th>ID</th>
 						<th>Content</th>
 						<th>Content_Amount</th>
@@ -195,7 +195,9 @@
 						<form method="get" th:action="@{'/deleteBarrel/' + ${index}}">
 						<button type="submit" class="btn btn-default btn-lg">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button></form>
-							</td> 	
+							</td> 
+							
+							
 			
       </tr>					
 				</tbody>		
@@ -217,13 +219,10 @@
 		<br/>
 		</div>
 		</div>
-
-		</div>
-		</div>		
 	</div>
 	</div>
 	</div>
-	
+	</div>
 	</div>
 	
 </body>
