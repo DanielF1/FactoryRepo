@@ -206,4 +206,15 @@ public class DistillationController {
 
 		return "distillation";
 	}
+	
+	@RequestMapping("/distillation/f")
+	public String distillationFill(	@RequestParam("status_one") String status_one, @RequestParam("status_two") String status_two, 
+									@RequestParam("quality") String quality, Model model)
+	{
+		System.out.println(status_one);
+		System.out.println(status_two);
+		System.out.println(quality);
+		model.addAttribute("stills", Production.getStills());
+		return "distillation";
+	}
 }

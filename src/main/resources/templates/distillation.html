@@ -166,31 +166,39 @@
 				<tr th:each="still, it : ${stills}" th:with="index = ${it.count}">
 					<td class="text-center"><span th:text="${index} + '. ' + ${still.amount}"></span></td>
 					<td class="text-center">
-						<span th:switch="${still.status_one}">
+						<span name="status_one" th:switch="${still.status_one}">
 							<button th:case="true" class="btn btn-success"></button>
 							<button th:case="false" class="btn btn-danger"></button>
 						</span> 
-						<span th:switch="${still.status_two}">
+						<span name="status_two" th:switch="${still.status_two}">
 							<button th:case="true" class="btn btn-success"></button>
 							<button th:case="false" class="btn btn-danger"></button>
 						</span>
 					</td>
 					<td class="text-center">
 						<form th:method="post" th:action="@{'/distillation/' + ${index}}">
-							<button type="button" class="btn btn-default" th:id="${index}" onclick="DoTheShow(id)">Destillieren</button>
+							<button class="btn btn-default" th:id="${index}">Destillieren</button>
 						</form>
 					</td>
 					<td class="text-center">
 						<span>Qualitätsstufe: </span>
-						<select name="">
+						<select name="quality">
 							<option value="schlecht">schlecht</option>
 							<option value="gut">gut</option>
 							<option value="sehr gut">sehr gut</option>
 						</select>
 					</td>
 					<td class="text-center">
-						<form th:method="post" th:action="@{dfef}">
-								<button type="button" class="btn btn-default" th:id="${index}" style="display: none">Abfüllen</button>
+						<form th:method="post" th:action="@{/distillation/f}">
+						<span name="status_one" th:switch="${still.status_one}">
+							<button th:case="true" class="btn btn-success"></button>
+							<button th:case="false" class="btn btn-danger"></button>
+						</span> 
+						<span name="status_two" th:switch="${still.status_two}">
+							<button th:case="true" class="btn btn-success"></button>
+							<button th:case="false" class="btn btn-danger"></button>
+						</span>							
+							<button class="btn btn-default" th:id="${index}">Abfüllen</button>
 						</form>
 					</td>
 				</tr>
@@ -223,10 +231,10 @@
 		    setTimeout(GoToURL, delay);
 		}
 		
-		function DoTheShow(id)
-		{
-			setTimeout(function() {Show(id);}, show);
-		}
+// 		function DoTheShow(id)
+// 		{
+// 			setTimeout(function() {Show(id);}, show);
+// 		}
 		
 		function GoToURL()
 		{
@@ -243,13 +251,13 @@
 		    else { window.location.replace(url); }
 		}
 		
-		function Show(id)
-		{
-			alert("show block");
-			altert(id);
-			document.getElementById('id').style.display='block';
-			alert("show block");
-		}
+// 		function Show(id)
+// 		{
+// 			alert("show block");
+// 			altert(id);
+// 			document.getElementById('id').style.display='block';
+// 			alert("show block");
+// 		}
 		/*
 		 * hide elements on load page and show after 10 seconds
 		 */
