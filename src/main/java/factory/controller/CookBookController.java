@@ -1,5 +1,6 @@
 package factory.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +71,7 @@ public class CookBookController {
 	public List<MaxStore> calcMaxStore()
 	{
 		List<MaxStore> maxstorelist = new ArrayList<MaxStore>();
+		SimpleDateFormat dateformatJava = new SimpleDateFormat("yyyy");
 		
 		/*
 		 * HashMap: return a sorted list 
@@ -142,21 +144,30 @@ public class CookBookController {
 	public String addRecipe(@RequestParam("name") String name, 
 							@RequestParam("ingridientName") String ingredientName,
 							@RequestParam("ingridientAmount") int ingridientAmount,
-							@RequestParam("ingridientUnit") String ingridientUnit) 
+							@RequestParam("ingridientUnit") String ingridientUnit,
+							@RequestParam("ingridientName") String ingredientName1,
+							@RequestParam("ingridientAmount") int ingridientAmount1,
+							@RequestParam("ingridientUnit") String ingridientUnit1,
+							@RequestParam("ingridientName") String ingredientName2,
+							@RequestParam("ingridientAmount") int ingridientAmount2,
+							@RequestParam("ingridientUnit") String ingridientUnit2,
+							@RequestParam("ingridientName") String ingredientName3,
+							@RequestParam("ingridientAmount") int ingridientAmount3,
+							@RequestParam("ingridientUnit") String ingridientUnit3) 
 	{
 		
 		Ingredient i1 = new Ingredient(ingredientName, ingridientAmount, ingridientUnit);
-//		Ingredient i2 = new Ingredient(ingredientName2, ingridientAmount2, ingridientUnit2);
-//		Ingredient i3 = new Ingredient(ingredientName3, ingridientAmount3, ingridientUnit3);
-//		Ingredient i4 = new Ingredient(ingredientName4, ingridientAmount4, ingridientUnit4);
+		Ingredient i2 = new Ingredient(ingredientName1, ingridientAmount1, ingridientUnit1);
+		Ingredient i3 = new Ingredient(ingredientName2, ingridientAmount2, ingridientUnit2);
+		Ingredient i4 = new Ingredient(ingredientName3, ingridientAmount3, ingridientUnit3);
 //		Ingredient i5 = new Ingredient(ingredientName5, ingridientAmount5, ingridientUnit5);
 		
 		List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 				
 		mapIngredient.add(i1);
-//		map1.add(i2);	
-//		map1.add(i3);	
-//		map1.add(i4);	
+		mapIngredient.add(i2);	
+		mapIngredient.add(i3);	
+		mapIngredient.add(i4);	
 //		map1.add(i5);
 		
 		cookbookrepository.save(new Recipe(name, mapIngredient));

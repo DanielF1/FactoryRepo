@@ -140,7 +140,7 @@ public class DistillationController {
 			}
 		}
 		
-		remainder = (still_amount * 100) - max_barrel_amount;
+		remainder = (still_amount * 100 * 0.75) - max_barrel_amount;
 		
 		System.out.println("barrels2: " + remainder);
 
@@ -208,11 +208,40 @@ public class DistillationController {
 	}
 	
 	@RequestMapping("/distillation/f")
-	public String distillationFill(	@RequestParam("status_one") String status_one, @RequestParam("status_two") String status_two, 
-									@RequestParam("quality") String quality, Model model)
+	public String distillationFill(@RequestParam("quality") String quality, @RequestParam("name") int name, Model model)
 	{
-		System.out.println(status_one);
-		System.out.println(status_two);
+		Still still = Production.getStills().get(name);
+		
+		if((still.getStatus_one() & still.getStatus_two()) == false)
+		{
+			double final_distillate = (still.getAmount() * 0.75) * 100; 
+			System.out.println("1: " + final_distillate);
+			for (Barrel barrel : BarrelStock.getBarrels()) 
+			{
+				if(barrel.getContent().equals(""))
+				{
+					
+					double barrelAmount = barrel.getBarrel_volume();
+					
+					if((barrelAmount - final_distillate) <= 0)
+					{
+						double amound = barrel.getBarrel_volume();
+						barrel.setContent_amount(amound);
+						System.out.println("2: " + barrel.getBarrel_volume());		
+						System.out.println("2: " + barrel.getContent_amount());	
+						final_distillate = final_distillate - barrelAmount;
+					}
+					else
+					{
+						barrel.setContent_amount(barrelAmount - final_distillate);
+						System.out.println("3: " + barrel.getContent_amount());
+						break;
+					}
+					System.out.println("1Y: " + final_distillate);
+				}
+			}
+		}
+		
 		System.out.println(quality);
 		model.addAttribute("stills", Production.getStills());
 		return "distillation";
