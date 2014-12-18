@@ -72,11 +72,11 @@ b {font-size: 1.5em;}
 }
 
 .input-group-addon {
-	width: 40%;
+	width: 100px!important;
 }
 
-.form-control{
-	width: 303%!important;
+.inputform{
+	width: 530px!important;
 }
 
 .addLocationForm{
@@ -99,8 +99,4 @@ b {font-size: 1.5em;}
 .nail{
 	width: 250px!important;
 	height: 450px!important;
-}
-
-.logg{
-	width: 10px!important;
 }

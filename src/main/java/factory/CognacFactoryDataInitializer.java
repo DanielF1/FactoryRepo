@@ -153,7 +153,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Barrel br1 = new Barrel("Destillat A", 5 ,12,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"), "");
 		Barrel br2 = new Barrel("Destillat A", 5 ,23,LocalDate.parse("2007-12-03"), LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"), "");
 		Barrel br3 = new Barrel("Destillat A", 20 ,23,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"), "");
-		Barrel br4 = new Barrel("", 0 ,23,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br4 = new Barrel("", 0 ,2600,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br5 = new Barrel("Destillat A", 5 ,23,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br6 = new Barrel("Destillat A", 12 ,21,LocalDate.parse("2007-12-03"), LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br7 = new Barrel("Destillat B", 12 ,22,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");

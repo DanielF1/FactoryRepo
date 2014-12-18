@@ -131,47 +131,12 @@ public class CookBookController {
 	{
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
-		model.addAttribute("bottlestock", BottleStock.getEmptybottles());
+		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
+		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 
 		return "cookbook";
 	}
 	
-	
-	/*
-	 * save new entry
-	
-//	@RequestMapping(value="/seed", params={"save"})
-//	public String saveSeedstarter(
-//	        final Recipe recipe, final Ingredient ingredient, final BindingResult bindingResult, final ModelMap model) {
-//	    if (bindingResult.hasErrors()) {
-//	        return "seed";
-//	    }
-//	    this.mapIngredient.add(ingredient);
-//	    this.cookbook.save(recipe);
-//	    //model.clear();
-//	    return "redirect:/seed";
-//	}
-	
-//    @RequestMapping(value = "add")
-//    public String add(Recipe recipe) {
-//        return "recipe/add";
-//    }
-//    
-//    @RequestMapping(value = "add", params = {"addOption"})
-//    public String addOption(Recipe recipe, BindingResult result) {
-//        String name = null;
-//		int amount = 0;
-//		String unit = null;
-//		recipe.getIngredients().add(new Ingredient(name, amount, unit));
-//        return "recipe/add";
-//    }
-//    
-//    @RequestMapping(value = "add", method = RequestMethod.POST)
-//    public String save(Recipe recipe, BindingResult result) {
-//        this.cookbook.save(recipe);
-//        return "redirect:/sg/add";
-//    }
-     */
 
 	@RequestMapping(value = "/cookbook/addRecipe", method = RequestMethod.POST)
 	public String addRecipe(@RequestParam("name") String name, 
@@ -209,11 +174,8 @@ public class CookBookController {
 		int existingBottles = 0;
 		int neededBottles = 0;
 		int missedBottle = missedBottles;
-
-
-//		int quantity_empty = bottlestock.getQuantity_empty();
-			
-
+		
+		
 		/*
 		 * calculate the number of needed bottles that we have in stock
 		 */
@@ -360,7 +322,7 @@ public class CookBookController {
 		//												System.out.println("3: " + barrelAmount);
 														if((barrelAmount - newAmount) <= 0)
 														{
-															barrel.setBarrel_content_amount(0);
+															barrel.setContent_amount(0);
 		//													System.out.println("4: " + barrel.getAmount());
 		//													barrelstock.saveBarrel(barrel);
 		
@@ -369,7 +331,7 @@ public class CookBookController {
 														}
 														else
 														{
-															barrel.setBarrel_content_amount(barrelAmount - newAmount);
+															barrel.setContent_amount(barrelAmount - newAmount);
 		
 		//													System.out.println("6: " + barrel.getAmount());
 		//													barrelstock.saveBarrel(barrel);
@@ -444,7 +406,8 @@ public class CookBookController {
 		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
-		model.addAttribute("bottlestock", BottleStock.getEmptybottles());
+		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
+		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
 		return "cookbook";
 	}
@@ -461,9 +424,10 @@ public class CookBookController {
 	
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
-//		model.addAttribute("bottlestock", bottlestocklist.findAll());
+		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
+		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
-		return "cookbook";
+		return "redirect:/cookbook/recipe/";
 	}
 	
 	/*
@@ -501,7 +465,8 @@ public class CookBookController {
 
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore());
-		model.addAttribute("bottlestock", BottleStock.getEmptybottles());
+		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
+		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
 		return "cookbook";
 	}

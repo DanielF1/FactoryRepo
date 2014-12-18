@@ -14,8 +14,6 @@ public class Barrel {
 	private double content_amount;
 	private double barrel_volume;
 	private LocalDate manufacturing_date;
-	private double barrel_amount;
-	private double barrel_content_amount;
 	private LocalDate birthdate_of_barrel;
 	private LocalDate death_of_barrel;
 	private LocalDate lastFill;
@@ -85,18 +83,7 @@ public class Barrel {
 	public void setManufacturing_date(LocalDate manufacturing_date) {
 		this.manufacturing_date = manufacturing_date;
 	}
-	public double getBarrel_amount() {
-		return barrel_amount;
-	}
-	public void setBarrel_amount(double barrel_amount) {
-		this.barrel_amount = barrel_amount;
-	}
-	public double getBarrel_content_amount() {
-		return barrel_content_amount;
-	}
-	public void setBarrel_content_amount(double barrel_content_amount) {
-		this.barrel_content_amount = barrel_content_amount;
-	}
+	
 	public LocalDate getBirthdate_of_barrel() {
 		return birthdate_of_barrel;
 	}
@@ -133,7 +120,7 @@ public class Barrel {
 			Alter = datecount/ANZAHL_TAGE_IM_JAHR;			
 
 		System.out.println(getContent() + getContent_amount()+ " Date count" + datecount + " alter" + Alter);
-		System.out.println(getContent() + getBarrel_amount()+ " Date count" + datecount + " alter" + Alter);
+		System.out.println(getContent() + getBarrel_volume()+ " Date count" + datecount + " alter" + Alter);
 		return Alter;
 	}
 	

@@ -18,7 +18,6 @@
 <body>
 <div class="main-wrapper">
 	<!-- Header -->
-
 	<div class="col-lg-7"></div>
 
 	<!-- Log in / Log out navigation -->
@@ -163,261 +162,225 @@
 					<form th:method="delete">
 						<button type="button" class="btn btn-default float-right" onclick="deleteEntry()" >Delete</button>
 					</form>
-					
-					
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 	<!-- /modal content -->
 
-	<div class="main-wrapper">
-	<!-- Header -->
-	<div class="header">
-		<div class="header-title">Cognac Shop <br/>Feuerwasser</div>
-	</div>
-	<!-- /Header -->
-
 	<!-- Container -->
 	<div class="main-container content">
 		<div class="col-lg-12">
-				<!-- add recipe form -->
-				<div class="row">
-					<div class="col-lg-2"></div>
-					<div class="col-lg-10">	
+			<!-- add recipe form -->		
+			<div id="main">
+			    <div class="my-form" >
+					<form role="form" method="post" th:action="@{/cookbook/addRecipe}">
+			        	<p >
+			        		<label for="name">Name</label>
+							<input name="name" type="text" /><br /> 
+						</p>
 						
-						<div id="main">
-						    <div class="my-form" >
-								<form role="form" method="post" th:action="@{/cookbook/addRecipe}">
-						        	<p >
-						        		<label for="name">Name</label>
-										<input name="name" type="text" /><br /> 
-									</p>
-									
-						            <p class="text-box">
-						                <label for="ingredient">Zutat <span class="box-number">1</span></label>
-						                <input type="text" name="ingridientName" value="" id="box" />
-						                <input type="number" name="ingridientAmount" value="" id="box" min="1" />
-						                <select name="ingridientUnit">
-											<option value="Liter">Liter</option>
-										</select>
-						                <a class="add-box" href="#"><button class="btn btn-default">Add More</button></a>
-						            </p>
-						            <p><input type="submit" class="btn btn-default" value="Speichern" /></p>
-						        </form>   
-					   		</div>
-						</div>
-						
-					</div>
-				</div>
-				<!-- /add recipe form --> 
+			            <p class="text-box">
+			                <label for="ingredient">Zutat <span class="box-number">1</span></label>
+			                <input type="text" name="ingridientName" value="" id="box" />
+			                <input type="number" name="ingridientAmount" value="" id="box" min="1" />
+			                <select name="ingridientUnit">
+								<option value="Liter">Liter</option>
+							</select>
+			                <a class="add-box" href="#"><button class="btn btn-default">Add More</button></a>
+			            </p>
+			            <p><input type="submit" class="btn btn-default" value="Speichern" /></p>
+			        </form>   
+			   	</div>
+			</div>
+				
+			</div>
+			<!-- /add recipe form --> 
 
-				<!-- recipe list -->
-		
-					<div class="col-lg-2"></div>
-					<div class="col-lg-4">
-						<table class="table table-condensed">
-							<tr class="success">	
-								<th>Recipe</th>
-								<th>
-									<div class="search-group">
-										<form method="post" role="form" th:action="@{/adminLocList}">
-											<input name="searchTerm" type="text" placeholder="Search"/>
-											<input type="hidden" value="Senden" />
-										</form>
-									</div>	
-								</th>
-							</tr>
-							<tr th:each="recipe : ${recipes}">
-								
-								<td>
-									<a th:href="@{'/cookbook/recipe/' + ${recipe.id}}">
-									<ul>
-										<li th:text="${recipe.name}">text</li>
-										<ul th:each="ingredient : ${recipe.ingredients}">
-											<li>
-												<span th:text="${ingredient.name}"></span>			
-												<span th:text="${ingredient.amount}"></span>
-												<span th:text="${ingredient.unit}"></span>
-											</li>
-										</ul>
-									</ul>
-									</a>
-								</td>
-								<td>
-									<button th:value="${recipe.id}" 
-											class="btn btn-default pull-right glyphicon glyphicon-remove btn-lg" 
-											data-toggle="modal" data-target="#myModal" onclick="doSomething(this)"></button>
-								</td>
-								 
-							</tr>
-						</table>
-					</div>
-
-					<div class="col-lg-6">
-						<!-- recipe details -->	
-						<div th:each="recipe : ${selectedRecipe}">	
-							<form th:method="get" th:action="@{'/cookbook/wedding/' + ${recipe.id}}">		
-								<ul>
-									<li name ="recipe_name" th:text="${recipe.name}">text</li>
-									<ul th:each="ingredient : ${recipe.ingredients}">
-										<li>
-											<span name ="ingredient_name" th:text="${ingredient.name}"></span>			
-											<span th:name ="ingredient_amount" th:text="${ingredient.amount}"></span>
-											<span th:name ="ingredient_unit" th:text="${ingredient.unit}"></span>
-										</li>
-									</ul>
+			<!-- recipe list -->
+			<div class="col-lg-4">
+				<table class="table table-condensed">
+					<tr class="success">	
+						<th>Recipe</th>
+						<th></th>
+					</tr>
+					<tr th:each="recipe : ${recipes}">
+						<td>
+							<a th:href="@{'/cookbook/recipe/' + ${recipe.id}}">
+							<ul>
+								<li th:text="${recipe.name}">text</li>
+								<ul th:each="ingredient : ${recipe.ingredients}">
+									<li>
+										<span th:text="${ingredient.name}"></span>			
+										<span th:text="${ingredient.amount}"></span>
+										<span th:text="${ingredient.unit}"></span>
+									</li>
 								</ul>
+							</ul>
+							</a>
+						</td>
+						<td>
+							<button th:value="${recipe.id}" 
+									class="btn btn-default pull-right glyphicon glyphicon-remove btn-lg" 
+									data-toggle="modal" data-target="#myModal" onclick="doSomething(this)"></button>
+						</td>		 
+					</tr>
+				</table>
+			</div>
 
-								<select name="selected_bottle_amount">
-									<option value="0.3">0.3</option>
-									<option value="0.7">0.7</option>
-								</select>
-								
-								<button class="btn btn-default">Herstellen</button><br/>
-						
-								<span th:text="${not_enough_0}"></span><br/><span th:text="${not_enough_1}"></span><br/>
-								<span th:text="${not_enough_2}"></span><br/><span th:text="${not_enough_3}"></span><br/>
-								<span th:text="${not_enough_4}"></span><br/><span th:text="${not_enough_5}"></span><br/>
-						
-								<span th:text="${not_enough_bottles}"></span>
-							</form>
+			<div class="col-lg-8">
+				<!-- recipe details -->	
+				<div th:each="recipe : ${selectedRecipe}">	
+					<form th:method="get" th:action="@{'/cookbook/wedding/' + ${recipe.id}}">		
+						<ul>
+							<li name ="recipe_name" th:text="${recipe.name}">text</li>
+							<ul th:each="ingredient : ${recipe.ingredients}">
+								<li>
+									<span name ="ingredient_name" th:text="${ingredient.name}"></span>			
+									<span th:name ="ingredient_amount" th:text="${ingredient.amount}"></span>
+									<span th:name ="ingredient_unit" th:text="${ingredient.unit}"></span>
+								</li>
+							</ul>
+						</ul>
+
+						<select name="selected_bottle_amount">
+							<option value="0.3">0.3</option>
+							<option value="0.7">0.7</option>
+						</select>
 							
-							<!-- buy bottles -->
-							<form th:method="get" th:action="@{/cookbook/buy/bottles}">
-								<select name="bottlesToBuyAmount">
-									<option value="0.3">0.3</option>
-									<option value="0.7">0.7</option>
-									<option value="1.0">1.0</option>
-								</select>
-								<input type="number" name="bottlesToBuyNumber" min="1" placeholder="Flaschenanzahl"/>
-								<button class="btn btn-default">Flaschen bestellen</button><br/><br/>
-							</form>
-							<!-- /buy bottles -->
-						</div>
-				    	<!-- /recipe details -->
-				    </div>
-				<!-- /recipe list -->
-
-		</div>
+						<button class="btn btn-default">Herstellen</button><br/>
+					
+						<span th:text="${not_enough_0}"></span><br/><span th:text="${not_enough_1}"></span><br/>
+						<span th:text="${not_enough_2}"></span><br/><span th:text="${not_enough_3}"></span><br/>
+						<span th:text="${not_enough_4}"></span><br/><span th:text="${not_enough_5}"></span><br/>
+					
+						<span th:text="${not_enough_bottles}"></span>
+					</form>
+						
+					<!-- buy bottles -->
+					<form th:method="get" th:action="@{/cookbook/buy/bottles}">
+						<h4>Flaschen bestellen</h4>
+						<select name="bottlesToBuyAmount">
+							<option value="0.3">0.3</option>
+							<option value="0.7">0.7</option>
+							<option value="1.0">1.0</option>
+						</select>
+						<input type="number" name="bottlesToBuyNumber" min="1" placeholder="Flaschenanzahl"/>
+						<button class="btn btn-default">Flaschen bestellen</button><br/><br/>
+					</form>
+					<!-- /buy bottles -->
+				</div>
+			    <!-- /recipe details -->
+			</div>
+			<!-- /recipe list -->
+		
+		
 		<div class="col-lg-12">	
 			<!-- barrel stock -->
-				<div class="col-lg-2"></div>
-				<h1>Fasslager</h1>
-				<div class="col-lg-8">
-					<table class="table table-condensed">
-						<tr class="success">
-							<th>Inhalt</th>
-							<th>Menge</th>
-						</tr>
-						<tr th:each="maxstore : ${barrelstock_store}">
-							<td><span th:text="${maxstore.content}"></span></td>
-							<td><span th:text="${maxstore.amount}"></span></td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-lg-2"></div>
+			<div class="col-lg-4">
+				<h3>Fasslager</h3>
+				<table class="table table-condensed">
+					<tr class="success">
+						<th class="text-center">Inhalt</th>
+						<th class="text-center">Menge</th>
+					</tr>
+					<tr th:each="maxstore : ${barrelstock_store}" class="text-center">
+						<td><span th:text="${maxstore.content}"></span></td>
+						<td><span th:text="${maxstore.amount}"></span></td>
+					</tr>
+				</table>
+			</div>
 			<!-- /barrel stock -->
 
 			<!-- bottle stock -->
-				<div class="col-lg-2"></div>
-				<div class="col-lg-4">
-					<h1>Flaschenlager</h1>
-					<table class="table table-condensed">
-						<tr class="success">
-							<th>Anzahl leerer Flaschen</th>
-							<th>Volumen</th>
-						</tr>
+			<div class="col-lg-4">
+				<h3>Flaschenlager</h3>
+				<table class="table table-condensed">
+					<tr class="success">
+						<th class="text-center">leerer Flaschen</th>
+						<th class="text-center">Volumen</th>
+					</tr>
 
-						<tr th:each="bottle : ${bottlestock}">
-							<td><span th:text="${bottle.amount}"></span></td>
-
-<!-- 						<tr th:each="bottlestocks : ${bottlestock}"> -->
-<!-- 							<td><span th:text="${bottlestocks.quantity_empty}"></span></td> -->
-<!-- 							<td> -->
-<!-- 								<div th:each="bottle : ${bottlestocks.emptybottles}"> -->
-<!-- 									<span th:text="${bottle.amount}"></span> -->
-<!-- 								</div> -->
-								
-<!-- 							</td> -->
-
-						</tr>
-					</table>
-				</div>
-
-				<div class="col-lg-4">
-<!-- 					<table class="table table-condensed"> -->
-<!-- 						<tr class="success"> -->
-<!-- 							<th>Anzahl voller Flaschen</th> -->
-<!-- 							<th>Volumen</th> -->
-<!-- 						</tr> -->
-<!-- 						<tr th:each="bottlestocks : ${bottlestock}"> -->
-<!-- 							<td><span th:text="${bottlestocks.quantity_full}"></span></td> -->
-<!-- 							<td> -->
-<!-- 								<div th:each="bottle : ${bottlestocks.fullbottles}"> -->
-<!-- 									<span th:text="${bottle.name}"></span> -->
-<!-- 									<span th:text="${bottle.amount}"></span> -->
-<!-- 								</div> -->
-<!-- 							</td> -->
-<!-- 						</tr> -->
-<!-- 					</table> -->
-				</div>
-
-
-				<div class="col-lg-2"></div>
+					<tr th:each="bottle_empty : ${bottlestock_empty}">
+						<td class="text-center"></td>
+						<td class="text-center"><span th:text="${bottle_empty.amount}"></span></td>
+					</tr>	
+				</table>
 			</div>
+			
+			<div class="col-lg-4">
+				<h3><br/></h3>
+				<table class="table table-condensed">
+					<tr class="success">
+						<th class="text-center">Name</th>
+						<th class="text-center">Volumen</th>
+					</tr>
+					<tr th:each="bottle_full : ${bottlestock_full}">
+						<td class="text-center"><span th:text="${bottle_full.name}"></span></td>
+						<td class="text-center"><span th:text="${bottle_full.amount}"></span></td>
+					</tr>
+				</table>
+		
+			</div>
+
 			<!-- /bottle stock -->
 		</div>
-		</div>
+			
 	</div>
 	<!-- /Container -->
-
-<script th:inline="javascript">
-/*<![CDATA[*/
-
-    /*============= add recipe form =============*/
-	jQuery(document).ready(function($){
-	    $('.my-form .add-box').click(function(){
-	        var n = $('.text-box').length + 1;
-	        if( 5 < n ) {
-	            alert('Stop it!');
-	            return false;
-	        }
-	        var box_html = $('<p class="text-box"><label for="ingredient">Zutat <span class="box-number">' + n + '</span></label> <input type="text" name="ingridientName" class="box-number" id="box" /> <input type="number" name="ingridientAmount" value="" id="box" min="1"/> <select name="ingridientUnit" value="" id="box"><option value="Liter">Liter</option><option value="Kg">Kg</option></select> <a href="#" class="remove-box"><button class="btn btn-default glyphicon glyphicon-remove"></button></a></p>');
-	        box_html.hide();
-	        $('.my-form p.text-box:last').after(box_html);
-	        box_html.fadeIn('slow');
-	        return false;
-	    });
-	    $('.my-form').on('click', '.remove-box', function(){
-	        $(this).parent().css( 'background-color', '#FF6C6C');
-	        $(this).parent().fadeOut("slow", function() {
-	            $(this).remove();
-	            $('.box-number').each(function(index){
-	                $(this).text( index + 1 );
-	            });
-	        });
-	        return false;
-	    });
-	});
 	
-
-	/*============= delete entry URL =============*/
-	var idForDelete ="";
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../resources/js/bootstrap.min.js"></script>
 	
-	function doSomething(elem){
-		idForDelete = elem.value;
-	}
+	<script th:inline="javascript">
+	/*<![CDATA[*/
 	
-	function deleteEntry()
-	{
-		var newURL      = "cookbook/delete";
-		newURL = newURL + "/" + escape(idForDelete);
+	    /*============= add recipe form =============*/
+		jQuery(document).ready(function($){
+		    $('.my-form .add-box').click(function(){
+		        var n = $('.text-box').length + 1;
+		        if( 5 < n ) {
+		            alert('Stop it!');
+		            return false;
+		        }
+		        var box_html = $('<p class="text-box"><label for="ingredient">Zutat <span class="box-number">' + n + '</span></label> <input type="text" name="ingridientName" class="box-number" id="box" /> <input type="number" name="ingridientAmount" value="" id="box" min="1"/> <select name="ingridientUnit" value="" id="box"><option value="Liter">Liter</option><option value="Kg">Kg</option></select> <a href="#" class="remove-box"><button class="btn btn-default glyphicon glyphicon-remove"></button></a></p>');
+		        box_html.hide();
+		        $('.my-form p.text-box:last').after(box_html);
+		        box_html.fadeIn('slow');
+		        return false;
+		    });
+		    $('.my-form').on('click', '.remove-box', function(){
+		        $(this).parent().css( 'background-color', '#FF6C6C');
+		        $(this).parent().fadeOut("slow", function() {
+		            $(this).remove();
+		            $('.box-number').each(function(index){
+		                $(this).text( index + 1 );
+		            });
+		        });
+		        return false;
+		    });
+		});
 		
-		location.href = newURL;
-	}
 	
-/*]]>*/
-</script>
+		/*============= delete entry URL =============*/
+		var idForDelete ="";
+		
+		function doSomething(elem){
+			idForDelete = elem.value;
+		}
+		
+		function deleteEntry()
+		{
+			var newURL      = "cookbook/delete";
+			newURL = newURL + "/" + escape(idForDelete);
+			
+			location.href = newURL;
+		}
+		
+	/*]]>*/
+	</script>
+</div>
 </body>
 </html>

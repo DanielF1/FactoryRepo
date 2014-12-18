@@ -30,6 +30,7 @@ import factory.model.CookBookRepository;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Ingredient;
+import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.Still;
@@ -43,12 +44,13 @@ public class DistillationController {
 	private long distillation = (5) * 2;
 //	private long distillation = (1000 * 60 * 60 * 24) * 2;
 	private final DepartmentRepository departmentrepository;
-	
+	private final LocationRepository locationRepository;
 	
 	@Autowired 
-	public DistillationController(DepartmentRepository departmentrepository)
+	public DistillationController(DepartmentRepository departmentrepository, LocationRepository locationRepository)
 	{
 		this.departmentrepository = departmentrepository;
+		this.locationRepository = locationRepository;
 	}
 	
 	@RequestMapping(value = "/distillation", method = RequestMethod.GET)
@@ -81,6 +83,7 @@ public class DistillationController {
 	/*
 	 * stop timer
 	 */
+
 	public void stopTimer()
 	{
 		if(timer != null)
@@ -91,8 +94,18 @@ public class DistillationController {
 			timer = null;
 
 		}
+		
+		
 	}
-
+	
+	@RequestMapping()
+	public String setOFF()
+	{
+		System.out.println("XXXXXXXXXXXX");
+		return "redirect:/distillation";
+	}
+	
+	
 	/*
 	 * task
 	 */
@@ -101,6 +114,7 @@ public class DistillationController {
 		if(distillation == 5)
 		{
 			still.setStatus_two(false);
+			setOFF();
 		}
 		
 		if(distillation == 0)
@@ -125,7 +139,7 @@ public class DistillationController {
 		{
 			if(barrel.getContent().equals(""))
 			{
-				max_barrel_amount += barrel.getBarrel_amount();
+				max_barrel_amount += barrel.getBarrel_volume();
 			}
 		}
 		
@@ -139,11 +153,11 @@ public class DistillationController {
 	
 	
 	@RequestMapping(value = "/distillation/process/{index}", method = RequestMethod.POST)
-	public String distillation(Model model, @PathVariable(value="index") int index, WineStock winestock) 
+	public String distillation(Model model, @PathVariable(value="index") int index) 
 	{
 		
 		Still still = Production.getStills().get(index - 1);
-
+		
 		/*
 		 * check status of still
 		 */
@@ -155,25 +169,38 @@ public class DistillationController {
 		{
 			model.addAttribute("error", "Destille " + index + " ist derzeit Koral!");
 			
+			
 			/*
 			 * check wine store
 			 */
-			if(winestock.getAmount() < still.getAmount())
-			{
-				model.addAttribute("error", "Nicht genug Wein vorhanden. Es fehlen noch" + (still.getAmount() - winestock.getAmount()) + " Hektoliter!");
-			}
-			else
-			{	
-				if(checkBarrels(still.getAmount()) > 0)
-				{
-					model.addAttribute("error", "Nicht genug Fässer vorhanden. Es fehlen noch Fässer für " 
-							+ (checkBarrels(still.getAmount()) * 0.01) + " Hektoliter!");
-				}
-				else
-				{
-					winestock.setAmount(winestock.getAmount() - still.getAmount());
-					still.setStatus_one(false);
-					startTimer(1000, still);
+			System.out.println("1");
+			for(Location location : locationRepository.findAll())
+			{System.out.println("2");
+				for(Department department : location.getDepartments())
+				{System.out.println("3");
+					if(department.getName().contains("Weinlager"))
+					{System.out.println("4");
+						if(location.getWineStockDepartment().getAmount() < still.getAmount())
+						{System.out.println("5");
+							model.addAttribute("error", "Nicht genug Wein vorhanden. Es fehlen noch " + (still.getAmount() - location.getWineStockDepartment().getAmount()) + " Hektoliter!");
+						}
+						else
+						{	
+							if(checkBarrels(still.getAmount()) > 0)
+							{
+								model.addAttribute("error", "Nicht genug Fässer vorhanden. Es fehlen noch Fässer für " 
+										+ (checkBarrels(still.getAmount()) * 0.01) + " Hektoliter!");
+							}
+							else
+							{
+								location.getWineStockDepartment().setAmount(location.getWineStockDepartment().getAmount() - still.getAmount());
+//								locationRepository.save(location);
+								
+								still.setStatus_one(false);
+								startTimer(1000, still);
+							}
+						}
+					}
 				}
 			}
 		}

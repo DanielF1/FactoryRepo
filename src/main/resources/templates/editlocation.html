@@ -151,27 +151,27 @@
 				<form role="form" method="post" action="addedLocation" class="addLocationForm">
 					<div class="input-group">
 					  <span class="input-group-addon">Name</span>
-					  <input type="text" name="name" th:value="${location.name}" class="form-control" placeholder="Name eingeben"/>
+					  <input type="text" name="name" th:value="${location.name}" class="form-control inputform" placeholder="Name eingeben"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Adresse</span>
-					  <input type="text" name="address" th:value="${location.address}" class="form-control" placeholder="Adresse eingeben"/>
+					  <input type="text" name="address" th:value="${location.address}" class="form-control inputform" placeholder="Adresse eingeben"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">PLZ Ort</span>
-					  <input name="city" th:value="${location.city}" class="form-control" placeholder="PLZ und Ort eingeben"/>
+					  <input name="city" th:value="${location.city}" class="form-control inputform" placeholder="PLZ und Ort eingeben"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Tel.:</span>
-					  <input type="text" name="telefon" th:value="${location.telefon}" class="form-control" placeholder="Telefonnummer eingeben"/>
+					  <input type="text" name="telefon" th:value="${location.telefon}" class="form-control inputform" placeholder="Telefonnummer eingeben"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">E-Mail</span>
-					  <input type="email" name="mail" th:value="${location.mail}" class="form-control" id="exampleInputEmail1" placeholder="email eingeben"/>
+					  <input type="email" name="mail" th:value="${location.mail}" class="form-control inputform" id="exampleInputEmail1" placeholder="email eingeben"/>
 					</div>
 
 	       		 	<button type="submit" class="btn btn-default btn-lg addLocationButton">
