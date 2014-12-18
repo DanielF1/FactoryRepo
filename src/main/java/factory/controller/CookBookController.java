@@ -416,7 +416,7 @@ public class CookBookController {
 	/*
 	 * mapping recipe details
 	 */
-	@RequestMapping(value="/recipe/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/cookbook/{id}", method = RequestMethod.GET)
 	public String recipeDetails(@PathVariable("id") Long id, Model model)
 	{
 
@@ -427,7 +427,7 @@ public class CookBookController {
 		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
 		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
-		return "redirect:/recipe";
+		return "cookbook";
 	}
 	
 	/*
