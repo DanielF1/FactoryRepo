@@ -226,7 +226,6 @@
 		function DoTheShow(id)
 		{
 			setTimeout(function() {Show(id);}, show);
-			alert("show");
 		}
 		
 		function GoToURL()
@@ -247,7 +246,9 @@
 		function Show(id)
 		{
 			alert("show block");
-			document.getElementById('id').style.display='none';
+			altert(id);
+			document.getElementById('id').style.display='block';
+			alert("show block");
 		}
 		/*
 		 * hide elements on load page and show after 10 seconds

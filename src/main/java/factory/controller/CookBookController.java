@@ -110,7 +110,7 @@ public class CookBookController {
 			for (Barrel barrel: list)
 			{
 				
-				maxAmount += barrel.getBarrel_volume();
+				maxAmount += barrel.getContent_amount();
 			}
 			
 			MaxStore maxstore = new MaxStore(key, maxAmount);
@@ -211,7 +211,7 @@ public class CookBookController {
 	 * pick a recipe and create new Cognac, 
 	 * if the inventory checks send their okay 
 	 */
-	@RequestMapping(value="/cookbook/wedding/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/wedding/{id}", method = RequestMethod.GET)
 	public String wedding(@PathVariable("id") Long id, Model model,	@RequestParam("selected_bottle_amount") double selected_bottle_amount)
 	{
 		int i = 0; 
