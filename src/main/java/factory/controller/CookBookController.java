@@ -379,7 +379,7 @@ public class CookBookController {
 										    			System.out.println(inventoryItem);
 										    			inventoryItem.increaseQuantity(Units.ONE);
 										    			System.out.println(inventoryItem.getQuantity());
-
+										    			inventory.save(inventoryItem);
 										    		}
 										    	}
 

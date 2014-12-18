@@ -365,9 +365,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private void initializeCookBook(CookBookRepository cookbookrepository) 
 	{
 		
-		Ingredient i1 = new Ingredient("Destillat A", 2000, "Liter");
-		Ingredient i2 = new Ingredient("Destillat B", 200, "Liter");
-		Ingredient i3 = new Ingredient("Destillat E", 100, "Liter");
+		Ingredient i1 = new Ingredient("Destillat A", 1, "Liter");
+		Ingredient i2 = new Ingredient("Destillat B", 1, "Liter");
+		Ingredient i3 = new Ingredient("Destillat E", 1, "Liter");
 		
 		List<Ingredient> mapIngredients1 = new ArrayList<Ingredient>();
 		
@@ -375,7 +375,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		mapIngredients1.add(i2);
 		mapIngredients1.add(i3);
 		
-		cookbookrepository.save(new Recipe("Cognac A", mapIngredients1));
+		cookbookrepository.save(new Recipe("Chatelier Cognac", mapIngredients1));
 		
 		Ingredient i4 = new Ingredient("Destillat B", 140, "Liter");
 		Ingredient i5 = new Ingredient("Destillat T", 20, "Liter");
@@ -387,7 +387,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		mapIngredients2.add(i5);
 		mapIngredients2.add(i6);
 		
-		cookbookrepository.save(new Recipe("Cognac B", mapIngredients2));
+		cookbookrepository.save(new Recipe("Delamain Vesper", mapIngredients2));
 		
 		Ingredient i7 = new Ingredient("Destillat A", 140, "Liter");
 		Ingredient i8 = new Ingredient("Destillat C", 20, "Liter");
