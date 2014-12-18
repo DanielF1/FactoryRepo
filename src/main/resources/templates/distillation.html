@@ -164,17 +164,14 @@
 						</span>
 					</td>
 					<td>
-						<form th:method="post" th:action="@{'/distillation/process/' + ${index}}">
-							<button class="btn btn-default">Destillieren</button>
+						<form th:method="post" th:action="@{'/distillation/' + ${index}}">
+							<button class="btn btn-default" id="myLink" onclick="klick()">Destillieren</button>
 						</form>
 					</td>
 				</tr>
 
 			</table>
 			<p th:text="${error}"></p><p th:text="${error2}"></p>
-		
-			
-		
 		
 		
 		
@@ -192,7 +189,36 @@
 		</div>
 	</div>
 	<!-- /Container -->
-
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		var url = "http://localhost:8080/distillation";
+		var delay = "5000";
+		
+		window.onload = function ()
+		{
+			if(window.location.href != url)
+		    DoTheRedirect()
+		}
+		function DoTheRedirect()
+		{
+		    setTimeout(GoToURL, delay)
+		}
+		function GoToURL()
+		{
+		    // IE8 and lower fix
+		    if (navigator.userAgent.match(/MSIE\s(?!9.0)/))
+		    {
+		        var referLink = document.createElement("a");
+		        referLink.href = url;
+		        document.body.appendChild(referLink);
+		        referLink.click();
+		    }
+		
+		    // All other browsers
+		    else { window.location.replace(url); }
+		}
+	/*]]>*/
+	</script>
 </div>
 </body>
 </html>

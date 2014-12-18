@@ -206,7 +206,7 @@
 					</tr>
 					<tr th:each="recipe : ${recipes}">
 						<td>
-							<a th:href="@{'/cookbook/recipe/' + ${recipe.id}}">
+							<a th:href="@{'/recipe/' + ${recipe.id}}">
 							<ul>
 								<li th:text="${recipe.name}">text</li>
 								<ul th:each="ingredient : ${recipe.ingredients}">

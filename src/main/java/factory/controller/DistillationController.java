@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -73,13 +75,16 @@ public class DistillationController {
 			{
 				public void run()
 				{
+
 					timerAction(still);
+	
 				}
 			};
 			timer.schedule(timertask, 0, intervall);
 		}
 	}	
 
+	
 	/*
 	 * stop timer
 	 */
@@ -98,14 +103,7 @@ public class DistillationController {
 		
 	}
 	
-	@RequestMapping()
-	public String setOFF()
-	{
-		System.out.println("XXXXXXXXXXXX");
-		return "redirect:/distillation";
-	}
-	
-	
+
 	/*
 	 * task
 	 */
@@ -114,7 +112,6 @@ public class DistillationController {
 		if(distillation == 5)
 		{
 			still.setStatus_two(false);
-			setOFF();
 		}
 		
 		if(distillation == 0)
@@ -152,7 +149,7 @@ public class DistillationController {
 	}
 	
 	
-	@RequestMapping(value = "/distillation/process/{index}", method = RequestMethod.POST)
+	@RequestMapping(value = "/distillation/{index}", method = RequestMethod.POST)
 	public String distillation(Model model, @PathVariable(value="index") int index) 
 	{
 		
@@ -173,15 +170,15 @@ public class DistillationController {
 			/*
 			 * check wine store
 			 */
-			System.out.println("1");
+			
 			for(Location location : locationRepository.findAll())
-			{System.out.println("2");
+			{
 				for(Department department : location.getDepartments())
-				{System.out.println("3");
+				{
 					if(department.getName().contains("Weinlager"))
-					{System.out.println("4");
+					{
 						if(location.getWineStockDepartment().getAmount() < still.getAmount())
-						{System.out.println("5");
+						{
 							model.addAttribute("error", "Nicht genug Wein vorhanden. Es fehlen noch " + (still.getAmount() - location.getWineStockDepartment().getAmount()) + " Hektoliter!");
 						}
 						else
