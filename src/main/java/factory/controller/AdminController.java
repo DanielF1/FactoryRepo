@@ -23,7 +23,7 @@ import factory.model.LocationRepository;
 
 
 @Controller
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN') ||  hasRole('ROLE_SUPERUSER')")
 class AdminController {
 
 	private final LocationRepository locationRepository;

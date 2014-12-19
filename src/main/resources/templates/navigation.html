@@ -138,6 +138,69 @@
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_CUSTOMER')">
 				<a href="/warenkorb.html">Warenkorb</a>
 			</li>
+			
+			<!-- Advanced superuser navigation -->
+
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/sortiment.html">Sortiment</a>
+			</li>
+	
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/saleSortiment.html">Schnellauswahl</a>
+			</li>
+				
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/orders.html">Bestellungen</a>
+			</li>
+			
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/warenkorb.html">Warenkorb</a>
+			</li>
+			
+			<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+		   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
+		      		Standort <span class="caret"></span>
+		    	</a>
+		    	<ul class="dropdown-menu" role="menu">
+			    	<li><a href="/addLocation.html">Standort hinzufügen</a></li>
+			    	<li><a href="/adminLocList.html">Standortübersicht</a></li>
+				</ul>
+			</li>							
+
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/employeeList.html">Mitarbeiterübersicht</a>
+			</li>
+			
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/register.html">Kundenregistrierung</a>
+			</li>
+
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/customerlist.html">Kundenliste</a>
+			</li>
+
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/cookbook.html">Rezepte</a>
+			</li>
+
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/distillation.html">Destillation</a>
+			</li>
+			
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/BarrelList.html">Fassliste</a>
+			</li>
+			
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="/locationwithwine.html">Weinmenge</a>
+			</li>
+
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a href="http://localhost:8080/form">Weinanlieferung</a>
+			</li>
+	
+			<!-- Advanced superuser navigation -->
+	
 		</ul>
 	</nav>
 

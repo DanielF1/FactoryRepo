@@ -31,7 +31,7 @@ import factory.model.validation.RegistrationForm;
 
 
 @Controller
-@PreAuthorize("hasRole('ROLE_SALESMAN') || hasRole('ROLE_ADMIN')" )
+@PreAuthorize("hasRole('ROLE_SALESMAN') || hasRole('ROLE_ADMIN') ||  hasRole('ROLE_SUPERUSER')" )
 public class Verkaeufercontroller {
 	
 	private final OrderManager<Order> orderManager;

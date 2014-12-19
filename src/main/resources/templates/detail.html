@@ -74,7 +74,7 @@
 				<div class="col-lg-12" >
 				<ul class="nav nav-pills">
 					<li role="presentation" class="disabled">
-						<form  method="post" action="/warenkorb" sec:authorize="hasRole('ROLE_CUSTOMER')">
+						<form  method="post" action="/warenkorb" sec:authorize="hasAnyRole('ROLE_CUSTOMER' , 'ROLE_SUPERUSER')">
 							<span for="number">Anzahl:</span>
 							<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" />
 							<input type="hidden" name="pid" th:value="${article.identifier}" /> <br/>

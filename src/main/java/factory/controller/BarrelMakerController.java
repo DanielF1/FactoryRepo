@@ -28,7 +28,7 @@ import factory.model.validation.InsertBarrel;
 
 
 @Controller
-@PreAuthorize("hasRole('ROLE_BARRELMAKER') || hasRole('ROLE_BREWER') || hasRole('ROLE_WAREHOUSEMAN')")
+@PreAuthorize("hasRole('ROLE_BARRELMAKER') || hasRole('ROLE_BREWER') || hasRole('ROLE_WAREHOUSEMAN')  ||  hasRole('ROLE_SUPERUSER')")
 public class BarrelMakerController {
 	
 	private final LocationRepository locationRepository;
