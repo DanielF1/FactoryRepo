@@ -367,9 +367,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private void initializeCookBook(CookBookRepository cookbookrepository) 
 	{
 		
-		Ingredient i1 = new Ingredient("Destillat A", 1, "Liter");
-		Ingredient i2 = new Ingredient("Destillat B", 1, "Liter");
-		Ingredient i3 = new Ingredient("Destillat E", 1, "Liter");
+		Ingredient i1 = new Ingredient("Destillat A", 60, "Liter");
+		Ingredient i2 = new Ingredient("Destillat B", 80, "Liter");
+		Ingredient i3 = new Ingredient("Destillat E", 70, "Liter");
 		
 		List<Ingredient> mapIngredients1 = new ArrayList<Ingredient>();
 		
@@ -401,6 +401,45 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		mapIngredients3.add(i8);
 		mapIngredients3.add(i9);
 		
-		cookbookrepository.save(new Recipe("Cognac C", mapIngredients3));		
+		cookbookrepository.save(new Recipe("Claude Chatelier Extra", mapIngredients3));	
+			
+		Ingredient i10 = new Ingredient("Destillat A", 20, "Liter");
+		Ingredient i11 = new Ingredient("Destillat B", 120, "Liter");
+		Ingredient i12 = new Ingredient("Destillat C", 5, "Liter");
+		
+		List<Ingredient> mapIngredients4 = new ArrayList<Ingredient>();
+		
+		mapIngredients4.add(i10);
+		mapIngredients4.add(i11);
+		mapIngredients4.add(i12);
+		
+		cookbookrepository.save(new Recipe("Monnet Cognac", mapIngredients4));
+
+		Ingredient i13 = new Ingredient("Destillat E", 25, "Liter");
+		Ingredient i14 = new Ingredient("Destillat A", 100, "Liter");
+		Ingredient i15 = new Ingredient("Destillat C", 30, "Liter");
+		
+		List<Ingredient> mapIngredients5 = new ArrayList<Ingredient>();
+		
+		mapIngredients5.add(i13);
+		mapIngredients5.add(i14);
+		mapIngredients5.add(i15);
+		
+		cookbookrepository.save(new Recipe("Courvoisier Napoleon", mapIngredients5));
+
+		Ingredient i16 = new Ingredient("Destillat B", 10, "Liter");
+		Ingredient i17 = new Ingredient("Destillat E", 120, "Liter");
+		Ingredient i18 = new Ingredient("Destillat C", 40, "Liter");
+		
+		List<Ingredient> mapIngredients6 = new ArrayList<Ingredient>();
+		
+		mapIngredients6.add(i16);
+		mapIngredients6.add(i17);
+		mapIngredients6.add(i18);
+		
+		cookbookrepository.save(new Recipe("Frapin Domaine Château", mapIngredients6));
+		
+		
+		
 	}
 }
