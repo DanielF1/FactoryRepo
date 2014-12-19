@@ -133,6 +133,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		userAccountManager.save(barrelmakerAcc);
 		UserAccount barrelmakerAcc2 = userAccountManager.create("fassbinder2", "123", new Role("ROLE_BARRELMAKER"));
 		userAccountManager.save(barrelmakerAcc2);
+		UserAccount superAcc = userAccountManager.create("superuser", "123", new Role("ROLE_SUPER"));
+		userAccountManager.save(barrelmakerAcc2);
 		
 		
 		/*
