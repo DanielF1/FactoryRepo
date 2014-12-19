@@ -33,6 +33,7 @@ import factory.model.Employee;
 import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.LocationRepository;
+import factory.model.MaxBottleStore;
 import factory.model.MaxStore;
 import factory.model.Recipe;
 
@@ -66,6 +67,7 @@ public class CookBookController {
 	{
 		this.cookbookrepository = cookbookrepository;
 		this.barrelstock = barrelstock;
+		this.bottlestock = bottlestock;
 		this.departmentrepository = departmentrepository;
 		this.locationRepository = locationRepository;
 		this.inventory = inventory;
@@ -148,7 +150,64 @@ public class CookBookController {
 		return maxstorelist;
 	}
 	
-	
+	public List<MaxBottleStore> sortBottle (@LoggedIn Optional<UserAccount> userAccount){
+		List<MaxBottleStore> sortBottle = new ArrayList<MaxBottleStore>();
+		HashMap<String, List<Bottle>> map = new HashMap<String, List<Bottle>>();
+		
+		for(Location loc : locationRepository.findAll()){
+			for(Employee e : loc.getEmployees()){
+				if(e.getUserAccount() == userAccount.get()){
+					for(Department dep : loc.getDepartments()){
+						if(dep.getName().contains("Flaschenlager")){
+							bottlestock = (BottleStock) dep;
+							{
+		
+				for (Bottle bottle : bottlestock.getBottles()) 
+				{
+					String name = bottle.getName();
+					
+					if (!map.containsKey(name)) 
+					{
+						map.put(name, new ArrayList<Bottle>());
+					}
+					
+					map.get(name).add(bottle);
+				}
+							}}}}}}
+
+
+			for (String key : map.keySet()) 
+			{
+				
+				List<Bottle> list = map.get(key);
+				
+				HashMap<Double, List<Bottle>> amountMap = new HashMap<Double, List<Bottle>>();
+				
+				for (Bottle bottle : list) {
+					 
+						double amount = bottle.getAmount();
+					if (!amountMap.containsKey(amount)) {
+						amountMap.put(amount, new ArrayList<Bottle>());
+						}
+						amountMap.get(amount).add(bottle);	
+				}
+				for (Double key1: amountMap.keySet()){
+					
+					int bottleAnzahl = 0;
+				
+				for (Bottle bottle: amountMap.get(key1))
+				{
+					bottleAnzahl++;
+				}
+				MaxBottleStore maxBottleStore = new MaxBottleStore(key,bottleAnzahl,key1);
+				
+				sortBottle.add(maxBottleStore);
+				
+			}
+			}
+		
+		return sortBottle;
+	}
 	/*
 	 * mapping initializes 
 	 */
@@ -157,8 +216,7 @@ public class CookBookController {
 	{
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
-		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
-		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
+		model.addAttribute("bottlestock_store", sortBottle(userAccount));
 
 		return "cookbook";
 	}
@@ -166,24 +224,31 @@ public class CookBookController {
 
 	@RequestMapping(value = "/cookbook/addRecipe", method = RequestMethod.POST)
 	public String addRecipe(@RequestParam("name") String name, 
-							@RequestParam("ingridientName") String ingredientName,
+							@RequestParam("ingridientQuality") String ingridientQuality,
+							@RequestParam("ingridientAge") int ingridientAge,
 							@RequestParam("ingridientAmount") int ingridientAmount,
 							@RequestParam("ingridientUnit") String ingridientUnit,
-							@RequestParam("ingridientName") String ingredientName1,
-							@RequestParam("ingridientAmount") int ingridientAmount1,
-							@RequestParam("ingridientUnit") String ingridientUnit1,
-							@RequestParam("ingridientName") String ingredientName2,
-							@RequestParam("ingridientAmount") int ingridientAmount2,
-							@RequestParam("ingridientUnit") String ingridientUnit2,
-							@RequestParam("ingridientName") String ingredientName3,
-							@RequestParam("ingridientAmount") int ingridientAmount3,
-							@RequestParam("ingridientUnit") String ingridientUnit3) 
+							
+							@RequestParam("ingridientQuality1") String ingridientQuality1,
+							@RequestParam("ingridientAge1") int ingridientAge1,
+							@RequestParam("ingridientAmount1") int ingridientAmount1,
+							@RequestParam("ingridientUnit1") String ingridientUnit1,
+							
+							@RequestParam("ingridientQuality2") String ingridientQuality2,
+							@RequestParam("ingridientAge2") int ingridientAge2,
+							@RequestParam("ingridientAmount2") int ingridientAmount2,
+							@RequestParam("ingridientUnit2") String ingridientUnit2,
+							
+							@RequestParam("ingridientQuality3") String ingridientQuality3,
+							@RequestParam("ingridientAge3") int ingridientAge3,
+							@RequestParam("ingridientAmount3") int ingridientAmount3,
+							@RequestParam("ingridientUnit3") String ingridientUnit3) 
 	{
 		
-		Ingredient i1 = new Ingredient(ingredientName, ingridientAmount, ingridientUnit);
-		Ingredient i2 = new Ingredient(ingredientName1, ingridientAmount1, ingridientUnit1);
-		Ingredient i3 = new Ingredient(ingredientName2, ingridientAmount2, ingridientUnit2);
-		Ingredient i4 = new Ingredient(ingredientName3, ingridientAmount3, ingridientUnit3);
+		Ingredient i1 = new Ingredient(ingridientQuality, ingridientAge, ingridientAmount, ingridientUnit);
+		Ingredient i2 = new Ingredient(ingridientQuality1,ingridientAge1, ingridientAmount1, ingridientUnit1);
+		Ingredient i3 = new Ingredient(ingridientQuality2, ingridientAge2,ingridientAmount2, ingridientUnit2);
+		Ingredient i4 = new Ingredient(ingridientQuality3, ingridientAge3, ingridientAmount3, ingridientUnit3);
 //		Ingredient i5 = new Ingredient(ingredientName5, ingridientAmount5, ingridientUnit5);
 		
 		List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
@@ -214,13 +279,14 @@ public class CookBookController {
 		/*
 		 * calculate the number of needed bottles that we have in stock
 		 */
-		for(Bottle bottle : BottleStock.getEmptybottles())
+		for(Bottle bottle : bottlestock.getBottles()/*BottleStock.getEmptybottles()*/)
 		{
-			if(bottle.getAmount() == selectedBottleAmount)
-			{
-				existingBottles ++;
+			if (bottle.getName().equals("")){
+				if(bottle.getAmount() == selectedBottleAmount)
+				{
+					existingBottles ++;
+				}
 			}
-			
 		}
 
 		
@@ -270,14 +336,14 @@ public class CookBookController {
 				{	
 					for(Ingredient ingredient : recipe.getIngredients())
 					{		
-						if(maxstore.getQuality().equals(ingredient.getName()))
+						if(maxstore.getQuality().equals(ingredient.getQuality())&&(maxstore.getAge()==ingredient.getAge()))
 						{
 							double barrelContentAmount = maxstore.getAmount();
 							double ingridientDistillateAmount = ingredient.getAmount();
 							
 							if(ingridientDistillateAmount > barrelContentAmount)
 							{
-								model.addAttribute("not_enough_" + i, "Nicht genug " + ingredient.getName() + " vorhanden."
+								model.addAttribute("not_enough_" + i, "Nicht genug " + ingredient.getAge() + " vorhanden."
 										+ " Es fehlen noch " + (ingridientDistillateAmount - barrelContentAmount) + " Liter.");
 								
 								not_enough++;
@@ -334,7 +400,7 @@ public class CookBookController {
 						{	
 							for(Ingredient ingredient : selectedRecipe.getIngredients())
 							{
-								if(maxstore.getQuality().equals(ingredient.getName()))
+								if(maxstore.getQuality().equals(ingredient.getQuality()))
 								{
 									/*
 									 * update barrels
@@ -389,8 +455,9 @@ public class CookBookController {
 
 									List<Object> toRemove = new ArrayList<Object>();
 
-									for(Bottle bottle : BottleStock.getEmptybottles())
+									for(Bottle bottle : bottlestock.getBottles()/*BottleStock.getEmptybottles()*/)
 									{
+										if(bottle.getName().equals("")){
 										if(bottles > 0)
 										{
 											if(selectedBottleAmount == bottle.getAmount())
@@ -398,7 +465,7 @@ public class CookBookController {
 												toRemove.add(bottle);
 												
 												Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
-												BottleStock.getFullbottles().add(b1);
+												bottlestock.getBottles().add(b1);
 												
 										    	for(Article article : articlerepository.findAll())
 										    	{
@@ -427,9 +494,14 @@ public class CookBookController {
 								
 										bottles--;
 									}
-							
-									BottleStock.getEmptybottles().removeAll(toRemove);
-									
+									} // /if
+//									bottlestock.getEmptybottles().removeAll(toRemove);
+									for(Bottle bottle: bottlestock.getBottles()){
+										if (bottle.getName().equals("")){
+											bottlestock.getBottles().remove(bottle);
+										}
+									}
+										
 								} // /if
 							} // /for
 						} // /for
@@ -441,8 +513,8 @@ public class CookBookController {
 		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
-		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
-		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
+		model.addAttribute("bottlestock_store", sortBottle(userAccount));
+//		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
 		return "cookbook";
 	}
@@ -459,8 +531,8 @@ public class CookBookController {
 	
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
-		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
-		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
+		model.addAttribute("bottlestock_store", sortBottle(userAccount));
+//		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
 		return "cookbook";
 	}
@@ -496,13 +568,13 @@ public class CookBookController {
 		for(int i = 0; i < bottlesToBuyNumber; i++)
 		{
 			Bottle b1 = new Bottle("", bottlesToBuyAmount);
-			BottleStock.getEmptybottles().add(b1);
+			bottlestock.getBottles().add(b1);
 		}
 
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
-		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
-		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
+		model.addAttribute("bottlestock_store", sortBottle(userAccount));
+//		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
 		return "cookbook";
 	}

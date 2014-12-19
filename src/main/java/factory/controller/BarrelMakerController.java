@@ -32,7 +32,7 @@ import factory.model.validation.InsertBarrel;
 
 
 @Controller
-@PreAuthorize("hasRole('ROLE_BARRELMAKER') || hasRole('ROLE_BREWER') || hasRole('ROLE_WAREHOUSEMAN')  ||  hasRole('ROLE_SUPERUSER')")
+@PreAuthorize("hasRole('ROLE_BARRELMAKER') || hasRole('ROLE_BREWER') || hasRole('ROLE_WAREHOUSEMAN')")
 public class BarrelMakerController {
 	
 	private final LocationRepository locationRepository;
@@ -191,6 +191,7 @@ public class BarrelMakerController {
 						barrel.setManufacturing_date(LocalDate.parse("0000-01-01"));
 					}
 					barrel.setLastFill(LocalDate.now());
+//					BarrelStock.getBarrels().add(barrel);
 				}
 			}
 			}

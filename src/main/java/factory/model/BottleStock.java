@@ -6,57 +6,38 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
 public class BottleStock extends Department{
 	
-	private int quantity_empty;
-	private int quantity_full;
+//	private int quantity_empty;
+//	private int quantity_full;
 	@OneToMany(cascade = CascadeType.ALL)
-	private static List<Bottle> emptybottles;	
-	@OneToMany(cascade = CascadeType.ALL)
-	private static List<Bottle> fullbottles;
+	private List<Bottle> bottles;	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Bottle> fullbottles;
 
 	
 	@Deprecated
 	public BottleStock(){}
 	
-	public BottleStock(String name, List<Bottle> emptybottles, List<Bottle> fullbottles){
+	public BottleStock(String name, List<Bottle> bottles/*, List<Bottle> fullbottles*/){
 		
 		super(name);
-		this.emptybottles = emptybottles;
-		this.fullbottles = fullbottles;
+		this.bottles = bottles;
+		
+	}
+
+	public List<Bottle> getBottles() {
+		return bottles;
+	}
+
+	public void setBottles(List<Bottle> bottles) {
+		this.bottles = bottles;
 	}
 
 
-	public static List<Bottle> getEmptybottles() {
-		return emptybottles;
-	}
 	
-	public void setEmptybottles(List<Bottle> emptybottles) {
-		this.emptybottles = emptybottles;
-	}
-
-	public static List<Bottle> getFullbottles() {
-		return fullbottles;
-	}
-
-	public void setFullbottles(List<Bottle> fullbottles) {
-		this.fullbottles = fullbottles;
-	}
-	
-	public int getQuantity_empty() {
-		return emptybottles.size();
-	}
-
-	public void setQuantity_empty(int quantity_empty) {
-		this.quantity_empty = quantity_empty;
-	}
-
-	public int getQuantity_full() {
-		return fullbottles.size();
-	}
-
-	public void setQuantity_full(int quantity_full) {
-		this.quantity_full = quantity_full;
-	}
 }

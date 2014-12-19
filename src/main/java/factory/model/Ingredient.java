@@ -8,32 +8,34 @@ import javax.persistence.Id;
 public class Ingredient {
 
 	private @Id @GeneratedValue Long id;
-	private String name;
+	private String quality;
+	private int age;
 	private int amount;
 	private String unit;
 	
-	/*
-	 * Konstruktor
-	 */
-	public Ingredient(String name, int amount, String unit){
-		this.name = name;
+	public Ingredient(String quality, int age, int amount, String unit) {
+		this.quality = quality;
+		this.age = age;
 		this.amount = amount;
 		this.unit = unit;
 	}
-	
 
 	public Ingredient(){}
 
-	
-	/*
-	 * Getter & Setter
-	 */
-	public String getName() {
-		return name;
+	public String getQuality() {
+		return quality;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setQuality(String quality) {
+		this.quality = quality;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public int getAmount() {
@@ -51,6 +53,10 @@ public class Ingredient {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
+
 	
-	
+	/*
+	 * Getter & Setter
+	 */
+
 }

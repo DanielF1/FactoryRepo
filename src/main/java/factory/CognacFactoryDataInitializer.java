@@ -208,16 +208,20 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Bottle b5 = new Bottle("" ,0.7);
 		Bottle b6 = new Bottle("", 0.3);
 		
-		List<Bottle> empty = new ArrayList<Bottle>();
-		List<Bottle> full = new ArrayList<Bottle>();
+		Bottle b21 = new Bottle("Courvoisier Napoleon", 0.7);
+
 		
-		empty.add(b1);
-		empty.add(b3);
-		empty.add(b4);
-		empty.add(b5);
-		empty.add(b6);
+		List<Bottle> bottles = new ArrayList<Bottle>();
+		List<Bottle> bottles1 = new ArrayList<Bottle>();
 		
-		full.add(b2);
+		bottles.add(b1);
+		bottles.add(b2);
+		bottles.add(b3);
+		bottles.add(b4);
+		bottles.add(b5);
+		bottles.add(b6);
+		
+		bottles1.add(b21);
 		
 		
 		/*
@@ -240,8 +244,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		 * initialize departments
 		 */
 	
-		Department bottlestock1 = departmentRepository.save(new BottleStock("FlaschenlagerA", empty, full));
-		Department bottlestock2 = departmentRepository.save(new BottleStock("FlaschenlagerB", empty, full));
+		Department bottlestock1 = departmentRepository.save(new BottleStock("FlaschenlagerA", bottles));
+		Department bottlestock2 = departmentRepository.save(new BottleStock("FlaschenlagerB", bottles1));
 		Department barrelstock1 = departmentRepository.save(new BarrelStock("FasslagerA", barrels));
 		Department barrelstock2 = departmentRepository.save(new BarrelStock("FasslagerB", barrels1));
 		Department winestock1 = departmentRepository.save(new WineStock("WeinlagerA", 300));
@@ -261,6 +265,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Department> list6 = new ArrayList<Department>();
 		list6.add(winestock1);
+		list6.add(bottlestock1);
 		list6.add(production2);
 		list6.add(barrelstock1);
 	
@@ -296,7 +301,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Employee> list2 = new ArrayList<Employee>();
 		list2.add(e1);
-		
 		list2.add(e5);
 		list2.add(e3);
 		list2.add(e7);
@@ -310,9 +314,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Employee> list4 = new ArrayList<Employee>();
 
-		list2.add(e2);
-		list2.add(e8);
-		list1.add(e4);
+		list4.add(e2);
+		list4.add(e8);
+		list4.add(e4);
 		list4.add(e6);
 		list4.add(e10);
 		
@@ -393,9 +397,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private void initializeCookBook(CookBookRepository cookbookrepository) 
 	{
 		
-		Ingredient i1 = new Ingredient("Destillat A", 1, "Liter");
-		Ingredient i2 = new Ingredient("Destillat B", 1, "Liter");
-		Ingredient i3 = new Ingredient("Wasser", 1, "Liter");
+		Ingredient i1 = new Ingredient("Gut", 1, 12, "Liter");
+		Ingredient i2 = new Ingredient("Schlecht", 1, 5,"Liter");
+		Ingredient i3 = new Ingredient("Wasser", 1,3, "Liter");
 
 		
 		List<Ingredient> mapIngredients1 = new ArrayList<Ingredient>();
@@ -406,9 +410,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		cookbookrepository.save(new Recipe("Chatelier Cognac", mapIngredients1));
 		
-		Ingredient i4 = new Ingredient("Destillat B", 140, "Liter");
-		Ingredient i5 = new Ingredient("Destillat A", 20, "Liter");
-		Ingredient i6 = new Ingredient("Wasser", 10, "Liter");
+		Ingredient i4 = new Ingredient("Sehr Gut", 14,10,"Liter");
+		Ingredient i5 = new Ingredient("Gut", 20, 18,"Liter");
+		Ingredient i6 = new Ingredient("Wasser", 10,12, "Liter");
 		
 		List<Ingredient> mapIngredients2 = new ArrayList<Ingredient>();
 		
@@ -418,9 +422,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		cookbookrepository.save(new Recipe("Delamain Vesper", mapIngredients2));
 		
-		Ingredient i7 = new Ingredient("Destillat A", 140, "Liter");
-		Ingredient i8 = new Ingredient("Destillat C", 20, "Liter");
-		Ingredient i9 = new Ingredient("Wasser", 10, "Liter");
+		Ingredient i7 = new Ingredient("Gut", 140, 13,"Liter");
+		Ingredient i8 = new Ingredient("Schlecht", 20, 12,"Liter");
+		Ingredient i9 = new Ingredient("Wasser", 10, 12,"Liter");
 		
 		List<Ingredient> mapIngredients3 = new ArrayList<Ingredient>();
 		
@@ -430,9 +434,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		cookbookrepository.save(new Recipe("Claude Chatelier Extra", mapIngredients3));	
 			
-		Ingredient i10 = new Ingredient("Destillat A", 20, "Liter");
-		Ingredient i11 = new Ingredient("Destillat B", 120, "Liter");
-		Ingredient i12 = new Ingredient("Destillat C", 5, "Liter");
+		Ingredient i10 = new Ingredient("Sehr Gut", 20, 14,"Liter");
+		Ingredient i11 = new Ingredient("Gut", 120, 15,"Liter");
+		Ingredient i12 = new Ingredient("Wasser", 5, 12,"Liter");
 		
 		List<Ingredient> mapIngredients4 = new ArrayList<Ingredient>();
 		
@@ -442,9 +446,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		cookbookrepository.save(new Recipe("Monnet Cognac", mapIngredients4));
 
-		Ingredient i13 = new Ingredient("Destillat E", 25, "Liter");
-		Ingredient i14 = new Ingredient("Destillat A", 100, "Liter");
-		Ingredient i15 = new Ingredient("Destillat C", 30, "Liter");
+		Ingredient i13 = new Ingredient("Gut", 25,3, "Liter");
+		Ingredient i14 = new Ingredient("Schlecht", 100,12, "Liter");
+		Ingredient i15 = new Ingredient("Sehr Gut", 30, 12,"Liter");
 		
 		List<Ingredient> mapIngredients5 = new ArrayList<Ingredient>();
 		
@@ -454,9 +458,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		cookbookrepository.save(new Recipe("Courvoisier Napoleon", mapIngredients5));
 
-		Ingredient i16 = new Ingredient("Destillat B", 10, "Liter");
-		Ingredient i17 = new Ingredient("Destillat E", 120, "Liter");
-		Ingredient i18 = new Ingredient("Destillat C", 40, "Liter");
+		Ingredient i16 = new Ingredient("Gut", 10, 3,"Liter");
+		Ingredient i17 = new Ingredient("Schlecht", 120, 5,"Liter");
+		Ingredient i18 = new Ingredient("Sehr Gut", 40, 29, "Liter");
 		
 		List<Ingredient> mapIngredients6 = new ArrayList<Ingredient>();
 		
