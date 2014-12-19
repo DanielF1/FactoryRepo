@@ -153,16 +153,6 @@
 					</div>
 
 					<div class="input-group">
-					  <span class="input-group-addon">Content</span>
-					  <input id="Content" th:field="*{Content}" type="text" name="Content" class="form-control" placeholder="Content eingeben"/>
-					</div>
-
-					<div class="input-group">
-					  <span class="input-group-addon">Content Amount</span>
-					  <input id="Content_amount" th:field="*{Content_amount}" type="text" name="Content_amount" class="form-control" placeholder="Telefonnummer eingeben"/>
-					</div>
-
-					<div class="input-group">
 					  <span class="input-group-addon">Barrel volume</span>
 					  <input id="Barrel_volume" th:field="*{Barrel_volume}" th:errorclass="fieldError" type="text" name="Barrel_volume"  placeholder="Fassvolumen eingeben" /> 
 						<p th:if="${#fields.hasErrors('Barrel_volume')}" th:errors="*{Barrel_volume}">Das Datum darf nicht leer sein.</p>

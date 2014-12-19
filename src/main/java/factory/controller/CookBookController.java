@@ -9,6 +9,8 @@ import java.util.Optional;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Units;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +27,11 @@ import factory.model.BarrelStock;
 import factory.model.Bottle;
 import factory.model.BottleStock;
 import factory.model.CookBookRepository;
+import factory.model.Department;
 import factory.model.DepartmentRepository;
+import factory.model.Employee;
 import factory.model.Ingredient;
+import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.MaxStore;
 import factory.model.Recipe;
@@ -52,12 +57,14 @@ public class CookBookController {
 	@Autowired 
 	public CookBookController(
 			CookBookRepository cookbookrepository, 
+			BarrelStock barrelstock,
 			DepartmentRepository departmentrepository, 
 			LocationRepository locationRepository,
 			Inventory<InventoryItem> inventory,
 			ArticleRepository articlerepository)
 	{
 		this.cookbookrepository = cookbookrepository;
+		this.barrelstock = barrelstock;
 		this.departmentrepository = departmentrepository;
 		this.locationRepository = locationRepository;
 		this.inventory = inventory;
@@ -68,8 +75,9 @@ public class CookBookController {
 	/*
 	 * calculate the maximum store of barrel stock
 	 */
-	public List<MaxStore> calcMaxStore()
+	public List<MaxStore> calcMaxStore(@LoggedIn Optional<UserAccount> userAccount)
 	{
+		
 		List<MaxStore> maxstorelist = new ArrayList<MaxStore>();
 		SimpleDateFormat dateformatJava = new SimpleDateFormat("yyyy");
 		
@@ -77,18 +85,22 @@ public class CookBookController {
 		 * HashMap: return a sorted list 
 		 */
 		HashMap<String, List<Barrel>> map = new HashMap<String, List<Barrel>>();
-
+		
 
 		/*
 		 * sort all barrels
 		 */
-//		for(Department departments : departmentrepository.findAll())
-		{ 
-//			if(departments.getName().contains("BarrelStock"))
-			{
-				for (Barrel barrel : BarrelStock.getBarrels()) 
+		for(Location loc : locationRepository.findAll()){
+			for(Employee e : loc.getEmployees()){
+				if(e.getUserAccount() == userAccount.get()){
+					for(Department dep : loc.getDepartments()){
+						if(dep.getName().contains("Fasslager")){
+							barrelstock = (BarrelStock) dep;
+							{
+		
+				for (Barrel barrel : barrelstock.getBarrels()) 
 				{
-					String content = barrel.getContent();
+					String content = barrel.getQuality();
 					
 					if (!map.containsKey(content)) 
 					{
@@ -97,9 +109,8 @@ public class CookBookController {
 					
 					map.get(content).add(barrel);
 				}
-			}			
-		}
-
+							}}}}}}
+	
 		/*
 		 * calculate maximum amount of one sort of barrel content
 		 */
@@ -129,10 +140,10 @@ public class CookBookController {
 	 * mapping initializes 
 	 */
 	@RequestMapping(value = "/cookbook", method = RequestMethod.GET)
-	public String book(Model model) 
+	public String book(Model model, @LoggedIn Optional<UserAccount> userAccount) 
 	{
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		model.addAttribute("barrelstock_store", calcMaxStore());
+		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
 		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
 		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 
@@ -223,7 +234,7 @@ public class CookBookController {
 	 * if the inventory checks send their okay 
 	 */
 	@RequestMapping(value="/wedding/{id}", method = RequestMethod.GET)
-	public String wedding(@PathVariable("id") Long id, Model model,	@RequestParam("selected_bottle_amount") double selected_bottle_amount)
+	public String wedding(@PathVariable("id") Long id, Model model,	@RequestParam("selected_bottle_amount") double selected_bottle_amount, @LoggedIn Optional<UserAccount> userAccount)
 	{
 		int i = 0; 
 		int j = 0;
@@ -242,7 +253,7 @@ public class CookBookController {
 				model.addAttribute("selected_name", recipe.getName());
 				model.addAttribute("selected_ingredients", recipe.getIngredients());
 				
-				for(MaxStore maxstore : calcMaxStore())
+				for(MaxStore maxstore : calcMaxStore(userAccount))
 				{	
 					for(Ingredient ingredient : recipe.getIngredients())
 					{		
@@ -304,7 +315,7 @@ public class CookBookController {
 				
 				if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount) == 0)
 				{
-					for(MaxStore maxstore : calcMaxStore())
+					for(MaxStore maxstore : calcMaxStore(userAccount))
 					{ 
 						for(Recipe selectedRecipe : cookbookrepository.findById(id))
 						{	
@@ -324,9 +335,9 @@ public class CookBookController {
 										{ 
 //											if(departments.getName().contains("BarrelStock"))
 											{
-												for (Barrel barrel : BarrelStock.getBarrels()) 
+												for (Barrel barrel : barrelstock.getBarrels()) 
 												{
-													if((barrel.getContent().equals(maxstore.getContent())) & (barrel.getBarrel_volume() > 0))
+													if((barrel.getQuality().equals(maxstore.getContent())) & (barrel.getBarrel_volume() > 0))
 													{
 		//												System.out.println("2: " + barrel.getContent());
 														double barrelAmount = barrel.getBarrel_volume();
@@ -416,7 +427,7 @@ public class CookBookController {
 		
 		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		model.addAttribute("barrelstock_store", calcMaxStore());
+		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
 		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
 		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
@@ -428,13 +439,13 @@ public class CookBookController {
 	 * mapping recipe details
 	 */
 	@RequestMapping(value="/cookbook/{id}", method = RequestMethod.GET)
-	public String recipeDetails(@PathVariable("id") Long id, Model model)
+	public String recipeDetails(@PathVariable("id") Long id, Model model, @LoggedIn Optional<UserAccount> userAccount)
 	{
 
 		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
 	
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		model.addAttribute("barrelstock_store", calcMaxStore());
+		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
 		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
 		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		
@@ -466,7 +477,8 @@ public class CookBookController {
 	 */
 	@RequestMapping(value="/cookbook/buy/bottles", method = RequestMethod.GET)
 	public String buyBottles(	@RequestParam("bottlesToBuyAmount") double bottlesToBuyAmount, 
-								@RequestParam("bottlesToBuyNumber") int bottlesToBuyNumber, Model model)
+								@RequestParam("bottlesToBuyNumber") int bottlesToBuyNumber, Model model, 
+								@LoggedIn Optional<UserAccount> userAccount)
 	{	
 		for(int i = 0; i < bottlesToBuyNumber; i++)
 		{
@@ -475,7 +487,7 @@ public class CookBookController {
 		}
 
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		model.addAttribute("barrelstock_store", calcMaxStore());
+		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
 		model.addAttribute("bottlestock_empty", BottleStock.getEmptybottles());
 		model.addAttribute("bottlestock_full", BottleStock.getFullbottles());
 		

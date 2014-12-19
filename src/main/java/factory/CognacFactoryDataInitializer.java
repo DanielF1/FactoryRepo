@@ -150,18 +150,19 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		/*
 		 * initialize barrels
 		 */
-		Barrel br1 = new Barrel("Destillat A", 5 ,12,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"), "");
-		Barrel br2 = new Barrel("Destillat A", 5 ,23,LocalDate.parse("2007-12-03"), LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"), "");
-		Barrel br3 = new Barrel("Destillat A", 20 ,23,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"), "");
-		Barrel br4 = new Barrel("", 0 ,2600,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
-		Barrel br5 = new Barrel("Destillat A", 5 ,23,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
-		Barrel br6 = new Barrel("Destillat A", 12 ,21,LocalDate.parse("2007-12-03"), LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"),"");
-		Barrel br7 = new Barrel("Destillat B", 12 ,22,LocalDate.parse("2007-12-03"), LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
-		Barrel br8 = new Barrel("Destillat B", 7 ,22,LocalDate.parse("2007-12-03"),LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
-		Barrel br9 = new Barrel("Destillat C", 10 ,13,LocalDate.parse("2007-12-03"), LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2011-12-03"),"");
-		Barrel br10 = new Barrel("Destillat C", 9 ,12,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-03"),"");
-		Barrel br11 = new Barrel("Destillat C", 12 ,14,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
-		Barrel br12 = new Barrel("Destillat C", 12 ,15,LocalDate.parse("2007-12-03"),LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
+		//Barrel (age, quality, content_amount, manufacturing_date,barrel_volume, birth_of_barrel,death_of_barrel,position )
+		Barrel br1 = new Barrel(0, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"), "");			
+		Barrel br2 = new Barrel(7, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),23, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"), "");
+		Barrel br3 = new Barrel(0, "Schlecht", 20 ,LocalDate.parse("2007-12-03"),23, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"), "");
+		Barrel br4 = new Barrel(7, "" ,2600,LocalDate.parse("2007-12-03"),2789,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br5 = new Barrel(0, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),23,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br6 = new Barrel(7, "Schlecht",17,LocalDate.parse("2007-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br7 = new Barrel(0,"Gut", 12 ,LocalDate.parse("2007-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
+		Barrel br8 = new Barrel(7, "Gut", 7 ,LocalDate.parse("2007-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
+		Barrel br9 = new Barrel(7, "Gut", 10 ,LocalDate.parse("2007-12-03"),13,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2011-12-03"),"");
+		Barrel br10 = new Barrel(7, "Gut", 9 ,LocalDate.parse("2007-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-03"),"");
+		Barrel br11 = new Barrel(7, "Sehr Gut", 12 ,LocalDate.parse("2007-12-03"),14,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
+		Barrel br12 = new Barrel(7, "Sehr Gut", 12 ,LocalDate.parse("2007-12-03"),15,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
 		
 		List<Barrel> barrels = new ArrayList<Barrel>();
 		barrels.add(br1);
@@ -177,7 +178,23 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrels.add(br11);
 		barrels.add(br12);
 		
-
+		
+		Barrel br61 = new Barrel(6, "Schlecht",17,LocalDate.parse("2008-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br71 = new Barrel(6,"Gut", 12 ,LocalDate.parse("2008-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
+		Barrel br81 = new Barrel(1, "Gut", 7 ,LocalDate.parse("2008-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
+		Barrel br91 = new Barrel(6, "Gut", 10 ,LocalDate.parse("2008-12-03"),13,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2011-12-03"),"");
+		Barrel br101 = new Barrel(1, "Gut", 9 ,LocalDate.parse("2008-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-03"),"");
+		Barrel br111 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2008-12-03"),14,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
+		Barrel br121 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2008-12-03"),15,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
+		
+		List<Barrel> barrels1 = new ArrayList<Barrel>();
+		barrels1.add(br61);
+		barrels1.add(br71);
+		barrels1.add(br81);
+		barrels1.add(br91);
+		barrels1.add(br101);
+		barrels1.add(br111);
+		barrels1.add(br121);
 		
 		/*
 		 * initialize bottles
@@ -223,7 +240,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Department d1 = departmentRepository.save(new BottleStock("FlaschenlagerA", empty, full));
 		Department d2 = departmentRepository.save(new BottleStock("FlaschenlagerB", empty, full));
 		Department d3 = departmentRepository.save(new BarrelStock("FasslagerA", barrels));
-		Department d4 = departmentRepository.save(new BarrelStock("FasslagerB", barrels));
+		Department d4 = departmentRepository.save(new BarrelStock("FasslagerB", barrels1));
 		Department d5 = departmentRepository.save(new WineStock("WeinlagerA", 300));
 		Department d6 = departmentRepository.save(new WineStock("WeinlagerB", 300));
 		Department d7 = departmentRepository.save(new Production("ProduktionA", still, 1000));
@@ -271,23 +288,27 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		
 		List<Employee> list1 = new ArrayList<Employee>();
-		list1.add(e1);
+		
 		list1.add(e4);
-		list1.add(e5);
-		list1.add(e7);
+		
 		
 		List<Employee> list2 = new ArrayList<Employee>();
-		list2.add(e2);
+		list2.add(e1);
+		
+		list2.add(e5);
 		list2.add(e3);
+		list2.add(e7);
 		
 		List<Employee> list3 = new ArrayList<Employee>();
 		list3.add(e9);
 		
 		
 		List<Employee> list4 = new ArrayList<Employee>();
+		list2.add(e2);
 		list4.add(e6);
 		list4.add(e8);
 		list4.add(e10);
+		
 		
 		
 		/*

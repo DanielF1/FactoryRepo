@@ -1,42 +1,25 @@
 package factory.controller;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.salespointframework.inventory.Inventory;
-import org.salespointframework.inventory.InventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import factory.model.ArticleRepository;
 import factory.model.Barrel;
 import factory.model.BarrelStock;
-import factory.model.CookBookRepository;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
-import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.Still;
-import factory.model.WineStock;
 
 @Controller
 public class DistillationController {

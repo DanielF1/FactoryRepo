@@ -149,11 +149,15 @@
 		<div class="col-lg-12">
 			<table class="table table-condensed">
 				<tr class="success">
+				
 					<th class="text-center">ID</th>
-					<th class="text-center">Content</th>
+					<th class="text-center">Age</th>
+					<th class="text-center">Quality</th>
+					
 					<th class="text-center">Content_Amount</th>
-					<th class="text-center">Barrel_Volume</th>
 					<th class="text-center">Manufacturing_Date</th>
+					<th class="text-center">Barrel_Volume</th>
+					
 					<th class="text-center">Birthdate_of_barrel</th>
 					<th class="text-center">Death_of_barrel</th>
 					<th class="text-center">LastFill</th>
@@ -162,10 +166,12 @@
 				</tr>
 				<tr th:each=" Barrel, it: ${BarrelList}" th:with="index=${it.count}">
 					<td class="text-center" th:text="${index}">1</td>
-					<td class="text-center" th:text="${Barrel.getContent()}">Destillat A</td>
+					<td class="text-center" th:text="${Barrel.getAge()}">0</td>
+					<td class="text-center" th:text="${Barrel.getQuality()}">gut</td>
 					<td class="text-center" th:text="${Barrel.getContent_amount()}">12,3</td>
-					<td class="text-center" th:text="${Barrel.getBarrel_volume()}">23</td>
 					<td class="text-center" th:text="${Barrel.getManufacturing_date()}">10.10.2012</td>
+					
+					<td class="text-center" th:text="${Barrel.getBarrel_volume()}">23</td>
 					<td class="text-center" th:text="${Barrel.getBirthdate_of_barrel()}">10.10.2012</td>
 					<td class="text-center" th:text="${Barrel.getDeath_of_barrel()}">10.10.2013</td>
 					<td class="text-center" th:text="${Barrel.getLastFill()}">20.10.2014</td>
