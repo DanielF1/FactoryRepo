@@ -10,20 +10,22 @@ import javax.persistence.Id;
 public class Barrel {
 
 	private @Id @GeneratedValue Long id;
-	private String content;
+	private int age;
+	private String quality;
 	private double content_amount;
-	private double barrel_volume;
 	private LocalDate manufacturing_date;
+	private double barrel_volume;	
 	private LocalDate birthdate_of_barrel;
 	private LocalDate death_of_barrel;
 	private LocalDate lastFill;
 	private String position;
 	
 	
-	public Barrel(String content, double content_amount, double barrel_volume, LocalDate manufacturing_date,
+	public Barrel(int age,String quality, double content_amount,LocalDate manufacturing_date, double barrel_volume, 
 			LocalDate birthdate_of_barrel,LocalDate death_of_barrel, LocalDate lastFill,String position)
 	{
-		this.content = content;
+		this.age = age;
+		this.quality = quality;
 		this.content_amount = content_amount;
 		this.barrel_volume = barrel_volume;
 		this.manufacturing_date = manufacturing_date;
@@ -34,10 +36,11 @@ public class Barrel {
 		
 
 	}
-	public Barrel(String content, double content_amount, String barrel_volume, String manufacturing_date,
+	public Barrel(int age,String quality, double content_amount,String manufacturing_date, String barrel_volume, 
 			String birthdate_of_barrel,String death_of_barrel, String lastFill,String position)
 	{
-		this.content = content;
+		this.age = age;
+		this.quality = quality;
 		this.content_amount = content_amount;
 		this.barrel_volume = Double.parseDouble(barrel_volume);
 		this.manufacturing_date = LocalDate.parse(manufacturing_date);
@@ -59,11 +62,16 @@ public class Barrel {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getContent() {
-		return content;
+	
+	public void setAge(int age) {
+		this.age = age;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	
+	public String getQuality() {
+		return quality;
+	}
+	public void setQuality(String quality) {
+		this.quality = quality;
 	}
 	public double getContent_amount() {
 		return content_amount;
@@ -108,20 +116,23 @@ public class Barrel {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public int getAlter(){
+	
+	public int getAge(){
 		int datecount =0;
 		int ANZAHL_TAGE_IM_JAHR = 365;
-		int Alter ;
+		int age ;
 		while (getManufacturing_date().compareTo(LocalDate.now())<0){
 			datecount++;
 			setManufacturing_date(getManufacturing_date().plusDays(1));
 		}
 			setManufacturing_date(LocalDate.now().minusDays(datecount));
-			Alter = datecount/ANZAHL_TAGE_IM_JAHR;			
-
-		System.out.println(getContent() + getContent_amount()+ " Date count" + datecount + " alter" + Alter);
-		System.out.println(getContent() + getBarrel_volume()+ " Date count" + datecount + " alter" + Alter);
-		return Alter;
+			age = datecount/ANZAHL_TAGE_IM_JAHR;			
+			if (getQuality().equals("") || getContent_amount()==0)
+				{
+					age = 0;
+				}
+		System.out.println(getContent_amount()+ " Date count" + datecount + " alter" + age);
+		System.out.println(getBarrel_volume()+ " Date count" + datecount + " alter" + age);
+		return age;
 	}
-	
 }

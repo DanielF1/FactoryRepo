@@ -5,13 +5,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+
+import org.springframework.stereotype.Component;
 
 @Entity
+@Component
 public class BarrelStock extends Department {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	private static List<Barrel> barrels;
+	private List<Barrel> barrels;
 	
 	@Deprecated
 	public BarrelStock() {}
@@ -22,7 +24,7 @@ public class BarrelStock extends Department {
 		this.barrels = mapBarrels;
 	}
 	
-	public static List<Barrel> getBarrels() {
+	public List<Barrel> getBarrels() {
 		return barrels;
 	}
 
