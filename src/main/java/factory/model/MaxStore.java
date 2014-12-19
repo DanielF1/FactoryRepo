@@ -8,31 +8,40 @@ import javax.persistence.Id;
 public class MaxStore {
 	
 	private @Id @GeneratedValue Long id;
-	private String content;
+	private String quality;
+	private int age;
 	private double amount;
 	
 	
-	public MaxStore(String content, double amount) 
+	public MaxStore(String quality,int age, double amount) 
 	{
-		this.content = content;
+		this.quality = quality;
+		this.age = age;
 		this.amount = amount;
 	}
 
 
-	public String getContent() {
-		return content;
+	public String getQuality() {
+		return quality;
+	}
+
+	public void setQuality(String quality) {
+		this.quality = quality;
 	}
 
 
-	public void setContent(String content) {
-		this.content = content;
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 
 	public double getAmount() {
 		return amount;
 	}
-
 
 	public void setAmount(double amount) {
 		this.amount = amount;

@@ -12,7 +12,6 @@ import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -112,6 +111,7 @@ public class CookBookController {
 					map.get(content).add(barrel);
 				}
 							}}}}}}
+
 	
 		/*
 		 * calculate maximum amount of one sort of barrel content
@@ -120,20 +120,31 @@ public class CookBookController {
 		{
 			
 			List<Barrel> list = map.get(key);
-			double maxAmount = 0;
 			
-			for (Barrel barrel: list)
+			HashMap<Integer, List<Barrel>> alterMap = new HashMap<Integer, List<Barrel>>();
+			
+			for (Barrel barrel : list) {
+				 
+					int age = barrel.getAge();
+				if (!alterMap.containsKey(age)) {
+					alterMap.put(age, new ArrayList<Barrel>());
+					}
+					alterMap.get(age).add(barrel);	
+			}
+			for (Integer key1: alterMap.keySet()){
+			double maxAmount = 0;
+			for (Barrel barrel: alterMap.get(key1))
 			{
 				
 				maxAmount += barrel.getContent_amount();
-			}
 			
-			MaxStore maxstore = new MaxStore(key, maxAmount);
+			}
+			MaxStore maxstore = new MaxStore(key, key1,maxAmount);
 			
 			maxstorelist.add(maxstore);
 			
 		}
-		
+		}
 		return maxstorelist;
 	}
 	
@@ -259,7 +270,7 @@ public class CookBookController {
 				{	
 					for(Ingredient ingredient : recipe.getIngredients())
 					{		
-						if(maxstore.getContent().equals(ingredient.getName()))
+						if(maxstore.getQuality().equals(ingredient.getName()))
 						{
 							double barrelContentAmount = maxstore.getAmount();
 							double ingridientDistillateAmount = ingredient.getAmount();
@@ -323,7 +334,7 @@ public class CookBookController {
 						{	
 							for(Ingredient ingredient : selectedRecipe.getIngredients())
 							{
-								if(maxstore.getContent().equals(ingredient.getName()))
+								if(maxstore.getQuality().equals(ingredient.getName()))
 								{
 									/*
 									 * update barrels
@@ -339,7 +350,7 @@ public class CookBookController {
 											{
 												for (Barrel barrel : barrelstock.getBarrels()) 
 												{
-													if((barrel.getQuality().equals(maxstore.getContent())) & (barrel.getBarrel_volume() > 0))
+													if((barrel.getQuality().equals(maxstore.getQuality())) & (barrel.getBarrel_volume() > 0))
 													{
 		//												System.out.println("2: " + barrel.getContent());
 														double barrelAmount = barrel.getBarrel_volume();

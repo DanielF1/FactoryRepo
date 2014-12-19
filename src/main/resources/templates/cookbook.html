@@ -47,6 +47,10 @@
 
 	<!-- navigation -->
 	<div class="col-lg-8 navigation">
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 		<nav th:include="navigation :: navigation"></nav>
 	</div>
 	<!-- /navigation -->
@@ -99,21 +103,21 @@
 						
 			            <p class="text-box">
 			                <label for="ingredient">Zutat <span class="box-number">1</span></label>
-			                <input type="number" name="ingridientName" value="" id="box" placeholder="Jahrgang"/>
+			                <input type="number" name="ingridientName" value="" id="box" placeholder="Alter"/>
 			                <input type="number" name="ingridientAmount" value="" id="box" min="1" placeholder="Menge"/>
 			                <select name="ingridientUnit">
 								<option value="Liter">Liter</option>
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">2</span></label>
-			                <input type="number" name="ingridientName1" value="" id="box" placeholder="Jahrgang"/>
+			                <input type="number" name="ingridientName1" value="" id="box" placeholder="Alter"/>
 			                <input type="number" name="ingridientAmount1" value="" id="box" min="1" placeholder="Menge"/>
 			                <select name="ingridientUnit1">
 								<option value="Liter">Liter</option>
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">3</span></label>
-			                <input type="number" name="ingridientName2" value="" id="box" placeholder="Jahrgang"/>
+			                <input type="number" name="ingridientName2" value="" id="box" placeholder="Alter"/>
 			                <input type="number" name="ingridientAmount2" value="" id="box" min="1" placeholder="Menge"/>
 			                <select name="ingridientUnit2">
 								<option value="Liter">Liter</option>
@@ -219,11 +223,13 @@
 				<h3>Fasslager</h3>
 				<table class="table table-condensed">
 					<tr class="success">
-						<th class="text-center">Inhalt</th>
+						<th class="text-center">Qualität</th>
+						<th class="text-center">Alter</th>
 						<th class="text-center">Menge</th>
 					</tr>
 					<tr th:each="maxstore : ${barrelstock_store}" class="text-center">
-						<td><span th:text="${maxstore.content}"></span></td>
+						<td><span th:text="${maxstore.quality}"></span></td>
+						<td><span th:text="${maxstore.age}"></span></td>
 						<td><span th:text="${maxstore.amount}"></span></td>
 					</tr>
 				</table>
