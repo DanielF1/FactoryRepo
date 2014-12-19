@@ -8,11 +8,8 @@ import java.util.TimerTask;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.scheduling.config.Task;
 import org.springframework.security.access.prepost.PreAuthorize;
-=======
->>>>>>> origin/master
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,9 +26,10 @@ import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.Still;
+import factory.model.WineStock;
 
 @Controller
-//@PreAuthorize("hasRole('ROLE_BREWER')")
+@PreAuthorize("hasRole('ROLE_BREWER')")
 public class DistillationController {
 	
 	private Timer timer;
@@ -39,12 +37,15 @@ public class DistillationController {
 	private long distillation = (5) * 2;
 //	private long distillation = (1000 * 60 * 60 * 24) * 2;
 	BarrelStock barrelstock;
+	WineStock winestock;
 	private final DepartmentRepository departmentrepository;
 	private final LocationRepository locationRepository;
 	
 	@Autowired 
-	public DistillationController(BarrelStock barrelstock, DepartmentRepository departmentrepository, LocationRepository locationRepository)
+	public DistillationController(WineStock winestock, BarrelStock barrelstock, DepartmentRepository departmentrepository, 
+			LocationRepository locationRepository)
 	{
+		this.winestock = winestock;
 		this.barrelstock = barrelstock;
 		this.departmentrepository = departmentrepository;
 		this.locationRepository = locationRepository;
@@ -83,7 +84,6 @@ public class DistillationController {
 	/*
 	 * stop timer
 	 */
-
 	public void stopTimer()
 	{
 		if(timer != null)
@@ -126,26 +126,31 @@ public class DistillationController {
 		int still_amount = i;
 		double max_barrel_amount = 0;
 		double remainder = 0;
+		
 		for(Location loc : locationRepository.findAll()){
 			for(Employee e : loc.getEmployees()){
 				if(e.getUserAccount() == userAccount.get()){
 					for(Department dep : loc.getDepartments()){
 						if(dep.getName().contains("Fasslager")){
 							barrelstock = (BarrelStock) dep;{
-							for (Barrel barrel : barrelstock.getBarrels()) 
-		{
-			if(barrel.getQuality().equals(""))
-			{
-				max_barrel_amount += barrel.getBarrel_volume();
+							for (Barrel barrel : barrelstock.getBarrels()){
+								
+								if(barrel.getQuality().equals(""))
+								{
+									max_barrel_amount += barrel.getBarrel_volume();
+								}
+							}
+							}
+						}
+					}
+				}
 			}
 		}
-							}}}}}}
 		
 		remainder = (still_amount * 100 * 0.75) - max_barrel_amount;
 		
 		System.out.println("barrels2: " + remainder);
 
-		
 		return remainder;
 	}
 	
@@ -171,37 +176,40 @@ public class DistillationController {
 			/*
 			 * check wine store
 			 */
-			
-			for(Location location : locationRepository.findAll())
-			{
-				for(Department department : location.getDepartments())
-				{
-					if(department.getName().contains("Weinlager"))
-					{
-						if(location.getWineStockDepartment().getAmount() < still.getAmount())
-						{
-							model.addAttribute("error", "Nicht genug Wein vorhanden. Es fehlen noch " + (still.getAmount() - location.getWineStockDepartment().getAmount()) + " Hektoliter!");
-						}
-						else
-						{	
-							if(checkBarrels(still.getAmount(), userAccount) > 0)
-							{
-								model.addAttribute("error", "Nicht genug Fässer vorhanden. Es fehlen noch Fässer für " 
-										+ (checkBarrels(still.getAmount(),userAccount) * 0.01) + " Hektoliter!");
-							}
-							else
-							{
-								location.getWineStockDepartment().setAmount(location.getWineStockDepartment().getAmount() - still.getAmount());
-//								locationRepository.save(location);
-								
-								still.setStatus_one(false);
-								startTimer(1000, still);
-							}
-						}
-					}
-				}
-			}
-		}
+			for(Location loc : locationRepository.findAll()){
+				for(Employee e : loc.getEmployees()){
+					if(e.getUserAccount() == userAccount.get()){
+						for(Department dep : loc.getDepartments()){
+							if(dep.getName().contains("Weinlager")){
+								winestock = (WineStock) dep;{
+						
+								if(winestock.getAmount() < still.getAmount())
+								{
+									model.addAttribute("error", "Nicht genug Wein vorhanden. Es fehlen noch " + (still.getAmount() - winestock.getAmount()) + " Hektoliter!");
+								}
+								else
+								{	
+									if(checkBarrels(still.getAmount(), userAccount) > 0)
+									{
+										model.addAttribute("error", "Nicht genug Fässer vorhanden. Es fehlen noch Fässer für " 
+												+ (checkBarrels(still.getAmount(),userAccount)) + " Liter!");
+									}
+									else
+									{
+										winestock.setAmount(winestock.getAmount() - still.getAmount());
+										departmentrepository.save(winestock);
+							
+										still.setStatus_one(false);
+										startTimer(1000, still);
+									}
+								} // /else
+								}	
+							} // /if
+						} // /for
+					} // /if
+				} // /for
+			} // /for
+		} // /else
 		
 		model.addAttribute("stills", Production.getStills());
 
@@ -209,39 +217,57 @@ public class DistillationController {
 	}
 	
 	@RequestMapping(value = "/distillation/f{index}")
-	public String distillationFill(@RequestParam("quality") String quality, @PathVariable(value="index") int index, Model model)
+	public String distillationFill( @RequestParam("quality") String quality,
+									@RequestParam("one") String one,
+									@RequestParam("two") String two,
+									@PathVariable(value="index") int index, Model model,
+									@LoggedIn Optional<UserAccount> userAccount)
 	{
-		Still still = Production.getStills().get(index);
+		Still still = Production.getStills().get(index - 1);
+		System.out.println("still 1: " + still.getStatus_one());
+		System.out.println("still 2: " + still.getStatus_two());
 		
-//		if((still.getStatus_one() == false) & (still.getStatus_two() == false))
+		if((still.getStatus_one() == false) && (still.getStatus_two() == false))
 		{
 			double final_distillate = (still.getAmount() * 0.75) * 100; 
 			System.out.println("1: " + final_distillate);
-			for (Barrel barrel : barrelstock.getBarrels()) 
-			{
-				if(barrel.getQuality().equals(""))
-				{
-					
-					double barrelAmount = barrel.getBarrel_volume();
-					
-					if((barrelAmount - final_distillate) <= 0)
-					{
-						double amound = barrel.getBarrel_volume();
-						barrel.setContent_amount(amound);
-						System.out.println("2: " + barrel.getBarrel_volume());		
-						System.out.println("2: " + barrel.getContent_amount());	
-						final_distillate = final_distillate - barrelAmount;
-					}
-					else
-					{
-						barrel.setContent_amount(barrelAmount - final_distillate);
-						System.out.println("3: " + barrel.getContent_amount());
-						break;
-					}
-					System.out.println("1Y: " + final_distillate);
-				}
-			}
-		}
+			
+			for(Location loc : locationRepository.findAll()){
+				for(Employee e : loc.getEmployees()){
+					if(e.getUserAccount() == userAccount.get()){
+						for(Department dep : loc.getDepartments()){
+							if(dep.getName().contains("Fasslager")){
+								barrelstock = (BarrelStock) dep;{
+								for (Barrel barrel : barrelstock.getBarrels()){
+			
+									if(barrel.getQuality().equals(""))
+									{									
+										double barrelAmount = barrel.getBarrel_volume();
+										
+										if((barrelAmount - final_distillate) <= 0)
+										{
+											double amound = barrel.getBarrel_volume();
+											barrel.setContent_amount(amound);
+											System.out.println("2: " + barrel.getBarrel_volume());		
+											System.out.println("2: " + barrel.getContent_amount());	
+											final_distillate = final_distillate - barrelAmount;
+										}
+										else
+										{
+											barrel.setContent_amount(final_distillate);
+											System.out.println("3: " + barrel.getContent_amount());
+											break;
+										}
+										System.out.println("1Y: " + final_distillate);
+									}
+								}
+								}
+							} // /if
+						} // /for
+					} // /if
+				} // /for
+			} // /for
+		} // /if
 		
 		System.out.println(quality);
 		model.addAttribute("stills", Production.getStills());

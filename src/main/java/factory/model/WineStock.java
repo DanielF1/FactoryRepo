@@ -2,7 +2,10 @@ package factory.model;
 
 import javax.persistence.Entity;
 
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
 public class WineStock extends Department {
 	
 	private double amount;

@@ -168,7 +168,7 @@ public class CookBookController {
 	public String addRecipe(@RequestParam("name") String name, 
 							@RequestParam("ingridientName") String ingredientName,
 							@RequestParam("ingridientAmount") int ingridientAmount,
-							@RequestParam("ingridientUnit") String ingridientUnit,
+							@RequestParam("ingridientUnit1") String ingridientUnit,
 							@RequestParam("ingridientName") String ingredientName1,
 							@RequestParam("ingridientAmount") int ingridientAmount1,
 							@RequestParam("ingridientUnit") String ingridientUnit1,
