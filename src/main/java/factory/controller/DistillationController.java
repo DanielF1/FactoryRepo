@@ -1,15 +1,13 @@
 package factory.controller;
 
 
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-import org.springframework.scheduling.config.Task;
-import org.springframework.security.access.prepost.PreAuthorize;
-=======
->>>>>>> origin/master
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +19,7 @@ import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
+import factory.model.Employee;
 import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.Production;
@@ -34,12 +33,14 @@ public class DistillationController {
 	private TimerTask timertask;
 	private long distillation = (5) * 2;
 //	private long distillation = (1000 * 60 * 60 * 24) * 2;
+	BarrelStock barrelstock;
 	private final DepartmentRepository departmentrepository;
 	private final LocationRepository locationRepository;
 	
 	@Autowired 
-	public DistillationController(DepartmentRepository departmentrepository, LocationRepository locationRepository)
+	public DistillationController(BarrelStock barrelstock, DepartmentRepository departmentrepository, LocationRepository locationRepository)
 	{
+		this.barrelstock = barrelstock;
 		this.departmentrepository = departmentrepository;
 		this.locationRepository = locationRepository;
 	}
@@ -115,19 +116,25 @@ public class DistillationController {
 		
 	}
 	
-	public double checkBarrels(int i)
+	public double checkBarrels(int i, @LoggedIn Optional<UserAccount> userAccount)
 	{
 		int still_amount = i;
 		double max_barrel_amount = 0;
 		double remainder = 0;
-		
-		for (Barrel barrel : BarrelStock.getBarrels()) 
+		for(Location loc : locationRepository.findAll()){
+			for(Employee e : loc.getEmployees()){
+				if(e.getUserAccount() == userAccount.get()){
+					for(Department dep : loc.getDepartments()){
+						if(dep.getName().contains("Fasslager")){
+							barrelstock = (BarrelStock) dep;{
+							for (Barrel barrel : barrelstock.getBarrels()) 
 		{
-			if(barrel.getContent().equals(""))
+			if(barrel.getQuality().equals(""))
 			{
 				max_barrel_amount += barrel.getBarrel_volume();
 			}
 		}
+							}}}}}}
 		
 		remainder = (still_amount * 100 * 0.75) - max_barrel_amount;
 		
@@ -139,7 +146,7 @@ public class DistillationController {
 	
 	
 	@RequestMapping(value = "/distillation/{index}", method = RequestMethod.POST)
-	public String distillation(Model model, @PathVariable(value="index") int index) 
+	public String distillation(Model model, @PathVariable(value="index") int index, @LoggedIn Optional<UserAccount> userAccount) 
 	{
 		
 		Still still = Production.getStills().get(index - 1);
@@ -172,10 +179,10 @@ public class DistillationController {
 						}
 						else
 						{	
-							if(checkBarrels(still.getAmount()) > 0)
+							if(checkBarrels(still.getAmount(), userAccount) > 0)
 							{
 								model.addAttribute("error", "Nicht genug Fässer vorhanden. Es fehlen noch Fässer für " 
-										+ (checkBarrels(still.getAmount()) * 0.01) + " Hektoliter!");
+										+ (checkBarrels(still.getAmount(),userAccount) * 0.01) + " Hektoliter!");
 							}
 							else
 							{
@@ -205,9 +212,9 @@ public class DistillationController {
 		{
 			double final_distillate = (still.getAmount() * 0.75) * 100; 
 			System.out.println("1: " + final_distillate);
-			for (Barrel barrel : BarrelStock.getBarrels()) 
+			for (Barrel barrel : barrelstock.getBarrels()) 
 			{
-				if(barrel.getContent().equals(""))
+				if(barrel.getQuality().equals(""))
 				{
 					
 					double barrelAmount = barrel.getBarrel_volume();

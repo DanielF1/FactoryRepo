@@ -191,7 +191,6 @@ public class BarrelMakerController {
 						barrel.setManufacturing_date(LocalDate.parse("0000-01-01"));
 					}
 					barrel.setLastFill(LocalDate.now());
-//					BarrelStock.getBarrels().add(barrel);
 				}
 			}
 			}
