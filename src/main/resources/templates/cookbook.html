@@ -103,30 +103,34 @@
 						
 			            <p class="text-box">
 			                <label for="ingredient">Zutat <span class="box-number">1</span></label>
-			                <input type="number" name="ingridientName" value="" id="box" placeholder="Alter"/>
+			                 <input type="text" name="ingridientQuality" value="" id="box" placeholder="Quality"/>
+			                <input type="number" name="ingridientAge" value="" id="box" placeholder="Alter"/>
 			                <input type="number" name="ingridientAmount" value="" id="box" min="1" placeholder="Menge"/>
 			                <select name="ingridientUnit">
 								<option value="Liter">Liter</option>
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">2</span></label>
-			                <input type="number" name="ingridientName1" value="" id="box" placeholder="Alter"/>
+			               			                 <input type="text" name="ingridientQuality1" value="" id="box" placeholder="Quality"/>
+			                <input type="number" name="ingridientAge1" value="" id="box" placeholder="Alter"/>
 			                <input type="number" name="ingridientAmount1" value="" id="box" min="1" placeholder="Menge"/>
 			                <select name="ingridientUnit1">
 								<option value="Liter">Liter</option>
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">3</span></label>
-			                <input type="number" name="ingridientName2" value="" id="box" placeholder="Alter"/>
+			                			                 <input type="text" name="ingridientQuality2" value="" id="box" placeholder="Quality"/>
+			                <input type="number" name="ingridientAge2" value="" id="box" placeholder="Alter"/>
 			                <input type="number" name="ingridientAmount2" value="" id="box" min="1" placeholder="Menge"/>
 			                <select name="ingridientUnit2">
 								<option value="Liter">Liter</option>
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">4</span></label>
-			                <input type="text" name="ingridientName2" value="" id="box" placeholder="Wasser"/>
-			                <input type="number" name="ingridientAmount2" value="" id="box" min="1" placeholder="Menge"/>
-			                <select name="ingridientUnit2">
+			                			                 <input type="text" name="ingridientQuality3" value="" id="box" placeholder="Quality"/>
+			                <input type="number" name="ingridientAge3" value="" id="box" placeholder="Alter"/>
+			                <input type="number" name="ingridientAmount3" value="" id="box" min="1" placeholder="Menge"/>
+			                <select name="ingridientUnit3">
 								<option value="Liter">Liter</option>
 							</select>
 <!-- 			                <a class="add-box" href="#"><button class="btn btn-default">Add More</button></a> -->
@@ -153,7 +157,8 @@
 								<li th:text="${recipe.name}">text</li>
 								<ul th:each="ingredient : ${recipe.ingredients}">
 									<li>
-										<span th:text="${ingredient.name}"></span>			
+										<span th:text="${ingredient.quality}"></span>	
+										<span th:text="${ingredient.age}"></span>					
 										<span th:text="${ingredient.amount}"></span>
 										<span th:text="${ingredient.unit}"></span>
 									</li>
@@ -178,7 +183,8 @@
 							<li name ="recipe_name" th:text="${recipe.name}">text</li>
 							<ul th:each="ingredient : ${recipe.ingredients}">
 								<li>
-									<span name ="ingredient_name" th:text="${ingredient.name}"></span>			
+									<span name ="ingredient_quality" th:text="${ingredient.quality}"></span>
+									<span name ="ingredient_age" th:text="${ingredient.age}"></span>			
 									<span th:name ="ingredient_amount" th:text="${ingredient.amount}"></span>
 									<span th:name ="ingredient_unit" th:text="${ingredient.unit}"></span>
 								</li>
@@ -241,31 +247,33 @@
 				<h3>Flaschenlager</h3>
 				<table class="table table-condensed">
 					<tr class="success">
-						<th class="text-center">leerer Flaschen</th>
+						<th class="text-center">Name</th>
+						<th class="text-center">Anzahl</th>
 						<th class="text-center">Volumen</th>
 					</tr>
 
-					<tr th:each="bottle_empty : ${bottlestock_empty}">
-						<td class="text-center"></td>
-						<td class="text-center"><span th:text="${bottle_empty.amount}"></span></td>
+					<tr th:each="maxBottleStore : ${bottlestock_store}">
+						<td class="text-center"><span th:text="${maxBottleStore.name}"></span></td>
+						<td class="text-center"><span th:text="${maxBottleStore.quantity}"></span></td>
+						<td class="text-center"><span th:text="${maxBottleStore.amount}"></span></td>
 					</tr>	
 				</table>
 			</div>
 			
-			<div class="col-lg-4">
-				<h3><br/></h3>
-				<table class="table table-condensed">
-					<tr class="success">
-						<th class="text-center">Name</th>
-						<th class="text-center">Volumen</th>
-					</tr>
-					<tr th:each="bottle_full : ${bottlestock_full}">
-						<td class="text-center"><span th:text="${bottle_full.name}"></span></td>
-						<td class="text-center"><span th:text="${bottle_full.amount}"></span></td>
-					</tr>
-				</table>
+<!-- 			<div class="col-lg-4"> -->
+<!-- 				<h3><br/></h3> -->
+<!-- 				<table class="table table-condensed"> -->
+<!-- 					<tr class="success"> -->
+<!-- 						<th class="text-center">Name</th> -->
+<!-- 						<th class="text-center">Volumen</th> -->
+<!-- 					</tr> -->
+<!-- 					<tr th:each="bottle_full : ${bottlestock_full}"> -->
+<!-- 						<td class="text-center"><span th:text="${bottle_full.name}"></span></td> -->
+<!-- 						<td class="text-center"><span th:text="${bottle_full.amount}"></span></td> -->
+<!-- 					</tr> -->
+<!-- 				</table> -->
 		
-			</div>
+<!-- 			</div> -->
 
 			<!-- /bottle stock -->
 		</div>
