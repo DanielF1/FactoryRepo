@@ -10,6 +10,7 @@ import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import factory.model.Recipe;
 
 
 @Controller
+//@PreAuthorize("hasRole('ROLE_BREWER')")
 public class CookBookController {
 	
 	private final CookBookRepository cookbookrepository;

@@ -115,7 +115,7 @@
 			</li>
 			
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
-				<a href="distillation.html">Destillation</a>
+				<a href="/distillation.html">Destillation</a>
 			</li>
 
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
@@ -166,34 +166,33 @@
 				<tr th:each="still, it : ${stills}" th:with="index = ${it.count}">
 					<td class="text-center"><span th:text="${index} + '. ' + ${still.amount}"></span></td>
 					<td class="text-center">
-						<span name="status_one" th:switch="${still.status_one}">
+						<button id="one" th:value="${still.status_one}" th:switch="${still.status_one}" style="display:none">
 							<button th:case="true" class="btn btn-success"></button>
 							<button th:case="false" class="btn btn-danger"></button>
-						</span> 
-						<span name="status_two" th:switch="${still.status_two}">
+						</button> 
+						<button id="two" th:value="${still.status_two}" th:switch="${still.status_two}" style="display:none">
 							<button th:case="true" class="btn btn-success"></button>
 							<button th:case="false" class="btn btn-danger"></button>
-						</span>
+						</button>
 					</td>
 					<td class="text-center">
 						<form th:method="post" th:action="@{'/distillation/' + ${index}}">
-							<button class="btn btn-default" th:id="${index}">Destillieren</button>
+							<button type="submit" class="btn btn-default" th:id="${index}" onclick="CheckShow(id)">Destillieren</button>
 						</form>
 					</td>
 					<td class="text-center">
-						<form th:method="post" th:action="@{/distillation/f}">	
+						<form th:method="post" th:action="@{'/distillation/f' + ${index}}" style="display:none" th:id="fill+${index}">	
 							<span>Qualitätsstufe: </span>
 							<select name="quality">
 								<option value="schlecht">schlecht</option>
 								<option value="gut">gut</option>
 								<option value="sehr gut">sehr gut</option>
 							</select>
-							<span th:name="${index}" th:text="${index}"></span>
+							                                                                                                                      
 							<button class="btn btn-default" >Abfüllen</button>
 						</form>
 					</td>
 				</tr>
-
 			</table>
 			<p th:text="${error}"></p><p th:text="${error2}"></p>
 		</div>	
@@ -221,12 +220,7 @@
 		{
 		    setTimeout(GoToURL, delay);
 		}
-		
-// 		function DoTheShow(id)
-// 		{
-// 			setTimeout(function() {Show(id);}, show);
-// 		}
-		
+
 		function GoToURL()
 		{
 		    // IE8 and lower fix
@@ -242,16 +236,25 @@
 		    else { window.location.replace(url); }
 		}
 		
-// 		function Show(id)
-// 		{
-// 			alert("show block");
-// 			altert(id);
-// 			document.getElementById('id').style.display='block';
-// 			alert("show block");
-// 		}
-		/*
-		 * hide elements on load page and show after 10 seconds
-		 */
+		function Show(id)
+		{
+			document.getElementById('fill1').style.display='inline';
+		}
+		
+		function DoTheShow(id)
+		{
+			setTimeout(function() {Show(id);}, show);
+		}
+		
+		function CheckShow(id)
+		{
+			var x = "false";
+			
+			if((document.getElementById("one").value) == x)
+			{
+				DoTheShow(id)
+			}
+		}
 
 	/*]]>*/
 	</script>

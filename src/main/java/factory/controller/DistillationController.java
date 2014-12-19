@@ -17,6 +17,7 @@ import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.Task;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,7 @@ import factory.model.Still;
 import factory.model.WineStock;
 
 @Controller
+//@PreAuthorize("hasRole('ROLE_BREWER')")
 public class DistillationController {
 	
 	private Timer timer;
@@ -207,12 +209,12 @@ public class DistillationController {
 		return "distillation";
 	}
 	
-	@RequestMapping("/distillation/f")
-	public String distillationFill(@RequestParam("quality") String quality, @RequestParam("name") int name, Model model)
+	@RequestMapping(value = "/distillation/f{index}")
+	public String distillationFill(@RequestParam("quality") String quality, @PathVariable(value="index") int index, Model model)
 	{
-		Still still = Production.getStills().get(name);
+		Still still = Production.getStills().get(index);
 		
-		if((still.getStatus_one() & still.getStatus_two()) == false)
+//		if((still.getStatus_one() == false) & (still.getStatus_two() == false))
 		{
 			double final_distillate = (still.getAmount() * 0.75) * 100; 
 			System.out.println("1: " + final_distillate);
