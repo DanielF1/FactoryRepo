@@ -383,13 +383,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		InventoryItem i6 = new InventoryItem(article6, Units.TEN);
 		inventory.save(i6);
 		
-		// Ist für den Vorrat in der Detailansicht verantwortlich, damit wenn etwas bestellt wird, auch der Vorrat aktualisiert wird
-
-//		for (Article article : articleRepository.findAll()) {
-//			InventoryItem inventoryItem = new InventoryItem(article, Units.TEN);
-//			inventory.save(inventoryItem);
-//				}		
-
 	}
 
 	

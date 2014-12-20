@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<title>Home</title>
 
-	<!-- JS dependencies -->
+		<!-- JS dependencies -->
 	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="../resources/js/bootstrap.min.js"></script>
@@ -13,8 +13,7 @@
 	
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
-	
-	<img src="../resources/img/wein.jpg" class="header"/>
+		<img src="../resources/img/wein.jpg" class="header"/>
 </head>
 
 <body>
@@ -69,10 +68,31 @@
 	<ul>
   <li class="list-group-item list-group-item-success">Bestseller</li>
   
+			<a th:each="article : ${articles}" th:href="@{'/detail/' + ${article.identifier}}" href="detail.html">
+			  <div class="col-sm-6 col-md-4 nail">
+			    <div class="thumbnail">
+			      <p><h4 class="text-center" th:text="${article.name}"></h4></p>
+			      <img id="img" th:src="@{'/resources/img/cover/' + ${article.image} + '.jpg'}" src="../resources/img/cover/nopic.jpg"/>
+			      <div class="caption">
+					<div>
+						<p class="text-center"><span>Alter:</span> <span th:text="${article.alter}"></span></p>
+						<p class="text-center"><span>Alkoholgehalt:</span> <span th:text="${article.alkoholgehalt}"></span></p>
+						<p class="text-center"><span>Volumen:</span> <span th:text="${article.volumen}"></span></p>
+						<p class="text-center"><span>Art:</span> <span th:text="${article.cognacart}"></span></p>
+						<p class="text-center"><span>Preis:</span> <span th:text="${article.price}"></span></p>	
+						<p><a th:href="@{'/detail/' + ${article.identifier}}" href="detail.html" 
+				        	class="btn btn-primary" role="button" style="width:100%">Zum Artikel</a></p>
+					</div>
+			      </div>
+			    </div>
+			  </div>
+			 </a>
+  </ul>
+  
+  <ul>
+    <li class="list-group-item list-group-item-success">Neu im Sortiment</li>
   
   
-  
-  <li class="list-group-item list-group-item-success">Neu im Sortiment</li>
   </ul>
 
 </div>

@@ -3,12 +3,12 @@ package factory.controller;
 
 import java.util.Optional;
 
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +34,9 @@ public class ShopController {
 
 	
 		@RequestMapping({ "/", "/index" })
-		public String start(Model model) {
+		public String start(/*@PathVariable ProductIdentifier pid,*/ Model model) {
 			
-			model.addAttribute("articles", articleRepository.findAll());
+//			model.addAttribute("articles", articleRepository.findOne(pid));
 			
 			
 			return "index";
