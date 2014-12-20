@@ -275,7 +275,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Department> list6 = new ArrayList<Department>();
 		list6.add(winestock1);
-		list6.add(bottlestock1);
 		list6.add(production2);
 		list6.add(barrelstock1);
 	
@@ -304,31 +303,22 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		
 		List<Employee> list1 = new ArrayList<Employee>();
-
-		
+		list1.add(e10);
+		list1.add(e8);
 		list1.add(e4);
-		
+		list1.add(e6);
 		
 		List<Employee> list2 = new ArrayList<Employee>();
 		list2.add(e1);
 		list2.add(e5);
-		list2.add(e3);
 		list2.add(e7);
 
-
-
-		
 		List<Employee> list3 = new ArrayList<Employee>();
 		list3.add(e9);
 		
-		
 		List<Employee> list4 = new ArrayList<Employee>();
-
 		list4.add(e2);
-		list4.add(e8);
-		list4.add(e4);
-		list4.add(e6);
-		list4.add(e10);
+		list2.add(e3);
 		
 		
 		

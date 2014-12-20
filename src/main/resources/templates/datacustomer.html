@@ -73,7 +73,7 @@
 					<th class="text-center">Adresse</th>
 					<th class="text-center"></th>
 				</tr>
-				<tr th:each="customer : ${customerlist}">
+				<tr>
 					<td class="text-center" th:text="${customer.userAccount.identifier}"></td>
 					<td class="text-center" th:text="${customer.familyname}"></td>
 					<td class="text-center" th:text="${customer.firstname}"></td>

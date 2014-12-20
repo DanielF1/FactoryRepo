@@ -68,30 +68,30 @@
 			<div class="col-lg-6">
 			<h3>Persönliche Daten bearbeiten</h3>
 				<form role="form" method="post" th:action="@{/editdatacustomer}">
-					<div class="input-group">
-					  <span class="input-group-addon">Benutzername</span>
-					  <input type="text" name="workplace" th:value="${customer.useraccount}" class="form-control inputform" placeholder="Benutzername eingeben"/>
-					</div>
+<!-- 					<div class="input-group"> -->
+<!-- 					  <span class="input-group-addon">Benutzername</span> -->
+<!-- 					  <input type="text" name="username" th:value="${customer.userAccount.identifier}" class="form-control inputform" placeholder="Benutzername eingeben"/> -->
+<!-- 					</div> -->
 
 					<div class="input-group">
 					  <span class="input-group-addon">Nachname</span>
-					  <input type="text" name="name" th:value="${customer.familyname}" class="form-control inputform" placeholder="Name eingeben"/>
+					  <input type="text" name="familyname" th:value="${customer.familyname}" class="form-control inputform"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Vorname</span>
-					  <input type="text" name="firstname" th:value="${customer.firstname}" class="form-control inputform" placeholder="Vorname eingeben"/>
+					  <input type="text" name="firstname" th:value="${customer.firstname}" class="form-control inputform"/>
 					</div>
 
 
 					<div class="input-group">
 					  <span class="input-group-addon">Anschrift</span>
-					  <input type="text" name="address" th:value="${customer.address}" class="form-control inputform" placeholder="Anschrift eingeben"/>
+					  <input type="text" name="address" th:value="${customer.address}" class="form-control inputform"/>
 					</div>
 
 					<input name="id" type="hidden" th:value="${customer.id}"/>
 
-	       		 	<button type="submit" class="btn btn-default btn-lg addLocationButton">
+	       		 	<button type="submit" class="btn btn-default btn-lg">
 						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Speichern
 	            	</button>
 				</form>
