@@ -16,17 +16,20 @@ public class AdminTasksManager {
 	private final DepartmentRepository departmentRepository;
 	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
+	private final CustomerRepository customerRepository;
 	
 	@Autowired
 	public AdminTasksManager(	LocationRepository locationRepository,
 								DepartmentRepository departmentRepository,
 								EmployeeRepository employeeRepository,
-								UserAccountManager userAccountManager) {
+								UserAccountManager userAccountManager,
+								CustomerRepository customerRepository) {
 		
 		this.locationRepository = locationRepository;
 		this.departmentRepository = departmentRepository;
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
+		this.customerRepository = customerRepository;
 	}
 	
 	public void addLocation(String name,String address, String city, String telefon, String mail){
@@ -147,6 +150,26 @@ public class AdminTasksManager {
 	}
 	
 	
+	public void editCustomer(	
+			Long id,  
+			String familyname, 
+			String firstname, 
+			String address){
+
+Customer customer = customerRepository.findOne(id);
+customer.setFamilyname(familyname);
+customer.setFirstname(firstname);
+customer.setAddress(address);
+
+
+customerRepository.save(customer);
+}
+	
+	
+	
+	
+	
+	
 //	public void editDepartment(Long id, double quantity, double capacity){
 //		
 //		Department department = departmentRepository.findOne(id);
@@ -171,4 +194,6 @@ public class AdminTasksManager {
 			locationRepository.save(location);	
 		return "redirect:/adminLocList";
 	}
+
+
 }

@@ -2,12 +2,9 @@ package factory.controller;
 
 import javax.validation.Valid;
 
-import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
-import org.salespointframework.quantity.Quantity;
-import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -23,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import factory.model.Article;
+import factory.model.AdminTasksManager;
 import factory.model.ArticleRepository;
 import factory.model.Customer;
 import factory.model.CustomerRepository;
@@ -97,4 +94,28 @@ public class Verkaeufercontroller {
 		return "saleSortiment";
 	}
 
+	
+	@RequestMapping(value="/editCustomer/{id}", method = RequestMethod.GET)
+	public String editEmployee(@PathVariable Long id, Model model){
+			
+		model.addAttribute("customer", customerRepository.findOne(id));
+		
+		return "editCustomer";
+	} 
+	 
+	@RequestMapping(value="/editCustomer", method = RequestMethod.POST)
+	public String editEmployee(	@RequestParam("id") Long id,
+								@RequestParam("familyname") String familyname,
+								@RequestParam("firstname") String firstname,
+								@RequestParam("address") String address
+								){
+	adminTasksManager.editCustomer(id, familyname, firstname, address);
+		
+		return "redirect:/customerlist";
+		}
+	
+	
+	
+	
+	
 }
