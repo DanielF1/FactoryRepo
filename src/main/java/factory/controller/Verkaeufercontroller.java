@@ -35,17 +35,20 @@ public class Verkaeufercontroller {
 	private final UserAccountManager userAccountManager;
 	private final CustomerRepository customerRepository;
 	private final ArticleRepository articleRepository;
+	private final AdminTasksManager adminTasksManager;
 	
 	@Autowired
 	public Verkaeufercontroller(OrderManager<Order> orderManager,
 								UserAccountManager userAccountManager,
 								CustomerRepository customerRepository,
-								ArticleRepository articleRepository) {
+								ArticleRepository articleRepository,
+								AdminTasksManager adminTasksManager) {
 
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
 		this.customerRepository = customerRepository;
 		this.articleRepository = articleRepository;
+		this.adminTasksManager = adminTasksManager;
 	}	
 	
 	

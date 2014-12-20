@@ -150,20 +150,19 @@ public class AdminTasksManager {
 	}
 	
 	
-	public void editCustomer(	
-			Long id,  
-			String familyname, 
-			String firstname, 
-			String address){
+	public void editCustomer(	Long id,  
+								String familyname, 
+								String firstname, 
+								String address){
 
-Customer customer = customerRepository.findOne(id);
-customer.setFamilyname(familyname);
-customer.setFirstname(firstname);
-customer.setAddress(address);
+		Customer customer = customerRepository.findOne(id);
+		customer.setFamilyname(familyname);
+		customer.setFirstname(firstname);
+		customer.setAddress(address);
 
 
-customerRepository.save(customer);
-}
+		customerRepository.save(customer);
+	}
 	
 	
 	
