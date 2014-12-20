@@ -67,8 +67,8 @@ public class BarrelMakerController {
 						if(dep.getName().contains("Fasslager")){
 							barrelstock = (BarrelStock) dep;
 //							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
-		modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
-		return "BarrelList";
+							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
+							return "BarrelList";
 						}
 					}
 				}

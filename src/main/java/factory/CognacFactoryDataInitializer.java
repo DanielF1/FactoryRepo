@@ -229,17 +229,25 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		/*
 		 * initialize stills
 		 */
-		List<Still> still = new ArrayList<Still>();
-		
 		Still still_1 = new Still(24, false, true);
 		Still still_2 = new Still(24, true, true);
 		Still still_3 = new Still(24, false, false);
 		Still still_4 = new Still(24, true, true);
 		
-		still.add(still_1);
-		still.add(still_2);
-		still.add(still_3);
-		still.add(still_4);
+		List<Still> stills1 = new ArrayList<Still>();
+		
+		
+		stills1.add(still_1);
+		stills1.add(still_2);
+		stills1.add(still_3);
+		stills1.add(still_4);
+		
+		
+		Still still_5 = new Still(24, false, true);
+		
+		List<Still> stills2 = new ArrayList<Still>();
+		
+		stills2.add(still_5);
 		
 		
 		/*
@@ -252,8 +260,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Department barrelstock2 = departmentRepository.save(new BarrelStock("FasslagerB", barrels1));
 		Department winestock1 = departmentRepository.save(new WineStock("WeinlagerA", 300));
 		Department winestock2 = departmentRepository.save(new WineStock("WeinlagerB", 300));
-		Department production1 = departmentRepository.save(new Production("ProduktionA", still, 1000));
-		Department production2 = departmentRepository.save(new Production("ProduktionB", still,1000));
+		Department production1 = departmentRepository.save(new Production("ProduktionA", 1000, stills1));
+		Department production2 = departmentRepository.save(new Production("ProduktionB", 1000, stills2));
 		Department verkauf1 = departmentRepository.save(new Sale("VerkaufA"));
 		Department verkauf2 = departmentRepository.save(new Sale("VerkaufB"));
 		Department verwaltung = departmentRepository.save(new Accountancy("Verwaltung", 0, 0));

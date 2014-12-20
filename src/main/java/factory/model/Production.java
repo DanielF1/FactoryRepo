@@ -6,23 +6,27 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.springframework.stereotype.Component;
 
 @Entity
+@Component
 public class Production extends Department {
 
 	private double capacity;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	private static List<Still> stills;
+	private List<Still> stills;
 	
 	@Deprecated
 	public Production(){}
 	
-	public Production(String name, List<Still> stillMap, double capacity) {
+	public Production(String name, double capacity, List<Still> stills) {
 		
 		super(name);
 		this.capacity = capacity;
-		this.stills = stillMap;
+		this.stills = stills;
 	}
 
 	public double getCapacity() {
@@ -33,12 +37,12 @@ public class Production extends Department {
 		this.capacity = capacity;
 	}
 
-	public static List<Still> getStills() {
+	public List<Still> getStills() {
 		return stills;
 	}
 
-	public static void setStills(List<Still> stills) {
-		Production.stills = stills;
+	public void setStills(List<Still> stills) {
+		this.stills = stills;
 	}
 	
 	

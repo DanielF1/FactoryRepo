@@ -1,7 +1,13 @@
 package factory.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Still {
 
+	private @Id @GeneratedValue Long id;
 	private int amount;
 	private boolean status_one;
 	private boolean status_two;

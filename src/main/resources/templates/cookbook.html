@@ -100,34 +100,45 @@
 						
 			            <p class="text-box">
 			                <label for="ingredient">Zutat <span class="box-number">1</span></label>
-			                 <input type="text" name="ingridientQuality" value="" id="box" placeholder="Quality"/>
-			                <input type="number" name="ingridientAge" value="" id="box" placeholder="Alter"/>
-			                <input type="number" name="ingridientAmount" value="" id="box" min="1" placeholder="Menge"/>
-			                <select name="ingridientUnit">
+			                <select name="ingredientQuality">
+								<option value="Schlecht">Schlecht</option>
+								<option value="Gut">Gut</option>
+								<option value="Sehr Gut">Sehr Gut</option>
+							</select>
+			                <input type="number" name="ingredientAge" value="" id="box" min="1" placeholder="Alter"/>
+			                <input type="number" name="ingredientAmount" value="" id="box" min="1" placeholder="Menge"/>
+			                <select name="ingredientUnit">
 								<option value="Liter">Liter</option>
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">2</span></label>
-			               			                 <input type="text" name="ingridientQuality1" value="" id="box" placeholder="Quality"/>
-			                <input type="number" name="ingridientAge1" value="" id="box" placeholder="Alter"/>
-			                <input type="number" name="ingridientAmount1" value="" id="box" min="1" placeholder="Menge"/>
-			                <select name="ingridientUnit1">
+			               	<select name="ingredientQuality1">
+								<option value="Schlecht">Schlecht</option>
+								<option value="Gut">Gut</option>
+								<option value="Sehr Gut">Sehr Gut</option>
+							</select>
+			                <input type="number" name="ingredientAge1" value="" id="box" min="1" placeholder="Alter"/>
+			                <input type="number" name="ingredientAmount1" value="" id="box" min="1" placeholder="Menge"/>
+			                <select name="ingredientUnit1">
 								<option value="Liter">Liter</option>
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">3</span></label>
-			                			                 <input type="text" name="ingridientQuality2" value="" id="box" placeholder="Quality"/>
-			                <input type="number" name="ingridientAge2" value="" id="box" placeholder="Alter"/>
-			                <input type="number" name="ingridientAmount2" value="" id="box" min="1" placeholder="Menge"/>
-			                <select name="ingridientUnit2">
+			                <select name="ingredientQuality2">
+								<option value="Schlecht">Schlecht</option>
+								<option value="Gut">Gut</option>
+								<option value="Sehr Gut">Sehr Gut</option>
+							</select>
+			                <input type="number" name="ingredientAge2" value="" id="box" min="1" placeholder="Alter"/>
+			                <input type="number" name="ingredientAmount2" value="" id="box" min="1" placeholder="Menge"/>
+			                <select name="ingredientUnit2">
 								<option value="Liter">Liter</option>
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">4</span></label>
-			                			                 <input type="text" name="ingridientQuality3" value="" id="box" placeholder="Quality"/>
-			                <input type="number" name="ingridientAge3" value="" id="box" placeholder="Alter"/>
-			                <input type="number" name="ingridientAmount3" value="" id="box" min="1" placeholder="Menge"/>
-			                <select name="ingridientUnit3">
+			                <input type="text" name="ingredientWater" value="" id="box" min="1" placeholder="Wasser"/>
+			                <input type="number" name="ingredientAmount3" value="" id="box" min="1" placeholder="Menge"/>
+			                <select name="ingredientUnit3">
 								<option value="Liter">Liter</option>
 							</select>
 <!-- 			                <a class="add-box" href="#"><button class="btn btn-default">Add More</button></a> -->
@@ -203,7 +214,7 @@
 					</form>
 						
 					<!-- buy bottles -->
-					<form th:method="get" th:action="@{/cookbook/buy/bottles}">
+					<form th:method="get" th:action="@{/buy/bottles}">
 						<h4>Flaschen bestellen</h4>
 						<select name="bottlesToBuyAmount">
 							<option value="0.3">0.3</option>

@@ -62,6 +62,9 @@
 	<!-- Container -->
 	<div class="main-container content">
 		<div class="col-lg-12">
+			<div class="col-lg-12">
+				<p class="btn-danger text-center" th:text="${error}"></p>
+			</div>
 			<table class="table table-condensed">
 				<tr class="success">
 					<th class="text-center"><div>Destille</div></th>
@@ -106,7 +109,6 @@
 					</td>
 				</tr>
 			</table>
-			<p th:text="${error}"></p><p th:text="${error2}"></p>
 		</div>	
 	</div>
 	<!-- /Container -->
