@@ -304,14 +304,14 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Employee> list1 = new ArrayList<Employee>();
 		list1.add(e10);
-		list1.add(e8);
+		list1.add(e7);
 		list1.add(e4);
 		list1.add(e6);
 		
 		List<Employee> list2 = new ArrayList<Employee>();
 		list2.add(e1);
 		list2.add(e5);
-		list2.add(e7);
+		list2.add(e8);
 
 		List<Employee> list3 = new ArrayList<Employee>();
 		list3.add(e9);
