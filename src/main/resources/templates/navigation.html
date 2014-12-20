@@ -139,6 +139,11 @@
 				<a href="/warenkorb.html">Warenkorb</a>
 			</li>
 			
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_CUSTOMER')">
+				<a href="/datacustomer.html">persönliche Daten ändern</a>
+			</li>
+			
+			
 			<!-- Advanced superuser navigation -->
 
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">

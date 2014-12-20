@@ -9,6 +9,7 @@ import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,11 +35,8 @@ public class ShopController {
 
 	
 		@RequestMapping({ "/", "/index" })
-		public String start(/*@PathVariable ProductIdentifier pid,*/ Model model) {
-			
-//			model.addAttribute("articles", articleRepository.findOne(pid));
-			
-			
+		public String start(Model model) {
+						
 			return "index";
 		}
 	
@@ -65,5 +63,17 @@ public class ShopController {
 	    	
 			return "detail";
 		}
+	    
+	    
+	    @RequestMapping(value="/editdatacustomer", method=RequestMethod.GET)
+	    public String editdata(Model model) {
+	    	
+	    	
+		
+	        return "redirect:/index";
+	    }
+	    
+	    
+	    
 	    
 }
