@@ -34,7 +34,11 @@ public class ShopController {
 
 	
 		@RequestMapping({ "/", "/index" })
-		public String start() {
+		public String start(Model model) {
+			
+			model.addAttribute("articles", articleRepository.findAll());
+			
+			
 			return "index";
 		}
 	
