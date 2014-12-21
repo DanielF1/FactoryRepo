@@ -382,7 +382,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		// Die Bilder sind von der Internetseite: http://de.123rf.com und  http://www.pixelio.de
 		
 
-		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac");
+		Article article1 = new Article("chateliere", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac");
 		articleRepository.save(article1);
 		
 		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac");
