@@ -161,7 +161,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Barrel br2 = new Barrel(7, "Schlecht", 5 ,LocalDate.parse("2008-12-03"),23, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"), "");
 		Barrel br3 = new Barrel(0, "Schlecht", 20 ,LocalDate.parse("2009-12-03"),23, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"), "");
 		Barrel br13 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),489,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
-		Barrel br4 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),229,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br4 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),1329,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br5 = new Barrel(0, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),23,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br6 = new Barrel(7, "Schlecht",17,LocalDate.parse("2007-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br7 = new Barrel(0,"Gut", 12 ,LocalDate.parse("2007-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
@@ -273,14 +273,15 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Department> list5 = new ArrayList<Department>();
 		list5.add(bottlestock1);
-		list5.add(winestock2);
+		list5.add(winestock1);
 		list5.add(production1);
 		list5.add(verkauf1);
+		list5.add(barrelstock1);
 		
 		List<Department> list6 = new ArrayList<Department>();
-		list6.add(winestock1);
+		list6.add(winestock2);
 		list6.add(production2);
-		list6.add(barrelstock1);
+		list6.add(barrelstock2);
 	
 		List<Department> list7 = new ArrayList<Department>();
 		list7.add(verwaltung);
@@ -288,7 +289,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		List<Department> list8 = new ArrayList<Department>();
 		list8.add(verkauf2);
 		list8.add(bottlestock2);
-		list8.add(barrelstock2);
+	
 		
 		
 		/*

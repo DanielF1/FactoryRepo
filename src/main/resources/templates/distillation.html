@@ -67,6 +67,7 @@
 			</div>
 			<table class="table table-condensed">
 				<tr class="success">
+					<th class="text-center"><div>#</div></th>
 					<th class="text-center"><div>Destille</div></th>
 					<th class="text-center"><div>Status</div></th>
 					<th class="text-center"></th>
@@ -74,7 +75,8 @@
 					<th class="text-center"></th>
 				</tr>
 				<tr th:each="still, it : ${stills}" th:with="index = ${it.count}">
-					<td class="text-center"><span th:text="${index} + '. ' + ${still.amount}"></span></td>
+					<td class="text-center"><span th:text="${index}"></span></td>
+					<td class="text-center"><span th:text="${still.amount}"></span></td>
 					<td class="text-center">
 						<span th:switch="${still.status_one}">
 							<span th:case="true" class="btn btn-success"></span> 

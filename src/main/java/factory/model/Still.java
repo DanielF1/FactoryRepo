@@ -11,6 +11,7 @@ public class Still {
 	private int amount;
 	private boolean status_one;
 	private boolean status_two;
+	private boolean timer_stop = false;
 	
 	public Still(int amount, boolean status_one, boolean status_two)
 	{
@@ -48,5 +49,15 @@ public class Still {
 
 	public void setStatus_two(boolean status_two) {
 		this.status_two = status_two;
-	}	
+	}
+
+	public boolean isTimer_stop() {
+		return timer_stop;
+	}
+
+	public void setTimer_stop(boolean timer_stop) {
+		this.timer_stop = timer_stop;
+	}
+	
+	
 }
