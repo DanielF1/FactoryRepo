@@ -16,7 +16,7 @@ public class Employee {
 	@GeneratedValue
 	private Long id;
 	private String workplace;
-	private String name;
+	private String familyname;
 	private String firstname;
 	private String salary;
 	private String mail;
@@ -31,7 +31,7 @@ public class Employee {
 	public Employee(UserAccount userAccount, String workplace, String name, String firstname,
 			String salary, String mail, String address) {
 		this.workplace = workplace;
-		this.name = name;
+		this.familyname = name;
 		this.firstname = firstname;
 		this.salary = salary;
 		this.mail = mail;
@@ -53,11 +53,11 @@ public class Employee {
 	public void setWorkplace(String workplace) {
 		this.workplace = workplace;
 	}
-	public String getName() {
-		return name;
+	public String getFamilyname() {
+		return familyname;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setFamilyname(String name) {
+		this.familyname = name;
 	}
 	public String getFirstname() {
 		return firstname;

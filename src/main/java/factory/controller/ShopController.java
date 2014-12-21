@@ -23,6 +23,8 @@ import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Customer;
 import factory.model.CustomerRepository;
+import factory.model.Employee;
+import factory.model.EmployeeRepository;
 
 @Controller
 @SessionAttributes("cart")
@@ -31,12 +33,17 @@ public class ShopController {
 	private final Inventory<InventoryItem> inventory;
 	private final ArticleRepository articleRepository;
 	private final CustomerRepository customerRepository;
+	private final EmployeeRepository employeeRepository;
 	
 	@Autowired
-	public ShopController(ArticleRepository articleRepository, Inventory<InventoryItem> inventory, CustomerRepository customerRepository){
+	public ShopController(	ArticleRepository articleRepository, 
+							Inventory<InventoryItem> inventory, 
+							CustomerRepository customerRepository,
+							EmployeeRepository employeeRepository){
 		this.articleRepository = articleRepository;
 		this.inventory = inventory;
 		this.customerRepository = customerRepository;
+		this.employeeRepository = employeeRepository;
 	}
 
 	
@@ -44,9 +51,13 @@ public class ShopController {
 		public String start(Model model) {
 				
 			List<Article> list1 = (List<Article>) articleRepository.findAll();
-			Article article = list1.get(2);
+			Article bestseller = list1.get(2);
+			Article newbie1 = list1.get(4);
+			Article newbie2 = list1.get(5);
 			
-			model.addAttribute("article", article);
+			model.addAttribute("article", bestseller);
+			model.addAttribute("newbie1", newbie1);
+			model.addAttribute("newbie2", newbie2);
 			
 			return "index";
 		}
@@ -76,7 +87,7 @@ public class ShopController {
 		}
 	    
 	   @RequestMapping(value="/datacustomer", method=RequestMethod.GET)
-	    public String showData(@LoggedIn Optional<UserAccount> userAccount, Model model){
+	    public String showCustomerData(@LoggedIn Optional<UserAccount> userAccount, Model model){
 	    	
 	    	Customer customer = customerRepository.findByUserAccount(userAccount.get());
 	    	model.addAttribute("customer", customer);
@@ -85,7 +96,7 @@ public class ShopController {
 	    }
 	    
 	    @RequestMapping(value="/editdatacustomer/{id}", method=RequestMethod.GET)
-	    public String editData(@PathVariable("id") Long id, Model model) {
+	    public String editCustomerData(@PathVariable("id") Long id, Model model) {
 	    	
 	    	Customer customer = customerRepository.findOne(id);
 	    	model.addAttribute("customer", customer);
@@ -94,7 +105,7 @@ public class ShopController {
 	    }
 	    
 	    @RequestMapping(value="/editdatacustomer", method=RequestMethod.POST)
-	    public String saveDate(	@RequestParam("id") Long id,
+	    public String saveCustomerData(	@RequestParam("id") Long id,
 //	    						@RequestParam("username") String username,
 	    						@RequestParam("familyname") String familyname,
 	    						@RequestParam("firstname") String firstname,
@@ -110,5 +121,38 @@ public class ShopController {
 	    	return "redirect:/datacustomer";
 	    }
 	    
+	    @RequestMapping(value="/dataemployee", method=RequestMethod.GET)
+	    public String showEmployeeData(@LoggedIn Optional<UserAccount> userAccount, Model model){
+	    	
+	    	Employee employee = employeeRepository.findByUserAccount(userAccount.get());
+	    	model.addAttribute("employee", employee);
+	    	
+	    	return "dataemployee";
+	    }
 	    
+	    @RequestMapping(value="/editdataemployee/{id}", method=RequestMethod.GET)
+	    public String editEmployeeData(@PathVariable("id") Long id, Model model) {
+	    	
+	    	Employee employee = employeeRepository.findOne(id);
+	    	model.addAttribute("employee", employee);
+	    	
+	        return "editdataemployee";
+	    }
+	    
+	    @RequestMapping(value="/editdataemployee", method=RequestMethod.POST)
+	    public String saveEmployeeData(	@RequestParam("id") Long id,
+//	    						@RequestParam("username") String username,
+	    						@RequestParam("familyname") String familyname,
+	    						@RequestParam("firstname") String firstname,
+	    						@RequestParam("address") String address){
+			
+	    	Employee employee = employeeRepository.findOne(id);
+	    	employee.setFamilyname(familyname);
+	    	employee.setFirstname(firstname);
+	    	employee.setAddress(address);
+	    	
+	    	employeeRepository.save(employee);
+	    	
+	    	return "redirect:/dataemployee";
+	    }
 }
