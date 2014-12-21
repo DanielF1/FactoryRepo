@@ -370,13 +370,13 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	 */
 	public void initializeSortiment(Inventory<InventoryItem> inventory) {
 		
-		// Die Bilder sind von der Internetseite: http://www.spirituosentheke.de 
+		// Die Bilder sind von der Internetseite: http://de.123rf.com und  http://www.pixelio.de
 		
 
 		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac");
 		articleRepository.save(article1);
 		
-		Article article2 = new Article("chatelier", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac");
+		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac");
 		articleRepository.save(article2);
 		
 		Article article3 = new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac");
