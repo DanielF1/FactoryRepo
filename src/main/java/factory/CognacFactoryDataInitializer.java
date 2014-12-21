@@ -2,8 +2,7 @@ package factory;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +32,7 @@ import factory.model.BottleStock;
 import factory.model.CookBookRepository;
 import factory.model.Customer;
 import factory.model.CustomerRepository;
+import factory.model.Delivery;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
@@ -293,26 +293,26 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		
 		/*
-		 * initialize deliver
+		 * initialize delivery
 		 */
-//		List<Deliver> deliver = new ArrayList<Deliver>();
+//		List<Delivery> deliver = new ArrayList<Delivery>();
 ////		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 //		Location loc1 = locationRepository.findByName("Standort 1");
 //		Long id1 = loc1.getId();
-//		Location loc2 = locationRepository.findByName("Standort 4");
-//		Long id4 = loc1.getId();
+//		Location loc4 = locationRepository.findByName("Standort 4");
+//		Long id4 = loc4.getId();
 //		
 //		
-//		Deliver deliver_1 = new Deliver(500.0, new GregorianCalendar(2015,Calendar.JANUARY,25,0,0,0).getTimeInMillis(), id1);
-//		Deliver deliver_2 = new Deliver(120, new GregorianCalendar(2015,Calendar.FEBRUARY,9,0,0,0).getTimeInMillis(), id4);
-//		Deliver deliver_3 = new Deliver(120, new GregorianCalendar(2015,Calendar.MARCH,8,0,0,0).getTimeInMillis(), id4);
-//		Deliver deliver_4 = new Deliver(120, new GregorianCalendar(2015,Calendar.FEBRUARY,14,0,0,0).getTimeInMillis(), id4);
+//		Delivery deliver_1 = new Delivery(500, new GregorianCalendar(2015,Calendar.JANUARY,25,0,0,0).getTimeInMillis(), id1);
+//		Delivery deliver_2 = new Delivery(120, new GregorianCalendar(2015,Calendar.FEBRUARY,9,0,0,0).getTimeInMillis(), id4);
+//		Delivery deliver_3 = new Delivery(120, new GregorianCalendar(2015,Calendar.MARCH,8,0,0,0).getTimeInMillis(), id4);
+//		Delivery deliver_4 = new Delivery(120, new GregorianCalendar(2015,Calendar.FEBRUARY,14,0,0,0).getTimeInMillis(), id4);
 //		
 //		deliver.add(deliver_1);
 //		deliver.add(deliver_2);
 //		deliver.add(deliver_3);
 //		deliver.add(deliver_4);
-//		
+		
 		
 		/*
 		 * initialize employees
