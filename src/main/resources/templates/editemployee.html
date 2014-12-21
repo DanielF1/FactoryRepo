@@ -68,34 +68,39 @@
 			<div class="col-lg-6">
 			<h3>Mitarbeiter bearbeiten</h3>
 				<form role="form" method="post" th:action="@{/editEmployee}">
+					
+					<div class="input-group">
+					  <span class="input-group-addon">Benutzername</span>
+					  <input type="text" name="username" th:value="${employee.userAccount.identifier}" class="form-control inputform"/>
+					</div>
 					<div class="input-group">
 					  <span class="input-group-addon">Arbeitsplatz</span>
-					  <input type="text" name="workplace" th:value="${employee.workplace}" class="form-control inputform" placeholder="Arbeitsplatz eingeben"/>
+					  <input type="text" name="workplace" th:value="${employee.workplace}" class="form-control inputform"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Name</span>
-					  <input type="text" name="name" th:value="${employee.name}" class="form-control inputform" placeholder="Name eingeben"/>
+					  <input type="text" name="name" th:value="${employee.familyname}" class="form-control inputform"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Vorname</span>
-					  <input type="text" name="firstname" th:value="${employee.firstname}" class="form-control inputform" placeholder="Vorname eingeben"/>
+					  <input type="text" name="firstname" th:value="${employee.firstname}" class="form-control inputform"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Gehalt</span>
-					  <input type="text" name="salary" th:value="${employee.salary}" class="form-control inputform" placeholder="Gehalt eingeben"/>
+					  <input type="text" name="salary" th:value="${employee.salary}" class="form-control inputform"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">E-Mail</span>
-					  <input type="email" name="mail" th:value="${employee.mail}" class="form-control inputform" id="exampleInputEmail1" placeholder="email eingeben"/>
+					  <input type="email" name="mail" th:value="${employee.mail}" class="form-control inputform" id="exampleInputEmail1"/>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Anschrift</span>
-					  <input type="text" name="address" th:value="${employee.address}" class="form-control inputform" placeholder="Anschrift eingeben"/>
+					  <input type="text" name="address" th:value="${employee.address}" class="form-control inputform"/>
 					</div>
 
 					<input name="id" type="hidden" th:value="${employee.id}"/>
