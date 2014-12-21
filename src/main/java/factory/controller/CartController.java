@@ -47,17 +47,17 @@ public class CartController {
 
 	
 	@ModelAttribute("cart")
-	private Cart inizializeCart() {
+	public Cart initializeCart() {
 		return new Cart();
 	}
     
-	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
-	public String basket(@LoggedIn Optional<UserAccount> userAccount, ModelMap modelMap) {
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
+	public String basket(ModelMap modelMap) {
 		modelMap.addAttribute("customerlist", customerRepository.findAll());
-		return "warenkorb";
+		return "cart";
 	}
     	
-	 @RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
+	 @RequestMapping(value = "/cart", method = RequestMethod.POST)
 	    public String addArticle(	@RequestParam("pid") Article article, 
 	    							@RequestParam("number") int number, 
 	    							@ModelAttribute Cart cart,
@@ -78,7 +78,7 @@ public class CartController {
 
 	 cart.removeItem(pid);
 
-	 return "redirect:/warenkorb";
+	 return "redirect:/cart";
 	 }
 	 
 	 
@@ -98,7 +98,7 @@ public class CartController {
 					cart.clear();
 
 					return "redirect:/";
-				}).orElse("redirect:/warenkorb");
+				}).orElse("redirect:/cart");
 		}
 	
 	   @RequestMapping(value="/saleCheckout", method=RequestMethod.POST)   
@@ -119,7 +119,7 @@ public class CartController {
 					cart.clear();
 
 					return "redirect:/";
-				}).orElse("redirect:/warenkorb");
+				}).orElse("redirect:/cart");
 		}
 	    
 	    @RequestMapping(value = "cart/clear", method = RequestMethod.POST)
@@ -129,6 +129,6 @@ public class CartController {
 	    	
 			return "redirect:/sortiment";
 			
-		}   
+		}
 }
 
