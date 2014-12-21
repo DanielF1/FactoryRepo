@@ -1,10 +1,8 @@
-package factory;
+package factory.model;
 
 import java.util.Date;
 
-
-
-public class Deliver {
+public class Delivery {
 
 	private double amount;
 	private Date date;
@@ -17,7 +15,7 @@ public class Deliver {
 //		this.locationId = locationId;
 //	}
 //	
-	public Deliver(double amount, long dateInMillis, Long locationId)
+	public Delivery(double amount, long dateInMillis, Long locationId)
 	{
 		this.amount = amount;
 		this.date = new Date(dateInMillis);
@@ -26,7 +24,7 @@ public class Deliver {
 	}
 
 	@Deprecated
-	public Deliver(){}
+	public Delivery(){}
 	
 
 	 // getter & setter
@@ -55,5 +53,7 @@ public class Deliver {
 		this.locationId = locationId;
 	}	
 }
+
+
 
 
