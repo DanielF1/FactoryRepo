@@ -3,6 +3,7 @@ package factory;
 import static org.joda.money.CurrencyUnit.EUR;
 
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +34,7 @@ import factory.model.CookBookRepository;
 import factory.model.Customer;
 import factory.model.CustomerRepository;
 import factory.model.Delivery;
+import factory.model.DeliveryRepository;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
@@ -57,6 +59,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final CustomerRepository customerRepository;
 	private final ArticleRepository articleRepository;
 	private final CookBookRepository cookbookrepository;
+	private final DeliveryRepository deliveryRepository;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager,
@@ -66,6 +69,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										EmployeeRepository employeeRepository,
 										ArticleRepository articleRepository,
 										CookBookRepository cookbookrepository, 
+										DeliveryRepository deliveryRepository,
 										Inventory<InventoryItem> inventory) {
 
 		
@@ -74,6 +78,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Assert.notNull(employeeRepository, "EmployeeRepository must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbookrepository, "CookBook must not be null!");
+		Assert.notNull(deliveryRepository, "CookBook must not be null!");
 		Assert.notNull(inventory, "Inventory must not be null!");
 		
 		this.userAccountManager = userAccountManager;
@@ -83,6 +88,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.employeeRepository = employeeRepository;
 		this.articleRepository = articleRepository;
 		this.cookbookrepository = cookbookrepository;
+		this.deliveryRepository = deliveryRepository;
 		this.inventory = inventory;
 	}
 
@@ -161,7 +167,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Barrel br2 = new Barrel(7, "Schlecht", 5 ,LocalDate.parse("2008-12-03"),23, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"), "");
 		Barrel br3 = new Barrel(0, "Schlecht", 20 ,LocalDate.parse("2009-12-03"),23, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"), "");
 		Barrel br13 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),489,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
-		Barrel br4 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),1329,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br4 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),229,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br5 = new Barrel(0, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),23,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br6 = new Barrel(7, "Schlecht",17,LocalDate.parse("2007-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br7 = new Barrel(0,"Gut", 12 ,LocalDate.parse("2007-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
@@ -273,15 +279,14 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Department> list5 = new ArrayList<Department>();
 		list5.add(bottlestock1);
-		list5.add(winestock1);
+		list5.add(winestock2);
 		list5.add(production1);
 		list5.add(verkauf1);
-		list5.add(barrelstock1);
 		
 		List<Department> list6 = new ArrayList<Department>();
-		list6.add(winestock2);
+		list6.add(winestock1);
 		list6.add(production2);
-		list6.add(barrelstock2);
+		list6.add(barrelstock1);
 	
 		List<Department> list7 = new ArrayList<Department>();
 		list7.add(verwaltung);
@@ -289,12 +294,16 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		List<Department> list8 = new ArrayList<Department>();
 		list8.add(verkauf2);
 		list8.add(bottlestock2);
-	
+		list8.add(barrelstock2);
 		
 		
 		/*
 		 * initialize delivery
 		 */
+		
+		Delivery deliver1 = deliveryRepository.save(new Delivery(100,new GregorianCalendar(2015,Calendar.JANUARY,25,0,0,0).getTimeInMillis(), "Standort 1"));
+		Delivery deliver2 = deliveryRepository.save(new Delivery(100,new GregorianCalendar(2015,Calendar.FEBRUARY,9,0,0,0).getTimeInMillis(), "Standort 4"));
+		
 //		List<Delivery> deliver = new ArrayList<Delivery>();
 ////		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 //		Location loc1 = locationRepository.findByName("Standort 1");

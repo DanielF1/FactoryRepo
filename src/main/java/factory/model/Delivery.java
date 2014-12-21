@@ -2,24 +2,34 @@ package factory.model;
 
 import java.util.Date;
 
-public class Delivery {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class Delivery {
+	
+	@Id 
+	@GeneratedValue
+	private Long id;
 	private double amount;
 	private Date date;
-	private long locationId;
-	
-//	public Deliver(double amount, Date date, long locationId)
-//	{
-//		this.amount = amount;
-//		this.date = date;
-//		this.locationId = locationId;
-//	}
-//	
-	public Delivery(double amount, long dateInMillis, Long locationId)
+	private Long locationID;
+	private String location;
+
+	public Delivery(double amount, long dateInMillis, String location)
 	{
 		this.amount = amount;
 		this.date = new Date(dateInMillis);
-		this.locationId = locationId;
+		this.location = location;
+	
+	}
+	
+	public Delivery(double amount, Date date, Long locationID)
+	{
+		this.amount = amount;
+		this.date = date;
+		this.locationID = locationID;
 	
 	}
 
@@ -46,12 +56,16 @@ public class Delivery {
 	}
 
 	public Long getLocation() {
-		return locationId;
+		return locationID;
 	}
 
 	public void setLocation(Long locationId) {
-		this.locationId = locationId;
+		this.locationID = locationID;
 	}	
+	
+	public Long getId() {
+		return id;
+	}
 }
 
 

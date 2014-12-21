@@ -74,16 +74,7 @@ public class LocationManagement {
 	}
 
 	public Transport deliverWine(double deliveredAmount, Date date, Long lid) {
-		Calendar calendar = Calendar.getInstance();
-		int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-		int currentMonth = calendar.get(Calendar.MONTH);
-		int currentYear = calendar.get(Calendar.YEAR);
-		calendar.setTimeInMillis(date.getTime());
-		int deliveryDay = calendar.get(Calendar.DAY_OF_MONTH);
-		int deliveryMonth = calendar.get(Calendar.MONTH);
-		int deliveryYear = calendar.get(Calendar.YEAR);
-		
-//	    if (currentDay == deliveryDay && currentMonth == deliveryMonth && currentYear == deliveryYear){	
+
 			WineStock deptWeinStock = (WineStock) getWineStockDepartment(lid);
 			Long id = deptWeinStock.getId();
 			double oldQuantity = deptWeinStock.getAmount();
@@ -111,8 +102,6 @@ public class LocationManagement {
 				//
 				// }
 				return ret;
-//			}
-//		}else{ save delivery
 			
 		}
 
@@ -133,25 +122,7 @@ public class LocationManagement {
 	}
 
 
-//	public Long findMaxCapacity() {
-//		// -1 ==> no more free capacity
-//		Long id = -1L;
-//		double freeCapacity = 0;
-//		for (Location location : getLocationsListWithProductionManagement()) {
-//			for (Department department : location.getDepartments()) {
-//				if (department.getName().contains("Produktion")) {
-//					// # TODO count capacity
-//					if (department.getCapacity() - department.getQuantity() > freeCapacity) {
-//						freeCapacity = department.getCapacity()
-//								- department.getQuantity();
-//						id = location.getId();
-//					}
-//				}
-//			}
-//		}
-//		return id;
-//	}
-	
+
 	
 	
 	public Long findMaxCapacity() {
