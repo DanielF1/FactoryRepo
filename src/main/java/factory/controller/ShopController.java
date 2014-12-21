@@ -1,6 +1,7 @@
 package factory.controller;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.salespointframework.inventory.Inventory;
@@ -39,9 +40,14 @@ public class ShopController {
 	}
 
 	
-		@RequestMapping({ "/", "/index" })
+		@RequestMapping({ "/", "/index"})
 		public String start(Model model) {
-						
+				
+			List<Article> list1 = (List<Article>) articleRepository.findAll();
+			Article article = list1.get(2);
+			
+			model.addAttribute("article", article);
+			
 			return "index";
 		}
 	
