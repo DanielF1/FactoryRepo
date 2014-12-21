@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import factory.model.Delivery;
+import factory.model.DeliveryRepository;
 import factory.model.Department;
 import factory.model.Location;
 import factory.model.LocationManagement;
 import factory.model.LocationRepository;
 import factory.model.TransportRepository;
+import factory.model.WineStock;
 
 @Controller
 public class WineGrowerController {
@@ -29,14 +33,14 @@ public class WineGrowerController {
 	private final LocationRepository locationRepository;
 	private final TransportRepository transportRepository;
 	private final LocationManagement locationManagement;
-	private static final int DAY_IN_MILLIS = 24 * 3600 * 1000;
-	private static final int VOLUME_HEKTOLITERS_IN_TWO_DAYS = 24;
-
+	private final DeliveryRepository deliveryRepository;
+	
 	@Autowired
-	public WineGrowerController(LocationRepository locationRepository, TransportRepository transportRepository, LocationManagement locationManagement) {
+	public WineGrowerController(LocationRepository locationRepository, TransportRepository transportRepository, DeliveryRepository deliveryRepository, LocationManagement locationManagement) {
 		this.locationRepository = locationRepository;
 		this.transportRepository = transportRepository;
 		this.locationManagement = locationManagement;
+		this.deliveryRepository = deliveryRepository;
 	}
 
 	
@@ -83,15 +87,28 @@ public class WineGrowerController {
 		} catch (ParseException e) {
 			return "redirect:form?error=date";
 		}
-		// this.place = place;
-
-		// deliver wine!
-//		LocationManagement locationmanagement;
-//		locationmanagement.deliverWine(quantity, this.date);
+		
+		Calendar calendar = Calendar.getInstance();
+		int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+		int currentMonth = calendar.get(Calendar.MONTH);
+		int currentYear = calendar.get(Calendar.YEAR);
+		calendar.setTimeInMillis(this.date.getTime());
+		int deliveryDay = calendar.get(Calendar.DAY_OF_MONTH);
+		int deliveryMonth = calendar.get(Calendar.MONTH);
+		int deliveryYear = calendar.get(Calendar.YEAR);
 		
 		
-		locationManagement.actualizationCapacity(this.date);
-		locationManagement.deliverWine(quantity, this.date , id);
+		
+		
+		
+		if (currentDay == deliveryDay && currentMonth == deliveryMonth && currentYear == deliveryYear){	
+			locationManagement.actualizationCapacity(this.date);
+			locationManagement.deliverWine(quantity, this.date , id);
+		}
+		else  {
+			Delivery delivery =  new Delivery(quantity,this.date ,id);
+			deliveryRepository.save(delivery);
+		}
 		
 		modelMap.addAttribute("quantity", quantity);
 		modelMap.addAttribute("date", this.date);
