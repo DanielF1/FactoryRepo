@@ -233,10 +233,10 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		/*
 		 * initialize stills
 		 */
-		Still still_1 = new Still(24, false, true);
-		Still still_2 = new Still(24, true, true);
-		Still still_3 = new Still(24, false, false);
-		Still still_4 = new Still(24, true, true);
+		Still still_1 = new Still(30, true, true);
+		Still still_2 = new Still(30, true, true);
+		Still still_3 = new Still(30, true, true);
+		Still still_4 = new Still(30, false, false);
 		
 		List<Still> stills1 = new ArrayList<Still>();
 		
@@ -247,7 +247,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		stills1.add(still_4);
 		
 		
-		Still still_5 = new Still(24, false, true);
+		Still still_5 = new Still(30, true, true);
 		
 		List<Still> stills2 = new ArrayList<Still>();
 		
@@ -334,11 +334,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list1.add(e10);
 		list1.add(e7);
 		list1.add(e4);
-		list1.add(e6);
+		list1.add(e5);
 		
 		List<Employee> list2 = new ArrayList<Employee>();
 		list2.add(e1);
-		list2.add(e5);
+		list2.add(e6);
 		list2.add(e8);
 
 		List<Employee> list3 = new ArrayList<Employee>();

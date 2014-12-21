@@ -82,25 +82,6 @@ public class DistillationController {
 		
 		return "distillation";
 	}
-	
-	/*
-	 * start timer
-	 */
-	public void startTimer(long intervall, Still still)
-	{
-		if(timer == null)
-		{
-			timer = new Timer();
-			timertask = new TimerTask()
-			{
-				public void run()
-				{
-					timerAction(still);
-				}
-			};
-			timer.schedule(timertask, 0, intervall);
-		}
-	}	
 
 	
 	/*
@@ -108,6 +89,7 @@ public class DistillationController {
 	 */
 	public void stopTimer(Still still)
 	{
+		System.out.println("still stop: " + still);
 		if(timer != null)
 		{
 			timer.cancel();
@@ -124,29 +106,50 @@ public class DistillationController {
 	 * task
 	 */
 	public void timerAction(Still still)
-	{	
+	{	System.out.println("still task: " + still);
 		if(distillation == 5)
 		{
 			still.setStatus_two(false);
+			System.out.println("timer_two: " + still.getStatus_two());
 		}
 		
 		if(distillation == 0)
 		{
 			stopTimer(still);
-			distillation = 5*2; 		
+			distillation = 5; 		
 		}
 		
 		System.out.println("timer: " + distillation);
 		distillation -= 1;	
 	}
 	
+	/*
+	 * start timer
+	 */
+	public void startTimer(long intervall, Still still)
+	{
+		if(timer == null)
+		{
+			timer = new Timer();
+			timertask = new TimerTask()
+			{
+				public void run()
+				{
+					timerAction(still);
+					System.out.println("still start: " + still);
+				}
+			};
+			timer.schedule(timertask, 0, intervall);
+		}
+	}	
+
 	
 	/*
 	 * check barrels
 	 */
-	public double checkBarrels(int i, @LoggedIn Optional<UserAccount> userAccount)
+	public double checkBarrels(double d, @LoggedIn Optional<UserAccount> userAccount)
 	{
-		int still_amount = i;
+		double still_amount = d;
 		double max_barrel_amount = 0;
 		double remainder = 0;
 		
@@ -205,23 +208,34 @@ public class DistillationController {
 							if(dep.getName().contains("Weinlager")){
 								winestock = (WineStock) dep;{
 						
-								if(winestock.getAmount() < still.getAmount())
+								if(winestock.getAmount() < (still.getAmount() * 0.8))
 								{
-									model.addAttribute("error", "Nicht genug Wein vorhanden. Es fehlen noch " + (still.getAmount() - winestock.getAmount()) + " Hektoliter!");
+									model.addAttribute("error", "Nicht genug Wein vorhanden. Es fehlen noch " 
+											+ ((still.getAmount() * 0.8) - winestock.getAmount()) + " Hektoliter!");
 								}
 								else
 								{	
-									if(checkBarrels(still.getAmount(), userAccount) > 0)
+									if(checkBarrels((still.getAmount() * 0.8), userAccount) > 0)
 									{
 										model.addAttribute("error", "Nicht genug Fässer vorhanden. Es fehlen noch Fässer für " 
-												+ (checkBarrels(still.getAmount(),userAccount)) + " Liter!");
+												+ (checkBarrels((still.getAmount() * 0.8),userAccount)) + " Liter!");
+										if(dep.getName().contains("Fasslager"))
+										{
+											String newMessage = ("Es werden Fässer für " + 
+													(checkBarrels((still.getAmount() * 0.8),userAccount)) + " Liter benötigt!");
+											
+											barrelstock.setNewMessage(newMessage);
+											departmentrepository.save(barrelstock);
+										}
 									}
 									else
-									{
-										winestock.setAmount(winestock.getAmount() - still.getAmount());
+									{System.out.println("wine 1: " + winestock.getAmount());
+										winestock.setAmount(winestock.getAmount() - (still.getAmount() * 0.8));
 										departmentrepository.save(winestock);
 							
+										System.out.println("wine 2: " + winestock.getAmount());
 										still.setStatus_one(false);
+										System.out.println("still call: " + still);
 										startTimer(1000, still);
 									}
 								} // /else
@@ -250,6 +264,8 @@ public class DistillationController {
 								
 							Still still = production.getStills().get(index - 1);
 							checkStill(still, userAccount, model, index);
+							
+							departmentrepository.save(production);
 							
 							model.addAttribute("stills", production.getStills());
 							}
@@ -288,7 +304,7 @@ public class DistillationController {
 							status_one = still.getStatus_one();
 							status_two = still.getStatus_two();
 							timer_stop = still.isTimer_stop();
-							final_distillate = (still.getAmount() * 0.75) * 100;
+							final_distillate = ((still.getAmount() * 0.8) * 0.75) * 100;
 							
 							}
 						}
@@ -299,7 +315,7 @@ public class DistillationController {
 		System.out.println("still 1: " + status_one);
 		System.out.println("still 2: " + status_two);
 		
-		if((status_one == false) && (status_two == false) && (timer_stop == true))
+		if((status_one == false) && (status_two == false) && (timer_stop == false))
 		{
 			System.out.println("1: " + final_distillate);
 			
@@ -319,13 +335,21 @@ public class DistillationController {
 										{
 											double amound = barrel.getBarrel_volume();
 											barrel.setContent_amount(amound);
+											barrel.setQuality(quality);
+											barrel.setManufacturing_date(LocalDate.now());
+											final_distillate = final_distillate - barrelAmount;
+																		
 											System.out.println("2: " + barrel.getBarrel_volume());		
 											System.out.println("2: " + barrel.getContent_amount());	
-											final_distillate = final_distillate - barrelAmount;
 										}
 										else
 										{
 											barrel.setContent_amount(final_distillate);
+											barrel.setQuality(quality);
+											barrel.setManufacturing_date(LocalDate.now());
+											
+											departmentrepository.save(barrelstock);
+											
 											System.out.println("3: " + barrel.getContent_amount());
 											break;
 										}
