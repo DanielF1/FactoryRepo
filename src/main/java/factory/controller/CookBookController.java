@@ -416,17 +416,18 @@ public class CookBookController {
 							
 						} // /if
 							
-//						if(!maxstore.getContent().contains(ingredient.getName()))
-//						{
-//							model.addAttribute("not_exist_" + j, "Die Zutat '" + ingredient.getName() + "' ist nicht vorhanden.");
-//							not_enough++;
-//							j++;
-//							
+						if(!((ingredient.getQuality().contains(maxstore.getQuality())) && (ingredient.getAge() == maxstore.getAge())))
+						{
+							model.addAttribute("not_exist_" + j, "Nicht genug Destillat des Alters " + ingredient.getAge() + " vorhanden."
+									+ " Es fehlen noch " + (ingridientDistillateAmount - maxstore.getAmount()) + " Liter.");
+							not_enough++;
+							j++;
+							
 //							System.out.println("out: " + ingredient.getName());
 //							System.out.println("out: " + maxstore.getContent());
-//							
-//
-//						}
+							
+
+						}
 					} // /for
 				} // /for
 						
@@ -608,16 +609,16 @@ public class CookBookController {
 	/*
 	 * delete recipe
 	 */
-	@RequestMapping(value = "/cookbook/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteTrue(@PathVariable(value="id") Long id, RedirectAttributes redirectAttrs) 
 	{	
 		String delete = "true";
 		redirectAttrs.addAttribute("id", id);
 		redirectAttrs.addAttribute("term", delete);
-		return "redirect:/cookbook/delete/{id}/{term}";
+		return "redirect:/delete/{id}/{term}";
 	}
 	
-	@RequestMapping(value = "/cookbook/delete/{id}/{term}")
+	@RequestMapping(value = "/delete/{id}/{term}")
 	public String removeRecipe(@PathVariable Long id)
 	{		
 		cookbookrepository.delete(id);

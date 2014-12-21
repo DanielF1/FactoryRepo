@@ -219,14 +219,6 @@ public class DistillationController {
 									{
 										model.addAttribute("error", "Nicht genug Fässer vorhanden. Es fehlen noch Fässer für " 
 												+ (checkBarrels((still.getAmount() * 0.8),userAccount)) + " Liter!");
-										if(dep.getName().contains("Fasslager"))
-										{
-											String newMessage = ("Es werden Fässer für " + 
-													(checkBarrels((still.getAmount() * 0.8),userAccount)) + " Liter benötigt!");
-											
-											barrelstock.setNewMessage(newMessage);
-											departmentrepository.save(barrelstock);
-										}
 									}
 									else
 									{System.out.println("wine 1: " + winestock.getAmount());

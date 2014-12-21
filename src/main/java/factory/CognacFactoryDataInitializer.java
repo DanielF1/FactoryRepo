@@ -427,8 +427,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private void initializeCookBook(CookBookRepository cookbookrepository) 
 	{
 		
-		Ingredient i1 = new Ingredient("Gut", 1, 12, "Liter");
-		Ingredient i2 = new Ingredient("Schlecht", 1, 5,"Liter");
+		Ingredient i1 = new Ingredient("Gut", 4, 12, "Liter");
+		Ingredient i2 = new Ingredient("Schlecht", 5, 5,"Liter");
 		Ingredient i3 = new Ingredient("Wasser", 1,3, "Liter");
 
 		

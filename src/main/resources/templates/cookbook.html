@@ -89,6 +89,7 @@
 	<!-- Container -->
 	<div class="main-container content">
 		<div class="col-lg-12">
+		
 			<!-- add recipe form -->		
 			<div id="main">
 			    <div class="my-form" >
@@ -198,14 +199,17 @@
 								</li>
 							</ul>
 						</ul>
-
+						<span>Flaschenvolumen: </span>
 						<select name="selected_bottle_amount">
 							<option value="0.3">0.3</option>
 							<option value="0.7">0.7</option>
-						</select>
+						</select><br/>
 							
 						<button class="btn btn-default">Herstellen</button><br/>
-					
+											<span th:text="${not_exist__0}"></span><br/><span th:text="${not_exist_1}"></span><br/>
+						<span th:text="${not_exist_2}"></span><br/><span th:text="${not_exist_3}"></span><br/>
+						<span th:text="${not_exist_4}"></span><br/><span th:text="${not_exist_5}"></span><br/>
+						
 						<span th:text="${not_enough_0}"></span><br/><span th:text="${not_enough_1}"></span><br/>
 						<span th:text="${not_enough_2}"></span><br/><span th:text="${not_enough_3}"></span><br/>
 						<span th:text="${not_enough_4}"></span><br/><span th:text="${not_enough_5}"></span><br/>
@@ -216,12 +220,13 @@
 					<!-- buy bottles -->
 					<form th:method="get" th:action="@{/buy/bottles}">
 						<h4>Flaschen bestellen</h4>
+						<span>Flaschenvolumen: </span>
 						<select name="bottlesToBuyAmount">
 							<option value="0.3">0.3</option>
 							<option value="0.7">0.7</option>
 							<option value="1.0">1.0</option>
 						</select>
-						<input type="number" name="bottlesToBuyNumber" min="1" placeholder="Flaschenanzahl"/>
+						<input type="number" name="bottlesToBuyNumber" min="1" placeholder="Flaschenanzahl"/><br/>
 						<button class="btn btn-default">Flaschen bestellen</button><br/><br/>
 					</form>
 					<!-- /buy bottles -->
@@ -333,7 +338,7 @@
 		
 		function deleteEntry()
 		{
-			var newURL      = "cookbook/delete";
+			var newURL      = "/delete";
 			newURL = newURL + "/" + escape(idForDelete);
 			
 			location.href = newURL;
