@@ -13,12 +13,12 @@ public class Article extends Product{
 		private String image;
 		private String alter;
 		private String alkoholgehalt;
-		private String volumen;
+		private double volumen;
 		private String cognacart;
 
 		public Article(){}
 		
-		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, String volumen, String cognacart) {
+		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, double volumen, String cognacart) {
 			
 			super(name, preis, Units.METRIC);
 			
@@ -62,11 +62,11 @@ public class Article extends Product{
 			this.alkoholgehalt=Alkoholgehalt;
 		}
 	
-		public String getVolumen(){
+		public double getVolumen(){
 			return this.volumen;
 		}
 		
-		public void setVolumen(String Volumen){
+		public void setVolumen(double Volumen){
 			
 			this.volumen=Volumen;
 		}

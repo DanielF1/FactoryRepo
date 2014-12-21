@@ -166,7 +166,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Barrel br1 = new Barrel(0, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"), "");			
 		Barrel br2 = new Barrel(7, "Schlecht", 5 ,LocalDate.parse("2008-12-03"),23, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"), "");
 		Barrel br3 = new Barrel(0, "Schlecht", 20 ,LocalDate.parse("2009-12-03"),23, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"), "");
-		Barrel br13 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),489,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br13 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),12489,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br4 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),229,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br5 = new Barrel(0, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),23,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br6 = new Barrel(7, "Schlecht",17,LocalDate.parse("2007-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"),"");
@@ -279,14 +279,15 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Department> list5 = new ArrayList<Department>();
 		list5.add(bottlestock1);
-		list5.add(winestock2);
+		list5.add(winestock1);
+		list5.add(barrelstock1);
 		list5.add(production1);
 		list5.add(verkauf1);
 		
 		List<Department> list6 = new ArrayList<Department>();
-		list6.add(winestock1);
+		list6.add(winestock2);
 		list6.add(production2);
-		list6.add(barrelstock1);
+		list6.add(barrelstock2);
 	
 		List<Department> list7 = new ArrayList<Department>();
 		list7.add(verwaltung);
@@ -294,7 +295,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		List<Department> list8 = new ArrayList<Department>();
 		list8.add(verkauf2);
 		list8.add(bottlestock2);
-		list8.add(barrelstock2);
 		
 		
 		/*
@@ -382,22 +382,22 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		// Die Bilder sind von der Internetseite: http://de.123rf.com und  http://www.pixelio.de
 		
 
-		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac");
+		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %",1, "Cognac");
 		articleRepository.save(article1);
 		
-		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac");
+		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article2);
 		
-		Article article3 = new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac");
+		Article article3 = new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article3);
 		
-		Article article4 = new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %","0,7 Liter","Cognac");
+		Article article4 = new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article4);
 		
-		Article article5 = new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %","1,0 Liter","Cognac");
+		Article article5 = new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %",0.7,"Cognac");
 		articleRepository.save(article5);
 		
-		Article article6 = new Article("monnet", "Monnet Cognac", "5 Jahre", Money.of(EUR, 26.95), "40,0 %","0,7 Liter","Cognac");
+		Article article6 = new Article("monnet", "Monnet Cognac", "5 Jahre", Money.of(EUR, 26.95), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article6); 		
 				
 		InventoryItem i1 = new InventoryItem(article1, Units.TEN);
@@ -428,7 +428,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	{
 		
 		Ingredient i1 = new Ingredient("Gut", 4, 12, "Liter");
-		Ingredient i2 = new Ingredient("Schlecht", 5, 5,"Liter");
+		Ingredient i2 = new Ingredient("Schlecht", 5, 50,"Liter");
 		Ingredient i3 = new Ingredient("Wasser", 1,3, "Liter");
 
 		

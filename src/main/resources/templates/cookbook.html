@@ -206,14 +206,25 @@
 						</select><br/>
 							
 						<button class="btn btn-default">Herstellen</button><br/>
-											<span th:text="${not_exist__0}"></span><br/><span th:text="${not_exist_1}"></span><br/>
-						<span th:text="${not_exist_2}"></span><br/><span th:text="${not_exist_3}"></span><br/>
-						<span th:text="${not_exist_4}"></span><br/><span th:text="${not_exist_5}"></span><br/>
+
 						
 						<span th:text="${not_enough_0}"></span><br/><span th:text="${not_enough_1}"></span><br/>
 						<span th:text="${not_enough_2}"></span><br/><span th:text="${not_enough_3}"></span><br/>
 						<span th:text="${not_enough_4}"></span><br/><span th:text="${not_enough_5}"></span><br/>
 					
+						<p>Diese Zutaten wurden nicht im Lager gefunden.</p>
+						<ul th:each="ingredient : ${not_exist}">
+							<li>
+								<span name ="ingredient_quality" th:text="${ingredient.quality}"></span>
+								<span name ="ingredient_age" th:text="${ingredient.age}"></span>			
+								<span th:name ="ingredient_amount" th:text="${ingredient.amount}"></span>
+								<span th:name ="ingredient_unit" th:text="${ingredient.unit}"></span>
+							</li>
+						</ul>
+					
+																<span th:text="${not_exist__0}"></span><br/><span th:text="${not_exist_1}"></span><br/>
+						<span th:text="${not_exist_2}"></span><br/><span th:text="${not_exist_3}"></span><br/>
+						<span th:text="${not_exist_4}"></span><br/><span th:text="${not_exist_5}"></span><br/>
 						<span th:text="${not_enough_bottles}"></span>
 					</form>
 						

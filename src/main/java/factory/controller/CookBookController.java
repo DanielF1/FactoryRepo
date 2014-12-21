@@ -188,8 +188,7 @@ public class CookBookController {
 									}
 									
 									map.get(name).add(bottle);
-								}
-								
+								}	
 							}
 						} // /if
 					} // /for
@@ -323,12 +322,9 @@ public class CookBookController {
 		
 							for (Bottle bottle : bottlestock.getBottles()) 
 							{
-								if (bottle.getName().equals(""))
+								if ((bottle.getName().equals("")) && (bottle.getAmount() == selectedBottleAmount))
 								{
-									if(bottle.getAmount() == selectedBottleAmount)
-									{
-										existingBottles ++;
-									}
+									existingBottles ++;
 								}
 							}
 							}
@@ -375,28 +371,23 @@ public class CookBookController {
 		/*
 		 * calculate, if there are enough ingredients
 		 */
-		for(Recipe recipe: cookbookrepository.findAll())
-		{
-			if(recipe.getId() == id)
-			{		
-				for(Ingredient ingredient : recipe.getIngredients()){
-					System.out.println("ingredient: " + ingredient);
-					double ingridientDistillateAmount = ingredient.getAmount();
-					
-					for(MaxStore maxstore : calcMaxStore(userAccount)){	
-						System.out.println("maxstore: " + maxstore);
-						if((ingredient.getQuality().equals(maxstore.getQuality())) && (ingredient.getAge() == maxstore.getAge())){
-							System.out.println("maxstore.getQuality(): " + maxstore.getQuality());
-							System.out.println("ingredient.getQuality(): " + ingredient.getQuality());
-							
-							System.out.println("maxstore.getAge(): " + maxstore.getAge());
-							System.out.println("maxstore.getAge(): " + ingredient.getAge());
-							
-							double barrelContentAmount = maxstore.getAmount();
-							
-							System.out.println("barrelContentAmount: " + barrelContentAmount);
-							System.out.println("ingridientDistillateAmount: " + ingridientDistillateAmount);
-							
+		List<Ingredient> temp = new ArrayList();
+		
+		for(Recipe recipe: cookbookrepository.findAll()){
+			if(recipe.getId() == id){
+				
+				temp = recipe.getIngredients();
+
+				for(MaxStore maxstore : calcMaxStore(userAccount)){			
+					for(Ingredient ingredient : recipe.getIngredients()){
+
+						double ingridientDistillateAmount = ingredient.getAmount();
+						double barrelContentAmount = maxstore.getAmount();
+						
+						if((maxstore.getQuality().equals(ingredient.getQuality())) && (maxstore.getAge() == ingredient.getAge()))
+						{
+							temp.remove(ingredient);
+
 							if(ingridientDistillateAmount > barrelContentAmount)
 							{
 								model.addAttribute("not_enough_" + i, "Nicht genug Destillat des Alters " + ingredient.getAge() + " vorhanden."
@@ -415,89 +406,136 @@ public class CookBookController {
 							break;
 							
 						} // /if
-							
-						if(!((ingredient.getQuality().contains(maxstore.getQuality())) && (ingredient.getAge() == maxstore.getAge())))
-						{
-							model.addAttribute("not_exist_" + j, "Nicht genug Destillat des Alters " + ingredient.getAge() + " vorhanden."
-									+ " Es fehlen noch " + (ingridientDistillateAmount - maxstore.getAmount()) + " Liter.");
-							not_enough++;
-							j++;
-							
-//							System.out.println("out: " + ingredient.getName());
-//							System.out.println("out: " + maxstore.getContent());
-							
 
-						}
-					} // /for
+					} // /for	
 				} // /for
-						
-			} // /if
 				
-			model.addAttribute("selected_name", recipe.getName());
-			model.addAttribute("selected_ingredients", recipe.getIngredients());
+				System.out.println("temp: " + temp);
+				System.out.println("recipe: " + recipe.getIngredients());
 			
-			/*
-			 * if enough distillate then check empty bottles
-			 */
-			if(not_enough == 0)
-			{				
-				int missedBottles = 0;
-				
+				model.addAttribute("selected_name", recipe.getName());
+				model.addAttribute("selected_ingredients", recipe.getIngredients());
+				model.addAttribute("not_exist", temp);
+		
 				/*
-				 * missed bottles > 0
+				 * if enough distillate then check empty bottles
 				 */
-				if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) > 0)
-				{
-					model.addAttribute("not_enough_bottles",  "Nicht genug leere Flaschen vorhanden. Es fehlen noch " 
-								+ checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) + " Flaschen.");
-				}
+				if((not_enough == 0) && (temp.size()  == 0))
+				{				
+					int missedBottles = 0;
 				
-				/*
-				 * missed bottles = 0
-				 */
-				if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) == 0){
-					for(MaxStore maxstore : calcMaxStore(userAccount)){ 
-						for(Recipe selectedRecipe : cookbookrepository.findById(id)){	
-							for(Ingredient ingredient : selectedRecipe.getIngredients()){
-								if(maxstore.getQuality().equals(ingredient.getQuality()) && (maxstore.getAge() == ingredient.getAge())){
-											
-									/*
-									 * update barrels
-									 */
-									double newAmount = ingredient.getAmount();
-									
-									while(newAmount > 0)
+					/*
+					 * missed bottles > 0
+					 */
+					if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) > 0)
+					{
+						model.addAttribute("not_enough_bottles",  "Nicht genug leere Flaschen vorhanden. Es fehlen noch " 
+									+ checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) + " Flaschen.");
+					}
+				
+					/*
+					 * missed bottles = 0
+					 */
+					if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) == 0){
+						for(MaxStore maxstore : calcMaxStore(userAccount)){ 
+							for(Recipe selectedRecipe : cookbookrepository.findById(id)){	
+								for(Ingredient ingredient : selectedRecipe.getIngredients())
+								{
+									if(maxstore.getQuality().equals(ingredient.getQuality()) && (maxstore.getAge() == ingredient.getAge()))
 									{
+											
+										/*
+										 * update barrels
+										 */
+										double newAmount = ingredient.getAmount();
+									
+										while(newAmount > 0)
+										{
+											for(Location loc : locationRepository.findAll()){
+												for(Employee e : loc.getEmployees()){
+													if(e.getUserAccount() == userAccount.get()){
+														for(Department dep : loc.getDepartments()){
+															if(dep.getName().contains("Fasslager")){
+																barrelstock = (BarrelStock) dep;{
+																for (Barrel barrel : barrelstock.getBarrels())
+																{		
+																	if((barrel.getQuality().equals(maxstore.getQuality())) && (barrel.getAge() == maxstore.getAge()))
+																	{
+																		double barrelAmount = barrel.getBarrel_volume();
+				
+																		if((barrelAmount - newAmount) <= 0)
+																		{
+																			barrel.setContent_amount(0);
+		
+																		//barrelstock.saveBarrel(barrel);
+					
+																			newAmount = newAmount - barrelAmount;
+																		}
+																		else
+																		{
+																			barrel.setContent_amount(barrelAmount - newAmount);
+			
+																			//barrelstock.saveBarrel(barrel);
+																			newAmount = 0;
+																			break;
+																		}
+																	} // /if
+																} // /for
+																}
+															} // /if
+														} // /for
+													} // /if
+												} // /for
+											} // /for
+										} // /while
+												
+							
+										/*
+										 * update bottles
+										 */
+										int bottles = 0;
+										bottles = (int) (maxDestillate / selectedBottleAmount);
+
+										List<Object> toRemove = new ArrayList<Object>();
+									
 										for(Location loc : locationRepository.findAll()){
 											for(Employee e : loc.getEmployees()){
 												if(e.getUserAccount() == userAccount.get()){
 													for(Department dep : loc.getDepartments()){
-														if(dep.getName().contains("Fasslager")){
-															barrelstock = (BarrelStock) dep;{
-										
-															for (Barrel barrel : barrelstock.getBarrels()){
-																		
-																if((barrel.getQuality().equals(maxstore.getQuality())) && (barrel.getBarrel_volume() > 0))
-																{
-																	double barrelAmount = barrel.getBarrel_volume();
-				
-																	if((barrelAmount - newAmount) <= 0)
+														if(dep.getName().contains("Flaschenlager")){
+															bottlestock = (BottleStock) dep;{
+															
+															for(Bottle bottle : bottlestock.getBottles())
+															{
+																if(bottles > 0)
+																{	
+																	if(bottle.getName().equals(""))
 																	{
-																		barrel.setContent_amount(0);
-		
-					//													barrelstock.saveBarrel(barrel);
-					
-																		newAmount = newAmount - barrelAmount;
-																	}
-																	else
-																	{
-																		barrel.setContent_amount(barrelAmount - newAmount);
-		
-					//													barrelstock.saveBarrel(barrel);
-																		newAmount = 0;
-																		
-																		break;
-																	}
+																		if(selectedBottleAmount == bottle.getAmount())
+																		{
+																			toRemove.add(bottle);
+												
+																			Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
+																			bottlestock.getBottles().add(b1);
+																			bottles--;
+
+																			for(Article article : articlerepository.findAll())
+																			{
+																				if((article.getName().equals(recipe.getName())) && (article.getVolumen() == selectedBottleAmount))
+																				{
+																					Optional<InventoryItem> item = inventory.findByProductIdentifier(article.getIdentifier());
+											    	    		
+																					if(!item.isPresent())
+																						continue;
+											    			
+																					InventoryItem inventoryItem = item.get();
+																					inventoryItem.increaseQuantity(Units.ONE);
+																					inventory.save(inventoryItem);
+																				
+																				} // /if
+																			} // /for
+																		} // /if
+																	} // /if
 																} // /if
 															} // /for
 															}
@@ -506,77 +544,16 @@ public class CookBookController {
 												} // /if
 											} // /for
 										} // /for
-									} // /while
-												
-							
-									/*
-									 * update bottles
-									 */
-									int bottles = 0;
-									bottles = (int) (maxDestillate / selectedBottleAmount);
-
-									List<Object> toRemove = new ArrayList<Object>();
 									
-									for(Location loc : locationRepository.findAll()){
-										for(Employee e : loc.getEmployees()){
-											if(e.getUserAccount() == userAccount.get()){
-												for(Department dep : loc.getDepartments()){
-													if(dep.getName().contains("Flaschenlager")){
-														bottlestock = (BottleStock) dep;{
-															
-													
-														for(Bottle bottle : bottlestock.getBottles())
-														{
-															if(bottle.getName().equals(""))
-															{
-																if(bottles > 0)
-																{
-																	if(selectedBottleAmount == bottle.getAmount())
-																	{
-																		toRemove.add(bottle);
-												
-																		Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
-																		bottlestock.getBottles().add(b1);
-												
-																		for(Article article : articlerepository.findAll())
-																		{
-																			if(article.getName().equals(recipe.getName()))
-																			{
-																				Optional<InventoryItem> item = inventory.findByProductIdentifier(article.getIdentifier());
-										    	    	
-																				if(!item.isPresent())
-																					continue;
-										    			
-																				InventoryItem inventoryItem = item.get();
-																				inventoryItem.increaseQuantity(Units.ONE);
-																				inventory.save(inventoryItem);
-																				
-																			} // /if
-																		} // /for
-																	} // /if
-																} // /if
-																else
-																{
-																	break;
-																}
-								
-																bottles--;
-															} // /if
-														} // /for
-														}
-													} // /if
-												} // /for
-											} // /if
-										} // /for
-									} // /for
-									
-									bottlestock.getBottles().removeAll(toRemove);
-		
-								} // /if
+										bottlestock.getBottles().removeAll(toRemove);
+			
+									} // /if
+								} // /for
 							} // /for
 						} // /for
-					} // /for
-				} // /if		
+					} // /if		
+				} // /if
+		
 			} // /if
 		} // /for
 		
