@@ -68,6 +68,7 @@ public class BarrelMakerController {
 							barrelstock = (BarrelStock) dep;
 //							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
+							modelMap.addAttribute("error", barrelstock.getNewMessage());
 							return "BarrelList";
 						}
 					}

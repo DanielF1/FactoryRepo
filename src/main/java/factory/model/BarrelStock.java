@@ -14,6 +14,7 @@ public class BarrelStock extends Department {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Barrel> barrels;
+	private String newMessage;
 	
 	@Deprecated
 	public BarrelStock() {}
@@ -31,4 +32,14 @@ public class BarrelStock extends Department {
 	public void setBarrels(List<Barrel> barrels) {
 		this.barrels = barrels;
 	}
+
+	public String getNewMessage() {
+		return newMessage;
+	}
+
+	public void setNewMessage(String newMessage) {
+		this.newMessage = newMessage;
+	}
+	
+	
 }

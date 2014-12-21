@@ -239,10 +239,10 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		/*
 		 * initialize stills
 		 */
-		Still still_1 = new Still(24, false, true);
-		Still still_2 = new Still(24, true, true);
-		Still still_3 = new Still(24, false, false);
-		Still still_4 = new Still(24, true, true);
+		Still still_1 = new Still(30, true, true);
+		Still still_2 = new Still(30, true, true);
+		Still still_3 = new Still(30, true, true);
+		Still still_4 = new Still(30, false, false);
 		
 		List<Still> stills1 = new ArrayList<Still>();
 		
@@ -253,7 +253,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		stills1.add(still_4);
 		
 		
-		Still still_5 = new Still(24, false, true);
+		Still still_5 = new Still(30, true, true);
 		
 		List<Still> stills2 = new ArrayList<Still>();
 		
@@ -343,11 +343,11 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list1.add(e10);
 		list1.add(e7);
 		list1.add(e4);
-		list1.add(e6);
+		list1.add(e5);
 		
 		List<Employee> list2 = new ArrayList<Employee>();
 		list2.add(e1);
-		list2.add(e5);
+		list2.add(e6);
 		list2.add(e8);
 
 		List<Employee> list3 = new ArrayList<Employee>();
@@ -379,13 +379,13 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	 */
 	public void initializeSortiment(Inventory<InventoryItem> inventory) {
 		
-		// Die Bilder sind von der Internetseite: http://www.spirituosentheke.de 
+		// Die Bilder sind von der Internetseite: http://de.123rf.com und  http://www.pixelio.de
 		
 
 		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %","1.0 Liter", "Cognac");
 		articleRepository.save(article1);
 		
-		Article article2 = new Article("chatelier", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac");
+		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %","0,7 Liter","Cognac");
 		articleRepository.save(article2);
 		
 		Article article3 = new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %","0,7 Liter","Cognac");

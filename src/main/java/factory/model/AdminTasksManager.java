@@ -54,6 +54,16 @@ public class AdminTasksManager {
 		locationRepository.save(location);
 	}
 	
+	public void deleteLocation(Long id){
+		
+		Location location = locationRepository.findOne(id);
+		List<Department> l1 = location.getDepartments();
+		l1.clear();
+		List<Employee> l2 = location.getEmployees();
+		l2.clear();
+		locationRepository.delete(location);
+	}
+	
 	
 	public void addEmployee(String username,
 							String password,
@@ -134,7 +144,7 @@ public class AdminTasksManager {
 		
 		Employee employee = employeeRepository.findOne(id);
 		employee.setWorkplace(workplace);
-		employee.setName(name);
+		employee.setFamilyname(name);
 		employee.setFirstname(firstname);
 		employee.setSalary(salary);
 		employee.setMail(mail);
@@ -145,8 +155,18 @@ public class AdminTasksManager {
 	
 	public void dismissEmployee(Long id){
 		Employee employee = employeeRepository.findOne(id);
-		employeeRepository.delete(employee);
 		
+		for(Location loc : locationRepository.findAll()){
+			for(Employee emp : loc.getEmployees()){
+				if(emp.equals(employee)){
+					List<Employee> l1 = loc.getEmployees();
+					l1.remove(employee);
+					userAccountManager.disable(employee.getUserAccount().getIdentifier());
+					employeeRepository.delete(employee);
+					break;
+				}
+			}
+		}
 	}
 	
 	

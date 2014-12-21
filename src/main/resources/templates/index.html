@@ -65,10 +65,10 @@
 		<div class="col-lg-12">
 		
 		<div class="list-group">
-	<ul style="list-style-type:none">
-  		<li class="list-group-item list-group-item-success">Bestseller</li>
-  
-		<li><div class="col-sm-6 col-md-4 nail">
+		
+  			<h3>Bestseller</h3>
+  			<a th:href="@{'/detail/' + ${article.identifier}}" href="detail.html">
+			<div>
 			    <div class="thumbnail">
 			      <h4 class="text-center" th:text="${article.name}"></h4>
 			      <img id="img" th:src="@{'/resources/img/cover/' + ${article.image} + '.jpg'}" src="../resources/img/cover/nopic.jpg"/>
@@ -82,23 +82,48 @@
 					</div>
 			      </div>
 			    </div>
-			  </div>
-		</li>
-  	</ul>
-  
-<!--   <ul> -->
-<!--     <li class="list-group-item list-group-item-success">Neu im Sortiment</li> -->
-  
-  
-<!--   </ul> -->
-
-</div>
+			</div>
+			</a>
 		
-		
-
+  			<h3>Neu im Sortiment</h3>
+  			<a th:href="@{'/detail/' + ${newbie1.identifier}}" href="detail.html">
+			<div class="col-sm-6 col-md-4 nail">
+			    <div class="thumbnail">
+			      <h4 class="text-center" th:text="${newbie1.name}"></h4>
+			      <img id="img" th:src="@{'/resources/img/cover/' + ${newbie1.image} + '.jpg'}" src="../resources/img/cover/nopic.jpg"/>
+			      <div class="caption">
+					<div>
+						<p class="text-center"><span>Alter:</span> <span th:text="${newbie1.alter}"></span></p>
+						<p class="text-center"><span>Alkoholgehalt:</span> <span th:text="${newbie1.alkoholgehalt}"></span></p>
+						<p class="text-center"><span>Volumen:</span> <span th:text="${newbie1.volumen}"></span></p>
+						<p class="text-center"><span>Art:</span> <span th:text="${newbie1.cognacart}"></span></p>
+						<p class="text-center"><span>Preis:</span> <span th:text="${newbie1.price}"></span></p>
+					</div>
+			      </div>
+			    </div>
+			</div>
+			</a>
+			<a th:href="@{'/detail/' + ${newbie2.identifier}}" href="detail.html">
+  			<div class="col-sm-6 col-md-4 nail">
+			    <div class="thumbnail">
+			      <h4 class="text-center" th:text="${newbie2.name}"></h4>
+			      <img id="img" th:src="@{'/resources/img/cover/' + ${newbie2.image} + '.jpg'}" src="../resources/img/cover/nopic.jpg"/>
+			      <div class="caption">
+					<div>
+						<p class="text-center"><span>Alter:</span> <span th:text="${newbie2.alter}"></span></p>
+						<p class="text-center"><span>Alkoholgehalt:</span> <span th:text="${newbie2.alkoholgehalt}"></span></p>
+						<p class="text-center"><span>Volumen:</span> <span th:text="${newbie2.volumen}"></span></p>
+						<p class="text-center"><span>Art:</span> <span th:text="${newbie2.cognacart}"></span></p>
+						<p class="text-center"><span>Preis:</span> <span th:text="${newbie2.price}"></span></p>
+					</div>
+			      </div>
+			    </div>
+			</div>
+			</a>
 		</div>
 	</div>
-	<!-- /Container -->
 </div>
+</div>
+	<!-- /Container -->
 </body>
 </html>

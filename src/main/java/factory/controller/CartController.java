@@ -47,7 +47,7 @@ public class CartController {
 
 	
 	@ModelAttribute("cart")
-	private Cart getCart() {
+	private Cart inizializeCart() {
 		return new Cart();
 	}
     

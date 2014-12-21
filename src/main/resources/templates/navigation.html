@@ -48,6 +48,9 @@
 				<a href="/locationwithwine.html">Weinmenge</a>
 			</li>
 			
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_ADMIN')">
+				<a href="/dataemployee.html">Persönliche Daten</a>
+			</li>
 			
 			<!-- /Advanced administrator navigation -->
 
@@ -72,6 +75,10 @@
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
 				<a href="/customerlist.html">Kundenliste</a>
 			</li>
+			
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SALESMAN')">
+				<a href="/dataemployee.html">Persönliche Daten</a>
+			</li>
 			<!-- /Advanced salesman navigation -->
 
 
@@ -92,6 +99,10 @@
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
 				<a href="/BarrelList.html">Fassliste</a>
 			</li>
+			
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+				<a href="/dataemployee.html">Persönliche Daten</a>
+			</li>
 			<!-- /Advanced brewer navigation -->
 
 			<!-- Advanced barrelmaker navigation -->
@@ -103,6 +114,9 @@
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
 				<a href="/BarrelList.html">Fassliste</a>
 			</li>
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BARRELMAKER')">
+				<a href="/dataemployee.html">Persönliche Daten</a>
+			</li>
 			<!-- /Advanced barrelmaker navigation -->
 			
 			<!-- Advanced lagerist navigation -->
@@ -113,6 +127,9 @@
 			
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WAREHOUSEMAN')">
 				<a href="/BarrelList.html">Fassliste</a>
+			</li>
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WAREHOUSEMAN')">
+				<a href="/dataemployee.html">Persönliche Daten</a>
 			</li>
 			<!-- /Advanced lagerist navigation -->
 			
@@ -128,6 +145,9 @@
 
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
 				<a href="/locationwithwine">Weinmenge</a>
+			</li>
+			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
+				<a href="/dataemployee.html">Persönliche Daten</a>
 			</li>
 			<!-- /Advanced winegrower navigation -->
 			

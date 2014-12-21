@@ -127,6 +127,14 @@ class AdminController {
 			return "redirect:/adminLocList";
 		}
 
+		@RequestMapping(value="/deleteLocation/{id}", method = RequestMethod.GET)
+		public String deleteLocation(@PathVariable Long id, Model model){
+			
+			adminTasksManager.deleteLocation(id);
+			
+			return "redirect:/adminLocList";
+		}
+		
 		
 		//Mitarbeiterbearbeitung von 1 Standort
 		
@@ -230,15 +238,11 @@ class AdminController {
 			return "employeeList";
 		}
   
-	//
-	//Funktion um Mitarbeiter zu entlassen ist unvollständig und muss erweitert werden,
-	//da nicht nur aus dem EmployeeRepo sondern auch aus der Liste gelöscht werden muss
-	//
-//	    @RequestMapping(value = "/dismissEmployee/{id}", method = RequestMethod.GET)
-//		public String dismissEmployee(@PathVariable Long id){
-//	    	
-//	    	adminTasksManager.dismissEmployee(id);
-//	    	
-//			return "employeeList";
-//		}
+	    @RequestMapping(value = "/dismissEmployee/{id}", method = RequestMethod.GET)
+		public String dismissEmployee(@PathVariable Long id){
+	    	
+	    	adminTasksManager.dismissEmployee(id);
+	    	
+			return "redirect:/employeeList";
+		}
 }
