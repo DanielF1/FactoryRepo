@@ -59,34 +59,34 @@ class AdminController {
 		}
 	
 	 
-	  //Search START
-		@RequestMapping(value = "/adminLocList", method = RequestMethod.POST)
-		public String goToFilteredLocations(@RequestParam("searchTerm") String searchTerm, RedirectAttributes redirectAttrs)
-		{		
-			redirectAttrs.addAttribute("term", searchTerm);
-			return "redirect:/adminLocList/{term}";
-		}
-
-		//show result
-		@RequestMapping(value = "/adminLocList/{term}")
-		public String showFilteredLocations(@PathVariable("term") String searchTerm, ModelMap modelMap, RedirectAttributes redirectAttrs)
-		{		
-			List<Location> resultList = new ArrayList<>();
-			for(Location location : locationRepository.findAll())
-			{
-				if(location.getName().equals(searchTerm)){resultList.add(location);}
-				if(location.getAddress().equals(searchTerm)){resultList.add(location);}
-				if(location.getCity().contains(searchTerm)){resultList.add(location);}
-				if(location.getTelefon().equals(searchTerm)){resultList.add(location);}
-				if(location.getMail().equals(searchTerm)){resultList.add(location);}
-				if(location.getDepartments().contains(searchTerm)){resultList.add(location);}
-			}
-			
-			modelMap.addAttribute("locations", resultList);
-			
-			return "adminLocList";
-		}
-	//Search END
+//	  //Search START
+//		@RequestMapping(value = "/adminLocList", method = RequestMethod.POST)
+//		public String goToFilteredLocations(@RequestParam("searchTerm") String searchTerm, RedirectAttributes redirectAttrs)
+//		{		
+//			redirectAttrs.addAttribute("term", searchTerm);
+//			return "redirect:/adminLocList/{term}";
+//		}
+//
+//		//show result
+//		@RequestMapping(value = "/adminLocList/{term}")
+//		public String showFilteredLocations(@PathVariable("term") String searchTerm, ModelMap modelMap, RedirectAttributes redirectAttrs)
+//		{		
+//			List<Location> resultList = new ArrayList<>();
+//			for(Location location : locationRepository.findAll())
+//			{
+//				if(location.getName().equals(searchTerm)){resultList.add(location);}
+//				if(location.getAddress().equals(searchTerm)){resultList.add(location);}
+//				if(location.getCity().contains(searchTerm)){resultList.add(location);}
+//				if(location.getTelefon().equals(searchTerm)){resultList.add(location);}
+//				if(location.getMail().equals(searchTerm)){resultList.add(location);}
+//				if(location.getDepartments().contains(searchTerm)){resultList.add(location);}
+//			}
+//			
+//			modelMap.addAttribute("locations", resultList);
+//			
+//			return "adminLocList";
+//		}
+//	//Search END
 
 				
 		@RequestMapping(value="/addLocation", method=RequestMethod.GET)

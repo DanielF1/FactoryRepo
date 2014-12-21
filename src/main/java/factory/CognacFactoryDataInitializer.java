@@ -387,7 +387,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article2);
-		
+
 		Article article3 = new Article("chabasse-napoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article3);
 		
