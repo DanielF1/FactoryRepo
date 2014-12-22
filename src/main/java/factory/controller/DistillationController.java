@@ -1,10 +1,7 @@
 package factory.controller;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,7 +9,6 @@ import java.util.TimerTask;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.config.Task;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -110,13 +106,15 @@ public class DistillationController {
 		if(distillation == 5)
 		{
 			still.setStatus_two(false);
+			departmentrepository.save(production);
 			System.out.println("timer_two: " + still.getStatus_two());
+			
 		}
 		
 		if(distillation == 0)
 		{
 			stopTimer(still);
-			distillation = 5; 		
+			distillation = 10; 		
 		}
 		
 		System.out.println("timer: " + distillation);
