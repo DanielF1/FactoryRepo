@@ -20,7 +20,7 @@ public class Still {
 		this.status_two = status_two;
 		this.timer_stop = timer_stop;
 	}
-
+	
 	@Deprecated
 	public Still(){}
 	
@@ -52,13 +52,11 @@ public class Still {
 		this.status_two = status_two;
 	}
 
-	public boolean isTimer_stop() {
+	public boolean getTimer_stop() {
 		return timer_stop;
 	}
 
 	public void setTimer_stop(boolean timer_stop) {
 		this.timer_stop = timer_stop;
 	}
-	
-	
 }

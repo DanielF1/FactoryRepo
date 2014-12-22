@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -31,6 +33,7 @@ import factory.model.CookBookRepository;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
+import factory.model.FoundLocation;
 import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.LocationRepository;
@@ -50,20 +53,20 @@ public class CookBookController {
 	private final Inventory<InventoryItem> inventory;
 	private final ArticleRepository articlerepository;
 	private final LocationRepository locationRepository;
-
+	private final DepartmentRepository departmentrepository;
 
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
-	
+//	List<FoundLocation> foundLocation = new ArrayList<FoundLocation>();
 	
 	@Autowired 
 	public CookBookController(
 			CookBookRepository cookbookrepository, 
 			BarrelStock barrelstock,
-			BottleStock bottlestock,
-			DepartmentRepository departmentrepository, 
+			BottleStock bottlestock, 
 			LocationRepository locationRepository,
 			Inventory<InventoryItem> inventory,
-			ArticleRepository articlerepository)
+			ArticleRepository articlerepository, 
+			DepartmentRepository departmentrepository)
 	{
 		this.cookbookrepository = cookbookrepository;
 		this.barrelstock = barrelstock;
@@ -71,6 +74,7 @@ public class CookBookController {
 		this.locationRepository = locationRepository;
 		this.inventory = inventory;
 		this.articlerepository = articlerepository;
+		this.departmentrepository = departmentrepository;
 	}
 	
 	
@@ -303,7 +307,7 @@ public class CookBookController {
 	/*
 	 * check empty bottles
 	 */
-	public int checkEmptyBottles(int missedBottles, double maxDestillate, Long id, double selectedBottleAmount,
+	public int checkEmptyBottles(int missedBottles, double maxDestillate, double waterAmount, Long id, double selectedBottleAmount,
 								@LoggedIn Optional<UserAccount> userAccount)
 	{
 		int existingBottles = 0;
@@ -340,7 +344,7 @@ public class CookBookController {
 		/*
 		 * calculate the necessary bottles
 		 */
-		neededBottles = (int) (maxDestillate / selectedBottleAmount);
+		neededBottles = (int) ((maxDestillate + waterAmount) / selectedBottleAmount);
 
 		/*
 		 * check, if there is a lack of empty bottles
@@ -363,22 +367,32 @@ public class CookBookController {
 			@LoggedIn Optional<UserAccount> userAccount)
 	{
 		int i = 0; 
-		int j = 0;
 		int not_enough = 0;
 		double maxDestillate = 0;
 		double selectedBottleAmount = selected_bottle_amount;
-
+		double waterAmount = 0;
 		
 		/*
 		 * calculate, if there are enough ingredients
 		 */
-		List<Ingredient> temp = new ArrayList();
+		List<Object> temp = new ArrayList<>();
 		
 		for(Recipe recipe: cookbookrepository.findAll()){
 			if(recipe.getId() == id){
 				
-				temp = recipe.getIngredients();
-
+				for(Ingredient ingredient : recipe.getIngredients())
+				{
+					temp.add(ingredient);
+					
+					if(ingredient.getQuality().equalsIgnoreCase("Wasser"))
+					{
+						waterAmount = ingredient.getAmount();
+					}
+				}
+				
+				
+				model.addAttribute("selected_name", recipe.getName());
+				model.addAttribute("selected_ingredients", recipe.getIngredients());
 				
 				for(MaxStore maxstore : calcMaxStore(userAccount)){			
 					for(Ingredient ingredient : recipe.getIngredients()){
@@ -386,18 +400,7 @@ public class CookBookController {
 						double ingridientDistillateAmount = ingredient.getAmount();
 						double barrelContentAmount = maxstore.getAmount();			
 						
-						if(ingredient.getQuality().equalsIgnoreCase("Wasser"))
-						{System.out.println("maxDestillate. " + maxDestillate);
-							System.out.println("ingredient.getQuality() " + ingredient.getQuality());
-							System.out.println("ingredient. " + temp);
-							temp.remove(ingredient);
-							System.out.println("ingredient.getQuality()2 " + ingredient.getQuality());
-							System.out.println("ingredient.2 " + temp);
-							maxDestillate = maxDestillate + ingredient.getAmount();
-							System.out.println("maxDestillate.2 " + maxDestillate);
-							model.addAttribute("not_exist", temp);
-						} 
-						
+											
 						if((maxstore.getQuality().equals(ingredient.getQuality())) && (maxstore.getAge() == ingredient.getAge()))
 						{
 							temp.remove(ingredient);
@@ -424,28 +427,59 @@ public class CookBookController {
 					} // /for	
 				} // /for
 				
+				if((temp.size() - 1) >= 0)
+				{
+					temp.remove(temp.size() - 1);
+				}
+
+				model.addAttribute("not_exist", temp);
 				
-//				for(Ingredient ingredient : temp)
-//				{
-//					
-//						
-//						if(temp.isEmpty())
-//						{
-//							model.addAttribute("not_exist1", " ");
-//						}
-//						else
-//						{
-//							
-//						}
-//					}
-//					
-////					System.out.println("ingredient.getQuality() " + ingredient.getQuality());
-//				}
-				
-				
-				model.addAttribute("selected_name", recipe.getName());
-				model.addAttribute("selected_ingredients", recipe.getIngredients());
-				
+				if(temp.size() > 0)
+				{
+					double searchContentAmount = 0;
+					int e = 0;
+					
+					for(Object ingredient : temp){
+						searchContentAmount = ((Ingredient) ingredient).getAmount();
+						
+						for(Location location : locationRepository.findAll()){
+							for(Department department : location.getDepartments()){
+								if(department.getName().contains("Fasslager")){
+									barrelstock = (BarrelStock) department;{
+									for (Barrel barrel : barrelstock.getBarrels())
+									{
+										if((barrel.getQuality().equals(((Ingredient) ingredient).getQuality())) 
+												&& (barrel.getAge() == ((Ingredient) ingredient).getAge()))
+										{
+											if((((Ingredient) ingredient).getAmount() > barrel.getContent_amount()))
+											{
+												searchContentAmount = searchContentAmount - barrel.getContent_amount();
+											}
+											
+											if((((Ingredient) ingredient).getAmount() < barrel.getContent_amount()) 
+													|| (((Ingredient) ingredient).getAmount() == barrel.getContent_amount()))
+											{
+												model.addAttribute("found" + e, "Die Zutat, der Qualität " + ((Ingredient) ingredient).getQuality()
+														+ " und des Alters " + ((Ingredient) ingredient).getAge() + ", wurde im Standort "
+														+ location.getName() + " gefunden.");
+												
+//												FoundLocation fL = new FoundLocation(location.getName(), 
+//														((Ingredient) ingredient).getQuality(), ((Ingredient) ingredient).getAge());
+//												
+//												foundLocation.add(fL);
+												e++;
+												searchContentAmount = 0;
+//												temp.remove(ingredient);
+											} // /if
+										}
+									}
+									}
+								}
+							}
+						}
+					}
+				}
+					
 				/*
 				 * if enough distillate then check empty bottles
 				 */
@@ -456,16 +490,20 @@ public class CookBookController {
 					/*
 					 * missed bottles > 0
 					 */
-					if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) > 0)
+					if(checkEmptyBottles(missedBottles, maxDestillate, waterAmount, id, selectedBottleAmount, userAccount) > 0)
 					{
 						model.addAttribute("not_enough_bottles",  "Nicht genug leere Flaschen vorhanden. Es fehlen noch " 
-									+ checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) + " Flaschen.");
+									+ checkEmptyBottles(missedBottles, maxDestillate, waterAmount, id, selectedBottleAmount, userAccount) + " Flaschen.");
 					}
 				
 					/*
 					 * missed bottles = 0
-					 */
-					if(checkEmptyBottles(missedBottles, maxDestillate, id, selectedBottleAmount, userAccount) == 0){
+					 */				
+					if(checkEmptyBottles(missedBottles, maxDestillate, waterAmount, id, selectedBottleAmount, userAccount) == 0){
+						
+						int bottles = 0;
+						bottles = (int) ((maxDestillate + waterAmount) / selectedBottleAmount);
+						
 						for(MaxStore maxstore : calcMaxStore(userAccount)){ 
 							for(Recipe selectedRecipe : cookbookrepository.findById(id)){	
 								for(Ingredient ingredient : selectedRecipe.getIngredients())
@@ -478,7 +516,7 @@ public class CookBookController {
 										 */
 										double newAmount = ingredient.getAmount();
 									
-										while(newAmount > 0)
+										if(newAmount > 0)
 										{
 											for(Location loc : locationRepository.findAll()){
 												for(Employee e : loc.getEmployees()){
@@ -488,24 +526,22 @@ public class CookBookController {
 																barrelstock = (BarrelStock) dep;{
 																for (Barrel barrel : barrelstock.getBarrels())
 																{		
-																	if((barrel.getQuality().equals(maxstore.getQuality())) && (barrel.getAge() == maxstore.getAge()))
+																	if((barrel.getQuality().equals(ingredient.getQuality())) && (barrel.getAge() == ingredient.getAge()))
 																	{
-																		double barrelAmount = barrel.getBarrel_volume();
+																		double barrelAmount = barrel.getContent_amount();
 				
 																		if((barrelAmount - newAmount) <= 0)
 																		{
 																			barrel.setContent_amount(0);
-		
-																		//barrelstock.saveBarrel(barrel);
-					
+																						
 																			newAmount = newAmount - barrelAmount;
 																		}
 																		else
 																		{
 																			barrel.setContent_amount(barrelAmount - newAmount);
-			
-																			//barrelstock.saveBarrel(barrel);
 																			newAmount = 0;
+																			departmentrepository.save(barrelstock);
+																			
 																			break;
 																		}
 																	} // /if
@@ -522,10 +558,9 @@ public class CookBookController {
 										/*
 										 * update bottles
 										 */
-										int bottles = 0;
-										bottles = (int) (maxDestillate / selectedBottleAmount);
-
-										List<Object> toRemove = new ArrayList<Object>();
+		
+										List<Object> toRemove = new ArrayList<>();
+										List<Bottle> toAdd = new ArrayList<Bottle>();
 									
 										for(Location loc : locationRepository.findAll()){
 											for(Employee e : loc.getEmployees()){
@@ -533,49 +568,50 @@ public class CookBookController {
 													for(Department dep : loc.getDepartments()){
 														if(dep.getName().contains("Flaschenlager")){
 															bottlestock = (BottleStock) dep;{
-															
+											
 															for(Bottle bottle : bottlestock.getBottles())
 															{
 																if(bottles > 0)
 																{	
-																	if(bottle.getName().equals(""))
+																	if((bottle.getName().isEmpty()) && (selectedBottleAmount == bottle.getAmount()))
 																	{
-																		if(selectedBottleAmount == bottle.getAmount())
-																		{
-																			toRemove.add(bottle);
-												
-																			Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
-																			bottlestock.getBottles().add(b1);
-																			bottles--;
+																		toRemove.add(bottle);
+										
+																		Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
+																		toAdd.add(b1);
+											
+																		bottles--;
 
-																			for(Article article : articlerepository.findAll())
+																		for(Article article : articlerepository.findAll())
+																		{
+																			if((article.getName().equals(recipe.getName())) && (article.getVolumen() == selectedBottleAmount))
 																			{
-																				if((article.getName().equals(recipe.getName())) && (article.getVolumen() == selectedBottleAmount))
-																				{
-																					Optional<InventoryItem> item = inventory.findByProductIdentifier(article.getIdentifier());
-											    	    		
-																					if(!item.isPresent())
-																						continue;
-											    			
-																					InventoryItem inventoryItem = item.get();
-																					inventoryItem.increaseQuantity(Units.ONE);
-																					inventory.save(inventoryItem);
-																				
-																				} // /if
-																			} // /for
-																		} // /if
+																				Optional<InventoryItem> item = inventory.findByProductIdentifier(article.getIdentifier());
+										    	    		
+																				if(!item.isPresent())
+																					continue;
+										    			
+																				InventoryItem inventoryItem = item.get();
+																				inventoryItem.increaseQuantity(Units.ONE);
+																				inventory.save(inventoryItem);
+																			
+																			} // /if
+																		} // /for
+																		
 																	} // /if
-																} // /if
-															} // /for
+																} // /for
+															} // /while
+															
+															bottlestock.getBottles().addAll(toAdd);
+															bottlestock.getBottles().removeAll(toRemove);
+															departmentrepository.save(bottlestock);
 															}
 														} // /if
 													} // /for
 												} // /if
 											} // /for
 										} // /for
-									
-										bottlestock.getBottles().removeAll(toRemove);
-			
+				
 									} // /if
 								} // /for
 							} // /for
@@ -651,6 +687,7 @@ public class CookBookController {
 									
 								Bottle b1 = new Bottle("", bottlesToBuyAmount);
 								bottlestock.getBottles().add(b1);
+								departmentrepository.save(bottlestock);
 								
 								}
 							} // /if

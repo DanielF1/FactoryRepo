@@ -4,7 +4,7 @@
 	<groupId>de.tudresden.inf.st</groupId>
 	<artifactId>videoshop</artifactId>
 	<version>1.1.0.BUILD-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -76,6 +76,11 @@
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 			<version>3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>net.wimpi</groupId>
+			<artifactId>telnetd-x</artifactId>
+			<version>2.1.1</version>
 		</dependency>
 	</dependencies>
 

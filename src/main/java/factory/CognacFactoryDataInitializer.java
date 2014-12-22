@@ -143,6 +143,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		userAccountManager.save(barrelmakerAcc);
 		UserAccount barrelmakerAcc2 = userAccountManager.create("fassbinder2", "123", new Role("ROLE_BARRELMAKER"));
 		userAccountManager.save(barrelmakerAcc2);
+		UserAccount barrelmakerAcc3 = userAccountManager.create("fassbinder3", "123", new Role("ROLE_BARRELMAKER"));
+		userAccountManager.save(barrelmakerAcc3);
 		UserAccount superAcc = userAccountManager.create("superuser", "123", new Role("ROLE_SUPERUSER"));
 		userAccountManager.save(superAcc);
 		
@@ -166,7 +168,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Barrel br1 = new Barrel(0, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"), "");			
 		Barrel br2 = new Barrel(7, "Schlecht", 5 ,LocalDate.parse("2008-12-03"),23, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2010-12-03"), "");
 		Barrel br3 = new Barrel(0, "Schlecht", 20 ,LocalDate.parse("2009-12-03"),23, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2008-12-03"), "");
-		Barrel br13 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),12489,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
+		Barrel br13 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),2489,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br4 = new Barrel(7, "" ,0,LocalDate.parse("2007-12-03"),229,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br5 = new Barrel(0, "Schlecht", 5 ,LocalDate.parse("2007-12-03"),23,LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
 		Barrel br6 = new Barrel(7, "Schlecht",17,LocalDate.parse("2007-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-03"),"");
@@ -194,12 +196,12 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		
 		Barrel br61 = new Barrel(6, "Schlecht",17,LocalDate.parse("2008-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
-		Barrel br71 = new Barrel(6,"Gut", 12 ,LocalDate.parse("2008-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
+		Barrel br71 = new Barrel(6,"Gut", 12 ,LocalDate.parse("1994-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
 		Barrel br81 = new Barrel(1, "Gut", 7 ,LocalDate.parse("2008-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
 		Barrel br91 = new Barrel(6, "Gut", 10 ,LocalDate.parse("2009-12-03"),13,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2011-12-03"),"");
 		Barrel br101 = new Barrel(1, "Gut", 9 ,LocalDate.parse("2008-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-03"),"");
 		Barrel br111 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2008-12-03"),14,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
-		Barrel br121 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2008-12-03"),15,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
+		Barrel br121 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2000-12-03"),15,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
 		
 		List<Barrel> barrels1 = new ArrayList<Barrel>();
 		barrels1.add(br61);
@@ -210,24 +212,29 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrels1.add(br111);
 		barrels1.add(br121);
 		
+		List<Barrel> barrels2 = new ArrayList<Barrel>();
+		Barrel br271 = new Barrel(6,"Gut", 34 ,LocalDate.parse("1994-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
+		barrels2.add(br271);
+		
+		
+		
 		/*
 		 * initialize bottles
 		 */
 		Bottle b1 = new Bottle("", 0.7);
-		Bottle b2 = new Bottle("Courvoisier Napoleon", 0.7);
+		Bottle b2 = new Bottle("", 0.7);
 		Bottle b3 = new Bottle("", 0.7);
 		Bottle b4 = new Bottle("Courvoisier Napoleon", 0.7);
 		Bottle b5 = new Bottle("" ,0.7);
-		Bottle b6 = new Bottle("", 0.3);
-		Bottle b7 = new Bottle("Claude Chatelier Extra", 1);
+		Bottle b6 = new Bottle("", 0.3);	
 		Bottle b8 = new Bottle("Chatelier Cognac" ,0.7);
-		Bottle b9 = new Bottle("Delamain Vesper" ,0.7);
 		Bottle b10 = new Bottle("Frapin Domaine Château" ,0.7);
+			
 		Bottle b11 = new Bottle("Monnet Cognac" ,0.7);
-		
-		
 		Bottle b21 = new Bottle("Courvoisier Napoleon", 0.7);
-
+		Bottle b7 = new Bottle("Claude Chatelier Extra", 1);
+		Bottle b9 = new Bottle("Delamain Vesper" ,0.7);
+		
 		
 		List<Bottle> bottles = new ArrayList<Bottle>();
 		List<Bottle> bottles1 = new ArrayList<Bottle>();
@@ -250,10 +257,10 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		/*
 		 * initialize stills
 		 */
-		Still still_1 = new Still(30, true, true, false);
+		Still still_1 = new Still(30, true, true, true);
 		Still still_2 = new Still(30, true, true, false);
 		Still still_3 = new Still(30, true, true, false);
-		Still still_4 = new Still(30, false, false, true);
+		Still still_4 = new Still(30, true, true, true);
 		
 		List<Still> stills1 = new ArrayList<Still>();
 		
@@ -279,6 +286,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Department bottlestock2 = departmentRepository.save(new BottleStock("FlaschenlagerB", bottles1));
 		Department barrelstock1 = departmentRepository.save(new BarrelStock("FasslagerA", barrels));
 		Department barrelstock2 = departmentRepository.save(new BarrelStock("FasslagerB", barrels1));
+		Department barrelstock3 = departmentRepository.save(new BarrelStock("FasslagerC", barrels2));
 		Department winestock1 = departmentRepository.save(new WineStock("WeinlagerA", 300));
 		Department winestock2 = departmentRepository.save(new WineStock("WeinlagerB", 300));
 		Department production1 = departmentRepository.save(new Production("ProduktionA", 1000, stills1));
@@ -306,6 +314,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		List<Department> list8 = new ArrayList<Department>();
 		list8.add(verkauf2);
 		list8.add(bottlestock2);
+		list8.add(barrelstock3);
 		
 		
 		/*
@@ -344,6 +353,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Employee e4 = employeeRepository.save(new Employee(salesmanAcc2, "Verkäufer","Fleischer","Detlef","210","Dieter@Fischer.de","Dieterstrasse"));
 		Employee e5 = employeeRepository.save(new Employee(barrelmakerAcc, "Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse"));
 		Employee e6 = employeeRepository.save(new Employee(barrelmakerAcc2, "Fassbinder","Schmiedel","Bruno","100","Bernd@Schmidt.de","Berndstrasse"));
+		Employee e21 = employeeRepository.save(new Employee(barrelmakerAcc3, "Fassbinder","Schedel","Bruno","1300","Be@Schmt.de","Bzzestrasse"));
 		Employee e7 = employeeRepository.save(new Employee(brewerAcc, "Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet"));
 		Employee e8 = employeeRepository.save(new Employee(brewerAcc2, "Braumeister","Smittie","Joe","250","Johannes@Smith.de","Johannesstreet"));
 		
@@ -366,7 +376,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		List<Employee> list4 = new ArrayList<Employee>();
 		list4.add(e2);
-		list2.add(e3);
+		list4.add(e3);
+		list4.add(e21);
+		
 		
 		
 		
@@ -411,22 +423,22 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Article article6 = new Article("monnet", "Monnet Cognac", "5 Jahre", Money.of(EUR, 26.95), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article6); 		
 				
-		InventoryItem i1 = new InventoryItem(article1, Units.TEN);
+		InventoryItem i1 = new InventoryItem(article1, Units.ONE);
 		inventory.save(i1);
 		
-		InventoryItem i2 = new InventoryItem(article2, Units.TEN);
+		InventoryItem i2 = new InventoryItem(article2, Units.ONE);
 		inventory.save(i2);
 		
-		InventoryItem i3 = new InventoryItem(article3, Units.TEN);
+		InventoryItem i3 = new InventoryItem(article3, Units.ONE);
 		inventory.save(i3);
 		
-		InventoryItem i4 = new InventoryItem(article4, Units.TEN);
+		InventoryItem i4 = new InventoryItem(article4, Units.ONE);
 		inventory.save(i4);
 		
-		InventoryItem i5 = new InventoryItem(article5, Units.TEN);
+		InventoryItem i5 = new InventoryItem(article5, Units.ONE);
 		inventory.save(i5);
 		
-		InventoryItem i6 = new InventoryItem(article6, Units.TEN);
+		InventoryItem i6 = new InventoryItem(article6, Units.ONE);
 		inventory.save(i6);
 		
 	}
@@ -438,9 +450,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private void initializeCookBook(CookBookRepository cookbookrepository) 
 	{
 		
-		Ingredient i1 = new Ingredient("Gut", 4, 12, "Liter");
-		Ingredient i2 = new Ingredient("Schlecht", 5, 50,"Liter");
-		Ingredient i3 = new Ingredient("Wasser", 1,3, "Liter");
+		Ingredient i1 = new Ingredient("Gut", 		4, 4, "Liter");
+		Ingredient i2 = new Ingredient("Schlecht", 	5, 15, "Liter");
+		Ingredient i3 = new Ingredient("Wasser", 	0, 3,  "Liter");
 
 		
 		List<Ingredient> mapIngredients1 = new ArrayList<Ingredient>();
@@ -451,9 +463,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		cookbookrepository.save(new Recipe("Chatelier Cognac", mapIngredients1));
 		
-		Ingredient i4 = new Ingredient("Sehr Gut", 14,10,"Liter");
+		Ingredient i4 = new Ingredient("Sehr Gut", 14, 10,"Liter");
 		Ingredient i5 = new Ingredient("Gut", 20, 18,"Liter");
-		Ingredient i6 = new Ingredient("Wasser", 10,12, "Liter");
+		Ingredient i6 = new Ingredient("Wasser", 0,12, "Liter");
 		
 		List<Ingredient> mapIngredients2 = new ArrayList<Ingredient>();
 		
@@ -463,9 +475,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		cookbookrepository.save(new Recipe("Delamain Vesper", mapIngredients2));
 		
-		Ingredient i7 = new Ingredient("Gut", 140, 13,"Liter");
+		Ingredient i7 = new Ingredient("Gut", 14, 13,"Liter");
 		Ingredient i8 = new Ingredient("Schlecht", 20, 12,"Liter");
-		Ingredient i9 = new Ingredient("Wasser", 10, 12,"Liter");
+		Ingredient i9 = new Ingredient("Wasser", 0, 12,"Liter");
 		
 		List<Ingredient> mapIngredients3 = new ArrayList<Ingredient>();
 		
@@ -476,8 +488,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		cookbookrepository.save(new Recipe("Claude Chatelier Extra", mapIngredients3));	
 			
 		Ingredient i10 = new Ingredient("Sehr Gut", 20, 14,"Liter");
-		Ingredient i11 = new Ingredient("Gut", 120, 15,"Liter");
-		Ingredient i12 = new Ingredient("Wasser", 5, 12,"Liter");
+		Ingredient i11 = new Ingredient("Gut", 12, 15,"Liter");
+		Ingredient i12 = new Ingredient("Wasser", 0, 12,"Liter");
 		
 		List<Ingredient> mapIngredients4 = new ArrayList<Ingredient>();
 		
@@ -488,26 +500,30 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		cookbookrepository.save(new Recipe("Monnet Cognac", mapIngredients4));
 
 		Ingredient i13 = new Ingredient("Gut", 25,3, "Liter");
-		Ingredient i14 = new Ingredient("Schlecht", 100,12, "Liter");
+		Ingredient i14 = new Ingredient("Schlecht", 10,12, "Liter");
 		Ingredient i15 = new Ingredient("Sehr Gut", 30, 12,"Liter");
+		Ingredient i155 = new Ingredient("Wasser", 0, 12,"Liter");
 		
 		List<Ingredient> mapIngredients5 = new ArrayList<Ingredient>();
 		
 		mapIngredients5.add(i13);
 		mapIngredients5.add(i14);
 		mapIngredients5.add(i15);
+		mapIngredients5.add(i155);
 		
 		cookbookrepository.save(new Recipe("Courvoisier Napoleon", mapIngredients5));
 
 		Ingredient i16 = new Ingredient("Gut", 10, 3,"Liter");
 		Ingredient i17 = new Ingredient("Schlecht", 120, 5,"Liter");
 		Ingredient i18 = new Ingredient("Sehr Gut", 40, 29, "Liter");
+		Ingredient i188 = new Ingredient("Wasser", 0, 29, "Liter");
 		
 		List<Ingredient> mapIngredients6 = new ArrayList<Ingredient>();
 		
 		mapIngredients6.add(i16);
 		mapIngredients6.add(i17);
 		mapIngredients6.add(i18);
+		mapIngredients6.add(i188);
 		
 		cookbookrepository.save(new Recipe("Frapin Domaine Château", mapIngredients6));
 		

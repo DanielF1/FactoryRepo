@@ -210,23 +210,31 @@
 							
 						<button class="btn btn-default">Herstellen</button><br/>
 
-						
 						<span th:text="${not_enough_0}"></span><br/><span th:text="${not_enough_1}"></span><br/>
 						<span th:text="${not_enough_2}"></span><br/><span th:text="${not_enough_3}"></span><br/>
-						<span th:text="${not_enough_4}"></span><br/><span th:text="${not_enough_5}"></span><br/>
+						<span th:text="${not_enough_4}"></span><br/><span th:text="${not_enough_5}"></span><br/><br/>
 					
-						<p>Diese Zutaten wurden nicht im Lager gefunden.</p>
+						<p><h4>~ Diese Zutaten wurden im Lager nicht gefunden:</h4></p>
 						<ul th:each="ingredient : ${not_exist}">
 							<li>
-								<span name ="ingredient_quality" th:text="${ingredient.quality}"></span>
-								<span name ="ingredient_age" th:text="${ingredient.age}"></span>			
-								<span th:name ="ingredient_amount" th:text="${ingredient.amount}"></span>
-								<span th:name ="ingredient_unit" th:text="${ingredient.unit}"></span>
+								<span th:text="${ingredient.quality}"></span>
+								<span th:text="${ingredient.age}"></span>			
+								<span th:text="${ingredient.amount}"></span>
+								<span th:text="${ingredient.unit}"></span>
 							</li>
 						</ul>
 						<span th:text="${not_enough_bottles}"></span>
 					</form>
+					
+					<br/><br/><br/>
+					
+					<p><h4>~ Zutaten, die in anderen Standorten gefunden wurden:</h4></p>
+					<p th:text="${found0}"></p><p th:text="${found1}"></p><p th:text="${found2}"></p>
+					<button class="btn btn-default">Transport beantragen</button> 
+					<h5><span style="color:red">Transport funktioniert nocht nicht richtig, wurde vorerst herausgenommen.</span></h5>
 						
+					<br/><br/><br/>
+	
 					<!-- buy bottles -->
 					<form th:method="get" th:action="@{/buy/bottles}">
 						<h4>Flaschen bestellen</h4>

@@ -85,16 +85,12 @@ public class DistillationController {
 	 */
 	public void stopTimer(Still still)
 	{
-		System.out.println("still stop: " + still);
 		if(timer != null)
 		{
 			timer.cancel();
 			timertask.cancel();
 			timertask = null;
 			timer = null;
-			still.setTimer_stop(true);
-			departmentrepository.save(production);
-			System.out.println("timer: " + still.isTimer_stop());
 		}
 	}
 	
@@ -103,7 +99,9 @@ public class DistillationController {
 	 * task
 	 */
 	public void timerAction(Still still)
-	{	System.out.println("still task: " + still);
+	{
+		--distillation;
+	
 		if(distillation == 5)
 		{
 			still.setStatus_two(false);
@@ -114,12 +112,15 @@ public class DistillationController {
 		
 		if(distillation == 0)
 		{
+			still.setTimer_stop(true);	
+			departmentrepository.save(production);
+			distillation = 5 * 2; 
+			
 			stopTimer(still);
-			distillation = 5 * 2; 		
+			System.out.println("timer: " + still.getTimer_stop());
 		}
 		
-		System.out.println("timer: " + distillation);
-		distillation -= 1;	
+		System.out.println("timer: " + distillation);	
 	}
 	
 	/*
@@ -135,9 +136,6 @@ public class DistillationController {
 				public void run()
 				{
 					timerAction(still);
-					still.setStatus_one(false);
-					departmentrepository.save(production);
-					System.out.println("still start: " + still);
 				}
 			};
 			timer.schedule(timertask, 0, intervall);
@@ -196,7 +194,7 @@ public class DistillationController {
 		}
 		else
 		{
-			model.addAttribute("error", "Destille " + index + " ist derzeit Koral!");
+			model.addAttribute("error_green", "Destille " + index + " ist derzeit Koral!");
 			
 			
 			/*
@@ -222,8 +220,36 @@ public class DistillationController {
 												+ (checkBarrels((still.getAmount() * 0.8),userAccount)) + " Liter!");
 									}
 									else
-									{System.out.println("wine 1: " + winestock.getAmount());
+									{
+										double stillAmount = still.getAmount()* 0.8 * 100 * 0.75;
+										
+												
+//													for(Department depa : loc.getDepartments()){
+//														if(dep.getName().contains("Fasslager")){
+//															barrelstock = (BarrelStock) depa;{
+//																
+//															if(stillAmount > 0)
+//															{
+//																for (Barrel barrel : barrelstock.getBarrels())
+//																{
+//																	if(barrel.getQuality().equals(""))
+//																	{
+//																		barrel.setQuality("reserv" + index);
+//																		stillAmount = stillAmount - barrel.getBarrel_volume();
+//																		System.out.println("reserv: " + barrel.getQuality());
+//																				
+//																	}
+//																}
+//											
+//															}
+														
+//												}
+//											}
+//										}
+											
 										winestock.setAmount(winestock.getAmount() - (still.getAmount() * 0.8));
+										still.setStatus_one(false);
+										departmentrepository.save(production);
 										departmentrepository.save(winestock);
 										startTimer(1000, still);
 									}
@@ -253,9 +279,6 @@ public class DistillationController {
 								
 							Still still = production.getStills().get(index - 1);
 							checkStill(still, userAccount, model, index);
-							
-							departmentrepository.save(production);
-							
 							model.addAttribute("stills", production.getStills());
 							}
 						}
@@ -278,7 +301,9 @@ public class DistillationController {
 									@PathVariable(value="index") int index, Model model,
 									@LoggedIn Optional<UserAccount> userAccount)
 	{
-		boolean status_one = false, status_two = false, timer_stop = false;
+		boolean status_one = false;
+		boolean status_two = false;
+		boolean timer_stop = false;
 		double final_distillate = 0;
 		
 		for(Location loc : locationRepository.findAll()){
@@ -292,7 +317,7 @@ public class DistillationController {
 							
 							status_one = still.getStatus_one();
 							status_two = still.getStatus_two();
-							timer_stop = still.isTimer_stop();
+							timer_stop = still.getTimer_stop();
 							final_distillate = ((still.getAmount() * 0.8) * 0.75) * 100;
 							
 							}
@@ -303,10 +328,32 @@ public class DistillationController {
 		}
 		System.out.println("still 1: " + status_one);
 		System.out.println("still 2: " + status_two);
+		System.out.println("still 3: " + timer_stop);
 		
 		if((status_one == false) && (status_two == false) && (timer_stop == true))
 		{
 			System.out.println("1: " + final_distillate);
+			
+			for(Location loc : locationRepository.findAll()){
+				for(Employee e : loc.getEmployees()){
+					if(e.getUserAccount() == userAccount.get()){
+						for(Department dep : loc.getDepartments()){
+							if(dep.getName().contains("Produktion")){
+								production = (Production) dep;{
+									
+								Still still = production.getStills().get(index - 1);	
+					
+								still.setStatus_one(true);
+								still.setStatus_two(true);
+								still.setTimer_stop(false);
+								
+								departmentrepository.save(production);
+								}
+							}
+						}
+					}
+				}
+			}
 			
 			for(Location loc : locationRepository.findAll()){
 				for(Employee e : loc.getEmployees()){
@@ -345,6 +392,8 @@ public class DistillationController {
 										System.out.println("1Y: " + final_distillate);
 									}
 								}
+								
+								model.addAttribute("error_green", "Destille erfolgreich geleert.");
 								}
 							} // /if
 						} // /for
@@ -363,8 +412,7 @@ public class DistillationController {
 				model.addAttribute("error", "Die Destillation ist noch im Gang.");
 			}
 		}
-		
-		System.out.println(quality);
+
 		model.addAttribute("stills", production.getStills());
 		return "distillation";
 	}
