@@ -216,9 +216,15 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Bottle b1 = new Bottle("", 0.7);
 		Bottle b2 = new Bottle("Courvoisier Napoleon", 0.7);
 		Bottle b3 = new Bottle("", 0.7);
-		Bottle b4 = new Bottle("", 0.7);
+		Bottle b4 = new Bottle("Courvoisier Napoleon", 0.7);
 		Bottle b5 = new Bottle("" ,0.7);
 		Bottle b6 = new Bottle("", 0.3);
+		Bottle b7 = new Bottle("Claude Chatelier Extra", 1);
+		Bottle b8 = new Bottle("Chatelier Cognac" ,0.7);
+		Bottle b9 = new Bottle("Delamain Vesper" ,0.7);
+		Bottle b10 = new Bottle("Frapin Domaine Château" ,0.7);
+		Bottle b11 = new Bottle("Monnet Cognac" ,0.7);
+		
 		
 		Bottle b21 = new Bottle("Courvoisier Napoleon", 0.7);
 
@@ -232,8 +238,13 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		bottles.add(b4);
 		bottles.add(b5);
 		bottles.add(b6);
+		bottles.add(b8);
+		bottles.add(b10);
 		
 		bottles1.add(b21);
+		bottles1.add(b7);
+		bottles1.add(b9);
+		bottles1.add(b11);
 		
 		
 		/*
