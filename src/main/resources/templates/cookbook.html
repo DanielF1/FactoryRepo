@@ -137,7 +137,10 @@
 							</select><br/>
 							
 							<label for="ingredient">Zutat <span class="box-number">4</span></label>
-			                <input type="text" name="ingredientWater" value="" id="box" min="1" placeholder="Wasser"/>
+							<select name="ingredientWater">
+								<option value="Wasser">Wasser</option>
+							</select>
+							<input type="number" name="ingredientAge3" value="0" th:value="0" id="box" min="0" max="0" placeholder="Alter"/>
 			                <input type="number" name="ingredientAmount3" value="" id="box" min="1" placeholder="Menge"/>
 			                <select name="ingredientUnit3">
 								<option value="Liter">Liter</option>
@@ -221,10 +224,6 @@
 								<span th:name ="ingredient_unit" th:text="${ingredient.unit}"></span>
 							</li>
 						</ul>
-					
-																<span th:text="${not_exist__0}"></span><br/><span th:text="${not_exist_1}"></span><br/>
-						<span th:text="${not_exist_2}"></span><br/><span th:text="${not_exist_3}"></span><br/>
-						<span th:text="${not_exist_4}"></span><br/><span th:text="${not_exist_5}"></span><br/>
 						<span th:text="${not_enough_bottles}"></span>
 					</form>
 						

@@ -93,6 +93,7 @@ public class DistillationController {
 			timertask = null;
 			timer = null;
 			still.setTimer_stop(true);
+			departmentrepository.save(production);
 			System.out.println("timer: " + still.isTimer_stop());
 		}
 	}
@@ -114,7 +115,7 @@ public class DistillationController {
 		if(distillation == 0)
 		{
 			stopTimer(still);
-			distillation = 10; 		
+			distillation = 5 * 2; 		
 		}
 		
 		System.out.println("timer: " + distillation);
@@ -134,6 +135,8 @@ public class DistillationController {
 				public void run()
 				{
 					timerAction(still);
+					still.setStatus_one(false);
+					departmentrepository.save(production);
 					System.out.println("still start: " + still);
 				}
 			};
@@ -222,10 +225,6 @@ public class DistillationController {
 									{System.out.println("wine 1: " + winestock.getAmount());
 										winestock.setAmount(winestock.getAmount() - (still.getAmount() * 0.8));
 										departmentrepository.save(winestock);
-							
-										System.out.println("wine 2: " + winestock.getAmount());
-										still.setStatus_one(false);
-										System.out.println("still call: " + still);
 										startTimer(1000, still);
 									}
 								} // /else
@@ -305,7 +304,7 @@ public class DistillationController {
 		System.out.println("still 1: " + status_one);
 		System.out.println("still 2: " + status_two);
 		
-		if((status_one == false) && (status_two == false) && (timer_stop == false))
+		if((status_one == false) && (status_two == false) && (timer_stop == true))
 		{
 			System.out.println("1: " + final_distillate);
 			

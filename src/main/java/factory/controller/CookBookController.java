@@ -1,5 +1,6 @@
 package factory.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -273,7 +274,7 @@ public class CookBookController {
 							@RequestParam("ingredientAmount2") int ingredientAmount2,
 							@RequestParam("ingredientUnit2") String ingredientUnit2,
 							
-							@RequestParam("ingredientQuality3") String ingredientQuality3,
+							@RequestParam("ingredientWater") String ingredientWater,
 							@RequestParam("ingredientAge3") int ingredientAge3,
 							@RequestParam("ingredientAmount3") int ingredientAmount3,
 							@RequestParam("ingredientUnit3") String ingredientUnit3) 
@@ -282,7 +283,7 @@ public class CookBookController {
 		Ingredient i1 = new Ingredient(ingredientQuality,  ingredientAge,  ingredientAmount,  ingredientUnit);
 		Ingredient i2 = new Ingredient(ingredientQuality1, ingredientAge1, ingredientAmount1, ingredientUnit1);
 		Ingredient i3 = new Ingredient(ingredientQuality2, ingredientAge2, ingredientAmount2, ingredientUnit2);
-		Ingredient i4 = new Ingredient(ingredientQuality3, ingredientAge3, ingredientAmount3, ingredientUnit3);
+		Ingredient i4 = new Ingredient(ingredientWater, ingredientAge3, ingredientAmount3, ingredientUnit3);
 		
 		List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 				
@@ -378,11 +379,24 @@ public class CookBookController {
 				
 				temp = recipe.getIngredients();
 
+				
 				for(MaxStore maxstore : calcMaxStore(userAccount)){			
 					for(Ingredient ingredient : recipe.getIngredients()){
 
 						double ingridientDistillateAmount = ingredient.getAmount();
-						double barrelContentAmount = maxstore.getAmount();
+						double barrelContentAmount = maxstore.getAmount();			
+						
+						if(ingredient.getQuality().equalsIgnoreCase("Wasser"))
+						{System.out.println("maxDestillate. " + maxDestillate);
+							System.out.println("ingredient.getQuality() " + ingredient.getQuality());
+							System.out.println("ingredient. " + temp);
+							temp.remove(ingredient);
+							System.out.println("ingredient.getQuality()2 " + ingredient.getQuality());
+							System.out.println("ingredient.2 " + temp);
+							maxDestillate = maxDestillate + ingredient.getAmount();
+							System.out.println("maxDestillate.2 " + maxDestillate);
+							model.addAttribute("not_exist", temp);
+						} 
 						
 						if((maxstore.getQuality().equals(ingredient.getQuality())) && (maxstore.getAge() == ingredient.getAge()))
 						{
@@ -410,13 +424,28 @@ public class CookBookController {
 					} // /for	
 				} // /for
 				
-				System.out.println("temp: " + temp);
-				System.out.println("recipe: " + recipe.getIngredients());
-			
+				
+//				for(Ingredient ingredient : temp)
+//				{
+//					
+//						
+//						if(temp.isEmpty())
+//						{
+//							model.addAttribute("not_exist1", " ");
+//						}
+//						else
+//						{
+//							
+//						}
+//					}
+//					
+////					System.out.println("ingredient.getQuality() " + ingredient.getQuality());
+//				}
+				
+				
 				model.addAttribute("selected_name", recipe.getName());
 				model.addAttribute("selected_ingredients", recipe.getIngredients());
-				model.addAttribute("not_exist", temp);
-		
+				
 				/*
 				 * if enough distillate then check empty bottles
 				 */

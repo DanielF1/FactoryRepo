@@ -11,13 +11,14 @@ public class Still {
 	private int amount;
 	private boolean status_one;
 	private boolean status_two;
-	private boolean timer_stop = false;
+	private boolean timer_stop;
 	
-	public Still(int amount, boolean status_one, boolean status_two)
+	public Still(int amount, boolean status_one, boolean status_two, boolean timer_stop)
 	{
 		this.amount = amount;
 		this.status_one = status_one;
 		this.status_two = status_two;
+		this.timer_stop = timer_stop;
 	}
 
 	@Deprecated
