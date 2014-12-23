@@ -91,7 +91,7 @@
 			
 					<p></p>
 						<form  method="get" action="/cart">
-							<button class="btn btn-default btn-lg" name="searchterm" sec:authorize="hasRole('ROLE_CUSTOMER')">
+							<button class="btn btn-default btn-lg" name="searchterm" sec:authorize="hasRole('ROLE_CUSTOMER') ||  hasRole('ROLE_SUPERUSER')">
 							<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Zum Warenkorb gehen</button>
 						</form>	
 					

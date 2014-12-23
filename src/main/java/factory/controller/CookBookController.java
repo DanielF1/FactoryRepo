@@ -43,7 +43,7 @@ import factory.model.Recipe;
 
 
 @Controller
-@PreAuthorize("hasRole('ROLE_BREWER')")
+@PreAuthorize("hasRole('ROLE_BREWER') ||  hasRole('ROLE_SUPERUSER')")
 public class CookBookController {
 	
 	private final CookBookRepository cookbookrepository;

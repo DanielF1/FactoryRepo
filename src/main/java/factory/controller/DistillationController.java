@@ -29,7 +29,7 @@ import factory.model.Still;
 import factory.model.WineStock;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_BREWER')")
+@PreAuthorize("hasRole('ROLE_BREWER') ||  hasRole('ROLE_SUPERUSER')")
 public class DistillationController {
 	
 	private Timer timer;
