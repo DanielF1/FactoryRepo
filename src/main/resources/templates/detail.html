@@ -82,24 +82,26 @@
 							<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Artikel hinzuf&uuml;gen</button>
 						</form>
 					</li>
-					<li>
+					<div class="button">
+					
 						<form method="get" action="/sortiment">
 							<button class="btn btn-default btn-lg" name="searchTerm">
 							<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Zur&uuml;ck zum Sortiment</button>
 						</form>
-					</li>
-					<li>
+			
+					<p></p>
 						<form  method="get" action="/cart">
 							<button class="btn btn-default btn-lg" name="searchterm" sec:authorize="hasRole('ROLE_CUSTOMER')">
 							<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Zum Warenkorb gehen</button>
 						</form>	
-					</li>
+					
+					</div>
 				</ul>
 			</div>
 		</div>
 	</div>
 </div>
-
 </div>
+
 </body>	
 </html>

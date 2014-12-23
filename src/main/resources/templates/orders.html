@@ -72,7 +72,7 @@
 					<th class="text-center" th:text="#{orders.payed}"> Gezahlt </th>
 					<th class="text-center" th:text="#{orders.paymethode}"> Bezahlmethode </th>
 					<th class="text-center" th:text="#{orders.state}"> Bestellstatus </th>						
-					<th class="text-center" th:text="#{orders.id}"> Produktidentifier </th>
+					<th class="text-center" th:text="#{orders.id}"> Bestellidentifier </th>
 				</tr>
 				<tr class="text-center" th:each="order : ${ordersCompleted}">
 					<td class="text-center" th:text="${order.dateCreated}" ></td>

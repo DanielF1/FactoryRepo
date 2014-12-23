@@ -65,8 +65,10 @@
 		<div class="col-lg-12">
 		
 		<div class="list-group">
-		
-  			<h3>Bestseller</h3>
+		<ul>
+  			<li class="list-group-item list-group-item-success">Bestseller</li>
+
+
   			<a th:href="@{'/detail/' + ${article.identifier}}" href="detail.html">
 			<div>
 			    <div class="thumbnail">
@@ -84,8 +86,12 @@
 			    </div>
 			</div>
 			</a>
+			</ul>
+			
 		
-  			<h3>Neu im Sortiment</h3>
+		<ul>
+  		<li class="list-group-item list-group-item-success">Neu im Sortiment</li>
+		
   			<a th:href="@{'/detail/' + ${newbie1.identifier}}" href="detail.html">
 			<div class="col-sm-6 col-md-4 nail">
 			    <div class="thumbnail">
@@ -103,6 +109,8 @@
 			    </div>
 			</div>
 			</a>
+			
+			<ul>
 			<a th:href="@{'/detail/' + ${newbie2.identifier}}" href="detail.html">
   			<div class="col-sm-6 col-md-4 nail">
 			    <div class="thumbnail">
@@ -120,6 +128,8 @@
 			    </div>
 			</div>
 			</a>
+			</ul>
+			</ul>
 		</div>
 	</div>
 </div>

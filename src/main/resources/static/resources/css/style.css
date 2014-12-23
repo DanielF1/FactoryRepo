@@ -42,15 +42,22 @@ b {font-size: 1.5em;}
 	margin: 50px 0 0 50px;
 }
 
-
-div.list-group{
+div.button{
 	
-	width: 90%;
-	height: 50%;
-	margin: 50px 40px;
-	
+	margin: 100px 0px;
 }
 
+div.list-group{
+
+	width: 60%;
+	height: 40%;
+	float: left;
+	margin-left: 210px;
+	margin-right: 100px;
+	margin-top: 10px;
+	margin-botton: 0px;
+	
+}
 
 @media(max-width: 460px) {
 	.header .header-title {
