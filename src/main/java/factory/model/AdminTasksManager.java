@@ -2,9 +2,11 @@ package factory.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -67,7 +69,7 @@ public class AdminTasksManager {
 	
 	public void addEmployee(String username,
 							String password,
-							Long id, 
+							String location, 
 							String workplace, 
 							String name,
 							String firstname,
@@ -80,9 +82,9 @@ public class AdminTasksManager {
 			UserAccount warehousemanAccount = userAccountManager.create(username, password, new Role("ROLE_WAREHOUSEMAN"));
 			userAccountManager.save(warehousemanAccount);
 		
-			Employee warehouseman = new Employee(warehousemanAccount, workplace, name, firstname, salary, mail, address);
+			Employee warehouseman = new Employee(warehousemanAccount, username, password, workplace, name, firstname, salary, mail, address);
 			employeeRepository.save(warehouseman);
-			Location loc1 = locationRepository.findOne(id);
+			Location loc1 = locationRepository.findByName(location);
 			loc1.getEmployees().add(warehouseman);
 			locationRepository.save(loc1);
 			break;
@@ -91,9 +93,9 @@ public class AdminTasksManager {
 			UserAccount brewerAccount = userAccountManager.create(username, password, new Role("ROLE_BREWER"));
 			userAccountManager.save(brewerAccount);
 		
-			Employee brewer = new Employee(brewerAccount, workplace, name, firstname, salary, mail, address);
+			Employee brewer = new Employee(brewerAccount, username, password, workplace, name, firstname, salary, mail, address);
 			employeeRepository.save(brewer);
-			Location loc2 = locationRepository.findOne(id);
+			Location loc2 = locationRepository.findByName(location);
 			loc2.getEmployees().add(brewer);
 			locationRepository.save(loc2);
 			break;
@@ -102,9 +104,9 @@ public class AdminTasksManager {
 			UserAccount barrelmakerAccount = userAccountManager.create(username, password, new Role("ROLE_BARRELMAKER"));
 			userAccountManager.save(barrelmakerAccount);
 		
-			Employee barrelmaker = new Employee(barrelmakerAccount, workplace, name, firstname, salary, mail, address);
+			Employee barrelmaker = new Employee(barrelmakerAccount, username, password, workplace, name, firstname, salary, mail, address);
 			employeeRepository.save(barrelmaker);
-			Location loc3 = locationRepository.findOne(id);
+			Location loc3 = locationRepository.findByName(location);
 			loc3.getEmployees().add(barrelmaker);
 			locationRepository.save(loc3);
 			break;
@@ -113,9 +115,9 @@ public class AdminTasksManager {
 			UserAccount salesmanAccount = userAccountManager.create(username, password, new Role("ROLE_SALESMAN"));
 			userAccountManager.save(salesmanAccount);
 		
-			Employee salesman = new Employee(salesmanAccount, workplace, name, firstname, salary, mail, address);
+			Employee salesman = new Employee(salesmanAccount, username, password, workplace, name, firstname, salary, mail, address);
 			employeeRepository.save(salesman);
-			Location loc4 = locationRepository.findOne(id);
+			Location loc4 = locationRepository.findByName(location);
 			loc4.getEmployees().add(salesman);
 			locationRepository.save(loc4);
 			break;
@@ -124,9 +126,9 @@ public class AdminTasksManager {
 			UserAccount winegrowerAccount = userAccountManager.create(username, password, new Role("ROLE_WINEGROWER"));
 			userAccountManager.save(winegrowerAccount);
 		
-			Employee winegrower = new Employee(winegrowerAccount, workplace, name, firstname, salary, mail, address);
+			Employee winegrower = new Employee(winegrowerAccount, username, password, workplace, name, firstname, salary, mail, address);
 			employeeRepository.save(winegrower);
-			Location loc5 = locationRepository.findOne(id);
+			Location loc5 = locationRepository.findByName(location);
 			loc5.getEmployees().add(winegrower);
 			locationRepository.save(loc5);
 			break;
@@ -134,17 +136,16 @@ public class AdminTasksManager {
 	}
 	
 	
-	public void editEmployee(	Long id, 
-								String workplace, 
-								String name, 
+	public void editEmployee(	String username, 
+								String familyname, 
 								String firstname, 
 								String salary, 
 								String mail, 
 								String address){
 		
-		Employee employee = employeeRepository.findOne(id);
-		employee.setWorkplace(workplace);
-		employee.setFamilyname(name);
+		Employee employee = employeeRepository.findByUsername(username);
+		
+		employee.setFamilyname(familyname);
 		employee.setFirstname(firstname);
 		employee.setSalary(salary);
 		employee.setMail(mail);
@@ -170,17 +171,15 @@ public class AdminTasksManager {
 	}
 	
 	
-	public void editCustomer(	Long id,  
+	public void editCustomer(	String username,  
 								String familyname, 
 								String firstname, 
 								String address){
 
-		Customer customer = customerRepository.findOne(id);
+		Customer customer = customerRepository.findByUsername(username);
 		customer.setFamilyname(familyname);
 		customer.setFirstname(firstname);
 		customer.setAddress(address);
-
-
 		customerRepository.save(customer);
 	}
 		
@@ -200,5 +199,34 @@ public class AdminTasksManager {
 		return "redirect:/adminLocList";
 	}
 
-
+	public void editEmployeeData(	String username, 
+									String workplace,
+									String familyname, 
+									String firstname, 
+									String mail, 
+									String address){
+		
+		Employee employee = employeeRepository.findByUsername(username);
+		employee.setWorkplace(workplace);
+		employee.setFamilyname(familyname);
+		employee.setFirstname(firstname);
+		employee.setMail(mail);
+		employee.setAddress(address);
+		
+		employeeRepository.save(employee);
+	}
+	
+	public void editCustomerData(	String username,
+									String familyname, 
+									String firstname, 
+									String address){
+		
+		Customer customer = customerRepository.findByUsername(username);
+    	customer.setFamilyname(familyname);
+    	customer.setFirstname(firstname);
+    	customer.setAddress(address);
+    	
+    	customerRepository.save(customer);
+    	
+	}
 }

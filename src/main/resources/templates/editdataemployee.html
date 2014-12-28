@@ -67,36 +67,49 @@
 
 			<div class="col-lg-6">
 			<h3>Persönliche Daten bearbeiten</h3>
-				<form role="form" method="post" th:action="@{/editdataemployee}">
-<!-- 					<div class="input-group"> -->
-<!-- 					  <span class="input-group-addon">Benutzername</span> -->
-<!-- 					  <input type="text" name="username" th:value="${customer.userAccount.identifier}" class="form-control inputform" placeholder="Benutzername eingeben"/> -->
-<!-- 					</div> -->
-
+				<form role="form" method="post" th:action="@{/editdataemployee}" th:object="${employee}">
+					
 					<div class="input-group">
-					  <span class="input-group-addon">Nachname</span>
-					  <input type="text" name="familyname" th:value="${employee.familyname}" class="form-control inputform"/>
+					  <span class="input-group-addon">Arbeitsplatz</span>
+					  <input type="text" name="workplace" th:value="${employee.workplace}" class="form-control inputform" readonly="readonly" th:field="*{workplace}"/>
+					  <p th:if="${#fields.hasErrors('workplace')}" th:errors="*{workplace}">Name Error</p>
+					</div>
+					
+					<div class="input-group">
+					  <span class="input-group-addon">Name</span>
+					  <input type="text" name="familyname" th:value="${employee.familyname}" class="form-control inputform" placeholder="Name eingeben" th:field="*{familyname}"/>
+					  <p th:if="${#fields.hasErrors('familyname')}" th:errors="*{familyname}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Vorname</span>
-					  <input type="text" name="firstname" th:value="${employee.firstname}" class="form-control inputform"/>
+					  <input type="text" name="firstname" th:value="${employee.firstname}" class="form-control inputform" placeholder="Vorname eingeben" th:field="*{firstname}"/>
+					  <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Name Error</p>
 					</div>
 
+					<div class="input-group">
+					  <span class="input-group-addon">E-Mail</span>
+					  <input type="email" name="mail" th:value="${employee.mail}" class="form-control inputform" id="exampleInputEmail1" placeholder="E-Mail eingeben" th:field="*{mail}"/>
+					  <p th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Name Error</p>
+					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Anschrift</span>
-					  <input type="text" name="address" th:value="${employee.address}" class="form-control inputform"/>
+					  <input type="text" name="address" th:value="${employee.address}" class="form-control inputform" placeholder="Addresse eingeben" th:field="*{address}"/>
+					  <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</p>
 					</div>
+					
+					<input name="salary" type="hidden" th:value="${employee.salary}" th:field="*{salary}"/>
+					<input name="username" type="hidden" th:value="${employee.username}" th:field="*{username}"/>
+					<input name="password" type="hidden" th:value="${employee.password}" th:field="*{password}"/>
 
-					<input name="id" type="hidden" th:value="${employee.id}"/>
-
-	       		 	<button type="submit" class="btn btn-default btn-lg">
+	       		 	<button type="submit" class="btn btn-default btn-lg addLocationButton">
 						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Speichern
 	            	</button>
+	          
 				</form>
-			</div>
-			<div class="col-lg-3"></div>
+			</div>			
+		<div class="col-lg-3"></div>
 		</div>
 	</div>      
  

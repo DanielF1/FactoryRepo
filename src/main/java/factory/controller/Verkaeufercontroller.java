@@ -78,7 +78,7 @@ public class Verkaeufercontroller {
 		UserAccount userAccount = userAccountManager.create(registrationForm.getName(), registrationForm.getPassword(),
 				new Role("ROLE_CUSTOMER"));
 		userAccountManager.save(userAccount);
-		customerRepository.save(new Customer(userAccount, registrationForm.getFamilyname(), registrationForm.getFirstname(), registrationForm.getAddress()));
+		customerRepository.save(new Customer(userAccount, registrationForm.getName(), registrationForm.getPassword(), registrationForm.getFamilyname(), registrationForm.getFirstname(), registrationForm.getAddress()));
 		
 		return "redirect:/";
 	}
@@ -97,9 +97,8 @@ public class Verkaeufercontroller {
 		return "saleSortiment";
 	}
 
-	
 	@RequestMapping(value="/editCustomer/{id}", method = RequestMethod.GET)
-	public String editEmployee(@PathVariable Long id, Model model){
+	public String editEmployee(@PathVariable Long id, Model model, Customer customer){
 			
 		model.addAttribute("customer", customerRepository.findOne(id));
 		
@@ -107,12 +106,17 @@ public class Verkaeufercontroller {
 	} 
 	 
 	@RequestMapping(value="/editCustomer", method = RequestMethod.POST)
-	public String editEmployee(	@RequestParam("id") Long id,
+	public String editEmployee(	@Valid Customer customer,
+								BindingResult bindingResult,
+								@RequestParam("username") String username,
 								@RequestParam("familyname") String familyname,
 								@RequestParam("firstname") String firstname,
-								@RequestParam("address") String address
-								){
-	adminTasksManager.editCustomer(id, familyname, firstname, address);
+								@RequestParam("address") String address){
+		
+		if (bindingResult.hasErrors()){
+	   		return "editCustomer";
+	   	}
+		adminTasksManager.editCustomer(username, familyname, firstname, address);
 		
 		return "redirect:/customerlist";
 		}

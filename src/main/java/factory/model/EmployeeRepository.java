@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
 	Employee findByUserAccount(UserAccount userAccount);
+	Employee findByUsername(String username);
 }

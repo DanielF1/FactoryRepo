@@ -69,30 +69,35 @@
 
 			<div class="col-lg-6">
 				<h3>Standort bearbeiten</h3>
-				<form role="form" method="post" th:action="@{/editLocation}" class="addLocationForm">
+				<form role="form" method="post" th:action="@{/editLocation}" class="addLocationForm" th:object="${location}">
 					<div class="input-group">
 					  <span class="input-group-addon">Name</span>
-					  <input type="text" name="name" th:value="${location.name}" class="form-control inputform" placeholder="Name eingeben"/>
+					  <input type="text" th:value="${location.name}" class="form-control inputform" placeholder="Name eingeben" th:field="*{name}"/>
+					  <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Adresse</span>
-					  <input type="text" name="address" th:value="${location.address}" class="form-control inputform" placeholder="Adresse eingeben"/>
+					  <input type="text" name="address" th:value="${location.address}" class="form-control inputform" placeholder="Adresse eingeben" th:field="*{address}"/>
+					  <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">PLZ Ort</span>
-					  <input name="city" th:value="${location.city}" class="form-control inputform" placeholder="PLZ und Ort eingeben"/>
+					  <input name="city" th:value="${location.city}" class="form-control inputform" placeholder="PLZ und Ort eingeben" th:field="*{city}"/>
+					  <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Tel.:</span>
-					  <input type="text" name="telefon" th:value="${location.telefon}" class="form-control inputform" placeholder="Telefonnummer eingeben"/>
+					  <input type="text" name="telefon" th:value="${location.telefon}" class="form-control inputform" placeholder="Telefonnummer eingeben" th:field="*{telefon}"/>
+					  <p th:if="${#fields.hasErrors('telefon')}" th:errors="*{telefon}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">E-Mail</span>
-					  <input type="email" name="mail" th:value="${location.mail}" class="form-control inputform" id="exampleInputEmail1" placeholder="email eingeben"/>
+					  <input type="email" name="mail" th:value="${location.mail}" class="form-control inputform" id="exampleInputEmail1" placeholder="email eingeben" th:field="*{mail}"/>
+					  <p th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Name Error</p>
 					</div>
 					
 					<input type="hidden" name="id" th:value="${location.id}"/>

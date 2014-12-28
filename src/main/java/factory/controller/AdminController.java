@@ -1,24 +1,24 @@
 package factory.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.Valid;
 
-import org.salespointframework.order.Cart;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.AdminTasksManager;
 import factory.model.DepartmentRepository;
+import factory.model.Employee;
 import factory.model.EmployeeRepository;
 import factory.model.Location;
 import factory.model.LocationRepository;
@@ -31,22 +31,21 @@ class AdminController {
 	private final LocationRepository locationRepository;
 	private final EmployeeRepository employeeRepository;
 	private final DepartmentRepository departmentRepository;
-	private final UserAccountManager userAccountManager;
 	private final AdminTasksManager adminTasksManager;
+	private final UserAccountManager userAccountManager;
 	
 	@Autowired
 	public AdminController(	LocationRepository locationRepository, 
 							EmployeeRepository employeeRepository, 
 							DepartmentRepository departmentRepository, 
-							UserAccountManager userAccountManager,
-							AdminTasksManager adminTasksManager) {
+							AdminTasksManager adminTasksManager,
+							UserAccountManager userAccountManager) {
 
 		this.locationRepository = locationRepository;
 		this.employeeRepository = employeeRepository;
 		this.departmentRepository = departmentRepository;
-		this.userAccountManager = userAccountManager;
 		this.adminTasksManager = adminTasksManager;
-		
+		this.userAccountManager = userAccountManager;
 	}
 
 		
@@ -90,16 +89,22 @@ class AdminController {
 
 				
 		@RequestMapping(value="/addLocation", method=RequestMethod.GET)
-	    public String addLocation() {
+	    public String addLocation(Location location) {
 	        return "addLocation";
 	    }
 	
-	    @RequestMapping(value="/addedLocation", method=RequestMethod.POST)
-	    public String Standortausgabe(	@RequestParam ("name") String name,
+	    @RequestMapping(value="/addLocation", method=RequestMethod.POST)
+	    public String Standortausgabe(	@Valid Location location,
+	    								BindingResult bindingResult,
+	    								@RequestParam ("name") String name,
 	    								@RequestParam ("address") String address,
 	    								@RequestParam ("city") String city,
 	    								@RequestParam ("telefon") String telefon,
 	    								@RequestParam ("mail") String mail) {
+	    	
+	    	if (bindingResult.hasErrors()) {
+	            return "addLocation";
+	        }
 	    	
 	    	adminTasksManager.addLocation(name, address, city, telefon, mail);
 	    		    	
@@ -107,7 +112,7 @@ class AdminController {
 	    }
 	    
 	    @RequestMapping(value="/editLocation/{id}", method = RequestMethod.GET)
-		public String editLocations(@PathVariable Long id, Model model){
+		public String editLocations(@PathVariable Long id, Model model, Location location){
 			
 			model.addAttribute("location" ,locationRepository.findOne(id));
 			
@@ -115,13 +120,18 @@ class AdminController {
 		}
 				
 		@RequestMapping(value="/editLocation", method = RequestMethod.POST)
-		public String editLocation(	@RequestParam("name") String name,
+		public String editLocation(	@Valid Location location,
+									BindingResult bindingResult,
+									@RequestParam("name") String name,
 									@RequestParam("address") String address,
 									@RequestParam("city") String city,
 									@RequestParam("telefon")String telefon,
 									@RequestParam("mail") String mail,
 									@RequestParam("id") Long id){
 			
+			if (bindingResult.hasErrors()) {
+	            return "editLocation";
+	        }
 			adminTasksManager.editLocation(name, address, city, telefon, mail, id);
 			
 			return "redirect:/adminLocList";
@@ -147,7 +157,7 @@ class AdminController {
 			}
 		
 		@RequestMapping(value="/editEmployee/{id}", method = RequestMethod.GET)
-		public String editEmployee(@PathVariable Long id, Model model){
+		public String editEmployee(@PathVariable Long id, Model model, Employee employee){
 				
 			model.addAttribute("employee", employeeRepository.findOne(id));
 			
@@ -155,42 +165,56 @@ class AdminController {
 		} 
 		 
 		@RequestMapping(value="/editEmployee", method = RequestMethod.POST)
-		public String editEmployee(	@RequestParam("id") Long id,
+		public String editEmployee(	@Valid Employee employee,
+									BindingResult bindingResult,
+									@RequestParam("username") String username,
+									@RequestParam("password") String password,
 									@RequestParam("workplace") String workplace,
-									@RequestParam("name") String name,
+									@RequestParam("familyname") String familyname,
 									@RequestParam("firstname") String firstname,
 									@RequestParam("salary") String salary,
 									@RequestParam("mail") String mail,
 									@RequestParam("address") String address
 									){
 			
-			adminTasksManager.editEmployee(id, workplace, name, firstname, salary, mail, address);
+			if (bindingResult.hasErrors()) {
+	            return "editEmployee";
+	        }
+			adminTasksManager.editEmployee(username, familyname, firstname, salary, mail, address);
 			
-			return "redirect:/adminLocList";
+			return "redirect:/employeeList";
 			}
 		 
-		@RequestMapping(value="/addEmployee/{id}", method=RequestMethod.GET)
-	    public String addEmployee(@PathVariable Long id, Model model) {
+		@RequestMapping(value="/addEmployee", method=RequestMethod.GET)
+	    public String addEmployee( Model model, Employee employee) {
 			
-			model.addAttribute("id", id);
+			model.addAttribute("locations", locationRepository.findAll());
 	        
 			return "addEmployee";
 	    }
 		
-		@RequestMapping(value="/addedEmployee", method=RequestMethod.POST)
-	    public String addedEmployee(	@RequestParam ("username") String username,
+		@RequestMapping(value="/addEmployee", method=RequestMethod.POST)
+	    public String addedEmployee(	@Valid Employee employee,
+	    								BindingResult bindingResult,
+	    								@RequestParam ("username") String username,
 	    								@RequestParam ("password") String password,
-										@RequestParam ("id") Long id,
+										@RequestParam ("location") String location,
 	    								@RequestParam ("workplace") String workplace,
-	    								@RequestParam ("name") String name,
+	    								@RequestParam ("familyname") String familyname,
 	    								@RequestParam ("firstname") String firstname,
 	    								@RequestParam ("salary") String salary,
 	    								@RequestParam ("mail") String mail,
-	    								@RequestParam ("address") String address) {
+	    								@RequestParam ("address") String address,
+	    								Model model) {
 	    	
-			adminTasksManager.addEmployee(username, password, id, workplace, name, firstname, salary, mail, address);
+			model.addAttribute("locations", locationRepository.findAll());
+	
+			if (bindingResult.hasErrors()) {
+	            return "addEmployee";
+	        }
+			adminTasksManager.addEmployee(username, password, location, workplace, familyname, firstname, salary, mail, address);
 			
-	    	return "redirect:/adminLocList";
+	    	return "redirect:/employeeList";
 	    }
 	
 		@RequestMapping(value="/editDepartments/{id}", method = RequestMethod.GET)
@@ -208,16 +232,6 @@ class AdminController {
 			
 			return "editOneDep";
 		}
-		
-//		@RequestMapping(value="/editDepartment", method = RequestMethod.POST)
-//		public String editDep(	@RequestParam("id") Long id,
-//								@RequestParam("quantity") double quantity,
-//								@RequestParam("capacity") double capacity){
-//			
-//			adminTasksManager.editDepartment(id, quantity, capacity);
-//			
-//			return "redirect:/adminLocList";
-//			}
 		
 		@RequestMapping(value="/addDepartment", method=RequestMethod.POST)
 		public String addedDepartment(	@RequestParam ("id") Long id,

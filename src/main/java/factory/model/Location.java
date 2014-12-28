@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 @Entity
 public class Location {
@@ -15,10 +17,15 @@ public class Location {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@NotEmpty(message = "{RegistrationForm.locname.NotEmpty}")
 	private String name;
+	@NotEmpty(message = "{RegistrationForm.address.NotEmpty}")
 	private String address;
+	@NotEmpty(message = "{RegistrationForm.city.NotEmpty}")
 	private String city;
+	@NotEmpty(message = "{RegistrationForm.telefon.NotEmpty}")
 	private String telefon;
+	@NotEmpty(message = "{RegistrationForm.mail.NotEmpty}")
 	private String mail;
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Employee> employees;

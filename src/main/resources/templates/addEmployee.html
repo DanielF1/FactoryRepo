@@ -14,6 +14,61 @@
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
 	<img src="../resources/img/wein.jpg" class="header"/>
+	
+	<script type="text/javascript">
+//     function validateForm(){
+//     var a=document.forms["check"]["username"].value;
+//     var b=document.forms["check"]["password"].value;
+//     var c=document.forms["check"]["familyname"].value;
+//     var d=document.forms["check"]["firstname"].value;
+//     var e=document.forms["check"]["salary"].value;
+//     var f=document.forms["check"]["exampleInputEmail1"].value;
+//     var g=document.forms["check"]["address"].value;
+    
+//     if (a==null || a=="", b==null || b=="")
+//       {
+//       alert("Einige Felder sind nicht ausgefüllt");
+//       if(a==null || a ==""){
+//       	document.getElementById("username").style.borderColor = "red";
+//       }else{
+//     	document.getElementById("username").style.borderColor = "#C4C4C4";  
+//       }
+//       if(b==null || b==""){
+//     	document.getElementById("password").style.borderColor = "red";
+//       }else{
+// 		document.getElementById("password").style.borderColor = "#C4C4C4";  
+//       }
+//       if(c==null || c==""){
+//       	document.getElementById("familyname").style.borderColor = "red";
+//       }else{
+//   		document.getElementById("familyname").style.borderColor = "#C4C4C4";  
+//       }
+//       if(d==null || d==""){
+//         	document.getElementById("firstname").style.borderColor = "red";
+//       }else{
+//     		document.getElementById("firstname").style.borderColor = "#C4C4C4";  
+//       }
+//       if(e==null || e==""){
+//       	document.getElementById("salary").style.borderColor = "red";
+// 	  }else{
+//   		document.getElementById("salary").style.borderColor = "#C4C4C4";  
+//       }
+//       if(f==null || f==""){
+//         document.getElementById("exampleInputEmail1").style.borderColor = "red";
+//   	  }else{
+//     	document.getElementById("exampleInputEmail1").style.borderColor = "#C4C4C4";  
+//       }
+//       if(g==null || g==""){
+//         document.getElementById("address").style.borderColor = "red";
+//       }else{
+//       	document.getElementById("address").style.borderColor = "#C4C4C4";  
+//       }
+//       return false;
+//       }
+//     }
+    </script>
+	
+	
 </head>
 
 <body>
@@ -67,22 +122,32 @@
 			<div class="col-lg-3"></div>
 
 			<div class="col-lg-6">
+				<form role="form" name="check" method="post"  th:action="@{/addEmployee}" th:object="${employee}">
+				
 				<h4>Accountangaben</h4>
-				<form role="form"  method="post" th:action="@{/addedEmployee}">
+				
 					<div class="input-group">
 					  <span class="input-group-addon">Benutzername</span>
-					  <input type="text" name="username" class="form-control" placeholder="Benutzername eingeben"/>
+					  <input id="username" type="text" name="username" class="form-control inputform" placeholder="Benutzername eingeben" th:field="*{username}"/>
+					  <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</p>			  			  
 					</div>
 
 					<div class="input-group">
-					  <span class="input-group-addon">Passwort</span>
-					  <input type="text" name="password" class="form-control" placeholder="Passwort eingeben"/>
+					  	<span class="input-group-addon"> Passwort</span>
+					  	<input id="password" type="text" name="password" class="form-control inputform" placeholder="Passwort eingeben" th:field="*{password}"/>
+					  <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
 					</div>
 
 					<h4>Mitarbeiterangaben</h4>
-										<div class="input-group">
+					<div class="input-group">
+					  <span class="input-group-addon">Standort</span>
+					 	 <select name="location">
+					 	 <option th:each=" loc : ${locations}" th:text="${loc.name}"></option>
+						</select>
+					</div>
+					<div class="input-group">
 					  <span class="input-group-addon">Arbeitsplatz</span>
-					 	 <select name="workplace">
+					 	 <select name="workplace" class="inputform">
 							<option>Lagerist</option>
 							<option>Braumeister</option>
 							<option>Fassbinder</option>
@@ -90,44 +155,34 @@
 							<option>Weinbauer</option>
 						</select>
 					</div>
-
-					<div class="input-group">
-					  <span class="input-group-addon">Tel.:</span>
-					  <input type="text" name="telefon" class="form-control" placeholder="Telefonnummer eingeben"/>
-					</div>
-
-					<div class="input-group">
-					  <span class="input-group-addon">E-Mail</span>
-					  <input type="email" name="mail" class="form-control" id="exampleInputEmail1" placeholder="email eingeben"/>
-					</div>
-
-	          		<div class="input-group">
-					  <span class="input-group-addon">Arbeitsplatz</span>
-					  <input type="text" name="workplace" class="form-control" placeholder="Arbeitsplatz eingeben"/>
-					</div>
 					<div class="input-group">
 					  <span class="input-group-addon">Name</span>
-					  <input type="text" name="name" class="form-control" placeholder="Name eingeben"/>
+					  <input type="text" id="familyname" name="familyname" class="form-control inputform" placeholder="Name eingeben" th:field="*{familyname}"/>
+					  <p th:if="${#fields.hasErrors('familyname')}" th:errors="*{familyname}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Vorname</span>
-					  <input type="text" name="firstname" class="form-control" placeholder="Vorname eingeben"/>
+					  <input type="text" id="firstname" name="firstname" class="form-control inputform" placeholder="Vorname eingeben" th:field="*{firstname}"/>
+					  <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Gehalt</span>
-					  <input type="text" name="salary" class="form-control" placeholder="Gehalt eingeben"/>
+					  <input type="text" id="salary" name="salary" class="form-control inputform" placeholder="Gehalt eingeben" th:field="*{salary}"/>
+					  <p th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">E-Mail</span>
-					  <input type="email" name="mail" class="form-control" id="exampleInputEmail1" placeholder="email eingeben"/>
+					  <input type="email" name="mail" class="form-control inputform" id="exampleInputEmail1" placeholder="Email eingeben" th:field="*{mail}"/>
+					  <p th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Name Error</p>
 					</div>
 
 					<div class="input-group">
 					  <span class="input-group-addon">Anschrift</span>
-					  <input type="text" name="address" class="form-control" placeholder="Anschrift eingeben"/>
+					  <input type="text" id="address" name="address" class="form-control inputform" placeholder="Anschrift eingeben" th:field="*{address}"/>
+					  <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</p>
 					</div>
 					
 					<input name="id" type="hidden" th:value="${id}"/>

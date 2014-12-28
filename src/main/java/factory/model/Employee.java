@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.salespointframework.useraccount.UserAccount;
 
 
@@ -15,11 +17,22 @@ public class Employee {
 	@Id 
 	@GeneratedValue
 	private Long id;
+	@NotEmpty(message = "{RegistrationForm.name.NotEmpty}")
+	private String username;
+	@NotEmpty(message = "{RegistrationForm.password.NotEmpty}")
+	private String password;
+	@NotEmpty
 	private String workplace;
+	@NotEmpty(message = "{RegistrationForm.familyname.NotEmpty}")
 	private String familyname;
+	@NotEmpty(message = "{RegistrationForm.firstname.NotEmpty}")
 	private String firstname;
+	@NotEmpty(message = "{RegistrationForm.salary.NotEmpty}")
 	private String salary;
+	@NotEmpty(message = "{RegistrationForm.mail.NotEmpty}")
+	@Email
 	private String mail;
+	@NotEmpty(message = "{RegistrationForm.address.NotEmpty}")
 	private String address;
 	
 	@Deprecated
@@ -28,7 +41,7 @@ public class Employee {
 	@OneToOne
 	private UserAccount userAccount;
 	
-	public Employee(UserAccount userAccount, String workplace, String name, String firstname,
+	public Employee(UserAccount userAccount, String username, String password, String workplace, String name, String firstname,
 			String salary, String mail, String address) {
 		this.workplace = workplace;
 		this.familyname = name;
@@ -37,6 +50,8 @@ public class Employee {
 		this.mail = mail;
 		this.address = address;
 		this.userAccount = userAccount;
+		this.username = username;
+		this.password = password;
 	}
 	
 	public UserAccount getUserAccount() {
@@ -83,8 +98,24 @@ public class Employee {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 	public Long getId() {
 		return id;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }
