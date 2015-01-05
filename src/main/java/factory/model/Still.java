@@ -9,6 +9,7 @@ public class Still {
 
 	private @Id @GeneratedValue Long id;
 	private int amount;
+	private boolean isRunning = false;
 	private boolean status_one;
 	private boolean status_two;
 	private boolean timer_stop;
@@ -23,6 +24,7 @@ public class Still {
 	
 	@Deprecated
 	public Still(){}
+	
 	
 	
 	/*
@@ -59,4 +61,14 @@ public class Still {
 	public void setTimer_stop(boolean timer_stop) {
 		this.timer_stop = timer_stop;
 	}
+
+	public boolean isRunning() {
+		return isRunning;
+	}
+
+	public void setRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
+	
+	
 }

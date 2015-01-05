@@ -229,9 +229,11 @@
 					<br/><br/><br/>
 					
 					<p><h4>~ Zutaten, die in anderen Standorten gefunden wurden:</h4></p>
-					<p th:text="${found0}"></p><p th:text="${found1}"></p><p th:text="${found2}"></p>
-					<button class="btn btn-default">Transport beantragen</button> 
-					<h5><span style="color:red">Transport funktioniert nocht nicht richtig, wurde vorerst herausgenommen.</span></h5>
+					<p th:text="${found0}"></p><p th:text="${found1}"></p><p th:text="${found2}"></p><p th:text="${found3}"></p><p th:text="${found4}"></p>
+					
+					<form action="/createTransport">
+						<button class="btn btn-default">Transport beantragen</button> 
+					</form>
 						
 					<br/><br/><br/>
 	

@@ -10,10 +10,10 @@ public class Ingredient {
 	private @Id @GeneratedValue Long id;
 	private String quality;
 	private int age;
-	private int amount;
+	private double amount;
 	private String unit;
 	
-	public Ingredient(String quality, int age, int amount, String unit) {
+	public Ingredient(String quality, int age, double amount, String unit) {
 		this.quality = quality;
 		this.age = age;
 		this.amount = amount;
@@ -22,6 +22,10 @@ public class Ingredient {
 
 	public Ingredient(){}
 
+	
+	/*
+	 * Getter & Setter
+	 */
 	public String getQuality() {
 		return quality;
 	}
@@ -38,7 +42,7 @@ public class Ingredient {
 		this.age = age;
 	}
 
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
@@ -53,10 +57,4 @@ public class Ingredient {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-
-	
-	/*
-	 * Getter & Setter
-	 */
-
 }

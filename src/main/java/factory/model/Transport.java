@@ -1,8 +1,12 @@
 package factory.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 
 @Entity
@@ -15,7 +19,7 @@ public class Transport {
 	private double quantity;
 	private Long source;
 	private Long destination;
-	
+
 	public Transport(){}
 	
 	public Transport(String sort, double quantity, Long source, Long destination) {

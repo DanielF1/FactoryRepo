@@ -392,7 +392,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		customerRepository.save(c1);
 		
 	}
-
 	
 	/*
 	 * initialize catalog

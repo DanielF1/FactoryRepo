@@ -5,13 +5,14 @@ public class FoundLocation {
 	private String location;
 	private String quality;
 	private int age;
+	private double amount;
 	
 	
-	public FoundLocation(String location, String quality, int age) {
-		super();
+	public FoundLocation(String location, String quality, int age, double amount) {
 		this.location = location;
 		this.quality = quality;
 		this.age = age;
+		this.amount = amount;
 	}
 	
 	public FoundLocation(){}
@@ -36,6 +37,14 @@ public class FoundLocation {
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 	
 	

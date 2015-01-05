@@ -26,6 +26,7 @@ import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.Still;
+import factory.model.StillTimerTask;
 import factory.model.WineStock;
 
 @Controller
@@ -34,7 +35,7 @@ public class DistillationController {
 	
 	private Timer timer;
 	private TimerTask timertask;
-	private long distillation = (5) * 2;
+	private int distillation = (5) * 2;
 //	private long distillation = (1000 * 60 * 60 * 24) * 2;
 	private BarrelStock barrelstock;
 	private WineStock winestock;
@@ -83,64 +84,64 @@ public class DistillationController {
 	/*
 	 * stop timer
 	 */
-	public void stopTimer(Still still)
-	{
-		if(timer != null)
-		{
-			timer.cancel();
-			timertask.cancel();
-			timertask = null;
-			timer = null;
-		}
-	}
+//	public void stopTimer(Still still)
+//	{
+//		if(timer != null)
+//		{
+//			timer.cancel();
+//			timertask.cancel();
+//			timertask = null;
+//			timer = null;
+//		}
+//	}
 	
 
 	/*
 	 * task
 	 */
-	public void timerAction(Still still)
-	{
-		--distillation;
-	
-		if(distillation == 5)
-		{
-			still.setStatus_two(false);
-			departmentrepository.save(production);
-			System.out.println("timer_two: " + still.getStatus_two());
-			
-		}
-		
-		if(distillation == 0)
-		{
-			still.setTimer_stop(true);	
-			departmentrepository.save(production);
-			distillation = 5 * 2; 
-			
-			stopTimer(still);
-			System.out.println("timer: " + still.getTimer_stop());
-		}
-		
-		System.out.println("timer: " + distillation);	
-	}
+//	public void timerAction(Still still)
+//	{
+//		--distillation;
+//	
+//		if(distillation == 5)
+//		{
+//			still.setStatus_two(false);
+//			departmentrepository.save(production);
+//			System.out.println("timer_two: " + still.getStatus_two());
+//			
+//		}
+//		
+//		if(distillation == 0)
+//		{
+//			still.setTimer_stop(true);	
+//			departmentrepository.save(production);
+//			distillation = 5 * 2; 
+//			
+//			stopTimer(still);
+//			System.out.println("timer: " + still.getTimer_stop());
+//		}
+//		
+//		System.out.println("timer: " + distillation);	
+//	}
 	
 	/*
 	 * start timer
 	 */
-	public void startTimer(long intervall, Still still)
-	{
-		if(timer == null)
-		{
-			timer = new Timer();
-			timertask = new TimerTask()
-			{
-				public void run()
-				{
-					timerAction(still);
-				}
-			};
-			timer.schedule(timertask, 0, intervall);
-		}
-	}	
+//	public void startTimer(long intervall, Still still)
+//	{
+//		if(timer == null)
+//		{
+//			timer = new Timer();
+//			timertask = new TimerTask()
+//			{
+//				public void run()
+//				{
+//					timerAction(still);
+//				}
+//			};
+//			timer.schedule(timertask, 0, intervall);
+//		}
+//	}	
 
 	
 	/*
@@ -249,9 +250,12 @@ public class DistillationController {
 											
 										winestock.setAmount(winestock.getAmount() - (still.getAmount() * 0.8));
 										still.setStatus_one(false);
+										still.setRunning(true);
 										departmentrepository.save(production);
 										departmentrepository.save(winestock);
-										startTimer(1000, still);
+//										startTimer(1000, still);
+										new StillTimerTask(still, production);
+										System.out.println("dep: " + production.getId());
 									}
 								} // /else
 								}	
