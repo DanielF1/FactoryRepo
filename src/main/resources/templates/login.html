@@ -1,72 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>Home</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-	<!-- JS dependencies -->
-	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="../resources/js/bootstrap.min.js"></script>
-	<script src="../resources/js/docs.min.js"></script>
-	
-	<!-- CSS dependencies -->
-	<link href="../resources/css/style.css" rel="stylesheet" />
-		<img src="../resources/img/wein.jpg" class="header"/>
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 
 <body>
-<div class="main-wrapper">
-	<!-- Header -->
 
-	<div class="col-lg-7"></div>
-
-	<!-- Log in / Log out navigation -->
-	<div class="col-lg-5 logNavi">	
-		<form class="form-inline" role="form" th:action="@{/login}" method="post" sec:authorize="!isAuthenticated()">
-		 	<div class="form-group" sec:authorize="!isAuthenticated()">
-		   		<label class="sr-only" for="username">Username</label>
-		    	<input type="text" class="form-control" id="username" name="username" 
-		    		autofocus="autofocus" placeholder="Username" />
-		  	</div>
-		 	<div class="form-group" >
-		    	<label for="password" class="sr-only">Password</label>
-
-		    	<input type="password" class="form-control" id="password" name="password" placeholder="Password" />
-		  	</div>
-
-		  	<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">
-		  		Log in</button>
-
-		  	
-		</form>
-		<a href="logout" class="form-inline">Logout</a>
-	</div>
-	<!-- Log in / Log out navigation -->
-
-	<div class="col-lg-2"></div>
-
-	<!-- navigation -->
-	<div class="col-lg-8 navigation">
-		<nav th:include="navigation :: navigation"></nav>
-	</div>
-	<!-- /navigation -->
-	
-	<div class="col-lg-2"></div>
-
-	<div class="header">
-		<div class="header-title">Cognac Fabrik <br/>Feuerwasser</div>
-	</div>
-	<!-- /Header -->
-
-	<!-- /Container -->
-	<div class="main-container content">
-		<div class="col-lg-12">
-
-		</div>
-	</div>
-	<!-- /Container -->
-</div>
+	<nav th:fragment="login">
+		<!-- Log in / Log out navigation -->
+<!-- 		<div class="col-lg-5 logNavi">	 -->
+			<form class="form-inline" role="form" th:action="@{/login}" method="post" >
+		 		<div class="form-group" sec:authorize="!isAuthenticated()">
+		   			<label class="sr-only" for="username">Username</label>
+		    		<input type="text" class="form-control pull-right" id="username" name="username" autofocus="autofocus" placeholder="Username" />
+			  	</div>
+			 	<div class="form-group" sec:authorize="!isAuthenticated()">
+			    	<label for="password" class="sr-only">Password</label>
+		    		<input type="password" class="form-control pull-right" id="password" name="password" placeholder="Password" />
+		  		</div>
+		  		<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">Log in</button>	
+			</form>
+			<form class="form-inline" role="form" action="logout" sec:authorize="isAuthenticated()">
+				<button type="submit" class="btn btn-default pull-right loginlogout">Logout</button>
+			</form>
+<!-- 		</div> -->
+		<!-- Log in / Log out navigation -->
+	</nav>
 </body>
 </html>
