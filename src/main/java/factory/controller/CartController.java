@@ -24,12 +24,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import factory.model.Article;
 import factory.model.CustomerRepository;
 
 @Controller
 @PreAuthorize("isAuthenticated()")
+@SessionAttributes("cart")
 public class CartController {
 	
 	private final OrderManager<Order> orderManager;
@@ -47,16 +49,8 @@ public class CartController {
 
 	
 	@ModelAttribute("cart")
-	private Cart getCart(HttpSession session) {
-
-		Cart cart = (Cart) session.getAttribute("cart");
-
-		if (cart == null) {
-			cart = new Cart();
-			session.setAttribute("cart", cart);
-		}
-
-		return cart;
+	private Cart inizializeCart(){
+		return new Cart();
 	}
     
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
@@ -69,10 +63,10 @@ public class CartController {
 	    public String addArticle(	@RequestParam("pid") Article article, 
 	    							@RequestParam("number") int number,
 	    							@LoggedIn Optional<UserAccount> userAccount,
-	    							HttpSession session) {
+	    							@ModelAttribute Cart cart) {
 	    	
 			Quantity quantity = Units.of(number);
-			Cart cart = getCart(session);
+			
 			cart.addOrUpdateItem(article, quantity);
 			
 			if(userAccount.get().hasRole(new Role("ROLE_SALESMAN"))){
@@ -92,12 +86,12 @@ public class CartController {
 	 
 	 
 	   @RequestMapping(value="/checkout", method=RequestMethod.POST)   
-	   public String Buy(HttpSession session, @LoggedIn Optional<UserAccount> userAccount){
+	   public String Buy(HttpSession session, @LoggedIn Optional<UserAccount> userAccount, @ModelAttribute Cart cart){
 	    	
 	    	return userAccount.map(account -> {
 
 					Order order = new Order(account, Cash.CASH);
-					Cart cart = getCart(session);
+					
 					cart.addItemsTo(order);
 
 					orderManager.payOrder(order);
@@ -111,14 +105,14 @@ public class CartController {
 		}
 	
 	   @RequestMapping(value="/saleCheckout", method=RequestMethod.POST)   
-	   public String BuyForCustomer(HttpSession session, @RequestParam("id") String userAccountIdent){
+	   public String BuyForCustomer(HttpSession session, @RequestParam("id") String userAccountIdent, @ModelAttribute Cart cart){
 	    	
 		   Optional<UserAccount> userAccount = userAccountManager.findByUsername(userAccountIdent);
 		   
 	    	return userAccount.map(account -> {
 
 	    			Order order = new Order(account, Cash.CASH);
-	    			Cart cart = getCart(session);
+	    			
 	    			cart.addItemsTo(order);
 
 	    			orderManager.payOrder(order);
@@ -132,9 +126,8 @@ public class CartController {
 		}
 	    
 	    @RequestMapping(value = "cart/clear", method = RequestMethod.POST)
-		public String clear(HttpSession session) {
+		public String clear(@ModelAttribute Cart cart) {
 	    	
-	    	Cart cart = getCart(session);
 	    	cart.clear();
 	    	
 			return "redirect:/sortiment";
