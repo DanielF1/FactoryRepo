@@ -63,12 +63,14 @@
 					<td class="text-center"><span th:text="${still.amount}"></span></td>
 					<td class="text-center">
 						<span th:switch="${still.status_one}">
-							<span th:case="true" class="btn btn-success"></span> 
-							<span th:case="false" class="btn btn-danger"></span>
+							<span th:case="0" class="btn btn-success"></span> 
+							<span th:case="1" class="btn btn-warning"></span>
+							<span th:case="2" class="btn btn-danger"></span>
 						</span> 
 						<span th:switch="${still.status_two}">
-							<span th:case="true" class="btn btn-success"></span>
-							<span th:case="false" class="btn btn-danger"></span>
+							<span th:case="0" class="btn btn-success"></span>
+							<span th:case="1" class="btn btn-warning"></span>
+							<span th:case="2" class="btn btn-danger"></span>
 						</span>
 					</td>
 					<td class="text-center">
