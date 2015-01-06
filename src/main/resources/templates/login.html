@@ -24,7 +24,7 @@
 		  		</div>
 		  		<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">Log in</button>	
 			</form>
-			<form class="form-inline" role="form" action="logout" sec:authorize="isAuthenticated()">
+			<form class="form-inline" role="form" action="/logout" sec:authorize="isAuthenticated()">
 				<button type="submit" class="btn btn-default pull-right loginlogout">Logout</button>
 			</form>
 <!-- 		</div> -->
