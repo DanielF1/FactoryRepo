@@ -1,6 +1,7 @@
 package factory.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,8 +89,8 @@ public class CookBookController {
 	{
 		for(BarrelTransport barreltransport : barrel_transport_repository.findAll())
 		{
-			System.out.println(".. " + (LocalDate.now().compareTo(barreltransport.getGoal_date())));
-			if((LocalDate.now().compareTo(barreltransport.getGoal_date()) > 0) && (barreltransport.getArrived() == false))
+			System.out.println(".. " + (LocalDateTime.now().compareTo(barreltransport.getGoal_date())));
+			if((LocalDateTime.now().compareTo(barreltransport.getGoal_date()) > 0) && (barreltransport.getArrived() == false))
 			{
 				for(Location loca : locationRepository.findAll()){
 					for(Location locTransport : barreltransport.getGoal()){
@@ -790,8 +791,8 @@ public class CookBookController {
 					List<Barrel> barrelsForTransport = new ArrayList<>();
 					List<Location> starting_point = new ArrayList<>();
 					List<Location> goal = new ArrayList<>();
-					LocalDate start_date = LocalDate.now();
-					LocalDate goal_date = LocalDate.now().plusDays(1);
+					LocalDateTime start_date = LocalDateTime.now();
+					LocalDateTime goal_date = LocalDateTime.now().plusDays(1);
 					
 					/*
 					 * prepare barrels for transport

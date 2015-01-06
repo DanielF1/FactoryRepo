@@ -1,5 +1,7 @@
 package factory.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,17 +11,32 @@ public class Still {
 
 	private @Id @GeneratedValue Long id;
 	private int amount;
-	private boolean isRunning = false;
-	private boolean status_one;
-	private boolean status_two;
-	private boolean timer_stop;
 	
-	public Still(int amount, boolean status_one, boolean status_two, boolean timer_stop)
+	/*
+	 * ======================================
+	 * 			0 == free
+	 * 			1 == still is running
+	 * 			2 == still is ready
+	 * ======================================
+	 */
+	private int status_one;
+	private int status_two;
+	
+	private LocalDateTime still_process_start_time = null;
+	private LocalDateTime still_process_end_time = null;
+	
+	
+	/*
+	 * constructor
+	 */
+	public Still(int amount, int status_one, int status_two,
+			LocalDateTime still_process_start_time,	LocalDateTime still_process_end_time) 
 	{
 		this.amount = amount;
 		this.status_one = status_one;
 		this.status_two = status_two;
-		this.timer_stop = timer_stop;
+		this.still_process_start_time = still_process_start_time;
+		this.still_process_end_time = still_process_end_time;
 	}
 	
 	@Deprecated
@@ -38,37 +55,36 @@ public class Still {
 		this.amount = amount;
 	}
 
-	public boolean getStatus_one() {
+	public int getStatus_one() {
 		return status_one;
 	}
 
-	public void setStatus_one(boolean status_one) {
+	public void setStatus_one(int status_one) {
 		this.status_one = status_one;
 	}
 
-	public boolean getStatus_two() {
+	public int getStatus_two() {
 		return status_two;
 	}
 
-	public void setStatus_two(boolean status_two) {
+	public void setStatus_two(int status_two) {
 		this.status_two = status_two;
 	}
 
-	public boolean getTimer_stop() {
-		return timer_stop;
+	public LocalDateTime getStill_process_start_time() {
+		return still_process_start_time;
 	}
 
-	public void setTimer_stop(boolean timer_stop) {
-		this.timer_stop = timer_stop;
+	public void setStill_process_start_time(LocalDateTime still_process_start_time) {
+		this.still_process_start_time = still_process_start_time;
 	}
 
-	public boolean isRunning() {
-		return isRunning;
+	public LocalDateTime getStill_process_end_time() {
+		return still_process_end_time;
 	}
 
-	public void setRunning(boolean isRunning) {
-		this.isRunning = isRunning;
+	public void setStill_process_end_time(LocalDateTime still_process_end_time) {
+		this.still_process_end_time = still_process_end_time;
 	}
-	
-	
+
 }

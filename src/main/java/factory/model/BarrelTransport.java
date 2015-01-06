@@ -1,6 +1,7 @@
 package factory.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,15 +24,15 @@ public class BarrelTransport {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Barrel> barrels;
 
-	private LocalDate start_date;
-	private LocalDate goal_date;
+	private LocalDateTime start_date;
+	private LocalDateTime goal_date;
 	private boolean arrived = false;
 	
 	/*
 	 * constructor
 	 */
 	public BarrelTransport(List<Location> starting_point, List<Location> goal,
-			List<Barrel> barrels, LocalDate start_date, LocalDate goal_date) {
+			List<Barrel> barrels, LocalDateTime start_date, LocalDateTime goal_date) {
 		this.starting_point = starting_point;
 		this.goal = goal;
 		this.barrels = barrels;
@@ -49,19 +50,19 @@ public class BarrelTransport {
 		return starting_point;
 	}
 
-	public LocalDate getStart_date() {
+	public LocalDateTime getStart_date() {
 		return start_date;
 	}
 
-	public void setStart_date(LocalDate start_date) {
+	public void setStart_date(LocalDateTime start_date) {
 		this.start_date = start_date;
 	}
 
-	public LocalDate getGoal_date() {
+	public LocalDateTime getGoal_date() {
 		return goal_date;
 	}
 
-	public void setGoal_date(LocalDate goal_date) {
+	public void setGoal_date(LocalDateTime goal_date) {
 		this.goal_date = goal_date;
 	}
 
@@ -100,6 +101,4 @@ public class BarrelTransport {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 }
