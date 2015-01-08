@@ -13,6 +13,10 @@
 	
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
+	<style type="text/css">
+	  .success_table{background-color:#92D36E!important; color:#fff;}
+	  .btn-default{background-color:#92D36E!important; color:#fff;}
+	</style>
 		<img src="../resources/img/wein.jpg" class="header"/>
 </head>
 
@@ -49,7 +53,7 @@
 		
 		<div class="list-group">
 		<ul>
-  			<li class="list-group-item list-group-item-success">Bestseller</li>
+  			<li class="list-group-item list-group-item-success success_table">Bestseller</li>
 
 
   			<a th:href="@{'/detail/' + ${article.identifier}}" href="detail.html">
@@ -73,7 +77,7 @@
 			
 		
 		<ul>
-  		<li class="list-group-item list-group-item-success">Neu im Sortiment</li>
+  		<li class="list-group-item list-group-item-success success_table">Neu im Sortiment</li>
 		
   			<a th:href="@{'/detail/' + ${newbie1.identifier}}" href="detail.html">
 			<div class="col-sm-6 col-md-4 nail">

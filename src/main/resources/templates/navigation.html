@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <style type="text/css">
+	  .success_table{background-color:#92D36E!important; color:#fff;}
+	  .btn-default{background-color:#92D36E!important; color:#fff;}
+	</style>
 </head>
 
 <body>
@@ -13,7 +17,7 @@
 <nav th:fragment="navigation">
 	
 	<ul class="nav nav-pills">
-			<li role="presentation" class="active button_color"><a href="/index.html">Home</a></li>
+			<li role="presentation" class="active"><a href="/index.html">Home</a></li>
 			
 			<li role="presentation" class="salespoint" sec:authorize="!isAuthenticated()">
 				<a href="/sortiment.html">Sortiment</a>

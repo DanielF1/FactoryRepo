@@ -13,7 +13,12 @@
 	
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
-		<img src="../resources/img/wein.jpg" class="header"/>
+	<style type="text/css">
+	  .success_table{background-color:#92D36E!important; color:#fff;}
+	  .btn-default{background-color:#92D36E!important; color:#fff; border:none;}
+	</style>
+	
+	<img src="../resources/img/wein.jpg" class="header"/>
 </head>
 
 <body>
@@ -52,6 +57,7 @@
 	<!-- Container -->
 	<div class="main-container">
 		<div class="col-lg-12 content">
+			<h3>Sortiment</h3>
 			<a th:each="article : ${articles}" th:href="@{'/detail/' + ${article.identifier}}" href="detail.html">
 			  <div class="col-sm-6 col-md-4 nail">
 			    <div class="thumbnail">
@@ -65,7 +71,7 @@
 						<p class="text-center"><span>Art:</span> <span th:text="${article.cognacart}"></span></p>
 						<p class="text-center"><span>Preis:</span> <span th:text="${article.price}"></span></p>	
 						<p><a th:href="@{'/detail/' + ${article.identifier}}" href="detail.html" 
-				        	class="btn btn-primary" role="button" style="width:100%">Zum Artikel</a></p>
+				        	class="btn btn-default" role="button" style="width:100%">Zum Artikel</a></p>
 					</div>
 			      </div>
 			    </div>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.Barrel;
 import factory.model.BarrelStock;
@@ -453,5 +454,59 @@ public class DistillationController {
 
 		model.addAttribute("stills", production.getStills());
 		return "distillation";
+	}
+	
+	
+	/*
+	 * add new still
+	 */
+	@RequestMapping(value = "/addNewStill", method = RequestMethod.POST)
+	public String addNewStill( @RequestParam("new_still_amount") int new_still_amount,	@LoggedIn Optional<UserAccount> userAccount)
+	{
+		for(Location loc : locationRepository.findAll()){
+			for(Employee e : loc.getEmployees()){
+				if(e.getUserAccount() == userAccount.get()){
+					for(Department dep : loc.getDepartments()){
+						if(dep.getName().contains("Produktion")){
+							production = (Production) dep;
+							
+							Still s1 = new Still(new_still_amount, 0, 0, null, null);
+							
+							production.getStills().add(s1);
+							
+							departmentrepository.save(production);
+						}
+					}
+				}
+			}
+		}
+			
+		return "redirect:/distillation";
+	}
+	
+	
+	/*
+	 * delete still
+	 */
+	@RequestMapping(value = "'/deleteStill/' + {index}", method = RequestMethod.GET)
+	public String deleteStill(@PathVariable(value="index") int index, @LoggedIn Optional<UserAccount> userAccount) 
+	{	
+		for(Location loc : locationRepository.findAll()){
+			for(Employee e : loc.getEmployees()){
+				if(e.getUserAccount() == userAccount.get()){
+					for(Department dep : loc.getDepartments()){
+						if(dep.getName().contains("Produktion")){
+							production = (Production) dep;
+							
+							production.getStills().remove(index - 1);
+							
+							departmentrepository.save(production);
+						}
+					}
+				}
+			}
+		}
+
+		return "redirect:/destillation";
 	}
 }

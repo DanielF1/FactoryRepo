@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>Location List</title>
+	<title>Cookbook</title>
 
 	<!-- JS dependencies -->
 	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
@@ -14,7 +14,9 @@
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
 	<style type="text/css">
-	  .btnDelete {margin-right: 15px;}
+	  .success_table{background-color:#92D36E!important; color:#fff;}
+	  .btn-default{background-color:#92D36E!important; color:#fff;}
+	  .add_recipe{top:56px;}
 	</style>
 	
 	<img src="../resources/img/wein.jpg" class="header"/>
@@ -63,7 +65,7 @@
 	
 				<div class="modal-footer">
 					<form th:method="delete">
-						<button type="button" class="btn btn-primary pull-right" onclick="deleteEntry()" >Delete</button>
+						<button type="button" class="btn btn-default pull-right" onclick="deleteEntry()" >Delete</button>
 					</form>
 					
 					<button type="button" class="btn btn-default btnDelete" data-dismiss="modal">Close</button>
@@ -76,11 +78,11 @@
 	<!-- Container -->
 	<div class="main-container content">
 		<div class="col-lg-12">
-		
 			<!-- recipe list -->
 			<div class="col-lg-4">
+			<h3>Rezepte</h3>
 				<table class="table table-condensed">
-					<tr class="success">	
+					<tr class="success_table">	
 						<th class="text-center">Rezepte</th>
 					</tr>
 					
@@ -121,12 +123,12 @@
 							        		<td class="text-center">
 							        			<br/>
 							        			<a th:href="@{'/cookbook/' + ${recipe.id}}" >
-							        			<button class="btn btn-primary pull-right" >Rezept auswählen</button></a>
+							        			<button class="btn btn-default pull-right" >Rezept auswählen</button></a>
 							        		</td>
 							        		<td class="text-center"> 
 							        			<br/>
 							        			<button th:value="${recipe.id}" 
-														class="btn btn-default pull-right" 
+														class="btn  btn-default pull-right" 
 														data-toggle="modal" data-target="#myModal" onclick="doSomething(this)">
 														Löschen
 												</button>
@@ -145,12 +147,12 @@
 			<!-- /recipe list -->
 			
 		
-		    <div class="col-lg-8" >
+		    <div class="col-lg-8 add_recipe" >
 		    
 		    	<!-- add recipe form -->
 				<form role="form" method="post" th:action="@{/cookbook/addRecipe}">
 					<table class="table table-condensed">
-						<tr class="success">
+						<tr class="success_table">
 							<td class="text-center"></td>
 							<td class="text-center"></td>
 							<td class="text-center"><input class="text-center" name="name" type="text"  placeholder="Rezeptname"/></td>
@@ -241,7 +243,7 @@
 						<table class="table table-condensed">
 							<h5 style="font-weight:bold"><span class="glyphicon glyphicon-leaf"></span> <span name ="recipe_name" th:text="${recipe.name}">text</span></h5>
 	
-				        	<tr class="success">
+				        	<tr class="success_table">
 				        		<th class="text-center">Qualität</th>
 				        		<th class="text-center">Alter</th>
 				        		<th class="text-center">Menge</th>
@@ -264,7 +266,7 @@
 										<option value="0.7">0.7</option>
 										<option value="1.0">1.0</option>
 									</select>
-									<span class="pull-right btnDelete">Flaschenvolumen  </span>	
+									<span class="pull-right">Flaschenvolumen  </span>	
 								</td>
 								<td class="text-center"><br/><br/><button class="btn btn-default pull-left">Herstellen</button>	</td>
 							</tr>
@@ -301,7 +303,7 @@
 					
 					<h4>Diese Zutaten wurden im Lager nicht gefunden</h4>
 					<table class="table table-condensed">
-						<tr class="success">
+						<tr class="success_table">
 			        		<th class="text-center">Qualität</th>
 			        		<th class="text-center">Alter</th>
 			        		<th class="text-center">Menge</th>

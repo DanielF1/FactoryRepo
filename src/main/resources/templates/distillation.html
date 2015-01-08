@@ -13,7 +13,15 @@
 	
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
-		<img src="../resources/img/wein.jpg" class="header"/>
+	<style type="text/css">
+	  .success_table{background-color:#92D36E!important; color:#fff;}
+	  .btn-default{background-color:#92D36E!important; color:#fff;}
+	  .new_still_amount{width:280px;}
+	  .add_new_still_btn{width:100%;}
+	  .add_new_still_div{top:56px;}
+	</style>
+	
+	<img src="../resources/img/wein.jpg" class="header"/>
 </head>
 
 <body>
@@ -49,54 +57,84 @@
 				<p class="btn-danger text-center" th:text="${error}"></p>
 				<p class="btn-success text-center" th:text="${error_green}"></p>
 			</div>
-			<table class="table table-condensed">
-				<tr class="success">
-					<th class="text-center"><div>#</div></th>
-					<th class="text-center"><div>Volumen der Destille</div></th>
-					<th class="text-center"><div>Status</div></th>
-					<th class="text-center"></th>
-					<th class="text-center"><div>Qualität</div></th>
-					<th class="text-center"></th>
-				</tr>
-				<tr th:each="still, it : ${stills}" th:with="index = ${it.count}">
-					<td class="text-center"><span th:text="${index}"></span></td>
-					<td class="text-center"><span th:text="${still.amount}"></span></td>
-					<td class="text-center">
-						<span th:switch="${still.status_one}">
-							<span th:case="0" class="btn btn-success"></span> 
-							<span th:case="1" class="btn btn-warning"></span>
-							<span th:case="2" class="btn btn-danger"></span>
-						</span> 
-						<span th:switch="${still.status_two}">
-							<span th:case="0" class="btn btn-success"></span>
-							<span th:case="1" class="btn btn-warning"></span>
-							<span th:case="2" class="btn btn-danger"></span>
-						</span>
-					</td>
-					<td class="text-center">
-						<form th:method="post" th:action="@{'/distillation/' + ${index}}">
-							<button class="btn btn-default" th:id="${index}" >Destillieren</button>
-						</form>
-					</td>
-					<td class="text-center">
-<!-- 						<form th:method="post" th:action="@{'/distillation/f' + ${index}}" style="display:block" th:id="abcdef + ${index}">	 -->
+			<div class="col-lg-9">
+				<h3>Destillation</h3>
+				<table class="table table-condensed">
+					<tr class="success_table">
+						<th class="text-center"><div>#</div></th>
+						<th class="text-center"><div>Volumen der Destille</div></th>
+						<th class="text-center"><div>Status</div></th>
+						<th class="text-center"></th>
+						<th class="text-center"><div>Qualität</div></th>
+						<th class="text-center"></th>
+						<th class="text-center"><div></div></th>
+					</tr>
+					<tr th:each="still, it : ${stills}" th:with="index = ${it.count}">
+						<td class="text-center"><span th:text="${index}"></span></td>
+						<td class="text-center"><span th:text="${still.amount}"></span> <span>Hektoliter</span></td>
+						<td class="text-center">
+							<span th:switch="${still.status_one}">
+								<span th:case="0" class="btn btn-success"></span> 
+								<span th:case="1" class="btn btn-warning"></span>
+								<span th:case="2" class="btn btn-danger"></span>
+							</span> 
+							<span th:switch="${still.status_two}">
+								<span th:case="0" class="btn btn-success"></span>
+								<span th:case="1" class="btn btn-warning"></span>
+								<span th:case="2" class="btn btn-danger"></span>
+							</span>
+						</td>
+						<td class="text-center">
+							<form th:method="post" th:action="@{'/distillation/' + ${index}}">
+								<button class="btn btn-default" th:id="${index}" >Destillieren</button>
+							</form>
+						</td>
+						<td class="text-center">
+	<!-- 						<form th:method="post" th:action="@{'/distillation/f' + ${index}}" style="display:block" th:id="abcdef + ${index}">	 -->
 							<form th:method="post" th:action="@{'/distillation/f' + ${index}}">	
-							<span>Qualitätsstufe: </span>
-
-							<select name="quality">
-								<option value="Schlecht">Schlecht</option>
-								<option value="Gut">Gut</option>
-								<option value="Sehr Gut">Sehr Gut</option>
-							</select>
-							<button class="btn btn-default" >Abfüllen</button>
-							
-							<input name="one" th:value="${still.status_one}" style="display:none"/>
-							<input name="two" th:value="${still.status_two}" style="display:none" />                                                                                                          
-							
-						</form>
-					</td>
-				</tr>
-			</table>
+								<span>Qualitätsstufe: </span>
+	
+								<select name="quality">
+									<option value="Schlecht">Schlecht</option>
+									<option value="Gut">Gut</option>
+									<option value="Sehr Gut">Sehr Gut</option>
+								</select>
+								<button class="btn btn-default" >Abfüllen</button>
+								
+								<input name="one" th:value="${still.status_one}" style="display:none"/>
+								<input name="two" th:value="${still.status_two}" style="display:none" />                                                                                                          
+								
+							</form>
+						</td>
+						<td>
+							<form th:method="get" th:action="@{'/deleteStill/' + ${index}}">	
+								<button class="btn btn-default" >Entfernen</button>
+							</form>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div class="col-lg-3 add_new_still_div">
+				<form role="form" method="post" th:action="@{/addNewStill}">
+					<table class="table table-condensed">
+						<tr class="success_table">
+							<td class="text-center"><span>Neue Destille bestellen</span></td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								<input class="text-center new_still_amount" type="number" name="new_still_amount" value="" min="1" max="30" placeholder="Volumen in Hektoliter"/>
+<!-- 	<button type="submit" class="btn btn-default add_new_still_btn" value="Rezept speichern">Bestellen</button>						 -->
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+<!-- 								<button type="submit" class="btn btn-default add_new_still_btn" value="Rezept speichern">Bestellen</button> -->
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
 		</div>	
 	</div>
 	<!-- /Container -->
