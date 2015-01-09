@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import factory.model.Accountancy;
 import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Department;
@@ -131,16 +130,19 @@ public class BarrelMakerController {
 	@RequestMapping("/insertBarrel")
 	public String insertBarrel(
 			@RequestParam("Barrel_volume") String barrel_volume,
+			@RequestParam("Barrel_anzahl") int barrel_anzahl,
 			@ModelAttribute("insertBarrel") @Valid InsertBarrel insertBarrel,
 			BindingResult result) {
 		if (result.hasErrors()) {
 		return "inserted";
 	}
 		//Barrel (age, quality, content_amount, manufacturing_date,barrel_volume, birth_of_barrel,death_of_barrel,position )
-
+		for (int i=1;i<=barrel_anzahl;i++)
+		{
 		Barrel barrel = new Barrel(0,"",0, LocalDate.parse("0000-01-01"),Double.parseDouble(barrel_volume),
 				LocalDate.now(),LocalDate.now().plusDays(2),LocalDate.parse("0000-01-01"), "");
 		barrelstock.getBarrels().add(barrel);
+		}
 		
 		double totalprice = 20;
 		
@@ -207,9 +209,8 @@ public class BarrelMakerController {
 
 		for (Barrel barrel : barrelstock.getBarrels()) {
 			
-			if (barrel.getDeath_of_barrel().compareTo(LocalDate.now())>=0
-					&&barrel.getLastFill().compareTo(LocalDate.now().minusDays(365))<=0  // LastFill = LastFillDate
-					&&!barrel.getQuality().equals("")
+			if (
+					!barrel.getQuality().equals("")
 					&&barrel.getContent_amount()!=0){
 				
 			String inhalt = barrel.getQuality();
@@ -239,6 +240,12 @@ public class BarrelMakerController {
 			for (Integer key1 : alterMap.keySet()) {
 				
 				double hilfsFass = 0;
+				int fass_anzahl =0;
+				for (Barrel barrel: alterMap.get(key1))
+				{
+					fass_anzahl++;
+				}
+				if (fass_anzahl>1){
 				for (Barrel barrel : alterMap.get(key1)) {
 					hilfsFass += barrel.getContent_amount();
 					barrel.setContent_amount(0);
@@ -259,7 +266,7 @@ public class BarrelMakerController {
 						barrel.setManufacturing_date(LocalDate.parse("0000-01-01"));
 					}
 					barrel.setLastFill(LocalDate.now());
-//					BarrelStock.getBarrels().add(barrel);
+				}
 				}
 			}
 			}

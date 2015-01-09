@@ -62,9 +62,14 @@
 
 					<div class="input-group">
 					  <span class="input-group-addon">Barrel volume</span>
-
 					  <input id="Barrel_volume" th:field="*{Barrel_volume}" th:errorclass="fieldError" type="number" min="1" name="Barrel_volume"  placeholder="Fassvolumen eingeben" /> 
-						<p th:if="${#fields.hasErrors('Barrel_volume')}" th:errors="*{Barrel_volume}">Das Datum darf nicht leer sein.</p>
+						<p th:if="${#fields.hasErrors('Barrel_volume')}" th:errors="*{Barrel_volume}">Das Volume darf nicht leer sein.</p>
+						<br/>
+						</div>
+						<div class="input-group">
+						<span class="input-group-addon">Barrel anzahl</span>
+					  <input id="Barrel_anzahl" th:field="*{Barrel_anzahl}" th:errorclass="fieldError" type="number" min="1" name="Barrel_anzahl"  placeholder="Fassanzahl eingeben" /> 
+						<p th:if="${#fields.hasErrors('Barrel_anzahl')}" th:errors="*{Barrel_anzahl}">Die anzahl darf nicht leer sein.</p>
 					</div>
 					<input type="submit" value="Insert" />
 			</form>
