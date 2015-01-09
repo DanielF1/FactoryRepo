@@ -38,6 +38,7 @@ public class BarrelMakerController {
 	private final LocationRepository locationRepository;
 	private final DepartmentRepository departmentRepository;
 	private BarrelStock barrelstock;
+	boolean check = false;
 	
 	@Autowired
 	public BarrelMakerController(LocationRepository locationRepository, DepartmentRepository departmentRepository, BarrelStock barrelstock){
@@ -45,6 +46,13 @@ public class BarrelMakerController {
 		this.barrelstock = barrelstock;
 		this.departmentRepository = departmentRepository;
 	}
+
+
+	public double Runden2Dezimal(double x) { 
+		double Ergebnis;
+		Ergebnis = (double) (int) (x*100)/100;
+		return Ergebnis; 
+		}
 	
 	public void alterBerechnen(){
 		List<Barrel> allBarrels = barrelstock.getBarrels();
@@ -54,6 +62,36 @@ public class BarrelMakerController {
 		}
 		departmentRepository.save(barrelstock);
 		
+	}
+	
+	public void engelAnteilBesuechtigen(){
+		List<Barrel> allBarrels = barrelstock.getBarrels();
+		int datecount = 0;
+	
+		for (Barrel barrel: allBarrels)
+		{
+			if (barrel.getLastFill().compareTo(LocalDate.now().minusDays(365))<0)
+			{
+				
+				while (barrel.getLastFill().compareTo(LocalDate.now())<0){
+					datecount++;
+					barrel.setLastFill(barrel.getLastFill().plusDays(1));
+				}
+			barrel.setLastFill(LocalDate.now().minusDays(datecount));
+			}
+			int Jahre=datecount/365; //wie lang destillat zu letzten mal in fässern erfüllt wurde
+			for (int i = 1; i <= Jahre; i++)
+			{
+			
+				barrel.setContent_amount(0.97*barrel.getContent_amount());
+				
+			}
+
+			barrel.setContent_amount(Runden2Dezimal(barrel.getContent_amount()));
+			System.out.println(barrel.getContent_amount());
+		}
+		departmentRepository.save(barrelstock);
+
 	}
 	
 	@RequestMapping("/BarrelList")
@@ -66,7 +104,10 @@ public class BarrelMakerController {
 					for(Department dep : loc.getDepartments()){
 						if(dep.getName().contains("Fasslager")){
 							barrelstock = (BarrelStock) dep;
-//							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
+							if (!check){
+								engelAnteilBesuechtigen();
+								check = true;
+							}
 							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 							return "BarrelList";
 						}
@@ -181,7 +222,7 @@ public class BarrelMakerController {
 					double volume = barrel.getBarrel_volume();
 					if (hilfsFass < volume)
 						volume = hilfsFass;
-					barrel.setContent_amount(volume);
+					barrel.setContent_amount(Runden2Dezimal(volume));
 					System.out.println(barrel.getContent_amount());
 					hilfsFass -= volume;
 					if (barrel.getContent_amount()==0)
