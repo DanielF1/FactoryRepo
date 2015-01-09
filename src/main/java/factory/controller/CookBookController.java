@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import factory.model.Accountancy;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;
@@ -36,6 +37,8 @@ import factory.model.CookBookRepository;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
+import factory.model.Expenditure;
+import factory.model.ExpenditureRepository;
 import factory.model.FoundLocation;
 import factory.model.Ingredient;
 import factory.model.Location;
@@ -60,6 +63,7 @@ public class CookBookController {
 	private final LocationRepository locationRepository;
 	private final DepartmentRepository departmentrepository;
 	private final BarrelTransportRepository barrel_transport_repository;
+	private final ExpenditureRepository expenditureRepository;
 
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 	List<FoundLocation> foundLocation = new ArrayList<FoundLocation>();
@@ -74,7 +78,8 @@ public class CookBookController {
 			Inventory<InventoryItem> inventory,
 			ArticleRepository articlerepository, 
 			DepartmentRepository departmentrepository,
-			BarrelTransportRepository barrel_transport_repository)
+			BarrelTransportRepository barrel_transport_repository,
+			ExpenditureRepository expenditureRepository)
 	{
 		this.cookbookrepository = cookbookrepository;
 		this.barrelstock = barrelstock;
@@ -85,6 +90,7 @@ public class CookBookController {
 		this.articlerepository = articlerepository;
 		this.departmentrepository = departmentrepository;
 		this.barrel_transport_repository = barrel_transport_repository;
+		this.expenditureRepository = expenditureRepository;
 	}
 	
 	
@@ -647,7 +653,7 @@ public class CookBookController {
 																	{
 																		toRemove.add(bottle);
 										
-																		Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount);
+																		Bottle b1 = new Bottle(recipe.getName(), selectedBottleAmount, 0.0);
 																		toAdd.add(b1);
 											
 																		bottles--;
@@ -740,6 +746,9 @@ public class CookBookController {
 								@RequestParam("bottlesToBuyNumber") int bottlesToBuyNumber, Model model, 
 								@LoggedIn Optional<UserAccount> userAccount)
 	{	
+		double price = 0;
+		double totalprice = 0;
+		
 		for(int i = 0; i < bottlesToBuyNumber; i++)
 		{
 			for(Location loc : locationRepository.findAll()){
@@ -748,10 +757,20 @@ public class CookBookController {
 						for(Department dep : loc.getDepartments()){
 							if(dep.getName().contains("Flaschenlager")){
 								bottlestock = (BottleStock) dep;{
-									
-								Bottle b1 = new Bottle("", bottlesToBuyAmount);
+								
+								if(bottlesToBuyAmount == 1){
+									price = 0.1;
+								}else if(bottlesToBuyAmount == 0.7){
+									price = 0.07;
+								}else if(bottlesToBuyAmount == 0.3){
+									price = 0.03;
+								}
+								totalprice += price;
+								
+								Bottle b1 = new Bottle("", bottlesToBuyAmount, price);
 								bottlestock.getBottles().add(b1);
 								departmentrepository.save(bottlestock);
+								
 								
 								}
 							} // /if
@@ -761,6 +780,19 @@ public class CookBookController {
 			} // /for
 		} // /for
 		
+		expenditureRepository.save(new Expenditure(LocalDate.now(), totalprice, "Flaschenbestellung"));
+		
+//		for(Location loc : locationRepository.findAll()){
+//			for(Department department : loc.getDepartments()){
+//				if(department.getName().contains("Rechnungswesen")){
+//		
+//					Accountancy acc = (Accountancy) department;
+//					acc.getExpenditures().add(exp);
+//				
+//				}//if
+//			}//for
+//		}//for
+
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		
 		return "cookbook";
