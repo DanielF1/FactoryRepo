@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Department;
@@ -68,6 +69,11 @@ public class DistillationController {
 									if(barrel.getQuality().equals(""))
 									{
 										barrel.setQuality("reserviert für Destille " + index);
+										if (!barrel.getPosition().equals(""))
+										{
+											barrel.setPosition("");
+
+										}
 										still_amount = still_amount - barrel.getBarrel_volume();
 										
 										if(stillAmount == 0)

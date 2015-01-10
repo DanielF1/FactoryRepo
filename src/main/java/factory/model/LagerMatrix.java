@@ -3,8 +3,6 @@ package factory.model;
 import java.util.List;
 
 
-
-
 public class LagerMatrix {
 	private String lagerType;
 	
@@ -39,8 +37,7 @@ public class LagerMatrix {
 	}
 	
 	public void zuordnen(List<Barrel> allBarrels){
-//		List<Barrel> allBarrels = barrelstock.getBarrels();
-		// ist der Lager fuer leere Faesser vorgesehen, oder nicht.
+//		resetLager();
 		boolean lagerFL = (this.lagerType == "FLL-R")?true:false;
 		if (allBarrels == null)
 			return;
@@ -49,27 +46,50 @@ public class LagerMatrix {
 			if(bar.getPosition().equals("") && bar.getQuality().equals("")){
 				this.getNextFreePos();
 				this.Lager[this.next.getRegal()][this.next.getPlatz()] = bar.getId();
-				bar.setPosition(this.getLagerType() + this.next.getRegal()  + "-" +  this.next.getPlatz());
+				int x = this.next.getRegal()+1;
+				int y = this.next.getPlatz()+1;
+				bar.setPosition(this.getLagerType() + x  + "-" + y );
 				System.out.println(bar.getPosition());
 			}
-//			departmentRepository.save(barrelstock);
 			this.next = null;
 		}
 		}
 		else {
 			for(Barrel bar:allBarrels){
-				boolean barLeer = !bar.getQuality().equals("");
-				if(bar.getPosition().equals("")&&barLeer){
+
+				if(bar.getPosition().equals("")&&!bar.getQuality().equals("")){
 					this.getNextFreePos();
 					this.Lager[this.next.getRegal()][this.next.getPlatz()] = bar.getId();
-					bar.setPosition(this.getLagerType() + this.next.getRegal()  + "-" +  this.next.getPlatz());
+					int x = this.next.getRegal()+1;
+					int y = this.next.getPlatz()+1;
+					bar.setPosition(this.getLagerType() + x  + "-" + y );
 					System.out.println(bar.getPosition());
 				}
-//				departmentRepository.save(barrelstock);
 				this.next = null;
 			}
 		}
 	
+	}
+	
+	private void resetLager(){
+		List<Barrel> allBarrels = barrelstock.getBarrels();
+		int x=0;
+		for (Barrel barrel: allBarrels)
+		{
+		for(Integer i = 1;i<= AnzahlRegale;i++){
+			for(Integer j =1;i<= AnzahlPlatzeProRegal;j++){
+
+					if (barrel.getId()==Lager[i][j])
+					{
+						x++;
+					}
+				}
+				//TO DO , pruefe ob der Fass mit dem folgenden ID aus der Matrix immer noch existiert in der DatenBank,
+				// wenn nicht dann lösche ihn aus der LagerMatrix (Lager[i][j] = null).
+			}
+		
+		}	
+		
 	}
 	
 	public void getNextFreePos(){
@@ -82,8 +102,8 @@ public class LagerMatrix {
 //			i = this.next.getRegal();
 //			j = this.next.getPlatz();
 //		}
-			for(Integer i =0;i< AnzahlRegale;i++){
-				for(Integer j =0;j< AnzahlPlatzeProRegal;j++){
+			for(Integer i =AnzahlRegale-1;i>=0;i--){
+				for(Integer j =AnzahlPlatzeProRegal-1;j>=0 ;j--){
 					if(Lager[i][j] == null){
 						this.next = new Pair(i,j);
 						i = this.next.getRegal();
