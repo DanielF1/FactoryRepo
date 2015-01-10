@@ -17,7 +17,7 @@ public class Article extends Product{
 		private String cognacart;
 
 		/* 
-		 * leerer Konstruktor
+		 * default Konstruktor
 		 */
 		public Article(){}
 		
