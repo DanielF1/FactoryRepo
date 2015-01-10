@@ -17,8 +17,15 @@ public class Income {
 	private double value;
 	private String sortOf;
 	
+	/*
+	 * leerer Konstruktor
+	 */
+	@Deprecated
 	public Income(){}
 	
+	/*
+	 * Konstruktor
+	 */
 	public Income(String customer, LocalDate date, double value, String sortOf) {
 		this.customer = customer;
 		this.date = date;
@@ -26,6 +33,9 @@ public class Income {
 		this.sortOf = sortOf;
 	}
 
+	/*
+	 * Getter und Setter
+	 */
 	public String getCustomer() {
 		return customer;
 	}

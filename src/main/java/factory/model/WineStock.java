@@ -10,15 +10,24 @@ public class WineStock extends Department {
 	
 	private double amount;
 	
+	/*
+	 * leerer Konstruktor
+	 */
 	@Deprecated
 	public WineStock() {}
 	
+	/*
+	 * Konstruktor
+	 */
 	public WineStock(String name, double amount) 
 	{
 		super(name);
 		this.amount = amount;
 	}
 
+	/*
+	 * KGetter und Setter
+	 */
 	public double getAmount() {
 		return amount;
 	}

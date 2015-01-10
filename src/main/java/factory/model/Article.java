@@ -17,11 +17,17 @@ public class Article extends Product{
 		private String cognacart;
 		private double income;
 
+
+		/* 
+		 * leerer Konstruktor
+		 */
 		@Deprecated
 		public Article(){}
 		
-		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, double volumen, String cognacart, double income) {
-			
+		/*
+		 * Konstruktor
+		 */
+		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, double volumen, String cognacart) {
 			super(name, preis, Units.METRIC);
 			
 			this.image = image;
@@ -29,8 +35,11 @@ public class Article extends Product{
 			this.alkoholgehalt = alkoholgehalt;
 			this.volumen = volumen;
 			this.cognacart = cognacart;
-			this.setIncome(income);
 		}
+		
+		/*	
+		* Getter und Setter
+		*/
 		
 		public String getImage(){
 			return this.image;
@@ -45,11 +54,6 @@ public class Article extends Product{
 			return this.alter;
 		}
 		
-	/*	
-		public String setAlter(){
-			return alter;
-		}
-		*/
 		
 		public void setAlter(String Alter){
 			
@@ -86,13 +90,4 @@ public class Article extends Product{
 		public void delete(Long id) {
 			
 		}
-
-		public double getIncome() {
-			return income;
-		}
-
-		public void setIncome(double income) {
-			this.income = income;
-		}	
-
 }

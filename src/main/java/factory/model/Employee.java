@@ -35,12 +35,18 @@ public class Employee {
 	@NotEmpty(message = "{RegistrationForm.address.NotEmpty}")
 	private String address;
 	
+	/*
+	 * leerer Konstruktor
+	 */
 	@Deprecated
 	public Employee(){}
 	
 	@OneToOne
 	private UserAccount userAccount;
 	
+	/*
+	 * Konstruktor
+	 */
 	public Employee(UserAccount userAccount, String username, String password, String workplace, String name, String firstname,
 			String salary, String mail, String address) {
 		this.workplace = workplace;
@@ -54,6 +60,9 @@ public class Employee {
 		this.password = password;
 	}
 	
+	/*
+	 * Getter und Setter
+	 */
 	public UserAccount getUserAccount() {
 		return userAccount;
 	}

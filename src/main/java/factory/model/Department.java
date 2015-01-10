@@ -12,6 +12,9 @@ public class Department {
 	private Long id;
 	private String name;
 
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	public Department(){}
 
@@ -19,6 +22,9 @@ public class Department {
 		this.name = name;
 	}
 	
+	/*
+	 * Getter und Setter
+	 */
 	public String getName() {
 		return name;
 	}

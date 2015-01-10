@@ -12,7 +12,9 @@ public class MaxStore {
 	private int age;
 	private double amount;
 	
-	
+	/*
+	 * Konstruktor
+	 */
 	public MaxStore(String quality,int age, double amount) 
 	{
 		this.quality = quality;
@@ -20,7 +22,9 @@ public class MaxStore {
 		this.amount = amount;
 	}
 
-
+	/*
+	 * Getter und Setter
+	 */
 	public String getQuality() {
 		return quality;
 	}
@@ -46,6 +50,4 @@ public class MaxStore {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	
-	
 }

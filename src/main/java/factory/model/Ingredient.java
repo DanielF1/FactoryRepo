@@ -13,6 +13,9 @@ public class Ingredient {
 	private double amount;
 	private String unit;
 	
+	/*
+	 * Konstruktor
+	 */
 	public Ingredient(String quality, int age, double amount, String unit) {
 		this.quality = quality;
 		this.age = age;
@@ -20,11 +23,14 @@ public class Ingredient {
 		this.unit = unit;
 	}
 
+	/*
+	 * leerer Konstruktor
+	 */
 	public Ingredient(){}
 
 	
 	/*
-	 * Getter & Setter
+	 * Getter und Setter
 	 */
 	public String getQuality() {
 		return quality;

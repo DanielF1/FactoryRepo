@@ -15,16 +15,24 @@ public class BottleStock extends Department{
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Bottle> bottles;	
 
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	public BottleStock(){}
 	
+	/*
+	 * Konstruktor
+	 */
 	public BottleStock(String name, List<Bottle> bottles/*, List<Bottle> fullbottles*/){
 		
 		super(name);
 		this.bottles = bottles;
 		
 	}
-
+	/*
+	 * Getter und Setter
+	 */
 	public List<Bottle> getBottles() {
 		return bottles;
 	}

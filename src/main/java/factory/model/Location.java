@@ -33,12 +33,16 @@ public class Location {
 	private List<Department> departments;
 
 	
-	
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	public Location() {
 	}
 
-
+	/*
+	 * Konstruktor
+	 */
 	public Location(String name, String address, String city, String telefon,
 			String mail, List<Employee> employees, List<Department> departments) {
 		this.name = name;
@@ -55,6 +59,10 @@ public class Location {
 //		return getProductionManagementDepartment().getWineQuantity();
 //	}
 
+	
+	/*
+	 * Getter und Setter
+	 */
 	public String getName() {
 		return name;
 	}
@@ -115,6 +123,10 @@ public class Location {
 		return departments;
 	}
 
+	
+	/*
+	 * 
+	 */
 	public WineStock getWineStockDepartment() {
 	
 		List<Department> deps = this.getDepartments();

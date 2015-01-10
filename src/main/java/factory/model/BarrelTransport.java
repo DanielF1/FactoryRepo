@@ -28,7 +28,7 @@ public class BarrelTransport {
 	private boolean arrived = false;
 	
 	/*
-	 * constructor
+	 * Konstruktor
 	 */
 	public BarrelTransport(List<Location> starting_point, List<Location> goal,
 			List<BarrelForTransport> barrels, LocalDateTime start_date, LocalDateTime goal_date) {

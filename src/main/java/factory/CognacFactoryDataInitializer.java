@@ -416,22 +416,22 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		// Die Bilder sind von der Internetseite: http://de.123rf.com und  http://www.pixelio.de
 		
 
-		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %",1, "Cognac", 46.95);
+		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %",1, "Cognac");
 		articleRepository.save(article1);
 		
-		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %",0.7,"Cognac", 41.90);
+		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article2);
 
-		Article article3 = new Article("chabassenapoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %",0.7,"Cognac", 79.90);
+		Article article3 = new Article("chabassenapoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article3);
 		
-		Article article4 = new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %",0.7,"Cognac", 97.95);
+		Article article4 = new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article4);
 		
-		Article article5 = new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %",0.7,"Cognac", 46.95);
+		Article article5 = new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %",0.7,"Cognac");
 		articleRepository.save(article5);
 		
-		Article article6 = new Article("monnet", "Monnet Cognac", "5 Jahre", Money.of(EUR, 26.95), "40,0 %",0.7,"Cognac", 26.95);
+		Article article6 = new Article("monnet", "Monnet Cognac", "5 Jahre", Money.of(EUR, 26.95), "40,0 %",0.7,"Cognac");
 		articleRepository.save(article6); 		
 				
 		InventoryItem i1 = new InventoryItem(article1, Units.ONE);
