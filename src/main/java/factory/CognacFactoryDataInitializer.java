@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import factory.model.Accountancy;
+import factory.model.AdminTasksManager;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;
@@ -61,6 +62,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final CookBookRepository cookbookrepository;
 	private final DeliveryRepository deliveryRepository;
 	private final IncomeRepository incomeRepository;
+	private final AdminTasksManager adminTasksManager;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager,
@@ -72,7 +74,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										CookBookRepository cookbookrepository, 
 										DeliveryRepository deliveryRepository,
 										Inventory<InventoryItem> inventory,
-										IncomeRepository incomeRepository) {
+										IncomeRepository incomeRepository,
+										AdminTasksManager adminTasksManager) {
 
 		
 		Assert.notNull(locationRepository, "LocationRepository must not be null!");
@@ -93,6 +96,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.deliveryRepository = deliveryRepository;
 		this.inventory = inventory;
 		this.incomeRepository = incomeRepository;
+		this.adminTasksManager = adminTasksManager;
 	}
 
 	@Override
@@ -102,7 +106,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 											employeeRepository, 
 											userAccountManager, 
 											customerRepository,
-											incomeRepository);
+											incomeRepository,
+											adminTasksManager);
 		
 		initializeSortiment(inventory);
 		initializeCookBook(cookbookrepository);
@@ -114,7 +119,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 													EmployeeRepository employeeRepository, 
 													UserAccountManager userAccountManager, 
 													CustomerRepository customerRepository,
-													IncomeRepository incomeRepository) {
+													IncomeRepository incomeRepository,
+													AdminTasksManager adminTasksManager) {
 	
 		/*
 		 * initialize barrels
@@ -401,11 +407,13 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		customerRepository.save(c1);
 		
 		
-		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 6, 8), 46.95, "Produktkauf"));
-		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 11, 18), 46.95, "Produktkauf"));
-		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 12, 24), 46.95, "Produktkauf"));
-		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2014, 7, 28), 46.95, "Produktkauf"));
-		incomeRepository.save(new Income("Peter Peterson", LocalDate.of(2014, 7, 14), 46.95, "Produktkauf"));
+		adminTasksManager.EmployeeExpenditures();
+		
+		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 6, 8), 526.95, "Produktkauf"));
+		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 11, 18), 726.95, "Produktkauf"));
+		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 12, 24), 326.95, "Produktkauf"));
+		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2014, 7, 28), 226.95, "Produktkauf"));
+		incomeRepository.save(new Income("Peter Peterson", LocalDate.of(2014, 7, 14), 426.95, "Produktkauf"));
 	}
 	
 	/*

@@ -40,6 +40,15 @@ public class AdminTasksManager {
 		this.incomeRepository = incomeRepository;
 	}
 	
+	/**
+	 * Erzeugt einen neuen Standort und fügt ihn zum Repository hinzu
+	 * 
+	 * @param name ist der Name des neuen Standortes
+	 * @param address ist die Straße des neuen Standortes
+	 * @param city  ist PLZ/Ort des neuen Standortes
+	 * @param telefon ist die Telefonnummer des neuen Standortes
+	 * @param mail ist die E-Mail des neuen Standortes
+	 */
 	public void addLocation(String name,String address, String city, String telefon, String mail){
 		
 		List<Employee> emp = new ArrayList<Employee>();
@@ -49,7 +58,16 @@ public class AdminTasksManager {
     	locationRepository.save(location);
 	}
 	
-	
+	/**
+	 * Daten eines bestehenden Standortes werden geändert und abgespeichert
+	 * 
+	 * @param name ist der Name der geändert wird
+	 * @param address ist die Straße die geändert wird
+	 * @param city ist die PLZ/Ort der geändert wird
+	 * @param telefon ist die Telefonnummer die geändert wird
+	 * @param mail ist die E-Mail die geändert wird
+	 * @param id Identifier des zu ändernden Standortes
+	 */
 	public void editLocation(String name,String address, String city, String telefon, String mail, Long id){
 		
 		Location location = locationRepository.findOne(id);
@@ -62,6 +80,11 @@ public class AdminTasksManager {
 		locationRepository.save(location);
 	}
 	
+	/**
+	 * Löscht einen Standort aus dem Repository und die darin enthaltenen Listen
+	 * 
+	 * @param id Identifier des zu löschenden Standortes
+	 */
 	public void deleteLocation(Long id){
 		
 		Location location = locationRepository.findOne(id);
@@ -72,7 +95,19 @@ public class AdminTasksManager {
 		locationRepository.delete(location);
 	}
 	
-	
+	/**
+	 * Neuer Mitarbeiter wird in das Mitarbeiter-Repository und einen Standort eingetragen
+	 * 
+	 * @param username Benutzername des neuen Mitarbeiters
+	 * @param password Passwort des neuen Mitarbeiters
+	 * @param location Standort, in den er eingefügt wird
+	 * @param workplace Arbeitsplatz des neuen Mitarbeiters
+	 * @param name Familienname des neuen Mitarbeiters
+	 * @param firstname Vorname des neuen Mitarbeiters
+	 * @param salary Gehalt des neuen Mitarbeiters
+	 * @param mail E-Mail des neuen Mitarbeiters
+	 * @param address Addresse des neuen Mitarbeiters
+	 */
 	public void addEmployee(String username,
 							String password,
 							String location, 
@@ -141,7 +176,16 @@ public class AdminTasksManager {
 		}
 	}
 	
-	
+	/**
+	 * Daten eines bestehenden Mitarbeites werden geändert und abgespeichert
+	 * 
+	 * @param username Benutzername des Mitarbeites
+	 * @param familyname Familienname des Mitarbeites
+	 * @param firstname Vorname des Mitarbeites
+	 * @param salary Gehalt des Mitarbeites
+	 * @param mail E-Mail des Mitarbeites
+	 * @param address Addresse des Mitarbeites
+	 */
 	public void editEmployee(	String username, 
 								String familyname, 
 								String firstname, 
@@ -160,6 +204,12 @@ public class AdminTasksManager {
 		employeeRepository.save(employee);
 	}
 	
+	
+	/**
+	 * Löscht einen Mitarbeiter aus der Mitarbeiterliste eines Standortes und aus dem Mitarbeiter-Repository
+	 * 
+	 * @param id Identifier des zu löschenden Mitarbeiters
+	 */
 	public void dismissEmployee(Long id){
 		Employee employee = employeeRepository.findOne(id);
 		
@@ -176,7 +226,14 @@ public class AdminTasksManager {
 		}
 	}
 	
-	
+	/**
+	 * Daten eines Kunden werden geändert und gespeichert
+	 * 
+	 * @param username Benutzername des Kunden
+	 * @param familyname Familienname des Kunden
+	 * @param firstname Vorname des Kunden
+	 * @param address Addresse des Kunden
+	 */
 	public void editCustomer(	String username,  
 								String familyname, 
 								String firstname, 
@@ -189,6 +246,13 @@ public class AdminTasksManager {
 		customerRepository.save(customer);
 	}
 		
+	/**
+	 * Fügt einem Standort eine neue Abteilung hinzu, wenn diese nicht schon vorhanden ist
+	 * 
+	 * @param id Identifier des Standortes
+	 * @param sort Art der Abteilung, die hinzugefügt werden soll
+	 * @return Weiterleitung auf die Standortübersicht
+	 */
 	public String addDepartment(Long id, String sort){
 		
 		Department department = new Department(sort);
@@ -205,6 +269,16 @@ public class AdminTasksManager {
 		return "redirect:/adminLocList";
 	}
 
+	/**
+	 * Daten eines Mitarbeiters werden geändert und im Mitarbeiter-Repository abgespeichert
+	 * 
+	 * @param username Benutzername des Mitarbeiters
+	 * @param workplace Arbeitsplatz des Mitarbeiters
+	 * @param familyname Familienname des Mitarbeiters
+	 * @param firstname Vorname des Mitarbeiters
+	 * @param mail E-Mail des Mitarbeiters
+	 * @param address Addresse des Mitarbeiters
+	 */
 	public void editEmployeeData(	String username, 
 									String workplace,
 									String familyname, 
@@ -221,7 +295,15 @@ public class AdminTasksManager {
 		
 		employeeRepository.save(employee);
 	}
-	
+		
+	/**
+	 * Daten eines Kunden werden geändert und im Kunden-Repository abgespeichert
+	 * 
+	 * @param username Benutzername des Kunden
+	 * @param familyname Familienname des Kunden
+	 * @param firstname Vorname des Kunden
+	 * @param address Addresse des Kunden
+	 */
 	public void editCustomerData(	String username,
 									String familyname, 
 									String firstname, 
@@ -235,6 +317,10 @@ public class AdminTasksManager {
     	customerRepository.save(customer);	
 	}
 	
+	
+	/**
+	 * Summiert alle Gehälter der Arbeiter und fügt für einen festgelegten Zeitraum Ausgaben in Höhe dieser Summe hinzu
+	 */
 	public void EmployeeExpenditures(){
 		
 		double totalSalary = 0;
@@ -250,6 +336,12 @@ public class AdminTasksManager {
 		}
 	}
 	
+	
+	/**
+	 * Summiert alle Einkommen, die sich im Income-Repository befinden, auf
+	 * 
+	 * @return Summe aller Einkommen als double
+	 */
 	public double summUpIncome(){
 		double summ = 0;
 		
@@ -261,6 +353,11 @@ public class AdminTasksManager {
 		return summ;
 	}
 	
+	/**
+	 * Summiert alle Ausgaben, die sich im Expenditure-Repository befinden, auf
+	 * 
+	 * @return Summe aller Ausgaben als double
+	 */
 	public double summUpExpenditure(){
 		double summ = 0;
 		

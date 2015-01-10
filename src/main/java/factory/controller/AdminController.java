@@ -271,7 +271,6 @@ class AdminController {
 	    @RequestMapping(value = "/accountancy", method = RequestMethod.GET)
 		public String accountancyOverview(ModelMap modelMap){
 
-	    	adminTasksManager.EmployeeExpenditures();
 	    	double income = adminTasksManager.summUpIncome();
 	    	double expenditure = adminTasksManager.summUpExpenditure();
 	    	
@@ -294,7 +293,7 @@ class AdminController {
 	    @RequestMapping(value = "/expenditure", method = RequestMethod.GET)
 		public String expenditureOverview(ModelMap modelMap){
 
-	    	adminTasksManager.EmployeeExpenditures();
+	    	
 //	    	List<Expenditure> list = new ArrayList<>();
 //	    	for(Expenditure e : expenditureRepository.findAll()){
 //	    		if(e.getDate().getMonth().equals(LocalDate.now().getMonth())){
