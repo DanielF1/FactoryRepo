@@ -51,7 +51,9 @@ public class Verkaeufercontroller {
 		this.adminTasksManager = adminTasksManager;
 	}	
 	
-	
+	/*
+	 * Abgeschlossene Bestellungen werden angezeigt 
+	 */
 	@RequestMapping("/orders")
 	public String orders(ModelMap modelMap) {
 
@@ -60,6 +62,9 @@ public class Verkaeufercontroller {
 		return "orders";
 	}
 	
+	/*
+	 * Anzeigen der Kundenliste
+	 */
 	@RequestMapping("/customerlist")
 	public String customerlist(ModelMap modelMap) {
 
@@ -68,6 +73,9 @@ public class Verkaeufercontroller {
 		return "customerlist";
 	}
 
+	/*
+	 * Registrierung vom Verkäufer von neuen Kunden
+	 */
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
 			BindingResult result) {
@@ -83,12 +91,18 @@ public class Verkaeufercontroller {
 		return "redirect:/";
 	}
 
+	/*
+	 * Formular für Kundenregistrierung
+	 */
 	@RequestMapping("/register")
 	public String register(ModelMap modelMap) {
 		modelMap.addAttribute("registrationForm", new RegistrationForm());
 		return "register";
 	}
 
+	/*
+	 * Schnellauswahl der Artikel für den Verkäufer 
+	 */
 	@RequestMapping(value = "/saleSortiment", method = RequestMethod.GET)
 	public String buyForCustomer(Model model){
 		
@@ -97,6 +111,9 @@ public class Verkaeufercontroller {
 		return "saleSortiment";
 	}
 
+	/*
+	 * Kundendaten bearbeiten
+	 */
 	@RequestMapping(value="/editCustomer/{id}", method = RequestMethod.GET)
 	public String editEmployee(@PathVariable Long id, Model model, Customer customer){
 			
@@ -105,6 +122,9 @@ public class Verkaeufercontroller {
 		return "editCustomer";
 	} 
 	 
+	/*
+	 * Kundendaten speichern
+	 */
 	@RequestMapping(value="/editCustomer", method = RequestMethod.POST)
 	public String editEmployee(	@Valid Customer customer,
 								BindingResult bindingResult,
@@ -120,9 +140,4 @@ public class Verkaeufercontroller {
 		
 		return "redirect:/customerlist";
 		}
-	
-	
-	
-	
-	
 }
