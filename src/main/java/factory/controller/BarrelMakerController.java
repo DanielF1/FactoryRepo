@@ -28,6 +28,7 @@ import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.Expenditure;
 import factory.model.ExpenditureRepository;
+import factory.model.LagerMatrix;
 import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.validation.InsertBarrel;
@@ -41,6 +42,8 @@ public class BarrelMakerController {
 	private final DepartmentRepository departmentRepository;
 	private BarrelStock barrelstock;
 	private final ExpenditureRepository expenditureRepository;
+	private LagerMatrix lagerFurLeereFasser;
+	private LagerMatrix lagerFurVolleFasser;
 	boolean check = false;
 
 	
@@ -53,8 +56,13 @@ public class BarrelMakerController {
 		this.barrelstock = barrelstock;
 		this.departmentRepository = departmentRepository;
 		this.expenditureRepository = expenditureRepository;
+		this.lagerFurLeereFasser = new LagerMatrix(departmentRepository,barrelstock,"FLL-R");
+		this.lagerFurVolleFasser = new LagerMatrix(departmentRepository,barrelstock,"FLV-R");
 	}
 
+	/*
+	 Die double Zahlen werden auf 2 Nachkommastellen gerundet
+	 */
 
 	public double Runden2Dezimal(double x) { 
 		double Ergebnis;
@@ -72,6 +80,9 @@ public class BarrelMakerController {
 		
 	}
 	
+	/*
+	 Hier wird der Engelanteil jedes Fasses berechnet, weil die Inhalte des Fasses jedes Jahr um 3% verringert
+	 */
 	public void engelAnteilBesuechtigen(){
 		List<Barrel> allBarrels = barrelstock.getBarrels();
 		int datecount = 0;
@@ -90,9 +101,8 @@ public class BarrelMakerController {
 			int Jahre=datecount/365; //wie lang destillat zu letzten mal in fässern erfüllt wurde
 			for (int i = 1; i <= Jahre; i++)
 			{
-			
 				barrel.setContent_amount(0.97*barrel.getContent_amount());
-				
+
 			}
 
 			barrel.setContent_amount(Runden2Dezimal(barrel.getContent_amount()));
@@ -101,6 +111,11 @@ public class BarrelMakerController {
 		departmentRepository.save(barrelstock);
 
 	}
+	
+
+	/*
+	 Die Fassliste wird an dem Browser angezeigt
+	 */
 	
 	@RequestMapping("/BarrelList")
 	public String barrel(ModelMap modelMap, @LoggedIn Optional<UserAccount> userAccount) {
@@ -127,6 +142,9 @@ public class BarrelMakerController {
 		return "BarrelList";
 	}
 
+	/*
+	 Hier wird ein Fass oder werden mehrere Fässer in der Fassliste hinzugefügt. 
+	 */
 	@RequestMapping("/insertBarrel")
 	public String insertBarrel(
 			@RequestParam("Barrel_volume") String barrel_volume,
@@ -159,18 +177,22 @@ public class BarrelMakerController {
 //			}//for
 //		}//for
 		
-		
-		
+
 		departmentRepository.save(barrelstock);
 		return "redirect:/BarrelList";
 	}
-
+	/*
+	 Falls die Eingaben des Formular, um Fässer hinzuzufügen, nicht richtig sind,
+	 wird das Formular mit Fehlermeldungen wieder angezeigt
+	 */
 	@RequestMapping("/inserted")
 	public String inserted(ModelMap modelMap) {
 		modelMap.addAttribute("insertBarrel", new InsertBarrel());
 		return "inserted";
 	}
-
+	/*
+	 Wenn das Fass zu alt ist, wird es entfernt
+	 */
 	@RequestMapping(value = "/deleteBarrel/{index}", method = RequestMethod.GET)
 	public String deleteBarrel(@PathVariable("index") int index, ModelMap modelMap) {
 
@@ -200,6 +222,10 @@ public class BarrelMakerController {
 		departmentRepository.save(barrelstock);
 		return "redirect:/BarrelList";
 	}
+	
+	/*
+	 Um den Lagerplatz zu sparen, werden die Inhalte gleichalten Alters der Fässer zusammenschütten 
+	 */
 	@RequestMapping(value = "/putBarrelstogether")
 	public String putBarrelsTogether(ModelMap modelMap) {
 
@@ -275,44 +301,46 @@ public class BarrelMakerController {
 		return "redirect:/BarrelList";
 	}
 	
-//	@RequestMapping(value ="/ageCalculate")
-	
-	
-	
+	/*
+	 Die Fässer werden im Lager zugeordnet
+	 */
 	@RequestMapping(value = "/fassZuordnen")
-	public String fassZuordnen(ModelMap modelMap){
-		List<Barrel> allBarrels = barrelstock.getBarrels();
-		int FLL_RegalNr = 1;
-		int FLV_RegalNr = 1;
-		int FLL_Platz = 1;
-		int FLV_Platz = 1;
-		int MAX_PLATZ_IM_REGAL = 5;
-		for (Barrel barrel:allBarrels)
-		{
-			if (barrel.getQuality().equals("")){
-				barrel.setPosition("FLL-R" + FLL_RegalNr +"-"+ FLL_Platz);	
-				if (FLL_Platz < MAX_PLATZ_IM_REGAL){
-					FLL_Platz++;
-				}
-				else{
-					FLL_Platz = 1;
-					FLL_RegalNr++;
-				}
-				
-			}
-			if (!barrel.getQuality().equals("")){
-				barrel.setPosition("FLV-R" + FLV_RegalNr +"-"+ FLV_Platz);
-				if (FLV_Platz < MAX_PLATZ_IM_REGAL){
-					FLV_Platz++;
-				}
-				else{
-					FLV_Platz = 1;
-					FLV_RegalNr++;
-				}
-			}
-			
-		}
+	public String fassZuordnen(){
+//		List<Barrel> allBarrels = barrelstock.getBarrels();
+//		int FLL_RegalNr = 1;
+//		int FLV_RegalNr = 1;
+//		int FLL_Platz = 1;
+//		int FLV_Platz = 1;
+//		int MAX_PLATZ_IM_REGAL = 5;
+//		for (Barrel barrel:allBarrels)
+//		{
+//			if (barrel.getQuality().equals("")){
+//				barrel.setPosition("FLL-R" + FLL_RegalNr +"-"+ FLL_Platz);	
+//				if (FLL_Platz < MAX_PLATZ_IM_REGAL){
+//					FLL_Platz++;
+//				}
+//				else{
+//					FLL_Platz = 1;
+//					FLL_RegalNr++;
+//				}
+//				
+//			}
+//			if (!barrel.getQuality().equals("")){
+//				barrel.setPosition("FLV-R" + FLV_RegalNr +"-"+ FLV_Platz);
+//				if (FLV_Platz < MAX_PLATZ_IM_REGAL){
+//					FLV_Platz++;
+//				}
+//				else{
+//					FLV_Platz = 1;
+//					FLV_RegalNr++;
+//				}
+//			}
+		this.lagerFurVolleFasser.zuordnen(barrelstock.getBarrels());
+		departmentRepository.save(barrelstock);
+		this.lagerFurLeereFasser.zuordnen(barrelstock.getBarrels());
 		departmentRepository.save(barrelstock);
 		return "redirect:/BarrelList";
+		
+//		return "redirect:/BarrelList";
 	}
 }

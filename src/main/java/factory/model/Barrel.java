@@ -126,7 +126,7 @@ public class Barrel {
 	}
 	
 	/*
-	 * 
+	 Diese Funktion berechnet den Alter der Destille 
 	 */
 	public int getAge(){
 		int datecount =0;
@@ -142,8 +142,7 @@ public class Barrel {
 				{
 					age = 0;
 				}
-		System.out.println(getContent_amount()+ " Date count" + datecount + " alter" + age);
-		System.out.println(getBarrel_volume()+ " Date count" + datecount + " alter" + age);
+		
 		return age;
 	}
 }
