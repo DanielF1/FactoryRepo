@@ -22,7 +22,7 @@ public class BarrelTransport {
 	private List<Location> goal;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Barrel> barrels;
+	private List<BarrelForTransport> barrels;
 
 	private LocalDateTime start_date;
 	private LocalDateTime goal_date;
@@ -32,7 +32,7 @@ public class BarrelTransport {
 	 * constructor
 	 */
 	public BarrelTransport(List<Location> starting_point, List<Location> goal,
-			List<Barrel> barrels, LocalDateTime start_date, LocalDateTime goal_date) {
+			List<BarrelForTransport> barrels, LocalDateTime start_date, LocalDateTime goal_date) {
 		this.starting_point = starting_point;
 		this.goal = goal;
 		this.barrels = barrels;
@@ -78,11 +78,11 @@ public class BarrelTransport {
 		this.goal = goal;
 	}
 
-	public List<Barrel> getBarrels() {
+	public List<BarrelForTransport> getBarrels() {
 		return barrels;
 	}
 
-	public void setBarrels(List<Barrel> barrels) {
+	public void setBarrels(List<BarrelForTransport> barrels) {
 		this.barrels = barrels;
 	}
 

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Lager</title>
+
+	<!-- JS dependencies -->
+	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
+	<script src="../resources/js/docs.min.js"></script>
+	
+	<!-- CSS dependencies -->
+	<link href="../resources/css/style.css" rel="stylesheet" />
+		<img src="../resources/img/wein.jpg" class="header"/>
+</head>
+
+<body>
+<div class="main-wrapper">
+	<!-- Header -->
+	<div class="col-lg-7"></div>
+
+	<!-- Log in / Log out navigation -->
+	<div class="col-lg-5 logNavi">	
+		<nav th:include="login :: login"></nav>
+	</div>
+	<!-- Log in / Log out navigation -->
+
+	<div class="col-lg-2"></div>
+
+	<!-- navigation -->
+	<div class="col-lg-8 navigation">
+
+		<nav th:include="navigation :: navigation"></nav>
+	</div>
+	<!-- /navigation -->
+
+	<div class="col-lg-2"></div>
+
+	<div class="header">
+		<div class="header-title">Cognac Fabrik <br/>Feuerwasser</div>
+	</div>
+	<!-- /Header -->
+	
+	<!-- Container -->
+	<div class="main-container content">
+		<div class="col-lg-12">	
+			<!-- barrel stock -->
+			<div class="col-lg-6">
+				<h3>Fasslager</h3>
+				<table class="table table-condensed">
+					<tr class="success">
+						<th class="text-center">Qualität</th>
+						<th class="text-center">Alter</th>
+						<th class="text-center">Menge</th>
+					</tr>
+					<tr th:each="maxstore : ${barrelstock_store}" class="text-center">
+						<td><span th:text="${maxstore.quality}"></span></td>
+						<td><span th:text="${maxstore.age}"></span></td>
+						<td><span th:text="${maxstore.amount}"></span></td>
+					</tr>
+				</table>
+			</div>
+			<!-- /barrel stock -->
+
+			<!-- bottle stock -->
+			<div class="col-lg-6">
+				<h3>Flaschenlager</h3>
+				<table class="table table-condensed">
+					<tr class="success">
+						<th class="text-center">Name</th>
+						<th class="text-center">Anzahl</th>
+						<th class="text-center">Volumen</th>
+					</tr>
+
+					<tr th:each="maxBottleStore : ${bottlestock_store}">
+						<td class="text-center"><span th:text="${maxBottleStore.name}"></span></td>
+						<td class="text-center"><span th:text="${maxBottleStore.quantity}"></span></td>
+						<td class="text-center"><span th:text="${maxBottleStore.amount}"></span></td>
+					</tr>	
+				</table>
+			</div>
+			<!-- /bottle stock -->
+			
+			<!-- wine stock -->
+<!-- 			<div class="col-lg-4"> -->
+<!-- 				<h3>Weinlager</h3> -->
+<!-- 				<table class="table table-condensed"> -->
+<!-- 					<tr class="success"> -->
+<!-- 						<th class="text-center">Vorhandene Menge an Wein</th> -->
+<!-- 					</tr> -->
+<!-- 					<tr th:each="wine : ${wine_store}"> -->
+<!-- 						<td class="text-center"><span th:text="${wine.amount}"></span></td> -->
+<!-- 					</tr> -->
+<!-- 				</table>		 -->
+<!-- 			</div> -->
+			<!-- wine stock -->
+			
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -64,14 +64,15 @@
 					<td class="text-center" th:text="${article.volumen}"></td>
 					<td class="text-center" th:text="${article.cognacart}"></td>
 					<td class="text-center" th:text="${article.price}"></td>
-					<td>
-						<form method="post" action="/cart">
-							<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" />
-							<input type="hidden" name="pid" th:value="${article.identifier}" /> 
-							<td><button class="btn btn-default" type="submit">
-							<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Artikel hinzuf&uuml;gen</button></td>
-						</form>
-					</td>							
+					
+					<form method="post" action="/cart">
+					<td class="text-center">
+						<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" />
+						<input type="hidden" name="pid" th:value="${article.identifier}" /> 
+					</td>
+					<td class="text-center"><button class="btn btn-default" type="submit">
+						<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Artikel hinzuf&uuml;gen</button></td>
+					</form>						
 				</tr>
 			</table>
 		</div>

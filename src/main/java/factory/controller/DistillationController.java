@@ -78,7 +78,6 @@ public class DistillationController {
 								}
 								
 								departmentrepository.save(barrelstock);
-			
 							}
 							}
 						}
@@ -89,10 +88,68 @@ public class DistillationController {
 	}
 	
 	
-	
 	/*
 	 * check the status of stills
 	 */
+	public Still stillCaseProcess(Still still)
+	{
+		LocalDateTime still_process_start_time = still.getStill_process_start_time();
+		LocalDateTime still_process_end_time = still.getStill_process_end_time();
+
+		/*
+		 * =======================================================================
+		 *				(start time == null) && (end time == null)
+		 * =======================================================================
+		 */
+		if((still_process_start_time == null) && (still_process_end_time == null))
+		{
+			still.setStatus_one(0);
+			still.setStatus_two(0);
+			
+			still_process_start_time = LocalDateTime.now().plusYears(1000L);
+			still_process_end_time = LocalDateTime.now().plusYears(1000L);
+		}
+
+		/*
+		 * =======================================================================
+		 *		(local time > start time) && (local time < end time - one day)
+		 * =======================================================================
+		 */
+		
+		if((LocalDateTime.now().isAfter(still_process_start_time))
+				&& (LocalDateTime.now().isBefore(still_process_end_time.minusDays(1L))))
+		{
+			still.setStatus_one(1);
+			still.setStatus_two(0);
+		}
+			
+		/*
+		 * =======================================================================
+		 *		(local time > start time + one day) && (local time < end time)
+		 * =======================================================================
+		 */
+		if((LocalDateTime.now().isAfter(still_process_start_time.plusDays(1L)))
+				&& (LocalDateTime.now().isBefore(still_process_end_time)))
+		{
+			still.setStatus_one(2);
+			still.setStatus_two(1);
+		}
+		
+		/*
+		 * =======================================================================
+		 *		(local time > start time + one day) && (local time > end time)
+		 * =======================================================================
+		 */
+		if((LocalDateTime.now().isAfter(still_process_start_time.plusDays(1L)))
+				&& (LocalDateTime.now().isAfter(still_process_end_time)))
+		{
+			still.setStatus_one(2);
+			still.setStatus_two(2);
+		}	
+		
+		return still;
+	}
+
 	public void checkStillStatus(@LoggedIn Optional<UserAccount> userAccount) 
 	{
 		for(Location loc : locationRepository.findAll()){
@@ -100,88 +157,15 @@ public class DistillationController {
 				if(e.getUserAccount() == userAccount.get()){
 					for(Department dep : loc.getDepartments()){
 						if(dep.getName().contains("Produktion")){
-							production = (Production) dep;{
-								
+							production = (Production) dep;
+
 							for(Still still : production.getStills())
 							{
-								LocalDateTime still_process_start_time = still.getStill_process_start_time();
-								LocalDateTime still_process_end_time = still.getStill_process_end_time();
-								
-								/*
-								 * =======================================================================
-								 *					(start time == null) && (end time == null)
-								 * =======================================================================
-								 */
-								if((still_process_start_time == null) && (still_process_end_time == null))
-								{
-									still.setStatus_one(0);
-									still.setStatus_two(0);
-									
-//									LocalDateTime startDateTime = LocalDateTime.parse("0000-10-10T00:00");
-//									LocalDateTime endDateTime = LocalDateTime.parse("0000-10-10T00:00");
-//									
-//									still.setStill_process_start_time(startDateTime);
-//									still.setStill_process_end_time(endDateTime);
-									
-									departmentrepository.save(production);
-									
-//									still_process_start_time = still.getStill_process_start_time();
-//									still_process_end_time = still.getStill_process_end_time();
-								
-									break;
-								}
-								
-								/*
-								 * =======================================================================
-								 *		(local time > start time) && (local time < end time - one day)
-								 * =======================================================================
-								 */
-								if((LocalDateTime.now().compareTo(still_process_start_time) > 0)
-										&& (LocalDateTime.now().compareTo(still_process_end_time.minusDays(1)) < 0))
-								{
-									System.out.println("xxx " + still.getStill_process_start_time());
-									System.out.println("xxx " + still.getStill_process_end_time());
-									still.setStatus_one(1);
-									still.setStatus_two(0);
-									
-									departmentrepository.save(production);
-									
-									break;
-								}
-									
-								/*
-								 * =======================================================================
-								 *		(local time > start time + one day) && (local time < end time)
-								 * =======================================================================
-								 */
-								if((LocalDateTime.now().compareTo(still_process_start_time.plusDays(1)) > 0)
-										&& (LocalDateTime.now().compareTo(still_process_end_time) < 0))
-								{
-									still.setStatus_one(2);
-									still.setStatus_two(1);
-									
-									departmentrepository.save(production);
-									
-									break;
-								}
-								
-								/*
-								 * =======================================================================
-								 *		(local time > start time + one day) && (local time > end time)
-								 * =======================================================================
-								 */
-								if((LocalDateTime.now().compareTo(still_process_start_time.plusDays(1)) > 0)
-										&& (LocalDateTime.now().compareTo(still_process_end_time) > 0))
-								{
-									still.setStatus_one(2);
-									still.setStatus_two(2);
-									
-									departmentrepository.save(production);
-									
-									break;
-								}	
-							} // /for
+								still = stillCaseProcess(still);
 							}
+							
+							departmentrepository.save(production);
+							
 						} // /if
 					} // /for
 				} // /if
@@ -382,8 +366,6 @@ public class DistillationController {
 				}
 			}
 		}
-		System.out.println("still 1: " + status_one);
-		System.out.println("still 2: " + status_two);
 		
 		if((status_one == 2) && (status_two == 2))
 		{

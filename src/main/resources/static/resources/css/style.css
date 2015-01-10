@@ -3,6 +3,7 @@
 html, body {
 	font-family: Helvetica,Arial,sans-serif;
 	width: 100%;
+	min-height: 725px;
 	height: 100%;
 	padding: 0px;
 	margin: 0px;
@@ -40,11 +41,6 @@ b {font-size: 1.5em;}
 	font-weight: bold;
 	color: #fff;
 	margin: 50px 0 0 50px;
-}
-
-div.button{
-	
-	margin: 100px 0px;
 }
 
 div.list-group{
@@ -117,4 +113,8 @@ div.list-group{
 .nail{
 	width: 250px!important;
 	height: 450px!important;
+}
+
+.logg{
+	width: 10px!important;
 }

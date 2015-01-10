@@ -13,7 +13,13 @@
 	
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
-		<img src="../resources/img/wein.jpg" class="header"/>
+	<style type="text/css">
+	  .btnBack {margin-top: -56px; margin-left: 180px;}
+	  .btnShop {margin-top: -96px; margin-left: 385px;}
+	</style>
+	
+	
+	<img src="../resources/img/wein.jpg" class="header"/>	
 </head>
 
 <body>
@@ -38,6 +44,7 @@
 	<div class="col-lg-2"></div>
 
 	<div class="header">
+
 		<div class="header-title">Cognac Fabrik <br/>Feuerwasser</div>
 	</div>
 	<!-- /Header -->
@@ -57,36 +64,30 @@
 				<div class="col-lg-12"><span>Cognacart:</span> <span th:text="${article.cognacart}"></span></div>
 				<div class="col-lg-12"><span>Preis:</span> <span th:text="${article.price}"></span></div>
 				<div class="col-lg-12"><span>Vorrat:</span> <span th:text="${quantity}"></span></div><br />
-				<div class="col-lg-12" >
-				<ul class="nav nav-pills">
-					<li role="presentation" class="disabled">
-						<form  method="post" action="/cart" sec:authorize="hasAnyRole('ROLE_CUSTOMER' , 'ROLE_SUPERUSER')">
-							<span for="number">Anzahl:</span>
-							<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" />
-							<input type="hidden" name="pid" th:value="${article.identifier}" /> <br/>
-							<button class="btn btn-default btn-lg" name="searchterm">
-							<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Artikel hinzuf&uuml;gen</button>
-						</form>
-					</li>
-					<div class="button">
-					
-						<form method="get" action="/sortiment">
-							<button class="btn btn-default btn-lg" name="searchTerm">
-							<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Zur&uuml;ck zum Sortiment</button>
-						</form>
-			
-					<p></p>
-						<form  method="get" action="/cart">
-							<button class="btn btn-default btn-lg" name="searchterm" sec:authorize="hasRole('ROLE_CUSTOMER') ||  hasRole('ROLE_SUPERUSER')">
-							<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Zum Warenkorb gehen</button>
-						</form>	
-					
+				<div class="col-lg-12 pull-right" >
+					<form  method="post" action="/cart" sec:authorize="hasAnyRole('ROLE_CUSTOMER' , 'ROLE_SUPERUSER')">
+						<span for="number">Anzahl:</span>
+						<input  id="number" type="number" name="number" min="1" max="10" step="1" value="1" />
+						<input type="hidden" name="pid" th:value="${article.identifier}" /><br/><br/><br/>
+						<button class="btn btn-default" name="searchterm">
+						<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Artikel hinzuf&uuml;gen</button>
+					</form>
 					</div>
-				</ul>
+				<div class="col-lg-12" >
+					<form action="/sortiment">
+						<button class="btn btn-default btnBack" name="searchTerm">
+						<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Zur&uuml;ck zum Sortiment</button>
+					</form>
+				</div>
+				<div class="col-lg-12" >
+					<form  method="get" action="/cart">
+						<button class="btn btn-default btnShop" name="searchterm" sec:authorize="hasRole('ROLE_CUSTOMER') ||  hasRole('ROLE_SUPERUSER')">
+						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Zum Warenkorb gehen</button>
+					</form>	
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 </body>	

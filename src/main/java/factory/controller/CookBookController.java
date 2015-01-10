@@ -3,6 +3,7 @@ package factory.controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;
+import factory.model.BarrelForTransport;
 import factory.model.BarrelStock;
 import factory.model.BarrelTransport;
 import factory.model.BarrelTransportRepository;
@@ -41,6 +43,7 @@ import factory.model.LocationRepository;
 import factory.model.MaxBottleStore;
 import factory.model.MaxStore;
 import factory.model.Recipe;
+import factory.model.WineStock;
 
 
 @Controller
@@ -51,6 +54,7 @@ public class CookBookController {
 
 	BarrelStock barrelstock;
 	BottleStock bottlestock;
+	WineStock winestock;
 	private final Inventory<InventoryItem> inventory;
 	private final ArticleRepository articlerepository;
 	private final LocationRepository locationRepository;
@@ -64,7 +68,8 @@ public class CookBookController {
 	public CookBookController(
 			CookBookRepository cookbookrepository, 
 			BarrelStock barrelstock,
-			BottleStock bottlestock, 
+			BottleStock bottlestock,
+			WineStock winestock,
 			LocationRepository locationRepository,
 			Inventory<InventoryItem> inventory,
 			ArticleRepository articlerepository, 
@@ -74,6 +79,7 @@ public class CookBookController {
 		this.cookbookrepository = cookbookrepository;
 		this.barrelstock = barrelstock;
 		this.bottlestock = bottlestock;
+		this.winestock = winestock;
 		this.locationRepository = locationRepository;
 		this.inventory = inventory;
 		this.articlerepository = articlerepository;
@@ -99,8 +105,13 @@ public class CookBookController {
 								if(dep.getName().contains("Fasslager")){
 									barrelstock = (BarrelStock) dep;
 									{
-										for(Barrel barrel : barreltransport.getBarrels()){
-											barrelstock.getBarrels().add(barrel);
+										for(BarrelForTransport barrel : barreltransport.getBarrels()){
+											
+											Barrel b1 = new Barrel(barrel.getAge(), barrel.getQuality(), barrel.getContent_amount(),
+												barrel.getManufacturing_date(), barrel.getBarrel_volume(), barrel.getBirthdate_of_barrel(), 
+												barrel.getDeath_of_barrel(), barrel.getLastFill(), barrel.getPosition());
+												
+											barrelstock.getBarrels().add(b1);
 										}
 									}
 								} // /if
@@ -109,6 +120,7 @@ public class CookBookController {
 							barreltransport.setArrived(true);
 							barrel_transport_repository.save(barreltransport);
 							departmentrepository.save(barrelstock);
+							
 						} // /if
 					}// /for
 				} // /for
@@ -288,11 +300,7 @@ public class CookBookController {
 	@RequestMapping(value = "/cookbook", method = RequestMethod.GET)
 	public String book(Model model, @LoggedIn Optional<UserAccount> userAccount) 
 	{
-		checkArrivedBarrels();
-		
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
-		model.addAttribute("bottlestock_store", sortBottle(userAccount));
 
 		return "cookbook";
 	}
@@ -529,7 +537,6 @@ public class CookBookController {
 												
 												System.out.println("<= " + foundLocation);
 												searchContentAmount = 0;
-//												temp.remove(ingredient);
 												
 												e++;
 												
@@ -684,14 +691,9 @@ public class CookBookController {
 		
 			} // /if
 		} // /for
-		
-		
-		checkArrivedBarrels();
-		
+
 		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
-		model.addAttribute("bottlestock_store", sortBottle(userAccount));
 
 		return "cookbook";
 	}
@@ -703,15 +705,9 @@ public class CookBookController {
 	@RequestMapping(value="/cookbook/{id}", method = RequestMethod.GET)
 	public String recipeDetails(@PathVariable("id") Long id, Model model, @LoggedIn Optional<UserAccount> userAccount)
 	{
-
-		checkArrivedBarrels();
-		
 		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
-	
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
-		model.addAttribute("bottlestock_store", sortBottle(userAccount));
-		
+	
 		return "cookbook";
 	}
 	
@@ -765,11 +761,7 @@ public class CookBookController {
 			} // /for
 		} // /for
 		
-		checkArrivedBarrels();
-		
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
-		model.addAttribute("bottlestock_store", sortBottle(userAccount));
 		
 		return "cookbook";
 	}
@@ -788,7 +780,7 @@ public class CookBookController {
 				if(loc.getName().equals(fl.getLocation())){
 					
 					double searchAmount = fl.getAmount();					
-					List<Barrel> barrelsForTransport = new ArrayList<>();
+					List<BarrelForTransport> barrelsForTransport = new ArrayList<>();
 					List<Location> starting_point = new ArrayList<>();
 					List<Location> goal = new ArrayList<>();
 					LocalDateTime start_date = LocalDateTime.now();
@@ -807,7 +799,12 @@ public class CookBookController {
 									if(searchAmount > 0)
 									{
 										searchAmount = searchAmount - barrel.getContent_amount();
-										barrelsForTransport.add(barrel);
+										
+										BarrelForTransport b1 = new BarrelForTransport(barrel.getAge(), barrel.getQuality(), barrel.getContent_amount(),
+												barrel.getManufacturing_date(), barrel.getBarrel_volume(), barrel.getBirthdate_of_barrel(), 
+												barrel.getDeath_of_barrel(), barrel.getLastFill(), barrel.getPosition());
+										
+										barrelsForTransport.add(b1);
 										barrelstock.getBarrels().remove(barrel);
 										
 										departmentrepository.save(barrelstock);
@@ -863,5 +860,31 @@ public class CookBookController {
 		model.addAttribute("transports", barrel_transport_repository.findAll());
 		
 		return "transport";
+	}
+	
+	@RequestMapping(value = "/stocks", method = RequestMethod.GET)
+	public String stocks(Model model, @LoggedIn Optional<UserAccount> userAccount)
+	{
+		for(Location loc : locationRepository.findAll()){
+			for(Employee e : loc.getEmployees()){
+				if(e.getUserAccount() == userAccount.get()){
+					for(Department dep : loc.getDepartments()){
+						if(dep.getName().contains("Weinlager")){
+							winestock = (WineStock) dep;{
+							
+								model.addAttribute("wine_store", winestock.getAmount());
+							}
+						} // /if
+					} // /for
+				} // /if
+			} // /for
+		} // /for
+			
+		checkArrivedBarrels();
+		
+		model.addAttribute("barrelstock_store", calcMaxStore(userAccount));
+		model.addAttribute("bottlestock_store", sortBottle(userAccount));
+		
+		return "stocks";
 	}
 }
