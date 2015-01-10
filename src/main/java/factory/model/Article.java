@@ -15,17 +15,19 @@ public class Article extends Product{
 		private String alkoholgehalt;
 		private double volumen;
 		private String cognacart;
+		private double income;
+
 
 		/* 
 		 * default Konstruktor
 		 */
+		@Deprecated
 		public Article(){}
 		
 		/*
 		 * Konstruktor
 		 */
 		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, double volumen, String cognacart) {
-			
 			super(name, preis, Units.METRIC);
 			
 			this.image = image;
@@ -87,6 +89,5 @@ public class Article extends Product{
 
 		public void delete(Long id) {
 			
-		}	
-
+		}
 }

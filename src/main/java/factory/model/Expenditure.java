@@ -16,10 +16,13 @@ public class Expenditure {
 	private double value;
 	private String sortOf;
 	
-	
+	@Deprecated
+	public Expenditure(){}
+
 	/*
 	 * Konstruktor
 	 */
+
 	public Expenditure(LocalDate date, double value, String sortOf) {
 		this.date = date;
 		this.value = value;

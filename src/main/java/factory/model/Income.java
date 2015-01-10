@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.joda.money.Money;
-
 @Entity
 public class Income {
 	
@@ -16,18 +14,19 @@ public class Income {
 	private  Long id;
 	private String customer;
 	private LocalDate date;
-	private Money value;
+	private double value;
 	private String sortOf;
 	
 	/*
 	 * leerer Konstruktor
 	 */
+	@Deprecated
 	public Income(){}
 	
 	/*
 	 * Konstruktor
 	 */
-	public Income(String customer, LocalDate date, Money value, String sortOf) {
+	public Income(String customer, LocalDate date, double value, String sortOf) {
 		this.customer = customer;
 		this.date = date;
 		this.value = value;
@@ -53,11 +52,11 @@ public class Income {
 		this.date = date;
 	}
 
-	public Money getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(Money value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 
