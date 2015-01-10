@@ -2,11 +2,9 @@ package factory.controller;
 
 import javax.validation.Valid;
 
-
-import org.salespointframework.useraccount.UserAccountManager;
+import org.joda.money.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
-import org.salespointframework.order.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -270,13 +268,42 @@ class AdminController {
 			return "redirect:/employeeList";
 		}
 	    
-	    
+	    @RequestMapping(value = "/accountancy", method = RequestMethod.GET)
+		public String accountancyOverview(ModelMap modelMap){
+
+	    	adminTasksManager.EmployeeExpenditures();
+	    	double income = adminTasksManager.summUpIncome();
+	    	double expenditure = adminTasksManager.summUpExpenditure();
+	    	
+	    	
+	    	modelMap.addAttribute("income", income);
+	    	modelMap.addAttribute("expenditure", expenditure);
+	    	
+	    	
+			return "accountancy";
+		}
 	    
 	    @RequestMapping(value = "/income", method = RequestMethod.GET)
-		public String accountancyOverview(ModelMap modelMap){
+		public String incomeOverview(ModelMap modelMap){
 
 	    	modelMap.addAttribute("income", incomeRepository.findAll());
 	    	
 			return "income";
+		}
+	    
+	    @RequestMapping(value = "/expenditure", method = RequestMethod.GET)
+		public String expenditureOverview(ModelMap modelMap){
+
+	    	adminTasksManager.EmployeeExpenditures();
+//	    	List<Expenditure> list = new ArrayList<>();
+//	    	for(Expenditure e : expenditureRepository.findAll()){
+//	    		if(e.getDate().getMonth().equals(LocalDate.now().getMonth())){
+//	    			list.add(e);
+//	    		}
+//	    	}
+	    	
+	    	modelMap.addAttribute("expenditures", expenditureRepository.findAll());
+	    	
+			return "expenditure";
 		}
 }

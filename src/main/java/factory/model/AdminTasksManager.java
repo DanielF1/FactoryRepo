@@ -3,10 +3,8 @@ package factory.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.joda.money.Money;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
-import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -21,7 +19,8 @@ public class AdminTasksManager {
 	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
 	private final CustomerRepository customerRepository;
-	private final OrderManager<Order> orderManager;
+	private final ExpenditureRepository expenditureRepository;
+	private final IncomeRepository incomeRepository;
 	
 	@Autowired
 	public AdminTasksManager(	LocationRepository locationRepository,
@@ -29,14 +28,16 @@ public class AdminTasksManager {
 								EmployeeRepository employeeRepository,
 								UserAccountManager userAccountManager,
 								CustomerRepository customerRepository,
-								OrderManager<Order> orderManager) {
+								ExpenditureRepository expenditureRepository,
+								IncomeRepository incomeRepository) {
 		
 		this.locationRepository = locationRepository;
 		this.departmentRepository = departmentRepository;
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
 		this.customerRepository = customerRepository;
-		this.orderManager = orderManager;
+		this.expenditureRepository = expenditureRepository;
+		this.incomeRepository = incomeRepository;
 	}
 	
 	public void addLocation(String name,String address, String city, String telefon, String mail){
@@ -244,27 +245,30 @@ public class AdminTasksManager {
 			totalSalary += sal;
 		}//for
 		
-		for(Location loc : locationRepository.findAll()){
-			for(Department department : loc.getDepartments()){
-				if(department.getName().contains("Rechnungswesen")){
-//					Accountancy acc = (Accountancy) department;
-//					for(int i=1; i<13; i++){
-//						acc.getExpenditures().add(new Expenditure(LocalDate.of(2014, i, 1), totalSalary, "Gehalt"));
-//					}
-					
-				}//if
-			}//for
-		}//for	
-	}
-	
-	public void summUp(){
-		
-		Iterable<Order> list = orderManager.find(OrderStatus.COMPLETED);
-		
-		for(Order order : list){
-			Money price = order.getTotalPrice();
-			
+		for(int i=1; i<13; i++){
+			expenditureRepository.save(new Expenditure(LocalDate.of(2014, i, 1), totalSalary, "Gehalt"));
 		}
 	}
 	
+	public double summUpIncome(){
+		double summ = 0;
+		
+		for(Income i : incomeRepository.findAll()){
+			double inc = i.getValue();
+			summ += inc;
+		}
+		
+		return summ;
+	}
+	
+	public double summUpExpenditure(){
+		double summ = 0;
+		
+		for(Expenditure i : expenditureRepository.findAll()){
+			double inc = i.getValue();
+			summ += inc;
+		}
+		
+		return summ;
+	}
 }

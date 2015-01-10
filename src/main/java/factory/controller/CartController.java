@@ -106,9 +106,11 @@ public class CartController {
 					
 					UserAccount userAcc = userAccount.get();
 					
+					double i = cart.getPrice().getAmountMajorLong();
+					
 					Customer cust = customerRepository.findByUserAccount(userAcc);
 					String customer = cust.getFirstname() + " " + cust.getFamilyname();
-					incomeRepository.save(new Income(customer, LocalDate.now(), cart.getPrice(), "Produktkauf"));
+					incomeRepository.save(new Income(customer, LocalDate.now(), i, "Produktkauf"));
 					
 					orderManager.payOrder(order);
 					orderManager.completeOrder(order);
@@ -131,6 +133,14 @@ public class CartController {
 	    			
 	    			cart.addItemsTo(order);
 
+	    			UserAccount userAcc = userAccount.get();
+					
+	    			double i = cart.getPrice().getAmountMajorLong();
+	    			
+					Customer cust = customerRepository.findByUserAccount(userAcc);
+					String customer = cust.getFirstname() + " " + cust.getFamilyname();
+					incomeRepository.save(new Income(customer, LocalDate.now(), i, "Produktkauf"));
+	    			
 	    			orderManager.payOrder(order);
 	    			orderManager.completeOrder(order);
 	    			orderManager.save(order);
