@@ -16,6 +16,9 @@ public class Expenditure {
 	private double value;
 	private String sortOf;
 	
+	@Deprecated
+	public Expenditure(){}
+	
 	public Expenditure(LocalDate date, double value, String sortOf) {
 		this.date = date;
 		this.value = value;

@@ -12,7 +12,6 @@ import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.order.Order;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -38,7 +37,8 @@ import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.EmployeeRepository;
-import factory.model.Expenditure;
+import factory.model.Income;
+import factory.model.IncomeRepository;
 import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.LocationRepository;
@@ -60,6 +60,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final ArticleRepository articleRepository;
 	private final CookBookRepository cookbookrepository;
 	private final DeliveryRepository deliveryRepository;
+	private final IncomeRepository incomeRepository;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager,
@@ -70,7 +71,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										ArticleRepository articleRepository,
 										CookBookRepository cookbookrepository, 
 										DeliveryRepository deliveryRepository,
-										Inventory<InventoryItem> inventory) {
+										Inventory<InventoryItem> inventory,
+										IncomeRepository incomeRepository) {
 
 		
 		Assert.notNull(locationRepository, "LocationRepository must not be null!");
@@ -90,6 +92,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.cookbookrepository = cookbookrepository;
 		this.deliveryRepository = deliveryRepository;
 		this.inventory = inventory;
+		this.incomeRepository = incomeRepository;
 	}
 
 	@Override
@@ -98,7 +101,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 											departmentRepository, 
 											employeeRepository, 
 											userAccountManager, 
-											customerRepository);
+											customerRepository,
+											incomeRepository);
 		
 		initializeSortiment(inventory);
 		initializeCookBook(cookbookrepository);
@@ -109,7 +113,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 													DepartmentRepository departmentRepository, 
 													EmployeeRepository employeeRepository, 
 													UserAccountManager userAccountManager, 
-													CustomerRepository customerRepository) {
+													CustomerRepository customerRepository,
+													IncomeRepository incomeRepository) {
 	
 		/*
 		 * initialize barrels
@@ -340,7 +345,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		 * initialize employees
 		 */
 		Employee e1 = employeeRepository.save(new Employee(warehousemanAcc, "lagerist1", "123", "Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse"));
-		
 		Employee e2 = employeeRepository.save(new Employee(warehousemanAcc2, "lagerist2", "123", "Lagerist","Maier","Chris","200","klaus@Mueller.de","Klausstrasse"));
 		Employee e10 = employeeRepository.save(new Employee(warehousemanAcc3, "lagerist3", "123", "Lagerist","Maier","Chris","200","klaus@Mueller.de","Klausstrasse"));
 		Employee e3 = employeeRepository.save(new Employee(salesmanAcc, "verkaeufer1", "123", "Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse"));
@@ -396,6 +400,12 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Customer c1 = new Customer(ua1, "hans", "123", "Dittrich", "Günther", "Hauptstraße 5");
 		customerRepository.save(c1);
 		
+		
+		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 6, 8), 46.95, "Produktkauf"));
+		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 11, 18), 46.95, "Produktkauf"));
+		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 12, 24), 46.95, "Produktkauf"));
+		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2014, 7, 28), 46.95, "Produktkauf"));
+		incomeRepository.save(new Income("Peter Peterson", LocalDate.of(2014, 7, 14), 46.95, "Produktkauf"));
 	}
 	
 	/*
@@ -406,22 +416,22 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		// Die Bilder sind von der Internetseite: http://de.123rf.com und  http://www.pixelio.de
 		
 
-		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %",1, "Cognac");
+		Article article1 = new Article("chatelier", "Claude Chatelier Extra", "20 Jahre", Money.of(EUR, 46.95), "40,0 %",1, "Cognac", 46.95);
 		articleRepository.save(article1);
 		
-		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %",0.7,"Cognac");
+		Article article2 = new Article("chateliere", "Chatelier Cognac", "8 Jahre", Money.of(EUR, 41.90 ), "40,0 %",0.7,"Cognac", 41.90);
 		articleRepository.save(article2);
 
-		Article article3 = new Article("chabassenapoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %",0.7,"Cognac");
+		Article article3 = new Article("chabassenapoleon", "Courvoisier Napoleon ", "5 Jahre", Money.of(EUR, 79.90), "40,0 %",0.7,"Cognac", 79.90);
 		articleRepository.save(article3);
 		
-		Article article4 = new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %",0.7,"Cognac");
+		Article article4 = new Article("delamain-vesper", "Delamain Vesper", "35 Jahre", Money.of(EUR, 97.95), "40,0 %",0.7,"Cognac", 97.95);
 		articleRepository.save(article4);
 		
-		Article article5 = new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %",0.7,"Cognac");
+		Article article5 = new Article("fontpinot", "Frapin Domaine Château", "5 Jahre", Money.of(EUR, 46.95), "30,0 %",0.7,"Cognac", 46.95);
 		articleRepository.save(article5);
 		
-		Article article6 = new Article("monnet", "Monnet Cognac", "5 Jahre", Money.of(EUR, 26.95), "40,0 %",0.7,"Cognac");
+		Article article6 = new Article("monnet", "Monnet Cognac", "5 Jahre", Money.of(EUR, 26.95), "40,0 %",0.7,"Cognac", 26.95);
 		articleRepository.save(article6); 		
 				
 		InventoryItem i1 = new InventoryItem(article1, Units.ONE);
@@ -443,7 +453,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		inventory.save(i6);
 		
 	}
-
 	
 	/*
 	 * initialize recipes

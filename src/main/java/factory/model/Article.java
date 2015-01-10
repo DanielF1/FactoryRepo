@@ -15,10 +15,12 @@ public class Article extends Product{
 		private String alkoholgehalt;
 		private double volumen;
 		private String cognacart;
+		private double income;
 
+		@Deprecated
 		public Article(){}
 		
-		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, double volumen, String cognacart) {
+		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, double volumen, String cognacart, double income) {
 			
 			super(name, preis, Units.METRIC);
 			
@@ -27,6 +29,7 @@ public class Article extends Product{
 			this.alkoholgehalt = alkoholgehalt;
 			this.volumen = volumen;
 			this.cognacart = cognacart;
+			this.setIncome(income);
 		}
 		
 		public String getImage(){
@@ -82,6 +85,14 @@ public class Article extends Product{
 
 		public void delete(Long id) {
 			
+		}
+
+		public double getIncome() {
+			return income;
+		}
+
+		public void setIncome(double income) {
+			this.income = income;
 		}	
 
 }

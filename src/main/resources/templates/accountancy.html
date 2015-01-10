@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>Orders</title>
+	<title>Rechnungswesen</title>
 
 	<!-- JS dependencies -->
 	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
@@ -52,16 +52,14 @@
 	<div class="main-container content">
 		<div class="col-lg-12">
 			<table class="table table-condensed">
-			<h3>Einnahmen</h3>
+			<h3>Übersicht</h3>
 				<tr class="success_table">
-					<th class="text-center" > Datum </th>
-					<th class="text-center" > Einnahmequelle </th>
-					<th class="text-center" > Höhe der Einnahme </th>	
+					<th class="text-center" > Höhe der Einnahmen </th>
+					<th class="text-center" > Höhe der Ausgaben </th>	
 				</tr>
-				<tr class="text-center" th:each="order : ${ordersCompleted}">
-					<td class="text-center" th:text="${order.dateCreated}" ></td>
-					<td class="text-center" th:text="${order.userAccount.identifier}"></td>
-					<td class="text-center" th:text="${order.totalPrice}"></td>
+				<tr class="text-center">
+					<td class="text-center" th:text="${income}" ></td>
+					<td class="text-center" th:text="${expenditure}" ></td>
 				</tr>
 			</table>
 		</div>
