@@ -16,8 +16,14 @@ public class Transport {
 	private Long source;
 	private Long destination;
 
+	/*
+	 * leerer Konstruktor
+	 */
 	public Transport(){}
 	
+	/*
+	 * Konstruktor
+	 */
 	public Transport(String sort, double quantity, Long source, Long destination) {
 		this.sort = sort;
 		this.source = source;
@@ -26,7 +32,9 @@ public class Transport {
 	}
 
 	
-
+	/*
+	 * Getter und Setter
+	 */
 	public String getSort() {
 		return sort;
 	}

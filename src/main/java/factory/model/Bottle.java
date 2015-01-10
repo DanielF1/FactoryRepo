@@ -12,7 +12,7 @@ public class Bottle {
 	private double price;
 	
 	/*
-	 * constructor
+	 * Konstruktor
 	 */
 	public Bottle(String name, double amount, double price)
 	{
@@ -24,9 +24,8 @@ public class Bottle {
 	Bottle(){}
 	
 	/*
-	 * getter & setter
+	 * Getter und Setter
 	 */
-	
 	public Long getId() 
 	{
 		return id;

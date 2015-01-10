@@ -19,8 +19,14 @@ public class Income {
 	private Money value;
 	private String sortOf;
 	
+	/*
+	 * leerer Konstruktor
+	 */
 	public Income(){}
 	
+	/*
+	 * Konstruktor
+	 */
 	public Income(String customer, LocalDate date, Money value, String sortOf) {
 		this.customer = customer;
 		this.date = date;
@@ -28,6 +34,9 @@ public class Income {
 		this.sortOf = sortOf;
 	}
 
+	/*
+	 * Getter und Setter
+	 */
 	public String getCustomer() {
 		return customer;
 	}

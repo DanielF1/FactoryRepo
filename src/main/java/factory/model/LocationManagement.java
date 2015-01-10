@@ -18,6 +18,10 @@ public class LocationManagement {
 	private static final int DAY_IN_MILLIS = 24 * 3600 * 1000;
 	private static final int VOLUME_HEKTOLITERS_IN_TWO_DAYS = 24;
 
+	
+	/*
+	 * Konstruktor
+	 */
 	@Autowired
 	public LocationManagement(	LocationRepository locationRepository,
 								DepartmentRepository departmentRepository,

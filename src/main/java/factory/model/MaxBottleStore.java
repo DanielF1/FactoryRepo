@@ -5,11 +5,19 @@ public class MaxBottleStore {
 	int quantity;
 	double amount;
 	
+	
+	/*
+	 * Konstruktor
+	 */
 	public MaxBottleStore(String name,int quantity,double amount){
 		this.name = name;
 		this.quantity=quantity;
 		this.amount = amount;
 	}
+	
+	/*
+	 * Getter und Setter
+	 */
 	public String getName() {
 		return name;
 	}
@@ -27,7 +35,5 @@ public class MaxBottleStore {
 	}
 	public void setAmount(double amount) {
 		this.amount = amount;
-	}
-	
-	
+	}	
 }

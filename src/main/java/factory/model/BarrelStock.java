@@ -15,15 +15,25 @@ public class BarrelStock extends Department {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Barrel> barrels;
 	
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	public BarrelStock() {}
 	
+	/*
+	 * Konstruktor
+	 */
 	public BarrelStock(String name, List<Barrel> mapBarrels){
 		
 		super(name);
 		this.barrels = mapBarrels;
 	}
 	
+	
+	/*
+	 * Getter und Setter
+	 */
 	public List<Barrel> getBarrels() {
 		return barrels;
 	}

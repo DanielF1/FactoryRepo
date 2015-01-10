@@ -16,9 +16,15 @@ public class Production extends Department {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Still> stills;
 	
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	public Production(){}
 	
+	/*
+	 * Konstruktor
+	 */
 	public Production(String name, double capacity, List<Still> stills) {
 		
 		super(name);
@@ -26,6 +32,9 @@ public class Production extends Department {
 		this.stills = stills;
 	}
 
+	/*
+	 * Getter und Setter
+	 */
 	public double getCapacity() {
 		return capacity;
 	}
@@ -41,6 +50,4 @@ public class Production extends Department {
 	public void setStills(List<Still> stills) {
 		this.stills = stills;
 	}
-	
-	
 }

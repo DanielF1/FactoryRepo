@@ -20,7 +20,9 @@ public class Barrel {
 	private LocalDate lastFill;
 	private String position;
 	
-	
+	/*
+	 * Konstruktor
+	 */
 	public Barrel(int age,String quality, double content_amount,LocalDate manufacturing_date, double barrel_volume, 
 			LocalDate birthdate_of_barrel,LocalDate death_of_barrel, LocalDate lastFill,String position)
 	{
@@ -36,6 +38,10 @@ public class Barrel {
 		
 
 	}
+	
+	/*
+	 * Konstruktor
+	 */
 	public Barrel(int age,String quality, double content_amount,String manufacturing_date, String barrel_volume, 
 			String birthdate_of_barrel,String death_of_barrel, String lastFill,String position)
 	{
@@ -54,7 +60,9 @@ public class Barrel {
 
 	Barrel(){}
 
-	
+	/*
+	 * Getter und Setter
+	 */
 
 	public Long getId() {
 		return id;
@@ -117,6 +125,9 @@ public class Barrel {
 		this.position = position;
 	}
 	
+	/*
+	 * 
+	 */
 	public int getAge(){
 		int datecount =0;
 		int ANZAHL_TAGE_IM_JAHR = 365;

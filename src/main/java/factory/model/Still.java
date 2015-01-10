@@ -27,7 +27,7 @@ public class Still {
 	
 	
 	/*
-	 * constructor
+	 * Konstruktor
 	 */
 	public Still(int amount, int status_one, int status_two,
 			LocalDateTime still_process_start_time,	LocalDateTime still_process_end_time) 
@@ -39,13 +39,16 @@ public class Still {
 		this.still_process_end_time = still_process_end_time;
 	}
 	
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	public Still(){}
 	
 	
 	
 	/*
-	 * getter & setter
+	 * Getter und Setter
 	 */
 	public int getAmount() {
 		return amount;
@@ -86,5 +89,4 @@ public class Still {
 	public void setStill_process_end_time(LocalDateTime still_process_end_time) {
 		this.still_process_end_time = still_process_end_time;
 	}
-
 }

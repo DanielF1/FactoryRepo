@@ -17,6 +17,9 @@ public class Delivery {
 	private Long locationID;
 	private String location;
 
+	/*
+	 * Konstruktor
+	 */
 	public Delivery(double amount, long dateInMillis, String location)
 	{
 		this.amount = amount;
@@ -25,6 +28,9 @@ public class Delivery {
 	
 	}
 	
+	/*
+	 * Konstruktor
+	 */
 	public Delivery(double amount, Date date, Long locationID)
 	{
 		this.amount = amount;
@@ -33,12 +39,16 @@ public class Delivery {
 	
 	}
 
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	public Delivery(){}
 	
 
-	 // getter & setter
-	 
+	/*
+	 * Getter und Setter
+	 */
 	public double getAmount() {
 		return amount;
 	}

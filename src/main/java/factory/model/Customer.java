@@ -28,10 +28,17 @@ public class Customer {
 	@OneToOne
 	private UserAccount userAccount;
 
+	
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	protected Customer() {
 	}
 
+	/*
+	 * Konstruktor
+	 */
 	public Customer(UserAccount userAccount, String username, String password, String familyname, String firstname, String address) {
 		this.userAccount = userAccount;
 		this.address = address;
@@ -42,6 +49,9 @@ public class Customer {
 		
 	}
 	
+	/*
+	 * Getter und Setter
+	 */
 	public String getAddress() {
 		return address;
 	}

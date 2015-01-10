@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 @Entity
 public class Sale extends Department {
 	
+	/*
+	 * Konstruktor
+	 */
 	@Deprecated
 	public Sale(){}
 	

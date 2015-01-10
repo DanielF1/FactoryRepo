@@ -16,12 +16,19 @@ public class Expenditure {
 	private double value;
 	private String sortOf;
 	
+	
+	/*
+	 * Konstruktor
+	 */
 	public Expenditure(LocalDate date, double value, String sortOf) {
 		this.date = date;
 		this.value = value;
 		this.sortOf = sortOf;
 	}
 
+	/*
+	 * Getter und Setter
+	 */
 	public LocalDate getDate() {
 		return date;
 	}

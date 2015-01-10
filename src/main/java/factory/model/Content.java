@@ -8,14 +8,24 @@ public class Content {
 	private LocalDate producingDate;
 	private String quality;
 	
+	/*
+	 * Konstruktor
+	 */
 	public Content(double amount, LocalDate producingDate, String quality) {
 		this.amount = amount;
 		this.producingDate = producingDate;
 		this.quality = quality;
 	}
 	
+	/*
+	 * leerer Konstruktor
+	 */
 	public Content(){}
 
+	
+	/*
+	 * Getter und Setter
+	 */
 	public double getAmount() {
 		return amount;
 	}
