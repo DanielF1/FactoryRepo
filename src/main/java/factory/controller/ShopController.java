@@ -72,7 +72,9 @@ public class ShopController {
 			return "index";
 		}
 	
-		
+		/*
+		 * alle Artikel aus dem Artikelrepository befinden sich aktuellen Artikelkatalog
+		 */
 	    @RequestMapping(value="/sortiment", method=RequestMethod.GET)
 	    public String Willkommen(Model model) {
 	  	    	
@@ -80,8 +82,10 @@ public class ShopController {
 
 	        return "sortiment";
 	    }
-	    
-	    
+	    	    
+	    /*
+		 * Detailansicht der einzelnen Artikel wird angezeigt
+		 */
 	    @RequestMapping("/detail/{pid}")
 		public String detail(@PathVariable("pid") Article article ,Model model) {
 			
@@ -94,6 +98,9 @@ public class ShopController {
 			return "detail";
 		}
 	   
+	    /*
+		 * Persönliche Daten vom Kunden können angezeigt werden
+		 */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/datacustomer", method=RequestMethod.GET)
 	    public String showCustomerData(@LoggedIn Optional<UserAccount> userAccount, Model model){
@@ -104,6 +111,9 @@ public class ShopController {
 	    	return "datacustomer";
 	    }
 	    
+	    /*
+		 * Persönliche Daten vom Kunden können editiert werden 
+		 */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/editdatacustomer", method=RequestMethod.GET)
 	   public String editCustomerData(@LoggedIn Optional<UserAccount> userAccount, Model model) {
@@ -113,7 +123,10 @@ public class ShopController {
 	    	
 	        return "editdatacustomer";
 	    }
-	    
+	   
+	   	/*
+	 	 * Persönliche Daten vom Kunden werden gespeichert
+	 	 */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/editdatacustomer", method=RequestMethod.POST)
 	   public String editCustomerData(	@Valid Customer customer,
@@ -131,6 +144,9 @@ public class ShopController {
 		   return "redirect:/datacustomer";
 	    }
 	    
+	    /*
+		 *  Persönliche Daten vom Mitarbeiter werden gespeichert
+		 */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/dataemployee", method=RequestMethod.GET)
 	    public String showEmployeeData(@LoggedIn Optional<UserAccount> userAccount, Model model){
@@ -141,6 +157,9 @@ public class ShopController {
 	    	return "dataemployee";
 	    }
 	    
+	   /*
+		 *  Persönliche Daten vom Mitarbeiter können editiert werden
+		 */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/editdataemployee", method=RequestMethod.GET)
 	    public String editEmployeeData(@LoggedIn Optional<UserAccount> userAccount, Model model) {
@@ -151,6 +170,9 @@ public class ShopController {
 	        return "editdataemployee";
 	    }
 	    
+	    /*
+		 *  Persönliche Daten vom Mitarbeiter werden gespeichert
+		 */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/editdataemployee", method=RequestMethod.POST)
 	    public String editEmployeeData(	@Valid Employee employee,

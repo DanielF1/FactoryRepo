@@ -19,7 +19,7 @@ public class Article extends Product{
 
 
 		/* 
-		 * leerer Konstruktor
+		 * default Konstruktor
 		 */
 		@Deprecated
 		public Article(){}
