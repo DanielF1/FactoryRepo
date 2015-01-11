@@ -21,7 +21,11 @@ public class Bottle {
 		this.price = price;
 	}
 	
+	/* 
+	 * default Konstruktor
+	 */
 	Bottle(){}
+	
 	
 	/*
 	 * Getter und Setter

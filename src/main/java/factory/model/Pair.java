@@ -4,6 +4,9 @@ public class Pair {
 	private Integer platz;
 	private Integer regal;
 	
+	/* 
+	 * Getter und Setter
+	 */
 	public Integer getPlatz() {
 		return platz;
 	}

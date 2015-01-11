@@ -10,8 +10,8 @@ public class WineStock extends Department {
 	
 	private double amount;
 	
-	/*
-	 * leerer Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public WineStock() {}
