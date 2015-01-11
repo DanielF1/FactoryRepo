@@ -7,8 +7,8 @@ public class FoundLocation {
 	private int age;
 	private double amount;
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
 	 */
 	public FoundLocation(String location, String quality, int age, double amount) {
 		this.location = location;
@@ -17,12 +17,12 @@ public class FoundLocation {
 		this.amount = amount;
 	}
 	
-	/* 
-	 * default Konstruktor
+	/** 
+	 * Default Constructor
 	 */
 	public FoundLocation(){}
 	
-	/*
+	/**
 	 * Getter und Setter
 	 */
 	public String getLocation() {

@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
+/**
+ * Transport beschreibt den Transfer von Gütern zwischen den Standorten der Firma
+ */
 @Entity
 public class Transport {
 
@@ -16,13 +18,13 @@ public class Transport {
 	private Long source;
 	private Long destination;
 
-	/* 
-	 * default Konstruktor
+	/** 
+	 * Default Constructor
 	 */
 	public Transport(){}
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
 	 */
 	public Transport(String sort, double quantity, Long source, Long destination) {
 		this.sort = sort;
@@ -31,7 +33,7 @@ public class Transport {
 		this.quantity = quantity;
 	}
 	
-	/*
+	/**
 	 * Getter und Setter
 	 */
 	public String getSort() {

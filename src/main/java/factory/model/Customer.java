@@ -8,8 +8,10 @@ import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.salespointframework.useraccount.UserAccount;
 
+/**
+ * Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
+ */
 @Entity
-
 public class Customer {
 
 	@Id
@@ -29,15 +31,15 @@ public class Customer {
 	private UserAccount userAccount;
 
 	
-	/* 
-	 * default Konstruktor
+	/** 
+	 * Default Constructor
 	 */
 	@Deprecated
 	protected Customer() {
 	}
 
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
 	 */
 	public Customer(UserAccount userAccount, String username, String password, String familyname, String firstname, String address) {
 		this.userAccount = userAccount;
@@ -49,7 +51,7 @@ public class Customer {
 		
 	}
 	
-	/*
+	/**
 	 * Getter und Setter
 	 */
 	public String getAddress() {

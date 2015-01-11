@@ -2,28 +2,31 @@ package factory.model;
 
 import java.time.LocalDate;
 
+/**
+ * Content ist der Cognac, der beim Herstellungsprozess entsteht
+ */
 public class Content {
 
 	private double amount;
 	private LocalDate producingDate;
 	private String quality;
 	
-	/*
-	 * Konstruktor
+	/** 
+	 * Default Constructor
+	 */
+	@Deprecated
+	public Content(){}
+	
+	/**
+	 * Constructor
 	 */
 	public Content(double amount, LocalDate producingDate, String quality) {
 		this.amount = amount;
 		this.producingDate = producingDate;
 		this.quality = quality;
 	}
-	
-	/* 
-	 * default Konstruktor
-	 */
-	public Content(){}
 
-	
-	/*
+	/**
 	 * Getter und Setter
 	 */
 	public double getAmount() {

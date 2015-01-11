@@ -2,17 +2,20 @@ package factory.model;
 
 import javax.persistence.Entity;
 
+/**
+ * Sale ist ein Department, was die Verkaufstelle der Firma darstellt
+ */
 @Entity
 public class Sale extends Department {
 	
-	/* 
-	 * default Konstruktor
+	/** 
+	 * Default Constructor
 	 */
 	@Deprecated
 	public Sale(){}
 	
-	/* 
-	 * Konstruktor
+	/** 
+	 * Constructor
 	 */
 	public Sale(String name) {
 		

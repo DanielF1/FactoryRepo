@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Income beschreibt eine finanzielle Einnahme der Firma und wird im Rechnungswesen verwendet
+ */
 @Entity
 public class Income {
 	
@@ -17,14 +20,14 @@ public class Income {
 	private double value;
 	private String sortOf;
 	
-	/* 
-	 * default Konstruktor
+	/** 
+	 * Default Constructor
 	 */
 	@Deprecated
 	public Income(){}
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
 	 */
 	public Income(String customer, LocalDate date, double value, String sortOf) {
 		this.customer = customer;
@@ -33,7 +36,7 @@ public class Income {
 		this.sortOf = sortOf;
 	}
 
-	/*
+	/**
 	 * Getter und Setter
 	 */
 	public String getCustomer() {

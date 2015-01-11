@@ -4,13 +4,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.money.Money;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Managerklasse, in der alle Aktionen durchgeführt werden, die für den Admin relevant sind.
+ */
 @Component
 public class AdminTasksManager {
 
@@ -332,7 +334,10 @@ public class AdminTasksManager {
 		}//for
 		
 		for(int i=1; i<13; i++){
-			expenditureRepository.save(new Expenditure(LocalDate.of(2014, i, 1), totalSalary, "Gehalt"));
+			if(LocalDate.now().isBefore(LocalDate.of(2015, i, 1))){
+				break;
+			}
+			expenditureRepository.save(new Expenditure(LocalDate.of(2015, i, 1), totalSalary, "Gehalt"));
 		}
 	}
 	

@@ -18,6 +18,41 @@
 	  .btn-default{background-color:#92D36E!important; color:#fff;}
 	</style>
 		<img src="../resources/img/wein.jpg" class="header"/>
+		
+		
+		
+	<script type="text/javascript"
+    	src="https://www.google.com/jsapi?autoload={
+			'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]}"></script>
+
+    <script type="text/javascript">
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Month', 'Einnahmen', 'Ausgaben'],
+          ['01.01',  	500,	400],
+          ['10.01',  	370,	460],
+          ['20.01',		460,	120],
+          ['30.01',		200,	540]
+        ]);
+
+        var options = {
+          title: 'Übersicht der Einnahmen und Ausgaben',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+			
 </head>
 
 <body>
@@ -63,6 +98,7 @@
 				</tr>
 			</table>
 		</div>
+		<div class="col-lg-12" id="curve_chart" style="width: 900px; height: 500px"></div>
 	</div>
 </div>
 </body>

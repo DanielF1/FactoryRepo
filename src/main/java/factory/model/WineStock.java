@@ -2,22 +2,22 @@ package factory.model;
 
 import javax.persistence.Entity;
 
-import org.springframework.stereotype.Component;
-
+/**
+ * WineStock ist ein Department, welches das Weinlager darstellt, in das der Rohstoff für die Produktion transportiert wird
+ */
 @Entity
-@Component
 public class WineStock extends Department {
 	
 	private double amount;
 	
-	/* 
-	 * default Konstruktor
+	/** 
+	 * Default Constructor
 	 */
 	@Deprecated
 	public WineStock() {}
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
 	 */
 	public WineStock(String name, double amount) 
 	{
@@ -25,8 +25,8 @@ public class WineStock extends Department {
 		this.amount = amount;
 	}
 
-	/*
-	 * KGetter und Setter
+	/**
+	 * Getter und Setter
 	 */
 	public double getAmount() {
 		return amount;

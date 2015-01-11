@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Barrel ist der Aufbewahrungsort eines Destillates
+ */
 @Entity
 public class Barrel {
 
@@ -20,8 +23,14 @@ public class Barrel {
 	private LocalDate lastFill;
 	private String position;
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Default Constructor
+	 */
+	@Deprecated
+	public Barrel(){}
+	
+	/**
+	 * Constructor
 	 */
 	public Barrel(int age,String quality, double content_amount,LocalDate manufacturing_date, double barrel_volume, 
 			LocalDate birthdate_of_barrel,LocalDate death_of_barrel, LocalDate lastFill,String position)
@@ -35,12 +44,10 @@ public class Barrel {
 		this.death_of_barrel = death_of_barrel;
 		this.lastFill = lastFill;
 		this.position = position;
-		
-
 	}
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
 	 */
 	public Barrel(int age,String quality, double content_amount,String manufacturing_date, String barrel_volume, 
 			String birthdate_of_barrel,String death_of_barrel, String lastFill,String position)
@@ -56,11 +63,7 @@ public class Barrel {
 		this.position = position;
 	}
 	
-	
-
-	Barrel(){}
-
-	/*
+	/**
 	 * Getter und Setter
 	 */
 

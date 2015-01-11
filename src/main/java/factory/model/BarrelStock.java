@@ -6,23 +6,25 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
-import org.springframework.stereotype.Component;
 
+/**
+ * BarrelStock ist ein Department, in dem die leeren als auch die vollen Fässer gelagert werden,
+ * die während der Produktion benötigt werden
+ */
 @Entity
-@Component
 public class BarrelStock extends Department {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Barrel> barrels;
 	
-	/* 
-	 * default Konstruktor
+	/** 
+	 * Default Constructor
 	 */
 	@Deprecated
 	public BarrelStock() {}
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
 	 */
 	public BarrelStock(String name, List<Barrel> mapBarrels){
 		
@@ -31,7 +33,7 @@ public class BarrelStock extends Department {
 	}
 	
 	
-	/*
+	/**
 	 * Getter und Setter
 	 */
 	public List<Barrel> getBarrels() {

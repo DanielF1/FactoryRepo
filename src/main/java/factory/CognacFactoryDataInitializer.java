@@ -4,8 +4,6 @@ import static org.joda.money.CurrencyUnit.EUR;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.joda.money.Money;
@@ -32,8 +30,6 @@ import factory.model.BottleStock;
 import factory.model.CookBookRepository;
 import factory.model.Customer;
 import factory.model.CustomerRepository;
-import factory.model.Delivery;
-import factory.model.DeliveryRepository;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
@@ -60,7 +56,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final CustomerRepository customerRepository;
 	private final ArticleRepository articleRepository;
 	private final CookBookRepository cookbookrepository;
-	private final DeliveryRepository deliveryRepository;
 	private final IncomeRepository incomeRepository;
 	private final AdminTasksManager adminTasksManager;
 
@@ -72,7 +67,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										EmployeeRepository employeeRepository,
 										ArticleRepository articleRepository,
 										CookBookRepository cookbookrepository, 
-										DeliveryRepository deliveryRepository,
 										Inventory<InventoryItem> inventory,
 										IncomeRepository incomeRepository,
 										AdminTasksManager adminTasksManager) {
@@ -83,7 +77,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Assert.notNull(employeeRepository, "EmployeeRepository must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbookrepository, "CookBook must not be null!");
-		Assert.notNull(deliveryRepository, "CookBook must not be null!");
 		Assert.notNull(inventory, "Inventory must not be null!");
 		
 		this.userAccountManager = userAccountManager;
@@ -93,7 +86,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.employeeRepository = employeeRepository;
 		this.articleRepository = articleRepository;
 		this.cookbookrepository = cookbookrepository;
-		this.deliveryRepository = deliveryRepository;
 		this.inventory = inventory;
 		this.incomeRepository = incomeRepository;
 		this.adminTasksManager = adminTasksManager;
@@ -281,35 +273,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list8.add(bottlestock2);
 		list8.add(barrelstock3);
 		
-		
-		/*
-		 * initialize delivery
-		 */
-		
-		Delivery deliver1 = deliveryRepository.save(new Delivery(100,new GregorianCalendar(2015,Calendar.JANUARY,25,0,0,0).getTimeInMillis(), "Standort 1"));
-		Delivery deliver2 = deliveryRepository.save(new Delivery(100,new GregorianCalendar(2015,Calendar.FEBRUARY,9,0,0,0).getTimeInMillis(), "Standort 4"));
-		
-//		List<Delivery> deliver = new ArrayList<Delivery>();
-////		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		Location loc1 = locationRepository.findByName("Standort 1");
-//		Long id1 = loc1.getId();
-//		Location loc4 = locationRepository.findByName("Standort 4");
-//		Long id4 = loc4.getId();
-//		
-//		
-//		Delivery deliver_1 = new Delivery(500, new GregorianCalendar(2015,Calendar.JANUARY,25,0,0,0).getTimeInMillis(), id1);
-//		Delivery deliver_2 = new Delivery(120, new GregorianCalendar(2015,Calendar.FEBRUARY,9,0,0,0).getTimeInMillis(), id4);
-//		Delivery deliver_3 = new Delivery(120, new GregorianCalendar(2015,Calendar.MARCH,8,0,0,0).getTimeInMillis(), id4);
-//		Delivery deliver_4 = new Delivery(120, new GregorianCalendar(2015,Calendar.FEBRUARY,14,0,0,0).getTimeInMillis(), id4);
-//		
-//		deliver.add(deliver_1);
-//		deliver.add(deliver_2);
-//		deliver.add(deliver_3);
-//		deliver.add(deliver_4);
-		
-		
-		
-		
+
 		if (userAccountManager.get(new UserAccountIdentifier("admin")).isPresent()) {
 			return;
 		}
@@ -357,7 +321,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Employee e4 = employeeRepository.save(new Employee(salesmanAcc2, "verkaeufer2", "123", "Verkäufer","Fleischer","Detlef","210","Dieter@Fischer.de","Dieterstrasse"));
 		Employee e5 = employeeRepository.save(new Employee(barrelmakerAcc, "fassbinder1", "123", "Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse"));
 		Employee e6 = employeeRepository.save(new Employee(barrelmakerAcc2, "fassbinder2", "123", "Fassbinder","Schmiedel","Bruno","100","Bernd@Schmidt.de","Berndstrasse"));
-		Employee e11 = employeeRepository.save(new Employee(barrelmakerAcc3, "fassbinder3", "123", "Fassbinder","Schedel","Bruno","1300","Be@Schmt.de","Bzzestrasse"));
+		Employee e11 = employeeRepository.save(new Employee(barrelmakerAcc3, "fassbinder3", "123", "Fassbinder","Schedel","Bruno","200","Be@Schmt.de","Bzzestrasse"));
 		Employee e7 = employeeRepository.save(new Employee(brewerAcc, "braumeister1", "123", "Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet"));
 		Employee e8 = employeeRepository.save(new Employee(brewerAcc2, "braumeister2", "123", "Braumeister","Smittie","Joe","250","Johannes@Smith.de","Johannesstreet"));
 		Employee e9 = employeeRepository.save(new Employee(adminAcc, "admin", "123", "Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse"));
@@ -409,11 +373,16 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		adminTasksManager.EmployeeExpenditures();
 		
-		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 6, 8), 526.95, "Produktkauf"));
-		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 11, 18), 726.95, "Produktkauf"));
-		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 12, 24), 326.95, "Produktkauf"));
-		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2014, 7, 28), 226.95, "Produktkauf"));
-		incomeRepository.save(new Income("Peter Peterson", LocalDate.of(2014, 7, 14), 426.95, "Produktkauf"));
+		
+		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2015, 1, 1), 526.90, "Produktkauf"));
+		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2015, 1, 2), 726.00, "Produktkauf"));
+		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2015, 1, 2), 326.90, "Produktkauf"));
+		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2015, 1, 4), 226.50, "Produktkauf"));
+		incomeRepository.save(new Income("Peter Peterson", LocalDate.of(2015, 1, 6), 426.00, "Produktkauf"));
+		incomeRepository.save(new Income("Günther Herson", LocalDate.of(2015, 1, 6), 326.00, "Produktkauf"));
+		incomeRepository.save(new Income("Klaudia Gant", LocalDate.of(2015, 1, 7), 626.00, "Produktkauf"));
+		incomeRepository.save(new Income("Harry Potter", LocalDate.of(2015, 1, 9), 226.00, "Produktkauf"));
+		incomeRepository.save(new Income("Frodo Beutlin", LocalDate.of(2015, 1, 10), 426.50, "Produktkauf"));
 	}
 	
 	/*
