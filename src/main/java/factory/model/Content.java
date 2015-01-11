@@ -17,8 +17,8 @@ public class Content {
 		this.quality = quality;
 	}
 	
-	/*
-	 * leerer Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	public Content(){}
 

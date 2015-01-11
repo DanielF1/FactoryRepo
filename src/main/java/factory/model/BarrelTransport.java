@@ -39,6 +39,9 @@ public class BarrelTransport {
 		this.goal_date = goal_date;
 	}
 
+	/* 
+	 * default Konstruktor
+	 */
 	BarrelTransport(){}
 	
 	

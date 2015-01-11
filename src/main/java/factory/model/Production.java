@@ -16,8 +16,8 @@ public class Production extends Department {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Still> stills;
 	
-	/*
-	 * Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public Production(){}

@@ -51,8 +51,11 @@ public class Verkaeufercontroller {
 		this.adminTasksManager = adminTasksManager;
 	}	
 	
-	/*
+	/**
 	 * Abgeschlossene Bestellungen werden angezeigt 
+	 * 
+	 * @param modelMap
+	 * @return
 	 */
 	@RequestMapping("/orders")
 	public String orders(ModelMap modelMap) {
@@ -61,9 +64,12 @@ public class Verkaeufercontroller {
 
 		return "orders";
 	}
-	
-	/*
+
+	/**
 	 * Anzeigen der Kundenliste
+	 * 
+	 * @param modelMap
+	 * @return
 	 */
 	@RequestMapping("/customerlist")
 	public String customerlist(ModelMap modelMap) {
@@ -72,9 +78,13 @@ public class Verkaeufercontroller {
 
 		return "customerlist";
 	}
-
-	/*
+	
+	/**
 	 * Registrierung vom Verkäufer von neuen Kunden
+	 * 
+	 * @param registrationForm
+	 * @param result
+	 * @return
 	 */
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
@@ -91,8 +101,11 @@ public class Verkaeufercontroller {
 		return "redirect:/";
 	}
 
-	/*
+	/**
 	 * Formular für Kundenregistrierung
+	 * 
+	 * @param modelMap
+	 * @return
 	 */
 	@RequestMapping("/register")
 	public String register(ModelMap modelMap) {
@@ -100,8 +113,11 @@ public class Verkaeufercontroller {
 		return "register";
 	}
 
-	/*
+	/**
 	 * Schnellauswahl der Artikel für den Verkäufer 
+	 * 
+	 * @param model
+	 * @return
 	 */
 	@RequestMapping(value = "/saleSortiment", method = RequestMethod.GET)
 	public String buyForCustomer(Model model){
@@ -110,9 +126,14 @@ public class Verkaeufercontroller {
 		
 		return "saleSortiment";
 	}
-
-	/*
+	
+	/**
 	 * Kundendaten bearbeiten
+	 * 
+	 * @param id
+	 * @param model
+	 * @param customer
+	 * @return
 	 */
 	@RequestMapping(value="/editCustomer/{id}", method = RequestMethod.GET)
 	public String editEmployee(@PathVariable Long id, Model model, Customer customer){
@@ -121,9 +142,17 @@ public class Verkaeufercontroller {
 		
 		return "editCustomer";
 	} 
-	 
-	/*
+
+	/**
 	 * Kundendaten speichern
+	 * 
+	 * @param customer
+	 * @param bindingResult
+	 * @param username
+	 * @param familyname
+	 * @param firstname
+	 * @param address
+	 * @return
 	 */
 	@RequestMapping(value="/editCustomer", method = RequestMethod.POST)
 	public String editEmployee(	@Valid Customer customer,

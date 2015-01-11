@@ -15,8 +15,8 @@ public class BarrelStock extends Department {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Barrel> barrels;
 	
-	/*
-	 * Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public BarrelStock() {}

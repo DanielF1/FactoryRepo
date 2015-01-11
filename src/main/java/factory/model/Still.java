@@ -39,13 +39,11 @@ public class Still {
 		this.still_process_end_time = still_process_end_time;
 	}
 	
-	/*
-	 * Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public Still(){}
-	
-	
 	
 	/*
 	 * Getter und Setter

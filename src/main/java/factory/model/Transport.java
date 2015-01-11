@@ -16,8 +16,8 @@ public class Transport {
 	private Long source;
 	private Long destination;
 
-	/*
-	 * leerer Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	public Transport(){}
 	
@@ -30,7 +30,6 @@ public class Transport {
 		this.destination = destination;
 		this.quantity = quantity;
 	}
-
 	
 	/*
 	 * Getter und Setter

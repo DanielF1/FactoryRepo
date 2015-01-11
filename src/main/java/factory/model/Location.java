@@ -33,8 +33,8 @@ public class Location {
 	private List<Department> departments;
 
 	
-	/*
-	 * Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public Location() {

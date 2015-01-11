@@ -29,8 +29,8 @@ public class Customer {
 	private UserAccount userAccount;
 
 	
-	/*
-	 * Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	protected Customer() {

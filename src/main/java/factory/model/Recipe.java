@@ -27,6 +27,9 @@ public class Recipe {
 		this.ingredients = map1;
 	}
 
+	/* 
+	 * default Konstruktor
+	 */
 	Recipe(){}
 	
 	/*

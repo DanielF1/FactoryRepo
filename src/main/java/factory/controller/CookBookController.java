@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import factory.model.Accountancy;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;

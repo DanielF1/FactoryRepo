@@ -39,8 +39,8 @@ public class Delivery {
 	
 	}
 
-	/*
-	 * Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public Delivery(){}

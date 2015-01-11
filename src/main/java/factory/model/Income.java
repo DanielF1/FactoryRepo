@@ -17,8 +17,8 @@ public class Income {
 	private double value;
 	private String sortOf;
 	
-	/*
-	 * leerer Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public Income(){}

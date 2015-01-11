@@ -35,8 +35,8 @@ public class Employee {
 	@NotEmpty(message = "{RegistrationForm.address.NotEmpty}")
 	private String address;
 	
-	/*
-	 * leerer Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public Employee(){}

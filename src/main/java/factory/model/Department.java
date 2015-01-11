@@ -12,12 +12,15 @@ public class Department {
 	private Long id;
 	private String name;
 
-	/*
-	 * Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public Department(){}
 
+	/* 
+	 * Konstruktor
+	 */
 	public Department(String name) {
 		this.name = name;
 	}
