@@ -81,7 +81,8 @@ public class BarrelMakerController {
 	}
 	
 	/*
-	 * Hier wird der Engelanteil jedes Fasses berechnet, weil die Inhalte des Fasses jedes Jahr um 3% verringert
+	 * Hier wird der Engelanteil jedes Fasses berechnet, 
+	 * weil die Inhalte des Fasses jedes Jahr um 3% verringert
 	 */
 	public void engelAnteilBesuechtigen(){
 		List<Barrel> allBarrels = barrelstock.getBarrels();
@@ -144,6 +145,8 @@ public class BarrelMakerController {
 
 	/*
 	 * Hier wird ein Fass oder werden mehrere Fässer in der Fassliste hinzugefügt. 
+	 * @param barrel_volume ist das Volume des Fasses
+	 * @param barrel_anzahl ist die Anzahl der hinzufügenden Fässer
 	 */
 	@RequestMapping("/insertBarrel")
 	public String insertBarrel(
@@ -190,6 +193,7 @@ public class BarrelMakerController {
 		modelMap.addAttribute("insertBarrel", new InsertBarrel());
 		return "inserted";
 	}
+	
 	/*
 	 Wenn das Fass zu alt ist, wird es entfernt
 	 */
@@ -224,7 +228,8 @@ public class BarrelMakerController {
 	}
 	
 	/*
-	 Um den Lagerplatz zu sparen, werden die Inhalte gleichalten Alters der Fässer zusammenschütten 
+	 * Um den Lagerplatz zu sparen, werden die Inhalte 
+	 * gleichalten Alters der Fässer zusammenschütten 
 	 */
 	@RequestMapping(value = "/putBarrelstogether")
 	public String putBarrelsTogether(ModelMap modelMap) {
