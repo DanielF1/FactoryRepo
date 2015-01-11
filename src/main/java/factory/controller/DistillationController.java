@@ -36,7 +36,6 @@ public class DistillationController {
 	private Production production;
 	private final DepartmentRepository departmentrepository;
 	private final LocationRepository locationRepository;
-	
 	@Autowired 
 	public DistillationController(WineStock winestock, BarrelStock barrelstock, Production production, 
 			DepartmentRepository departmentrepository, LocationRepository locationRepository)
@@ -68,12 +67,13 @@ public class DistillationController {
 								{
 									if(barrel.getQuality().equals(""))
 									{
-										barrel.setQuality("reserviert für Destille " + index);
 										if (!barrel.getPosition().equals(""))
 										{
 											barrel.setPosition("");
-
+											
 										}
+										barrel.setQuality("reserviert für Destille " + index);
+										
 										still_amount = still_amount - barrel.getBarrel_volume();
 										
 										if(stillAmount == 0)

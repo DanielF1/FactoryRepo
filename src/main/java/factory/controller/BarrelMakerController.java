@@ -61,7 +61,7 @@ public class BarrelMakerController {
 	}
 
 	/*
-	 Die double Zahlen werden auf 2 Nachkommastellen gerundet
+	 * Die double Zahlen werden auf 2 Nachkommastellen gerundet
 	 */
 
 	public double Runden2Dezimal(double x) { 
@@ -81,7 +81,7 @@ public class BarrelMakerController {
 	}
 	
 	/*
-	 Hier wird der Engelanteil jedes Fasses berechnet, weil die Inhalte des Fasses jedes Jahr um 3% verringert
+	 * Hier wird der Engelanteil jedes Fasses berechnet, weil die Inhalte des Fasses jedes Jahr um 3% verringert
 	 */
 	public void engelAnteilBesuechtigen(){
 		List<Barrel> allBarrels = barrelstock.getBarrels();
@@ -98,7 +98,7 @@ public class BarrelMakerController {
 				}
 			barrel.setLastFill(LocalDate.now().minusDays(datecount));
 			}
-			int Jahre=datecount/365; //wie lang destillat zu letzten mal in fässern erfüllt wurde
+			int Jahre=datecount/365; //wie lang destillat zum letzten mal in fässern erfüllt wurde
 			for (int i = 1; i <= Jahre; i++)
 			{
 				barrel.setContent_amount(0.97*barrel.getContent_amount());
@@ -114,7 +114,7 @@ public class BarrelMakerController {
 	
 
 	/*
-	 Die Fassliste wird an dem Browser angezeigt
+	 * Die Fassliste wird an dem Browser angezeigt
 	 */
 	
 	@RequestMapping("/BarrelList")
@@ -143,7 +143,7 @@ public class BarrelMakerController {
 	}
 
 	/*
-	 Hier wird ein Fass oder werden mehrere Fässer in der Fassliste hinzugefügt. 
+	 * Hier wird ein Fass oder werden mehrere Fässer in der Fassliste hinzugefügt. 
 	 */
 	@RequestMapping("/insertBarrel")
 	public String insertBarrel(
@@ -285,14 +285,17 @@ public class BarrelMakerController {
 					barrel.setContent_amount(Runden2Dezimal(volume));
 					System.out.println(barrel.getContent_amount());
 					hilfsFass -= volume;
+					barrel.setLastFill(LocalDate.now());
 					if (barrel.getContent_amount()==0)
 					{
-						barrel.setQuality("");
-						barrel.setAge(0);
-						barrel.setPosition("");
-						barrel.setManufacturing_date(LocalDate.parse("0000-01-01"));
+						double x=barrel.getBarrel_volume();
+						LocalDate y = barrel.getBirthdate_of_barrel();
+						LocalDate z = barrel.getDeath_of_barrel();
+						barrelstock.getBarrels().remove(barrel);
+						Barrel barrel1 = new Barrel(0,"",0,LocalDate.parse("0000-01-01"),x,y,z, LocalDate.now(),"");
+						barrelstock.getBarrels().add(barrel1);
 					}
-					barrel.setLastFill(LocalDate.now());
+					
 				}
 				}
 			}
@@ -307,41 +310,12 @@ public class BarrelMakerController {
 	 */
 	@RequestMapping(value = "/fassZuordnen")
 	public String fassZuordnen(){
-//		List<Barrel> allBarrels = barrelstock.getBarrels();
-//		int FLL_RegalNr = 1;
-//		int FLV_RegalNr = 1;
-//		int FLL_Platz = 1;
-//		int FLV_Platz = 1;
-//		int MAX_PLATZ_IM_REGAL = 5;
-//		for (Barrel barrel:allBarrels)
-//		{
-//			if (barrel.getQuality().equals("")){
-//				barrel.setPosition("FLL-R" + FLL_RegalNr +"-"+ FLL_Platz);	
-//				if (FLL_Platz < MAX_PLATZ_IM_REGAL){
-//					FLL_Platz++;
-//				}
-//				else{
-//					FLL_Platz = 1;
-//					FLL_RegalNr++;
-//				}
-//				
-//			}
-//			if (!barrel.getQuality().equals("")){
-//				barrel.setPosition("FLV-R" + FLV_RegalNr +"-"+ FLV_Platz);
-//				if (FLV_Platz < MAX_PLATZ_IM_REGAL){
-//					FLV_Platz++;
-//				}
-//				else{
-//					FLV_Platz = 1;
-//					FLV_RegalNr++;
-//				}
-//			}
+
 		this.lagerFurVolleFasser.zuordnen(barrelstock.getBarrels());
 		departmentRepository.save(barrelstock);
 		this.lagerFurLeereFasser.zuordnen(barrelstock.getBarrels());
 		departmentRepository.save(barrelstock);
 		return "redirect:/BarrelList";
 		
-//		return "redirect:/BarrelList";
 	}
 }

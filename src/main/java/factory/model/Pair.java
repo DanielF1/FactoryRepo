@@ -4,6 +4,19 @@ public class Pair {
 	private Integer platz;
 	private Integer regal;
 	
+
+	/*
+	 * Konstruktor
+	 */
+	public Pair(Integer regal, Integer platz){
+		this.platz = platz;
+		this.regal = regal;
+	}
+
+
+	/*
+	 * Getters und Setters
+	 */
 	public Integer getPlatz() {
 		return platz;
 	}
@@ -20,13 +33,8 @@ public class Pair {
 		this.regal = regal;
 	}
 
-	public Pair(Integer regal, Integer platz){
-		this.platz = platz;
-		this.regal = regal;
-	}
-
-	public boolean istGrosserAls(Pair pair){
-		return (pair.getRegal() <= this.getRegal() && pair.getPlatz() < this.getPlatz()) ? true : false;
-	}
+//	public boolean istGrosserAls(Pair pair){
+//		return (pair.getRegal() <= this.getRegal() && pair.getPlatz() < this.getPlatz()) ? true : false;
+//	}
 }
 
