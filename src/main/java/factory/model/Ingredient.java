@@ -23,8 +23,8 @@ public class Ingredient {
 		this.unit = unit;
 	}
 
-	/*
-	 * leerer Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	public Ingredient(){}
 

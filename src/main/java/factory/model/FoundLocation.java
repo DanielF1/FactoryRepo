@@ -17,8 +17,8 @@ public class FoundLocation {
 		this.amount = amount;
 	}
 	
-	/*
-	 * leerer Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	public FoundLocation(){}
 	

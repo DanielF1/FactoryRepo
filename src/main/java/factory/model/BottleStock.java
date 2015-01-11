@@ -15,8 +15,8 @@ public class BottleStock extends Department{
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Bottle> bottles;	
 
-	/*
-	 * Konstruktor
+	/* 
+	 * default Konstruktor
 	 */
 	@Deprecated
 	public BottleStock(){}

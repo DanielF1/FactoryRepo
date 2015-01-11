@@ -56,7 +56,12 @@ class AdminController {
 		this.incomeRepository = incomeRepository;
 	}
 
-		
+
+	/**
+	 * 
+	 * @param modelMap
+	 * @return
+	 */
 	 @RequestMapping(value = "/adminLocList", method = RequestMethod.GET)
 		public String standortUebersicht(ModelMap modelMap){
 	    	
@@ -95,12 +100,27 @@ class AdminController {
 //		}
 //	//Search END
 
-				
+		/**
+		 * 		
+		 * @param location
+		 * @return
+		 */
 		@RequestMapping(value="/addLocation", method=RequestMethod.GET)
 	    public String addLocation(Location location) {
 	        return "addLocation";
 	    }
 	
+		/**
+		 * 
+		 * @param location
+		 * @param bindingResult
+		 * @param name
+		 * @param address
+		 * @param city
+		 * @param telefon
+		 * @param mail
+		 * @return
+		 */
 	    @RequestMapping(value="/addLocation", method=RequestMethod.POST)
 	    public String Standortausgabe(	@Valid Location location,
 	    								BindingResult bindingResult,
@@ -119,6 +139,13 @@ class AdminController {
 	    	return "redirect:/adminLocList";
 	    }
 	    
+	    /**
+	     * 
+	     * @param id
+	     * @param model
+	     * @param location
+	     * @return
+	     */
 	    @RequestMapping(value="/editLocation/{id}", method = RequestMethod.GET)
 		public String editLocations(@PathVariable Long id, Model model, Location location){
 			
@@ -126,7 +153,19 @@ class AdminController {
 			
 			return "editLocation";
 		}
-				
+		
+	    /**
+	     * 
+	     * @param location
+	     * @param bindingResult
+	     * @param name
+	     * @param address
+	     * @param city
+	     * @param telefon
+	     * @param mail
+	     * @param id
+	     * @return
+	     */
 		@RequestMapping(value="/editLocation", method = RequestMethod.POST)
 		public String editLocation(	@Valid Location location,
 									BindingResult bindingResult,
@@ -145,6 +184,12 @@ class AdminController {
 			return "redirect:/adminLocList";
 		}
 
+		/**
+		 * 
+		 * @param id
+		 * @param model
+		 * @return
+		 */
 		@RequestMapping(value="/deleteLocation/{id}", method = RequestMethod.GET)
 		public String deleteLocation(@PathVariable Long id, Model model){
 			
@@ -155,7 +200,12 @@ class AdminController {
 		
 		
 		//Mitarbeiterbearbeitung von 1 Standort
-		
+		/**
+		 * 
+		 * @param id
+		 * @param model
+		 * @return
+		 */
 		 @RequestMapping(value="/employees/{id}", method = RequestMethod.GET)
 		 public String editEmployees(@PathVariable Long id, Model model){	
 			
@@ -171,7 +221,21 @@ class AdminController {
 			
 			return "editEmployee";
 		} 
-		 
+		
+		/**
+		 * 
+		 * @param employee
+		 * @param bindingResult
+		 * @param username
+		 * @param password
+		 * @param workplace
+		 * @param familyname
+		 * @param firstname
+		 * @param salary
+		 * @param mail
+		 * @param address
+		 * @return
+		 */
 		@RequestMapping(value="/editEmployee", method = RequestMethod.POST)
 		public String editEmployee(	@Valid Employee employee,
 									BindingResult bindingResult,
@@ -193,6 +257,12 @@ class AdminController {
 			return "redirect:/employeeList";
 			}
 		 
+		/**
+		 * 	
+		 * @param model
+		 * @param employee
+		 * @return
+		 */
 		@RequestMapping(value="/addEmployee", method=RequestMethod.GET)
 	    public String addEmployee( Model model, Employee employee) {
 			
@@ -201,6 +271,22 @@ class AdminController {
 			return "addEmployee";
 	    }
 		
+		/**
+		 * 
+		 * @param employee
+		 * @param bindingResult
+		 * @param username
+		 * @param password
+		 * @param location
+		 * @param workplace
+		 * @param familyname
+		 * @param firstname
+		 * @param salary
+		 * @param mail
+		 * @param address
+		 * @param model
+		 * @return
+		 */
 		@RequestMapping(value="/addEmployee", method=RequestMethod.POST)
 	    public String addedEmployee(	@Valid Employee employee,
 	    								BindingResult bindingResult,
@@ -225,6 +311,12 @@ class AdminController {
 	    	return "redirect:/employeeList";
 	    }
 	
+		/**
+		 * 
+		 * @param id
+		 * @param model
+		 * @return
+		 */
 		@RequestMapping(value="/editDepartments/{id}", method = RequestMethod.GET)
 		public String editDepartments(@PathVariable Long id, Model model){	
 			
@@ -233,6 +325,12 @@ class AdminController {
 			return "editDepartments";
 			}
 	
+		/**
+		 * 
+		 * @param id
+		 * @param model
+		 * @return
+		 */
 		@RequestMapping(value="/editOneDep/{id}", method = RequestMethod.GET)
 		public String editOneDepartment(@PathVariable Long id, Model model){	
 			
@@ -241,6 +339,12 @@ class AdminController {
 			return "editOneDep";
 		}
 		
+		/**
+		 * 
+		 * @param id
+		 * @param sort
+		 * @return
+		 */
 		@RequestMapping(value="/addDepartment", method=RequestMethod.POST)
 		public String addedDepartment(	@RequestParam ("id") Long id,
 		   								@RequestParam ("sort") String sort) {
@@ -251,7 +355,11 @@ class AdminController {
 		}
 
 		//Übersicht aller Arbeiter in allen Standorten
-		
+		/**
+		 * 
+		 * @param modelMap
+		 * @return
+		 */
 	    @RequestMapping(value = "/employeeList", method = RequestMethod.GET)
 		public String employeeList(ModelMap modelMap){
 	    	
@@ -260,6 +368,11 @@ class AdminController {
 			return "employeeList";
 		}
   
+	    /**
+	     * 
+	     * @param id
+	     * @return
+	     */
 	    @RequestMapping(value = "/dismissEmployee/{id}", method = RequestMethod.GET)
 		public String dismissEmployee(@PathVariable Long id){
 	    	
@@ -268,6 +381,11 @@ class AdminController {
 			return "redirect:/employeeList";
 		}
 	    
+	    /**
+	     * 
+	     * @param modelMap
+	     * @return
+	     */
 	    @RequestMapping(value = "/accountancy", method = RequestMethod.GET)
 		public String accountancyOverview(ModelMap modelMap){
 
@@ -282,6 +400,11 @@ class AdminController {
 			return "accountancy";
 		}
 	    
+	    /**
+	     * 
+	     * @param modelMap
+	     * @return
+	     */
 	    @RequestMapping(value = "/income", method = RequestMethod.GET)
 		public String incomeOverview(ModelMap modelMap){
 
@@ -290,6 +413,11 @@ class AdminController {
 			return "income";
 		}
 	    
+	    /**
+	     * 
+	     * @param modelMap
+	     * @return
+	     */
 	    @RequestMapping(value = "/expenditure", method = RequestMethod.GET)
 		public String expenditureOverview(ModelMap modelMap){
 
