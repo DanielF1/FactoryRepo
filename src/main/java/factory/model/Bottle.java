@@ -9,14 +9,16 @@ public class Bottle {
 	private @Id @GeneratedValue Long id;
 	private String name;
 	private double amount;
+	private double price;
 	
 	/*
 	 * constructor
 	 */
-	public Bottle(String name, double amount)
+	public Bottle(String name, double amount, double price)
 	{
 		this.name = name;
 		this.amount = amount;
+		this.price = price;
 	}
 	
 	Bottle(){}
@@ -51,5 +53,13 @@ public class Bottle {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 }

@@ -2,7 +2,11 @@ package factory.controller;
 
 import javax.validation.Valid;
 
+
 import org.salespointframework.useraccount.UserAccountManager;
+import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderManager;
+import org.salespointframework.order.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,8 @@ import factory.model.AdminTasksManager;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.EmployeeRepository;
+import factory.model.ExpenditureRepository;
+import factory.model.IncomeRepository;
 import factory.model.Location;
 import factory.model.LocationRepository;
 
@@ -30,20 +36,26 @@ class AdminController {
 	private final EmployeeRepository employeeRepository;
 	private final DepartmentRepository departmentRepository;
 	private final AdminTasksManager adminTasksManager;
-	private final UserAccountManager userAccountManager;
+	private final OrderManager<Order> orderManager;
+	private final ExpenditureRepository expenditureRepository;
+	private final IncomeRepository incomeRepository;
 	
 	@Autowired
 	public AdminController(	LocationRepository locationRepository, 
 							EmployeeRepository employeeRepository, 
 							DepartmentRepository departmentRepository, 
 							AdminTasksManager adminTasksManager,
-							UserAccountManager userAccountManager) {
+							OrderManager<Order> orderManager,
+							ExpenditureRepository expenditureRepository,
+							IncomeRepository incomeRepository) {
 
 		this.locationRepository = locationRepository;
 		this.employeeRepository = employeeRepository;
 		this.departmentRepository = departmentRepository;
 		this.adminTasksManager = adminTasksManager;
-		this.userAccountManager = userAccountManager;
+		this.orderManager = orderManager;
+		this.expenditureRepository = expenditureRepository;
+		this.incomeRepository = incomeRepository;
 	}
 
 		
@@ -256,5 +268,15 @@ class AdminController {
 	    	adminTasksManager.dismissEmployee(id);
 	    	
 			return "redirect:/employeeList";
+		}
+	    
+	    
+	    
+	    @RequestMapping(value = "/income", method = RequestMethod.GET)
+		public String accountancyOverview(ModelMap modelMap){
+
+	    	modelMap.addAttribute("income", incomeRepository.findAll());
+	    	
+			return "income";
 		}
 }

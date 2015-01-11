@@ -1,5 +1,6 @@
 package factory.controller;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -27,7 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import factory.model.Article;
+import factory.model.Customer;
 import factory.model.CustomerRepository;
+import factory.model.ExpenditureRepository;
+import factory.model.Income;
+import factory.model.IncomeRepository;
 
 @Controller
 @PreAuthorize("isAuthenticated()")
@@ -37,14 +42,19 @@ public class CartController {
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
 	private final CustomerRepository customerRepository;
+	private final IncomeRepository incomeRepository;
 	
 	@Autowired
-	public CartController(OrderManager<Order> orderManager, UserAccountManager userAccountManager, CustomerRepository customerRepository) {
+	public CartController(	OrderManager<Order> orderManager, 
+							UserAccountManager userAccountManager, 
+							CustomerRepository customerRepository,
+							IncomeRepository incomeRepository) {
 
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
 		this.customerRepository = customerRepository;
+		this.incomeRepository = incomeRepository;
 	}
 
 	
@@ -86,14 +96,20 @@ public class CartController {
 	 
 	 
 	   @RequestMapping(value="/checkout", method=RequestMethod.POST)   
-	   public String Buy(HttpSession session, @LoggedIn Optional<UserAccount> userAccount, @ModelAttribute Cart cart){
+	   public String Buy(@LoggedIn Optional<UserAccount> userAccount, @ModelAttribute Cart cart){
 	    	
 	    	return userAccount.map(account -> {
 
 					Order order = new Order(account, Cash.CASH);
 					
 					cart.addItemsTo(order);
-
+					
+					UserAccount userAcc = userAccount.get();
+					
+					Customer cust = customerRepository.findByUserAccount(userAcc);
+					String customer = cust.getFirstname() + " " + cust.getFamilyname();
+					incomeRepository.save(new Income(customer, LocalDate.now(), cart.getPrice(), "Produktkauf"));
+					
 					orderManager.payOrder(order);
 					orderManager.completeOrder(order);
 					orderManager.save(order);

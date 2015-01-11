@@ -2,8 +2,6 @@ package factory;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +12,7 @@ import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.order.Order;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -39,6 +38,7 @@ import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.EmployeeRepository;
+import factory.model.Expenditure;
 import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.LocationRepository;
@@ -167,23 +167,22 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrels2.add(br271);
 		
 		
-		
 		/*
 		 * initialize bottles
 		 */
-		Bottle b1 = new Bottle("", 0.7);
-		Bottle b2 = new Bottle("", 0.7);
-		Bottle b3 = new Bottle("", 0.7);
-		Bottle b4 = new Bottle("Courvoisier Napoleon", 0.7);
-		Bottle b5 = new Bottle("" ,0.7);
-		Bottle b6 = new Bottle("", 0.3);	
-		Bottle b8 = new Bottle("Chatelier Cognac" ,0.7);
-		Bottle b10 = new Bottle("Frapin Domaine Château" ,0.7);
+		Bottle b1 = new Bottle("", 0.7, 0.0);
+		Bottle b2 = new Bottle("", 0.7, 0.0);
+		Bottle b3 = new Bottle("", 0.7, 0.0);
+		Bottle b4 = new Bottle("Courvoisier Napoleon", 0.7, 0.0);
+		Bottle b5 = new Bottle("" ,0.7, 0.0);
+		Bottle b6 = new Bottle("", 0.3, 0.0);	
+		Bottle b8 = new Bottle("Chatelier Cognac" ,0.7, 0.0);
+		Bottle b10 = new Bottle("Frapin Domaine Château" ,0.7, 0.0);
 			
-		Bottle b11 = new Bottle("Monnet Cognac" ,0.7);
-		Bottle b21 = new Bottle("Courvoisier Napoleon", 0.7);
-		Bottle b7 = new Bottle("Claude Chatelier Extra", 1);
-		Bottle b9 = new Bottle("Delamain Vesper" ,0.7);
+		Bottle b11 = new Bottle("Monnet Cognac" ,0.7, 0.0);
+		Bottle b21 = new Bottle("Courvoisier Napoleon", 0.7, 0.0);
+		Bottle b7 = new Bottle("Claude Chatelier Extra", 1, 0.0);
+		Bottle b9 = new Bottle("Delamain Vesper" ,0.7, 0.0);
 		
 		
 		List<Bottle> bottles = new ArrayList<Bottle>();
@@ -233,7 +232,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		stills2.add(still_5);
 		
-		
 		/*
 		 * initialize departments
 		 */
@@ -249,7 +247,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Department production2 = departmentRepository.save(new Production("ProduktionB", 1000, stills2));
 		Department verkauf1 = departmentRepository.save(new Sale("VerkaufA"));
 		Department verkauf2 = departmentRepository.save(new Sale("VerkaufB"));
-		Department verwaltung = departmentRepository.save(new Accountancy("Verwaltung", 0, 0));
+		Department rechnungswesen = departmentRepository.save(new Accountancy("Rechnungswesen"));
 
 		
 		List<Department> list5 = new ArrayList<Department>();
@@ -265,7 +263,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list6.add(barrelstock2);
 	
 		List<Department> list7 = new ArrayList<Department>();
-		list7.add(verwaltung);
+		list7.add(rechnungswesen);
 		
 		List<Department> list8 = new ArrayList<Department>();
 		list8.add(verkauf2);
@@ -342,6 +340,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		 * initialize employees
 		 */
 		Employee e1 = employeeRepository.save(new Employee(warehousemanAcc, "lagerist1", "123", "Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse"));
+		
 		Employee e2 = employeeRepository.save(new Employee(warehousemanAcc2, "lagerist2", "123", "Lagerist","Maier","Chris","200","klaus@Mueller.de","Klausstrasse"));
 		Employee e10 = employeeRepository.save(new Employee(warehousemanAcc3, "lagerist3", "123", "Lagerist","Maier","Chris","200","klaus@Mueller.de","Klausstrasse"));
 		Employee e3 = employeeRepository.save(new Employee(salesmanAcc, "verkaeufer1", "123", "Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse"));

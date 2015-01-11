@@ -21,11 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import factory.model.Accountancy;
 import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Department;
 import factory.model.DepartmentRepository;
 import factory.model.Employee;
+import factory.model.Expenditure;
+import factory.model.ExpenditureRepository;
 import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.validation.InsertBarrel;
@@ -38,13 +41,27 @@ public class BarrelMakerController {
 	private final LocationRepository locationRepository;
 	private final DepartmentRepository departmentRepository;
 	private BarrelStock barrelstock;
+	private final ExpenditureRepository expenditureRepository;
+	boolean check = false;
+
 	
 	@Autowired
-	public BarrelMakerController(LocationRepository locationRepository, DepartmentRepository departmentRepository, BarrelStock barrelstock){
+	public BarrelMakerController(	LocationRepository locationRepository,
+									DepartmentRepository departmentRepository, 
+									BarrelStock barrelstock,
+									ExpenditureRepository expenditureRepository){
 		this.locationRepository = locationRepository;
 		this.barrelstock = barrelstock;
 		this.departmentRepository = departmentRepository;
+		this.expenditureRepository = expenditureRepository;
 	}
+
+
+	public double Runden2Dezimal(double x) { 
+		double Ergebnis;
+		Ergebnis = (double) (int) (x*100)/100;
+		return Ergebnis; 
+		}
 	
 	public void alterBerechnen(){
 		List<Barrel> allBarrels = barrelstock.getBarrels();
@@ -54,6 +71,36 @@ public class BarrelMakerController {
 		}
 		departmentRepository.save(barrelstock);
 		
+	}
+	
+	public void engelAnteilBesuechtigen(){
+		List<Barrel> allBarrels = barrelstock.getBarrels();
+		int datecount = 0;
+	
+		for (Barrel barrel: allBarrels)
+		{
+			if (barrel.getLastFill().compareTo(LocalDate.now().minusDays(365))<0)
+			{
+				
+				while (barrel.getLastFill().compareTo(LocalDate.now())<0){
+					datecount++;
+					barrel.setLastFill(barrel.getLastFill().plusDays(1));
+				}
+			barrel.setLastFill(LocalDate.now().minusDays(datecount));
+			}
+			int Jahre=datecount/365; //wie lang destillat zu letzten mal in fässern erfüllt wurde
+			for (int i = 1; i <= Jahre; i++)
+			{
+			
+				barrel.setContent_amount(0.97*barrel.getContent_amount());
+				
+			}
+
+			barrel.setContent_amount(Runden2Dezimal(barrel.getContent_amount()));
+			System.out.println(barrel.getContent_amount());
+		}
+		departmentRepository.save(barrelstock);
+
 	}
 	
 	@RequestMapping("/BarrelList")
@@ -66,7 +113,10 @@ public class BarrelMakerController {
 					for(Department dep : loc.getDepartments()){
 						if(dep.getName().contains("Fasslager")){
 							barrelstock = (BarrelStock) dep;
-//							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
+							if (!check){
+								engelAnteilBesuechtigen();
+								check = true;
+							}
 							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 							return "BarrelList";
 						}
@@ -91,6 +141,24 @@ public class BarrelMakerController {
 		Barrel barrel = new Barrel(0,"",0, LocalDate.parse("0000-01-01"),Double.parseDouble(barrel_volume),
 				LocalDate.now(),LocalDate.now().plusDays(2),LocalDate.parse("0000-01-01"), "");
 		barrelstock.getBarrels().add(barrel);
+		
+		double totalprice = 20;
+		
+		expenditureRepository.save(new Expenditure(LocalDate.now(), totalprice, "Fassherstellung"));
+		
+//		for(Location loc : locationRepository.findAll()){
+//			for(Department department : loc.getDepartments()){
+//				if(department.getName().contains("Rechnungswesen")){
+//		
+//					Accountancy acc = (Accountancy) department;
+//					acc.getExpenditures().add(exp);
+//				
+//				}//if
+//			}//for
+//		}//for
+		
+		
+		
 		departmentRepository.save(barrelstock);
 		return "redirect:/BarrelList";
 	}
@@ -181,7 +249,7 @@ public class BarrelMakerController {
 					double volume = barrel.getBarrel_volume();
 					if (hilfsFass < volume)
 						volume = hilfsFass;
-					barrel.setContent_amount(volume);
+					barrel.setContent_amount(Runden2Dezimal(volume));
 					System.out.println(barrel.getContent_amount());
 					hilfsFass -= volume;
 					if (barrel.getContent_amount()==0)

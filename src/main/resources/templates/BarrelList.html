@@ -78,7 +78,8 @@
 					<td class="text-center" th:text="${Barrel.getQuality()}">gut</td>
 					<td class="text-center" th:text="${Barrel.getContent_amount()}">12,3</td>
 					<td class="text-center" th:text="${Barrel.getManufacturing_date()}">10.10.2012</td>
-					
+					<td class="text-center" th:if="${Barrel.getManufacturing_date()} == '0000-01-01'"> -- </td>
+       				 <td class="text-center" th:if="${Barrel.getManufacturing_date()} == '0000-01-01'"></td>
 					<td class="text-center" th:text="${Barrel.getBarrel_volume()}">23</td>
 					<td class="text-center" th:text="${Barrel.getBirthdate_of_barrel()}">10.10.2012</td>
 <!-- 					<td class="text-center" th:text="${Barrel.getDeath_of_barrel()}">10.10.2013</td> -->
