@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Department;
@@ -54,22 +52,23 @@ public class DistillationController {
 	 */
 	public void reserveBarrels(double stillAmount, @LoggedIn Optional<UserAccount> userAccount, int index)
 	{
+		double still_amount = stillAmount;
+		
 		for(Location loca : locationRepository.findAll()){
 			for(Employee em : loca.getEmployees()){
 				if(em.getUserAccount() == userAccount.get()){			
 					for(Department dep : loca.getDepartments()){
 						if(dep.getName().contains("Fasslager")){
-							barrelstock = (BarrelStock) dep;{
-								System.out.println("xxx: ");
-							for(double  i = stillAmount; i > 0; i--)
+							barrelstock = (BarrelStock) dep;
+
+							for (Barrel barrel : barrelstock.getBarrels())
 							{
-								for (Barrel barrel : barrelstock.getBarrels())
+								if(still_amount > 0)
 								{
 									if(barrel.getQuality().equals(""))
 									{
-										barrel.setQuality("reserv" + index);
-										stillAmount = stillAmount - barrel.getBarrel_volume();
-										System.out.println("reserv: " + barrel.getQuality());
+										barrel.setQuality("reserviert für Destille " + index);
+										still_amount = still_amount - barrel.getBarrel_volume();
 										
 										if(stillAmount == 0)
 										{
@@ -77,10 +76,9 @@ public class DistillationController {
 										}
 									}
 								}
-								
-								departmentrepository.save(barrelstock);
-							}
-							}
+							}	
+							
+							departmentrepository.save(barrelstock);
 						}
 					}
 				}
@@ -402,7 +400,7 @@ public class DistillationController {
 								barrelstock = (BarrelStock) dep;{
 								for (Barrel barrel : barrelstock.getBarrels()){
 			
-									if(barrel.getQuality().equals("reserv" + index))
+									if(barrel.getQuality().equals("reserviert für Destille " + index))
 									{									
 										double barrelAmount = barrel.getBarrel_volume();
 										
@@ -412,6 +410,7 @@ public class DistillationController {
 											barrel.setContent_amount(amound);
 											barrel.setQuality(quality);
 											barrel.setManufacturing_date(LocalDate.now());
+											barrel.setLastFill(LocalDate.now());
 											final_distillate = final_distillate - barrelAmount;
 																		
 											System.out.println("2: " + barrel.getBarrel_volume());		
@@ -488,8 +487,8 @@ public class DistillationController {
 	/*
 	 * delete still
 	 */
-	@RequestMapping(value = "'/deleteStill/' + {index}", method = RequestMethod.GET)
-	public String deleteStill(@PathVariable(value="index") int index, @LoggedIn Optional<UserAccount> userAccount) 
+	@RequestMapping(value = "/deleteStill/{index}", method = RequestMethod.GET)
+	public String deleteStill(@PathVariable(value="index") int index, @LoggedIn Optional<UserAccount> userAccount, Model model) 
 	{	
 		for(Location loc : locationRepository.findAll()){
 			for(Employee e : loc.getEmployees()){
@@ -498,15 +497,23 @@ public class DistillationController {
 						if(dep.getName().contains("Produktion")){
 							production = (Production) dep;
 							
-							production.getStills().remove(index - 1);
+							Still still = production.getStills().get(index - 1);
 							
-							departmentrepository.save(production);
+							if((still.getStatus_one() == 0) && (still.getStatus_two() == 0))
+							{
+								production.getStills().remove(still);
+								
+								departmentrepository.save(production);
+							} else {
+								model.addAttribute("error", "Destille muss vorher geleert werden.");
+							}
+
 						}
 					}
 				}
 			}
 		}
-
-		return "redirect:/destillation";
+		
+		return "redirect:/distillation";
 	}
 }

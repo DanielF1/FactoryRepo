@@ -23,7 +23,6 @@ import factory.model.Location;
 import factory.model.LocationManagement;
 import factory.model.LocationRepository;
 import factory.model.TransportRepository;
-import factory.model.WineStock;
 
 @Controller
 public class WineGrowerController {

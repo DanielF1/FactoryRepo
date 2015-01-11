@@ -1,9 +1,7 @@
 package factory.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -400,7 +398,7 @@ public class CookBookController {
 		 */
 		if(existingBottles < neededBottles)
 		{
-			missedBottle = (int) (neededBottles - existingBottles);
+			missedBottle = neededBottles - existingBottles;
 		}
 
 		return missedBottle;
