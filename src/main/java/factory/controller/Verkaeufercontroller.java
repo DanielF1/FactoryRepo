@@ -54,8 +54,8 @@ public class Verkaeufercontroller {
 	/**
 	 * Abgeschlossene Bestellungen werden angezeigt 
 	 * 
-	 * @param modelMap
-	 * @return
+	 * @param modelMap ModelMap ist aus der Salespoint api
+	 * @return abgeschlossenen Bestellungen einsehbar
 	 */
 	@RequestMapping("/orders")
 	public String orders(ModelMap modelMap) {
@@ -68,8 +68,8 @@ public class Verkaeufercontroller {
 	/**
 	 * Anzeigen der Kundenliste
 	 * 
-	 * @param modelMap
-	 * @return
+	 * @param modelMap ModelMap ist aus der Salespoint api
+	 * @return Kundenliste wird angezeigt
 	 */
 	@RequestMapping("/customerlist")
 	public String customerlist(ModelMap modelMap) {
@@ -84,7 +84,6 @@ public class Verkaeufercontroller {
 	 * 
 	 * @param registrationForm
 	 * @param result
-	 * @return
 	 */
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
@@ -104,8 +103,7 @@ public class Verkaeufercontroller {
 	/**
 	 * Formular für Kundenregistrierung
 	 * 
-	 * @param modelMap
-	 * @return
+	 * @param modelMap ModelMap ist aus der Salespoint api
 	 */
 	@RequestMapping("/register")
 	public String register(ModelMap modelMap) {
@@ -116,8 +114,7 @@ public class Verkaeufercontroller {
 	/**
 	 * Schnellauswahl der Artikel für den Verkäufer 
 	 * 
-	 * @param model
-	 * @return
+	 * @param model Model ist aus der Salespoint api
 	 */
 	@RequestMapping(value = "/saleSortiment", method = RequestMethod.GET)
 	public String buyForCustomer(Model model){
@@ -130,10 +127,9 @@ public class Verkaeufercontroller {
 	/**
 	 * Kundendaten bearbeiten
 	 * 
-	 * @param id
-	 * @param model
-	 * @param customer
-	 * @return
+	 * @param id identifier des Kunden
+	 * @param model Model ist aus der Salespoint api
+	 * @param customer ist im model definiert, Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
 	 */
 	@RequestMapping(value="/editCustomer/{id}", method = RequestMethod.GET)
 	public String editEmployee(@PathVariable Long id, Model model, Customer customer){
@@ -146,13 +142,13 @@ public class Verkaeufercontroller {
 	/**
 	 * Kundendaten speichern
 	 * 
-	 * @param customer
+	 * @param customer ist im model definiert, Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
 	 * @param bindingResult
-	 * @param username
-	 * @param familyname
-	 * @param firstname
-	 * @param address
-	 * @return
+	 * @param username Benutzername des Kunden
+	 * @param familyname Nachname des Kunden
+	 * @param firstname Vorname des Kunden
+	 * @param address Adresse des Kunden
+	 * @return Kundenliste wird aktualisiert(gespeichert) und angezeigt
 	 */
 	@RequestMapping(value="/editCustomer", method = RequestMethod.POST)
 	public String editEmployee(	@Valid Customer customer,

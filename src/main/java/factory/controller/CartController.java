@@ -59,7 +59,7 @@ public class CartController {
 
 	/**
 	 * 
-	 * @return new cart
+	 * @return Cart ist aus der Salespoint api
 	 */
 	@ModelAttribute("cart")
 	private Cart inizializeCart(){
@@ -68,8 +68,7 @@ public class CartController {
 	
 	/**
 	 * 
-	 * @param modelMap
-	 * @return
+	 * @param modelMap ModelMap ist aus der Salespoint api
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String basket(ModelMap modelMap) {
@@ -81,11 +80,10 @@ public class CartController {
 	 * Artikel wird mit der quantity hinzugefügt, außerdem wird der cart geupdated
 	 * wenn der verkäufer eingeloggt ist, wird ihm das Schnellsortiment zurückgegeben, allen anderen das Sortiment
 	 * 
-	 * @param article
-	 * @param number
-	 * @param userAccount
-	 * @param cart
-	 * @return
+	 * @param article ist im model definiert, Article ist das Produkt, welches in der Firma hergestellt und verkauft wird
+	 * @param number ist für die Anzahl der Artikel verantwortlich
+	 * @param userAccount UserAccount ist aus der Salespoint api
+	 * @param cart Cart ist aus der Salespoint api
 	 */
 	 @RequestMapping(value = "/cart", method = RequestMethod.POST)
 	    public String addArticle(	@RequestParam("pid") Article article, 
@@ -105,9 +103,8 @@ public class CartController {
 	 /**
 	  *  Einzelne Artikel werden im Warenkorb gelöscht
 	  * 
-	  * @param pid
-	  * @param cart
-	  * @return
+	  * @param pid der identifier wird von jedem Artikel bestimmt und kann dadurch auch somit gelöscht werden
+	  * @param cart Cart ist aus der Salespoint api
 	  */
 	 @RequestMapping(value = "/article/{pid}", method = RequestMethod.GET)
 	 public String deleteArticle(@PathVariable String pid, @ModelAttribute Cart cart) {
@@ -123,9 +120,8 @@ public class CartController {
 	  * wenn man die Bestellung bezahlt und abgeschlossen hat,
 	  * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
 	  * 
-	  * @param userAccount
-	  * @param cart
-	  * @return
+	  * @param userAccount UserAccount ist aus der Salespoint api
+	  * @param cart Cart ist aus der Salespoint api
 	  */
 	   @RequestMapping(value="/checkout", method=RequestMethod.POST)   
 	   public String Buy(@LoggedIn Optional<UserAccount> userAccount, @ModelAttribute Cart cart){
@@ -161,8 +157,8 @@ public class CartController {
 	    * 
 	    * @param session
 	    * @param userAccountIdent
-	    * @param cart
-	    * @return
+	    * @param cart Cart ist aus der Salespoint api
+	    * @return geht auf die Startseite zurück
 	    */
 	   @RequestMapping(value="/saleCheckout", method=RequestMethod.POST)   
 	   public String BuyForCustomer(HttpSession session, @RequestParam("id") String userAccountIdent, @ModelAttribute Cart cart){
@@ -196,8 +192,8 @@ public class CartController {
 	   /**
 	    * Der Warenkorb wird komplett verworfen und gelöscht
 	    * 
-	    * @param cart
-	    * @return
+	    * @param cart Cart ist aus der Salespoint api
+	    * @return man kommt wieder in den Artikelkatalog
 	    */
 	    @RequestMapping(value = "cart/clear", method = RequestMethod.POST)
 		public String clear(@ModelAttribute Cart cart) {

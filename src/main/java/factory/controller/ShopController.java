@@ -58,8 +58,7 @@ public class ShopController {
 
 	/**
 	 * 
-	 * @param model
-	 * @return
+	 * @param model Model ist aus der Salespoint api
 	 */
 		@RequestMapping({ "/", "/index"})
 		public String start(Model model) {
@@ -79,8 +78,8 @@ public class ShopController {
 		/**
 		 * alle Artikel aus dem Artikelrepository befinden sich aktuellen Artikelkatalog
 		 * 
-		 * @param model
-		 * @return
+		 * @param model Model ist aus der Salespoint api
+		 * @return den Artikelkatalog
 		 */
 	    @RequestMapping(value="/sortiment", method=RequestMethod.GET)
 	    public String Willkommen(Model model) {
@@ -91,11 +90,11 @@ public class ShopController {
 	    }
 
 	    /**
-	     *  Detailansicht der einzelnen Artikel wird angezeigt
+	     *  Detailansicht der einzelnen Artikel
 	     * 
-	     * @param article
-	     * @param model
-	     * @return
+	     * @param article ist im model definiert, Article ist das Produkt, welches in der Firma hergestellt und verkauft wird
+	     * @param model Model ist aus der Salespoint api
+	     * @return die Detailansicht des einzelnen Artikels
 	     */
 	    @RequestMapping("/detail/{pid}")
 		public String detail(@PathVariable("pid") Article article ,Model model) {
@@ -112,9 +111,9 @@ public class ShopController {
 	    /**
 	     * Persönliche Daten vom Kunden können angezeigt werden
 	     * 
-	     * @param userAccount
-	     * @param model
-	     * @return
+	     * @param userAccount UserAccount ist aus der Salespoint api
+	     * @param model Model ist aus der Salespoint api
+	     * @return Persönliche Daten des Kunden
 	     */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/datacustomer", method=RequestMethod.GET)
@@ -129,9 +128,8 @@ public class ShopController {
 	   /**
 	    * Persönliche Daten vom Kunden können editiert werden
 	    * 
-	    * @param userAccount
-	    * @param model
-	    * @return
+	    * @param userAccount UserAccount ist aus der Salespoint api
+	    * @param model Model ist aus der Salespoint api
 	    */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/editdatacustomer", method=RequestMethod.GET)
@@ -146,13 +144,13 @@ public class ShopController {
 	   /**
 	    * Persönliche Daten vom Kunden werden gespeichert
 	    * 
-	    * @param customer
+	    * @param customer ist im model definiert, Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
 	    * @param bindingResult
-	    * @param username
-	    * @param familyname
-	    * @param firstname
-	    * @param address
-	    * @return
+	    * @param username Benutzername des Kunden
+	    * @param familyname Nachname des Kunden
+	    * @param firstname Vorname des Kunden
+	    * @param address Adresse des Kunden
+	    * @return aktualisierte Persönliche Kundendaten werden angezeigt
 	    */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/editdatacustomer", method=RequestMethod.POST)
@@ -174,9 +172,9 @@ public class ShopController {
 	   /**
 	    * Persönliche Daten vom Mitarbeiter werden gespeichert
 	    * 
-	    * @param userAccount
-	    * @param model
-	    * @return
+	    * @param userAccount UserAccount ist aus der Salespoint api
+	    * @param model Model ist aus der Salespoint api
+	    * @return aktualisierte Persönliche Mitarbeiterdaten werden angezeigt
 	    */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/dataemployee", method=RequestMethod.GET)
@@ -192,9 +190,8 @@ public class ShopController {
 	   /**
 	    * Persönliche Daten vom Mitarbeiter können editiert werden
 	    * 
-	    * @param userAccount
-	    * @param model
-	    * @return
+	    * @param userAccount UserAccount ist aus der Salespoint api
+	    * @param model Model ist aus der Salespoint api
 	    */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/editdataemployee", method=RequestMethod.GET)
@@ -209,15 +206,14 @@ public class ShopController {
 	   /**
 	    * Persönliche Daten vom Mitarbeiter werden gespeichert
 	    * 
-	    * @param employee
+	    * @param employee ist im model definiert, ein Employee ist eine Person, die in der Firma verschiedene Arbeiten verrichtet
 	    * @param bindingResult
-	    * @param username
-	    * @param workplace
-	    * @param familyname
-	    * @param firstname
-	    * @param mail
-	    * @param address
-	    * @return
+	    * @param username Benutzername des Mitarbeiters
+	    * @param workplace Arbeitsplatz des Mitarbeiters
+	    * @param familyname Nachname des Mitarbeiters
+	    * @param firstname Vorname des Mitarbeiters
+	    * @param mail Email Adresse des Mitarbeiters
+	    * @param address Adresse des Mitarbeiters
 	    */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/editdataemployee", method=RequestMethod.POST)
