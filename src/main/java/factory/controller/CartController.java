@@ -57,28 +57,35 @@ public class CartController {
 		this.incomeRepository = incomeRepository;
 	}
 
-	
-	/*
-	 * cart
+	/**
+	 * 
+	 * @return new cart
 	 */
 	@ModelAttribute("cart")
 	private Cart inizializeCart(){
 		return new Cart();
 	}
-    
-	/*
-	 * zeigt den Warenkorb und Customerlist an
+	
+	/**
+	 * 
+	 * @param modelMap
+	 * @return
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String basket(ModelMap modelMap) {
 		modelMap.addAttribute("customerlist", customerRepository.findAll());
 		return "cart";
 	}
-    
 	
-	/*
+	/**
 	 * Artikel wird mit der quantity hinzugefügt, außerdem wird der cart geupdated
 	 * wenn der verkäufer eingeloggt ist, wird ihm das Schnellsortiment zurückgegeben, allen anderen das Sortiment
+	 * 
+	 * @param article
+	 * @param number
+	 * @param userAccount
+	 * @param cart
+	 * @return
 	 */
 	 @RequestMapping(value = "/cart", method = RequestMethod.POST)
 	    public String addArticle(	@RequestParam("pid") Article article, 
@@ -95,10 +102,13 @@ public class CartController {
 			}
 			return "redirect:/sortiment";
 	    }
-	 
-	 	/*
-		 * Einzelne Artikel werden im Warenkorb gelöscht
-		 */
+	 /**
+	  *  Einzelne Artikel werden im Warenkorb gelöscht
+	  * 
+	  * @param pid
+	  * @param cart
+	  * @return
+	  */
 	 @RequestMapping(value = "/article/{pid}", method = RequestMethod.GET)
 	 public String deleteArticle(@PathVariable String pid, @ModelAttribute Cart cart) {
 
@@ -107,11 +117,16 @@ public class CartController {
 	 return "redirect:/cart";
 	 }
 	 
-	 	/*
-	 	 * KUNDE BESTELLT PERSÖNLICH
-		 * wenn man die Bestellung bezahlt und abgeschlossen hat,
-		 * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
-		 */
+	 
+	 /**
+	  * KUNDE BESTELLT PERSÖNLICH
+	  * wenn man die Bestellung bezahlt und abgeschlossen hat,
+	  * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
+	  * 
+	  * @param userAccount
+	  * @param cart
+	  * @return
+	  */
 	   @RequestMapping(value="/checkout", method=RequestMethod.POST)   
 	   public String Buy(@LoggedIn Optional<UserAccount> userAccount, @ModelAttribute Cart cart){
 	    	
@@ -138,12 +153,17 @@ public class CartController {
 					return "redirect:/";
 				}).orElse("redirect:/cart");
 		}
-	
-	   /*
-	 	 * VERKÄUFER BESTELLT FÜR KUNDE
-		 * wenn man die Bestellung bezahlt und abgeschlossen hat,
-		 * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
-		 */
+	   
+	   /**
+	    * VERKÄUFER BESTELLT FÜR KUNDE
+		* wenn man die Bestellung bezahlt und abgeschlossen hat,
+	    * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
+	    * 
+	    * @param session
+	    * @param userAccountIdent
+	    * @param cart
+	    * @return
+	    */
 	   @RequestMapping(value="/saleCheckout", method=RequestMethod.POST)   
 	   public String BuyForCustomer(HttpSession session, @RequestParam("id") String userAccountIdent, @ModelAttribute Cart cart){
 	    	
@@ -172,10 +192,13 @@ public class CartController {
 					return "redirect:/";
 				}).orElse("redirect:/cart");
 		}
-	    
-	   	 /*
-		 * Der Warenkorb wird komplett verworfen und gelöscht
-		 */
+
+	   /**
+	    * Der Warenkorb wird komplett verworfen und gelöscht
+	    * 
+	    * @param cart
+	    * @return
+	    */
 	    @RequestMapping(value = "cart/clear", method = RequestMethod.POST)
 		public String clear(@ModelAttribute Cart cart) {
 	    	
