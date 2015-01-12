@@ -27,23 +27,23 @@ import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Bottle;
 import factory.model.BottleStock;
-import factory.model.CookBookRepository;
 import factory.model.Customer;
-import factory.model.CustomerRepository;
 import factory.model.Department;
-import factory.model.DepartmentRepository;
 import factory.model.Employee;
-import factory.model.EmployeeRepository;
 import factory.model.Income;
-import factory.model.IncomeRepository;
 import factory.model.Ingredient;
 import factory.model.Location;
-import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.Recipe;
 import factory.model.Sale;
 import factory.model.Still;
 import factory.model.WineStock;
+import factory.repository.CookBookRepository;
+import factory.repository.CustomerRepository;
+import factory.repository.DepartmentRepository;
+import factory.repository.EmployeeRepository;
+import factory.repository.IncomeRepository;
+import factory.repository.LocationRepository;
 
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {

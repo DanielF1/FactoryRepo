@@ -28,23 +28,23 @@ import factory.model.Barrel;
 import factory.model.BarrelForTransport;
 import factory.model.BarrelStock;
 import factory.model.BarrelTransport;
-import factory.model.BarrelTransportRepository;
 import factory.model.Bottle;
 import factory.model.BottleStock;
-import factory.model.CookBookRepository;
 import factory.model.Department;
-import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.Expenditure;
-import factory.model.ExpenditureRepository;
 import factory.model.FoundLocation;
 import factory.model.Ingredient;
 import factory.model.Location;
-import factory.model.LocationRepository;
 import factory.model.MaxBottleStore;
 import factory.model.MaxStore;
 import factory.model.Recipe;
 import factory.model.WineStock;
+import factory.repository.BarrelTransportRepository;
+import factory.repository.CookBookRepository;
+import factory.repository.DepartmentRepository;
+import factory.repository.ExpenditureRepository;
+import factory.repository.LocationRepository;
 
 
 @Controller

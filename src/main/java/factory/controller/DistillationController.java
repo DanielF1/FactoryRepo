@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Department;
-import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.Location;
-import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.Still;
 import factory.model.WineStock;
+import factory.repository.DepartmentRepository;
+import factory.repository.LocationRepository;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_BREWER') ||  hasRole('ROLE_SUPERUSER')")

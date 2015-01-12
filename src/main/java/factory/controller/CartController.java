@@ -29,10 +29,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import factory.model.Article;
 import factory.model.Customer;
-import factory.model.CustomerRepository;
-import factory.model.ExpenditureRepository;
 import factory.model.Income;
-import factory.model.IncomeRepository;
+import factory.repository.CustomerRepository;
+import factory.repository.ExpenditureRepository;
+import factory.repository.IncomeRepository;
 
 @Controller
 @PreAuthorize("isAuthenticated()")

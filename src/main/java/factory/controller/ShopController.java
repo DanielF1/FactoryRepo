@@ -27,9 +27,9 @@ import factory.model.AdminTasksManager;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Customer;
-import factory.model.CustomerRepository;
 import factory.model.Employee;
-import factory.model.EmployeeRepository;
+import factory.repository.CustomerRepository;
+import factory.repository.EmployeeRepository;
 
 @Controller
 public class ShopController {

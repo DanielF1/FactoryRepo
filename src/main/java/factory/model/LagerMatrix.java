@@ -2,6 +2,8 @@ package factory.model;
 
 import java.util.List;
 
+import factory.repository.DepartmentRepository;
+
 
 public class LagerMatrix {
 	private String lagerType;

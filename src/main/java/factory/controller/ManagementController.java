@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.Location;
-import factory.model.LocationRepository;
+import factory.repository.LocationRepository;
 
 @Controller
 public class ManagementController {

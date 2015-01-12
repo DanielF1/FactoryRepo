@@ -18,12 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.AdminTasksManager;
 import factory.model.Employee;
-import factory.model.EmployeeRepository;
 import factory.model.Expenditure;
-import factory.model.ExpenditureRepository;
-import factory.model.IncomeRepository;
 import factory.model.Location;
-import factory.model.LocationRepository;
+import factory.repository.EmployeeRepository;
+import factory.repository.ExpenditureRepository;
+import factory.repository.IncomeRepository;
+import factory.repository.LocationRepository;
 
 
 @Controller
@@ -50,10 +50,10 @@ class AdminController {
 		this.incomeRepository = incomeRepository;
 	}
 
-
 		/**
 		 * Mapping einer Liste von allen Locations, die im Location-Repository gespeichert sind
 		 * 
+		 * @param modelMap bereitgestellt von Spring
 		 * @return HTML-Seite, auf der alle relevanten Informationen angezeigt werden
 		 */
 	 	@RequestMapping(value = "/adminLocList", method = RequestMethod.GET)
@@ -108,6 +108,7 @@ class AdminController {
 	     * Mapping für Formular zur Bearbeitung einer bestehenden Location
 	     * 
 	     * @param id Identifier der Location
+	     * @param model bereitgestellt von Spring
 	     * @param location Objekt der Klasse Location für Validierung
 	     * @return HTML-Seite, auf der die Informationen abgefragt werden
 	     */
@@ -154,6 +155,7 @@ class AdminController {
 		 * Mapping um Location zu löschen
 		 * 
 		 * @param id Identifier der Location die gelöscht werden soll
+		 * @param model bereitgestellt von Spring
 		 * @return Umleitung auf Locationübersicht
 		 */
 		@RequestMapping(value="/deleteLocation/{id}", method = RequestMethod.GET)
@@ -169,6 +171,7 @@ class AdminController {
 		 * Mapping für Übersicht der Employees einer Location
 		 * 
 		 * @param id Identifier der Location
+		 * @param model bereitgestellt von Spring
 		 * @return HTML-Seite mit Übersicht der Employees
 		 */
 		 @RequestMapping(value="/employees/{id}", method = RequestMethod.GET)
@@ -183,6 +186,7 @@ class AdminController {
 		 * Mapping für Formular zur Bearbeitung eines Employee
 		 * 
 		 * @param id Identifier des Employee
+		 * @param model bereitgestellt von Spring
 		 * @param employee Objekt der Klasse Employee für Validierung
 		 * @return HTML-Seite, auf der die Informationen abgefragt werden
 		 */
@@ -233,6 +237,7 @@ class AdminController {
 		/**
 		 * Mapping für Formular zur Erstellung eines neuen Employee-Objektes
 		 * 	
+		 * @param model bereitgestellt von Spring
 		 * @param employee Objekt, das überprüft wird
 		 * @return HTML-Seite, auf der die Informationen abgefragt werden
 		 */
@@ -258,6 +263,7 @@ class AdminController {
 		 * @param salary Gehalt des neuen Employee
 		 * @param mail E-Mail des neuen Employee
 		 * @param address Addresse des neuen Employee
+		 * @param model bereitgestellt von Spring
 		 * @return Bei fehlerhafter Eingabe Umleitung auf Formular, sonst Umleitung auf Employeeübersicht
 		 */
 		@RequestMapping(value="/addEmployee", method=RequestMethod.POST)
@@ -288,6 +294,7 @@ class AdminController {
 		 * Mapping für Übersicht der Departments einer Location
 		 * 
 		 * @param id Identifier der Location
+		 * @param model bereitgestellt von Spring
 		 * @return HTML-Seite mit Übersicht der Departments
 		 */
 		@RequestMapping(value="/editDepartments/{id}", method = RequestMethod.GET)
@@ -318,6 +325,7 @@ class AdminController {
 		/**
 		 * Mapping einer Liste aller Employees, die im Employee-Repository gespeichert sind
 		 * 
+		 * @param modelMap bereitgestellt von Spring
 		 * @return HTML-Seite auf der alle relevanten Informationen angezeigt werden
 		 */
 	    @RequestMapping(value = "/employeeList", method = RequestMethod.GET)
@@ -345,6 +353,7 @@ class AdminController {
 	    /**
 	     * Mapping für Übersicht der Einnahmen und Ausgaben als Tabelle und Diagramm
 	     * 
+	     * @param modelMap bereitgestellt von Spring
 	     * @return HTML-Seite auf der alle relevanten Informationen angezeigt werden
 	     */
 	    @RequestMapping(value = "/accountancy", method = RequestMethod.GET)
@@ -441,6 +450,7 @@ class AdminController {
 	    /**
 	     * Mapping für Übersicht aller Incomes, die im Income-Repository gespeichert sind
 	     * 
+	     * @param modelMap bereitgestellt von Spring
 	     * @return HTML-Seite auf der alle relevanten Informationen angezeigt werden
 	     */
 	    @RequestMapping(value = "/income", method = RequestMethod.GET)
@@ -451,6 +461,14 @@ class AdminController {
 			return "income";
 		}
 	    
+	    /**
+	     * Mapping für gefilterte Übersicht von Expenditures, je nach Ergebnis des searchTerm
+	     * 
+	     * @param modelMap bereitgestellt von Spring
+	     * @param searchTerm Suchkriterium nach dem die Liste der Ausgaben sortiert wird
+	     * @param redirectAttrs bereitgestellt von Spring
+	     * @return Umleitung auf HTML-Seite mit gefilterter Liste
+	     */
 	    @RequestMapping(value = "/expenditure", method = RequestMethod.POST)
 		public String expendituresSearch(ModelMap modelMap, @RequestParam("sort") String searchTerm, RedirectAttributes redirectAttrs){
 	    	
@@ -459,7 +477,14 @@ class AdminController {
 			return "redirect:/expenditure/{term}";
 		}
 	    
-		
+		/**
+		 * Mapping für gefilterte Übersicht von Expenditures, je nach Ergebnis des searchTerm
+		 * 
+		 * @param searchTerm Suchkriterium nach dem die Liste der Ausgaben sortiert wird
+		 * @param modelMap bereitgestellt von Spring
+		 * @param redirectAttrs bereitgestellt von Spring
+		 * @return Umleitung auf HTML-Seite mit gefilterter Liste
+		 */
 		@RequestMapping(value = "/expenditure/{term}")
 		public String showFilteredExpenditures(@PathVariable("term") String searchTerm, ModelMap modelMap, RedirectAttributes redirectAttrs)
 		{		
@@ -469,15 +494,11 @@ class AdminController {
 			
 			return "expenditure";
 		}
-//	//Search END
-	    
-	    
-	    
-	    
-	    
+
 	    /**
 	     * Mapping für Übersicht aller Expenditures, die im Expenditure-Repository gespeichert sind
 	     * 
+	     * @param modelMap bereitgestellt von Spring
 	     * @return HTML-Seite auf der alle relevanten Informationen angezeigt werden
 	     */
 	    @RequestMapping(value = "/expenditure", method = RequestMethod.GET)

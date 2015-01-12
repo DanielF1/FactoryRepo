@@ -11,6 +11,13 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import factory.repository.CustomerRepository;
+import factory.repository.DepartmentRepository;
+import factory.repository.EmployeeRepository;
+import factory.repository.ExpenditureRepository;
+import factory.repository.IncomeRepository;
+import factory.repository.LocationRepository;
+
 /**
  * Managerklasse, in der alle Aktionen durchgeführt werden, die für den Admin relevant sind.
  */

@@ -25,14 +25,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Department;
-import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.Expenditure;
-import factory.model.ExpenditureRepository;
 import factory.model.LagerMatrix;
 import factory.model.Location;
-import factory.model.LocationRepository;
 import factory.model.validation.InsertBarrel;
+import factory.repository.DepartmentRepository;
+import factory.repository.ExpenditureRepository;
+import factory.repository.LocationRepository;
 
 
 @Controller

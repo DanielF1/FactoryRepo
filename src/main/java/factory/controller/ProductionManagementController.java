@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import factory.model.Department;
 import factory.model.Location;
-import factory.model.LocationRepository;
+import factory.repository.LocationRepository;
 
 @Controller
 public class ProductionManagementController {

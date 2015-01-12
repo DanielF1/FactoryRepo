@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import factory.model.ArticleRepository;
 import factory.model.BarrelStock;
-import factory.model.BarrelTransportRepository;
 import factory.model.BottleStock;
-import factory.model.CookBookRepository;
-import factory.model.DepartmentRepository;
 import factory.model.FoundLocation;
 import factory.model.Ingredient;
-import factory.model.LocationRepository;
 import factory.model.WineStock;
+import factory.repository.BarrelTransportRepository;
+import factory.repository.CookBookRepository;
+import factory.repository.DepartmentRepository;
+import factory.repository.LocationRepository;
 
 @Controller
 public class WineTransportController {

@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import factory.model.AdminTasksManager;
 import factory.model.ArticleRepository;
 import factory.model.Customer;
-import factory.model.CustomerRepository;
 import factory.model.validation.RegistrationForm;
+import factory.repository.CustomerRepository;
 
 
 @Controller
