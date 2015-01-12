@@ -148,13 +148,13 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrels.add(br13);
 		
 		
-		Barrel br61 = new Barrel(6, "Schlecht",17,LocalDate.parse("2008-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
-		Barrel br71 = new Barrel(6,"Gut", 12 ,LocalDate.parse("1994-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-23"),"");
-		Barrel br81 = new Barrel(1, "Gut", 7 ,LocalDate.parse("2008-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-15"),"");
-		Barrel br91 = new Barrel(6, "Gut", 10 ,LocalDate.parse("2009-12-03"),13,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-16"),"");
-		Barrel br101 = new Barrel(1, "Gut", 9 ,LocalDate.parse("2008-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-13"),"");
-		Barrel br111 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2008-12-03"),14,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-24"),"");
-		Barrel br121 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2000-12-03"),15,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2014-12-25"),"");
+		Barrel br61 = new Barrel(6, "Schlecht",17,LocalDate.parse("2008-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2013-12-03"),"");
+		Barrel br71 = new Barrel(6,"Gut", 12 ,LocalDate.parse("1994-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-23"),"");
+		Barrel br81 = new Barrel(1, "Gut", 7 ,LocalDate.parse("2008-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-15"),"");
+		Barrel br91 = new Barrel(6, "Gut", 10 ,LocalDate.parse("2009-12-03"),13,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-16"),"");
+		Barrel br101 = new Barrel(1, "Gut", 9 ,LocalDate.parse("2008-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-13"),"");
+		Barrel br111 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2008-12-03"),14,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-24"),"");
+		Barrel br121 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2000-12-03"),15,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-25"),"");
 		
 		List<Barrel> barrels1 = new ArrayList<Barrel>();
 		barrels1.add(br61);

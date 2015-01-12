@@ -47,6 +47,7 @@ public class BarrelMakerController {
 	private LagerMatrix lagerFurLeereFasser;
 	private LagerMatrix lagerFurVolleFasser;
 	boolean check = false;
+	String checkwhether ="";
 
 	
 	@Autowired
@@ -133,9 +134,18 @@ public class BarrelMakerController {
 					for(Department dep : loc.getDepartments()){
 						if(dep.getName().contains("Fasslager")){
 							barrelstock = (BarrelStock) dep;
-							if (!check){
+							if ((checkwhether.equals(""))||(checkwhether.equals(barrelstock.getName())))
+							{
+								if (!check){
+									checkwhether=barrelstock.getName();
+									engelAnteilBesuechtigen();
+									check = true;
+								}
+							}
+							else {
+								checkwhether=barrelstock.getName();
 								engelAnteilBesuechtigen();
-								check = true;
+								check=true;
 							}
 							modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 							return "BarrelList";
