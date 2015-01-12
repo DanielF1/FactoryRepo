@@ -1,5 +1,7 @@
 package factory.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import factory.model.AdminTasksManager;
 import factory.model.Employee;
 import factory.model.EmployeeRepository;
+import factory.model.Expenditure;
 import factory.model.ExpenditureRepository;
 import factory.model.IncomeRepository;
 import factory.model.Location;
@@ -339,18 +343,97 @@ class AdminController {
 		}
 	    
 	    /**
-	     * Mapping für Übersicht der Einnahmen und Ausgaben
+	     * Mapping für Übersicht der Einnahmen und Ausgaben als Tabelle und Diagramm
 	     * 
 	     * @return HTML-Seite auf der alle relevanten Informationen angezeigt werden
 	     */
 	    @RequestMapping(value = "/accountancy", method = RequestMethod.GET)
 		public String accountancyOverview(ModelMap modelMap){
 
-	    	double income = adminTasksManager.summUpIncome();
-	    	double expenditure = adminTasksManager.summUpExpenditure();
+//	    	double income = adminTasksManager.summUpIncome();
+//	    	double expenditure = adminTasksManager.summUpExpenditure();
+	    	double jan14in = adminTasksManager.summUpIncomeForMonth(1, 2014);
+	    	double feb14in = adminTasksManager.summUpIncomeForMonth(2, 2014);
+	    	double mar14in = adminTasksManager.summUpIncomeForMonth(3, 2014);
+	    	double apr14in = adminTasksManager.summUpIncomeForMonth(4, 2014);
+	    	double may14in = adminTasksManager.summUpIncomeForMonth(5, 2014);
+	    	double jun14in = adminTasksManager.summUpIncomeForMonth(6, 2014);
+	    	double jul14in = adminTasksManager.summUpIncomeForMonth(7, 2014);
+	    	double aug14in = adminTasksManager.summUpIncomeForMonth(8, 2014);
+	    	double sep14in = adminTasksManager.summUpIncomeForMonth(9, 2014);
+	    	double oct14in = adminTasksManager.summUpIncomeForMonth(10, 2014);
+	    	double nov14in = adminTasksManager.summUpIncomeForMonth(11, 2014);
+	    	double dec14in = adminTasksManager.summUpIncomeForMonth(12, 2014);
+	    	double jan15in = adminTasksManager.summUpIncomeForMonth(1, 2015);
 	    	
-	    	modelMap.addAttribute("income", income);
-	    	modelMap.addAttribute("expenditure", expenditure);
+	    	double jan14ex = adminTasksManager.summUpExpenditureForMonth(1, 2014);
+	    	double feb14ex = adminTasksManager.summUpExpenditureForMonth(2, 2014);
+	    	double mar14ex = adminTasksManager.summUpExpenditureForMonth(3, 2014);
+	    	double apr14ex = adminTasksManager.summUpExpenditureForMonth(4, 2014);
+	    	double may14ex = adminTasksManager.summUpExpenditureForMonth(5, 2014);
+	    	double jun14ex = adminTasksManager.summUpExpenditureForMonth(6, 2014);
+	    	double jul14ex = adminTasksManager.summUpExpenditureForMonth(7, 2014);
+	    	double aug14ex = adminTasksManager.summUpExpenditureForMonth(8, 2014);
+	    	double sep14ex = adminTasksManager.summUpExpenditureForMonth(9, 2014);
+	    	double oct14ex = adminTasksManager.summUpExpenditureForMonth(10, 2014);
+	    	double nov14ex = adminTasksManager.summUpExpenditureForMonth(11, 2014);
+	    	double dec14ex = adminTasksManager.summUpExpenditureForMonth(12, 2014);
+	    	double jan15ex = adminTasksManager.summUpExpenditureForMonth(1, 2015);
+	    	
+	    	modelMap.addAttribute("incjan14", jan14in);
+	    	modelMap.addAttribute("incfeb14", feb14in);
+	    	modelMap.addAttribute("incmar14", mar14in);
+	    	modelMap.addAttribute("incapr14", apr14in);
+	    	modelMap.addAttribute("incmay14", may14in);
+	    	modelMap.addAttribute("incjun14", jun14in);
+	    	modelMap.addAttribute("incjul14", jul14in);
+	    	modelMap.addAttribute("incaug14", aug14in);
+	    	modelMap.addAttribute("incsep14", sep14in);
+	    	modelMap.addAttribute("incoct14", oct14in);
+	    	modelMap.addAttribute("incnov14", nov14in);
+	    	modelMap.addAttribute("incdec14", dec14in);
+	    	modelMap.addAttribute("incjan15", jan15in);
+	    	
+	    	modelMap.addAttribute("expjan14", jan14ex);
+	    	modelMap.addAttribute("expfeb14", feb14ex);
+	    	modelMap.addAttribute("expmar14", mar14ex);
+	    	modelMap.addAttribute("expapr14", apr14ex);
+	    	modelMap.addAttribute("expmay14", may14ex);
+	    	modelMap.addAttribute("expjun14", jun14ex);
+	    	modelMap.addAttribute("expjul14", jul14ex);
+	    	modelMap.addAttribute("expaug14", aug14ex);
+	    	modelMap.addAttribute("expsep14", sep14ex);
+	    	modelMap.addAttribute("expoct14", oct14ex);
+	    	modelMap.addAttribute("expnov14", nov14ex);
+	    	modelMap.addAttribute("expdec14", dec14ex);
+	    	modelMap.addAttribute("expjan15", jan15ex);
+	    	
+	    	String jan14 = "Januar 14";
+	    	modelMap.addAttribute("jan14", jan14);
+	    	String feb14 = "Februar 14";
+	    	modelMap.addAttribute("feb14", feb14);
+	    	String mar14 = "März 14";
+	    	modelMap.addAttribute("mar14", mar14);
+	    	String apr14 = "April 14";
+	    	modelMap.addAttribute("apr14", apr14);
+	    	String may14 = "Mai 14";
+	    	modelMap.addAttribute("may14", may14);
+	    	String jun14 = "Juni 14";
+	    	modelMap.addAttribute("jun14", jun14);
+	    	String jul14 = "Juli 14";
+	    	modelMap.addAttribute("jul14", jul14);
+	    	String aug14 = "August 14";
+	    	modelMap.addAttribute("aug14", aug14);
+	    	String sep14 = "September 14";
+	    	modelMap.addAttribute("sep14", sep14);
+	    	String oct14 = "Oktober 14";
+	    	modelMap.addAttribute("oct14", oct14);
+	    	String nov14 = "November 14";
+	    	modelMap.addAttribute("nov14", nov14);
+	    	String dec14 = "Dezember 14";
+	    	modelMap.addAttribute("dec14", dec14);
+	    	String jan15 = "Januar 15";
+	    	modelMap.addAttribute("jan15", jan15);
 	    	
 			return "accountancy";
 		}
@@ -367,6 +450,30 @@ class AdminController {
 	    	
 			return "income";
 		}
+	    
+	    @RequestMapping(value = "/expenditure", method = RequestMethod.POST)
+		public String expendituresSearch(ModelMap modelMap, @RequestParam("sort") String searchTerm, RedirectAttributes redirectAttrs){
+	    	
+	    	redirectAttrs.addAttribute("term", searchTerm);
+	    	
+			return "redirect:/expenditure/{term}";
+		}
+	    
+		
+		@RequestMapping(value = "/expenditure/{term}")
+		public String showFilteredExpenditures(@PathVariable("term") String searchTerm, ModelMap modelMap, RedirectAttributes redirectAttrs)
+		{		
+			List<Expenditure> filteredList = adminTasksManager.filterIncome(searchTerm);
+			
+			modelMap.addAttribute("expenditures", filteredList);
+			
+			return "expenditure";
+		}
+//	//Search END
+	    
+	    
+	    
+	    
 	    
 	    /**
 	     * Mapping für Übersicht aller Expenditures, die im Expenditure-Repository gespeichert sind

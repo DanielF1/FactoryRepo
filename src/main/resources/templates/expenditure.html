@@ -52,16 +52,29 @@
 	<div class="main-container content">
 		<div class="col-lg-12">
 			<h3>Ausgaben</h3>
+			
+			<form class="text-center pull-right" method="post" role="form" th:action="@{/expenditure}">
+				<select class="text-center" name="sort" >
+					<option selected="disabled" style="display:none;"> Sortieren nach </option>
+					<option>Gesamtansicht</option>
+					<option>Weinlieferung</option>
+					<option>Gehalt</option>
+					<option>Fassherstellung</option>
+					
+				</select>
+				<button class="btn btn-default" type="submit">Sortieren</button>
+			</form>
+			
 			<table class="table table-condensed">
 				<tr class="success_table">
 					<th class="text-center"> Datum </th>
 					<th class="text-center"> Ausgabequelle </th>
-					<th class="text-center"> Höhe der Ausgabe </th>	
+					<th class="text-center"> Höhe der Ausgabe in €</th>	
 				</tr>
 				<tr class="text-center" th:each="exp : ${expenditures}">
 					<td class="text-center" th:text="${exp.date}" ></td>
-					<td class="text-center" th:text="${exp.value}"></td>
 					<td class="text-center" th:text="${exp.sortOf}"></td>
+					<td class="text-center" th:text="${exp.value}"></td>
 				</tr>
 			</table>
 		</div>

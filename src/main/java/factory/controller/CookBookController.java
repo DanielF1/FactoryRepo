@@ -69,9 +69,6 @@ public class CookBookController {
 	@Autowired 
 	public CookBookController(
 			CookBookRepository cookbookrepository, 
-			BarrelStock barrelstock,
-			BottleStock bottlestock,
-			WineStock winestock,
 			LocationRepository locationRepository,
 			Inventory<InventoryItem> inventory,
 			ArticleRepository articlerepository, 
@@ -80,9 +77,6 @@ public class CookBookController {
 			ExpenditureRepository expenditureRepository)
 	{
 		this.cookbookrepository = cookbookrepository;
-		this.barrelstock = barrelstock;
-		this.bottlestock = bottlestock;
-		this.winestock = winestock;
 		this.locationRepository = locationRepository;
 		this.inventory = inventory;
 		this.articlerepository = articlerepository;
@@ -754,7 +748,7 @@ public class CookBookController {
 					if(e.getUserAccount() == userAccount.get()){
 						for(Department dep : loc.getDepartments()){
 							if(dep.getName().contains("Flaschenlager")){
-								bottlestock = (BottleStock) dep;{
+								bottlestock = (BottleStock) dep;
 								
 								if(bottlesToBuyAmount == 1){
 									price = 0.1;
@@ -765,12 +759,11 @@ public class CookBookController {
 								}
 								totalprice += price;
 								
+								
 								Bottle b1 = new Bottle("", bottlesToBuyAmount, price);
 								bottlestock.getBottles().add(b1);
 								departmentrepository.save(bottlestock);
 								
-								
-								}
 							} // /if
 						} // /for
 					} // /if

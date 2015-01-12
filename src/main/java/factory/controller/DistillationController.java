@@ -37,12 +37,9 @@ public class DistillationController {
 	private final DepartmentRepository departmentrepository;
 	private final LocationRepository locationRepository;
 	@Autowired 
-	public DistillationController(WineStock winestock, BarrelStock barrelstock, Production production, 
-			DepartmentRepository departmentrepository, LocationRepository locationRepository)
+	public DistillationController(DepartmentRepository departmentrepository, LocationRepository locationRepository)
 	{
-		this.winestock = winestock;
-		this.barrelstock = barrelstock;
-		this.production = production;
+
 		this.departmentrepository = departmentrepository;
 		this.locationRepository = locationRepository;
 	}

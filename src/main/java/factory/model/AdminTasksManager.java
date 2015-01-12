@@ -1,6 +1,7 @@
 package factory.model;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -334,11 +335,26 @@ public class AdminTasksManager {
 		}//for
 		
 		for(int i=1; i<13; i++){
-			if(LocalDate.now().isBefore(LocalDate.of(2015, i, 1))){
-				break;
-			}
-			expenditureRepository.save(new Expenditure(LocalDate.of(2015, i, 1), totalSalary, "Gehalt"));
+//			if(LocalDate.now().isBefore(LocalDate.of(2015, i, 1))){
+//				break;
+//			}
+			expenditureRepository.save(new Expenditure(LocalDate.of(2014, i, 1), totalSalary, "Gehalt"));
+			
 		}
+		expenditureRepository.save(new Expenditure(LocalDate.of(2015, 1, 1), totalSalary, "Gehalt"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 1, 5), 240, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 2, 11), 100, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 3, 18), 1800, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 4, 10), 180, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 5, 3), 2600, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 6, 7), 80, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 7, 20), 1300, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 8, 16), 1200, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 9, 11), 40, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 10, 1), 4400, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 11, 18), 260, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 12, 28), 100, "Fassherstellung"));
+	
 	}
 	
 	
@@ -366,11 +382,56 @@ public class AdminTasksManager {
 	public double summUpExpenditure(){
 		double summ = 0;
 		
-		for(Expenditure i : expenditureRepository.findAll()){
-			double inc = i.getValue();
+		for(Expenditure e : expenditureRepository.findAll()){
+			double inc = e.getValue();
 			summ += inc;
 		}
 		
 		return summ;
+	}
+	
+	public double summUpIncomeForMonth(int monthToSummUp, int year){
+		
+    	double total = 0;
+    	
+    	for(Income in : incomeRepository.findAll()){
+    		if(in.getDate().getMonth().getValue() == monthToSummUp && in.getDate().getYear() == year){
+    			total += in.getValue();
+    		}
+    	}
+    
+    	return total;
+	}
+	
+	
+	public double summUpExpenditureForMonth(int monthToSummUp, int year){
+		
+    	double total = 0;
+    	
+    	for(Expenditure ex : expenditureRepository.findAll()){
+    		if(ex.getDate().getMonth().getValue() == monthToSummUp && ex.getDate().getYear() == year){
+    			total += ex.getValue();
+    		}
+    	}
+    
+    	return total;
+	}
+
+	public List<Expenditure> filterIncome(String sort) {
+	
+		List<Expenditure> filteredList = new ArrayList<>();
+		
+		if(sort.contains("Gesamtansicht")){
+			for(Expenditure i : expenditureRepository.findAll()){
+				filteredList.add(i);
+			}
+		}else{
+			for(Expenditure i : expenditureRepository.findAll()){
+				if(i.getSortOf().contains(sort)){
+					filteredList.add(i);
+				}
+			}
+		}
+		return filteredList;
 	}
 }

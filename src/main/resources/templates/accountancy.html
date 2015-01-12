@@ -32,17 +32,96 @@
     <script type="text/javascript">
       google.setOnLoadCallback(drawChart);
 
+      
       function drawChart() {
+    	
+    	var i1 = document.getElementById("incjan14").innerHTML;
+    	var ij14 = parseInt(i1 | 0);
+    	var e1 = document.getElementById("expjan14").innerHTML;
+    	var ej14 = parseInt(e1 | 0);
+    	
+    	var i2 = document.getElementById("incfeb14").innerHTML;
+    	var if14 = parseInt(i2 | 0);
+    	var e2 = document.getElementById("expfeb14").innerHTML;
+    	var ef14 = parseInt(e2 | 0);
+    	
+    	var i3 = document.getElementById("incmar14").innerHTML;
+    	var im14 = parseInt(i3 | 0);
+    	var e3 = document.getElementById("expmar14").innerHTML;
+    	var em14 = parseInt(e3 | 0);
+    	
+    	var i4 = document.getElementById("incapr14").innerHTML;
+    	var ia14 = parseInt(i4 | 0);
+    	var e4 = document.getElementById("expapr14").innerHTML;
+    	var ea14 = parseInt(e4 | 0);
+    	
+    	var i5 = document.getElementById("incmay14").innerHTML;
+    	var imy14 = parseInt(i5 | 0);
+    	var e5 = document.getElementById("expmay14").innerHTML;
+    	var emy14 = parseInt(e5 | 0);
+    	
+    	var i6 = document.getElementById("incjun14").innerHTML;
+    	var ijn14 = parseInt(i6 | 0);
+    	var e6 = document.getElementById("expjun14").innerHTML;
+    	var ejn14 = parseInt(e6 | 0);
+    	
+    	var i7 = document.getElementById("incjul14").innerHTML;
+    	var ijl14 = parseInt(i7 | 0);
+    	var e7 = document.getElementById("expjul14").innerHTML;
+    	var ejl14 = parseInt(e7 | 0);
+    	
+    	var i8 = document.getElementById("incaug14").innerHTML;
+    	var ia14 = parseInt(i8 | 0);
+    	var e8 = document.getElementById("expaug14").innerHTML;
+    	var ia14 = parseInt(e8 | 0);
+    	
+    	var i9 = document.getElementById("incsep14").innerHTML;
+    	var is14 = parseInt(i9 | 0);
+    	var e9 = document.getElementById("expsep14").innerHTML;
+    	var es14 = parseInt(e9 | 0);
+    	
+    	var i10 = document.getElementById("incoct14").innerHTML;
+    	var io14 = parseInt(i10 | 0);
+    	var e10 = document.getElementById("expoct14").innerHTML;
+    	var eo14 = parseInt(e10 | 0);
+    	
+    	var i11 = document.getElementById("incnov14").innerHTML;
+    	var in14 = parseInt(i11 | 0);
+    	var e11 = document.getElementById("expnov14").innerHTML;
+    	var en14 = parseInt(e11 | 0);
+    	
+    	var i12 = document.getElementById("incdec14").innerHTML;
+    	var id14 = parseInt(i12 | 0);
+    	var e12 = document.getElementById("expdec14").innerHTML;
+    	var ed14 = parseInt(e12 | 0);
+    	
+    	var i13 = document.getElementById("incjan15").innerHTML;
+    	var ij15 = parseInt(i13 | 0);
+    	var e13 = document.getElementById("expjan15").innerHTML;
+    	var ej15 = parseInt(e13 | 0);
+    	  
+    	
+    	
+    	
         var data = google.visualization.arrayToDataTable([
           ['Month', 'Einnahmen', 'Ausgaben'],
-          ['01.01',  	500,	400],
-          ['10.01',  	370,	460],
-          ['20.01',		460,	120],
-          ['30.01',		200,	540]
+          ['Jan 2014',  	ij14,	ej14],
+          ['Feb 2014',  	if14,	ef14],
+          ['März 2014',	im14,	em14],
+          ['Apr 2014',	ia14,	ea14],
+          ['Mai 2014',	imy14,	emy14],
+          ['Jun 2014',	ijn14,	ejn14],
+          ['Jul 2014',	ijl14,	ejl14],
+          ['Aug 2014',	ia14,	ea14],
+          ['Sep 2014',	is14,	es14],
+          ['Okt 2014',	io14,	eo14],
+          ['Nov 2014',	in14,	en14],
+          ['Dez 2014',	id14,	ed14],
+          ['Jan 2015',	ij15,	ej15]
         ]);
 
         var options = {
-          title: 'Übersicht der Einnahmen und Ausgaben',
+          title: 'Übersicht der Einnahmen und Ausgaben 2014',
           curveType: 'function',
           legend: { position: 'bottom' }
         };
@@ -89,16 +168,78 @@
 			<table class="table table-condensed">
 			<h3>Übersicht</h3>
 				<tr class="success_table">
+					<th class="text-center" > Monat </th>
 					<th class="text-center" > Höhe der Einnahmen </th>
 					<th class="text-center" > Höhe der Ausgaben </th>	
 				</tr>
 				<tr class="text-center">
-					<td class="text-center" th:text="${income}" ></td>
-					<td class="text-center" th:text="${expenditure}" ></td>
+					<td class="text-center" th:text="${jan14}" ></td>
+					<td id="incjan14" class="text-center" th:text="${incjan14}" ></td>
+					<td id="expjan14" class="text-center" th:text="${expjan14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${feb14}" ></td>
+					<td id="incfeb14" class="text-center" th:text="${incfeb14}" ></td>
+					<td id="expfeb14" class="text-center" th:text="${expfeb14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${mar14}" ></td>
+					<td id="incmar14" class="text-center" th:text="${incmar14}" ></td>
+					<td id="expmar14" class="text-center" th:text="${expmar14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${apr14}" ></td>
+					<td id="incapr14" class="text-center" th:text="${incapr14}" ></td>
+					<td id="expapr14" class="text-center" th:text="${expapr14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${may14}" ></td>
+					<td id="incmay14" class="text-center" th:text="${incmay14}" ></td>
+					<td id="expmay14" class="text-center" th:text="${expmay14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${jun14}" ></td>
+					<td id="incjun14" class="text-center" th:text="${incjun14}" ></td>
+					<td id="expjun14" class="text-center" th:text="${expjun14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${jul14}" ></td>
+					<td id="incjul14" class="text-center" th:text="${incjul14}" ></td>
+					<td id="expjul14" class="text-center" th:text="${expjul14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${aug14}" ></td>
+					<td id="incaug14" class="text-center" th:text="${incaug14}" ></td>
+					<td id="expaug14" class="text-center" th:text="${expaug14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${sep14}" ></td>
+					<td id="incsep14" class="text-center" th:text="${incsep14}" ></td>
+					<td id="expsep14" class="text-center" th:text="${expsep14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${oct14}" ></td>
+					<td id="incoct14" class="text-center" th:text="${incoct14}" ></td>
+					<td id="expoct14" class="text-center" th:text="${expoct14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${nov14}" ></td>
+					<td id="incnov14" class="text-center" th:text="${incnov14}" ></td>
+					<td id="expnov14" class="text-center" th:text="${expnov14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${dec14}" ></td>
+					<td id="incdec14" class="text-center" th:text="${incdec14}" ></td>
+					<td id="expdec14" class="text-center" th:text="${expdec14}" ></td>
+				</tr>
+				<tr class="text-center">
+					<td class="text-center" th:text="${jan15}" ></td>
+					<td id="incjan15" class="text-center" th:text="${incjan15}" ></td>
+					<td id="expjan15" class="text-center" th:text="${expjan15}" ></td>
 				</tr>
 			</table>
 		</div>
-		<div class="col-lg-12" id="curve_chart" style="width: 900px; height: 500px"></div>
+		<div class="col-lg-12" id="curve_chart" style="width: 1300px; height: 500px"></div>
 	</div>
 </div>
 </body>

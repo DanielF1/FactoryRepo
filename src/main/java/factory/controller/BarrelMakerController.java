@@ -61,7 +61,7 @@ public class BarrelMakerController {
 		this.lagerFurVolleFasser = new LagerMatrix(departmentRepository,barrelstock,"FLV-R");
 	}
 
-	/*
+	/**
 	 * Die double Zahlen werden auf 2 Nachkommastellen gerundet
 	 */
 
@@ -81,7 +81,7 @@ public class BarrelMakerController {
 		
 	}
 	
-	/*
+	/**
 	 * Hier wird der Engelanteil jedes Fasses berechnet, 
 	 * weil die Inhalte des Fasses jedes Jahr um 3% verringert
 	 */
@@ -115,7 +115,7 @@ public class BarrelMakerController {
 	}
 	
 
-	/*
+	/**
 	 * Die Fassliste wird an dem Browser angezeigt
 	 */
 	
@@ -144,7 +144,7 @@ public class BarrelMakerController {
 		return "BarrelList";
 	}
 
-	/*
+	/**
 	 * Hier wird ein Fass oder werden mehrere Fässer in der Fassliste hinzugefügt. 
 	 * @param barrel_volume ist das Volume des Fasses
 	 * @param barrel_anzahl ist die Anzahl der hinzufügenden Fässer
@@ -185,7 +185,7 @@ public class BarrelMakerController {
 		departmentRepository.save(barrelstock);
 		return "redirect:/BarrelList";
 	}
-	/*
+	/**
 	 Falls die Eingaben des Formular, um Fässer hinzuzufügen, nicht richtig sind,
 	 wird das Formular mit Fehlermeldungen wieder angezeigt
 	 */
@@ -195,7 +195,7 @@ public class BarrelMakerController {
 		return "inserted";
 	}
 	
-	/*
+	/**
 	 Wenn das Fass zu alt ist, wird es entfernt
 	 */
 	@RequestMapping(value = "/deleteBarrel/{index}", method = RequestMethod.GET)
@@ -228,7 +228,7 @@ public class BarrelMakerController {
 		return "redirect:/BarrelList";
 	}
 	
-	/*
+	/**
 	 * Um den Lagerplatz zu sparen, werden die Inhalte 
 	 * gleichalten Alters der Fässer zusammenschütten 
 	 */
@@ -317,7 +317,7 @@ public class BarrelMakerController {
 		return "redirect:/BarrelList";
 	}
 	
-	/*
+	/**
 	 Die Fässer werden im Lager zugeordnet
 	 */
 	@RequestMapping(value = "/fassZuordnen")
