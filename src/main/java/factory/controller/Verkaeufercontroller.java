@@ -54,7 +54,7 @@ public class Verkaeufercontroller {
 	/**
 	 * Abgeschlossene Bestellungen werden angezeigt 
 	 * 
-	 * @param modelMap ModelMap ist aus der Salespoint api
+	 * @param modelMap ModelMap bereitgestellt von Spring
 	 * @return abgeschlossenen Bestellungen einsehbar
 	 */
 	@RequestMapping("/orders")
@@ -68,7 +68,7 @@ public class Verkaeufercontroller {
 	/**
 	 * Anzeigen der Kundenliste
 	 * 
-	 * @param modelMap ModelMap ist aus der Salespoint api
+	 * @param modelMap ModelMap bereitgestellt von Spring
 	 * @return Kundenliste wird angezeigt
 	 */
 	@RequestMapping("/customerlist")
@@ -82,8 +82,8 @@ public class Verkaeufercontroller {
 	/**
 	 * Registrierung vom Verkäufer von neuen Kunden
 	 * 
-	 * @param registrationForm
-	 * @param result
+	 * @param registrationForm Formular für Registrierung und Validierung
+	 * @param result Ergebnis der Validierung
 	 */
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
@@ -103,7 +103,7 @@ public class Verkaeufercontroller {
 	/**
 	 * Formular für Kundenregistrierung
 	 * 
-	 * @param modelMap ModelMap ist aus der Salespoint api
+	 * @param modelMap ModelMap bereitgestellt von Spring
 	 */
 	@RequestMapping("/register")
 	public String register(ModelMap modelMap) {
@@ -114,7 +114,7 @@ public class Verkaeufercontroller {
 	/**
 	 * Schnellauswahl der Artikel für den Verkäufer 
 	 * 
-	 * @param model Model ist aus der Salespoint api
+	 * @param model Model bereitgestellt von Spring
 	 */
 	@RequestMapping(value = "/saleSortiment", method = RequestMethod.GET)
 	public String buyForCustomer(Model model){
@@ -128,7 +128,7 @@ public class Verkaeufercontroller {
 	 * Kundendaten bearbeiten
 	 * 
 	 * @param id identifier des Kunden
-	 * @param model Model ist aus der Salespoint api
+	 * @param model Model bereitgestellt von Spring
 	 * @param customer ist im model definiert, Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
 	 */
 	@RequestMapping(value="/editCustomer/{id}", method = RequestMethod.GET)
@@ -143,7 +143,7 @@ public class Verkaeufercontroller {
 	 * Kundendaten speichern
 	 * 
 	 * @param customer ist im model definiert, Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
-	 * @param bindingResult
+	 * @param bindingResult Ergebnis der Validierung
 	 * @param username Benutzername des Kunden
 	 * @param familyname Nachname des Kunden
 	 * @param firstname Vorname des Kunden

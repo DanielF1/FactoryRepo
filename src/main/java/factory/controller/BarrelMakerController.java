@@ -117,8 +117,11 @@ public class BarrelMakerController {
 
 	/**
 	 * Die Fassliste wird an dem Browser angezeigt
+	 * 
+	 * @param modelMap bereitgestellt von Spring
+	 * @param userAccount bereitgestellt von Spring
+	 * @return HTML-Seite
 	 */
-	
 	@RequestMapping("/BarrelList")
 	public String barrel(ModelMap modelMap, @LoggedIn Optional<UserAccount> userAccount) {
 		System.out.print("11111111111111");
@@ -145,9 +148,11 @@ public class BarrelMakerController {
 	}
 
 	/**
-	 * Hier wird ein Fass oder werden mehrere Fässer in der Fassliste hinzugefügt. 
+	 * Hier wird ein Fass oder werden mehrere Fässer in der Fassliste hinzugefügt.
+	 * 
 	 * @param barrel_volume ist das Volume des Fasses
 	 * @param barrel_anzahl ist die Anzahl der hinzufügenden Fässer
+	 * @return HTML-Seiten
 	 */
 	@RequestMapping("/insertBarrel")
 	public String insertBarrel(
@@ -185,9 +190,13 @@ public class BarrelMakerController {
 		departmentRepository.save(barrelstock);
 		return "redirect:/BarrelList";
 	}
+	
 	/**
-	 Falls die Eingaben des Formular, um Fässer hinzuzufügen, nicht richtig sind,
-	 wird das Formular mit Fehlermeldungen wieder angezeigt
+	 * Falls die Eingaben des Formular, um Fässer hinzuzufügen, nicht richtig sind,
+	 * wird das Formular mit Fehlermeldungen wieder angezeigt
+	 * 
+	 * @param modelMap bereitgestellt von Spring
+	 * @return HTML-Seite
 	 */
 	@RequestMapping("/inserted")
 	public String inserted(ModelMap modelMap) {
@@ -196,7 +205,11 @@ public class BarrelMakerController {
 	}
 	
 	/**
-	 Wenn das Fass zu alt ist, wird es entfernt
+	 * Wenn das Fass zu alt ist, wird es entfernt
+	 * 
+	 * @param index 
+	 * @param modelMap bereitgestellt von Spring
+	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/deleteBarrel/{index}", method = RequestMethod.GET)
 	public String deleteBarrel(@PathVariable("index") int index, ModelMap modelMap) {
@@ -231,6 +244,9 @@ public class BarrelMakerController {
 	/**
 	 * Um den Lagerplatz zu sparen, werden die Inhalte 
 	 * gleichalten Alters der Fässer zusammenschütten 
+	 * 
+	 * @param modelMap bereitgestellt von Spring
+	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/putBarrelstogether")
 	public String putBarrelsTogether(ModelMap modelMap) {
@@ -273,7 +289,7 @@ public class BarrelMakerController {
 				
 				double hilfsFass = 0;
 				int fass_anzahl =0;
-				for (Barrel barrel: alterMap.get(key1))
+				for (Barrel barrel : alterMap.get(key1))
 				{
 					fass_anzahl++;
 				}
@@ -318,7 +334,9 @@ public class BarrelMakerController {
 	}
 	
 	/**
-	 Die Fässer werden im Lager zugeordnet
+	 * Die Fässer werden im Lager zugeordnet
+	 * 
+	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/fassZuordnen")
 	public String fassZuordnen(){

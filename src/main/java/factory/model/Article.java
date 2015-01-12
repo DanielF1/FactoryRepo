@@ -9,6 +9,7 @@ import org.salespointframework.quantity.Units;
 /**
  * Article ist das Produkt, welches in der Firma hergestellt und verkauft wird
  */
+@SuppressWarnings("serial")
 @Entity
 public class Article extends Product{
 	
