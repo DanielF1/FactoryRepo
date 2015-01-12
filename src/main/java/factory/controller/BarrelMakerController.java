@@ -14,6 +14,7 @@ import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -159,6 +160,7 @@ public class BarrelMakerController {
 			@RequestParam("Barrel_volume") String barrel_volume,
 			@RequestParam("Barrel_anzahl") int barrel_anzahl,
 			@ModelAttribute("insertBarrel") @Valid InsertBarrel insertBarrel,
+			Model model,
 			BindingResult result) {
 		if (result.hasErrors()) {
 		return "inserted";
@@ -185,10 +187,14 @@ public class BarrelMakerController {
 //				}//if
 //			}//for
 //		}//for
-		
-
+		if (barrel_anzahl==1)
+		{
+		model.addAttribute("error_green", "Ein Fass mit dem Volume " + barrel_volume + " wurde hinzugefügt." );}
+		else {
+			model.addAttribute("error_green", barrel_anzahl +" Fässer mit dem Volume " + barrel_volume + " wurde hinzugefügt." );
+		}
 		departmentRepository.save(barrelstock);
-		return "redirect:/BarrelList";
+		return "BarrelList";
 	}
 	
 	/**
@@ -212,7 +218,7 @@ public class BarrelMakerController {
 	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/deleteBarrel/{index}", method = RequestMethod.GET)
-	public String deleteBarrel(@PathVariable("index") int index, ModelMap modelMap) {
+	public String deleteBarrel(@PathVariable("index") int index, Model model) {
 
 		Barrel barrel = barrelstock.getBarrels().get(index-1);
 		// Fass ist leer
@@ -220,9 +226,7 @@ public class BarrelMakerController {
 		{
 			// Fass Ablaufdateum ist in der Vergangenheit
 			if (barrel.getContent_amount() ==0) {
-				System.out.println("Size List: " + barrelstock.getBarrels().size());
 				barrelstock.getBarrels().remove(index-1);
-				System.out.println("Size List: " + barrelstock.getBarrels().size());
 			}
 			else{
 
@@ -230,15 +234,21 @@ public class BarrelMakerController {
 				newbarrel.setQuality(barrel.getQuality());
 				newbarrel.setContent_amount(barrel.getContent_amount());
 				newbarrel.setBarrel_volume(barrel.getBarrel_volume());
-				newbarrel.setPosition(barrel.getPosition());
 				barrel.setQuality("");
 				barrel.setContent_amount(0);
 				barrelstock.getBarrels().remove(index-1);
 				barrelstock.getBarrels().add(newbarrel);
 		}
+			
+			model.addAttribute("error_green", "Fass wurde erfolgreich entfernt");
+		}
+		else
+		{
+			model.addAttribute("error", "Fass wurde nicht entfernt, da es noch nicht zu alt ist.");
+
 		}
 		departmentRepository.save(barrelstock);
-		return "redirect:/BarrelList";
+		return "BarrelList";
 	}
 	
 	/**
