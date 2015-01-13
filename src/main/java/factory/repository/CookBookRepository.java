@@ -1,6 +1,8 @@
-package factory.model;
+package factory.repository;
 
 import org.springframework.data.repository.Repository;
+
+import factory.model.Recipe;
 
 public interface CookBookRepository extends Repository<Recipe, Long>{
 

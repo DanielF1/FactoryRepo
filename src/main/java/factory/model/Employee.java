@@ -10,6 +10,9 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.salespointframework.useraccount.UserAccount;
 
+/**
+ * Ein Employee ist eine Person, die in der Firma verschiedene Arbeiten verrichtet
+ */
 
 @Entity
 public class Employee {
@@ -34,13 +37,18 @@ public class Employee {
 	private String mail;
 	@NotEmpty(message = "{RegistrationForm.address.NotEmpty}")
 	private String address;
-	
-	@Deprecated
-	public Employee(){}
-	
 	@OneToOne
 	private UserAccount userAccount;
 	
+	/** 
+	 * Default Constructor
+	 */
+	@Deprecated
+	public Employee(){}
+	
+	/**
+	 * Constructor
+	 */
 	public Employee(UserAccount userAccount, String username, String password, String workplace, String name, String firstname,
 			String salary, String mail, String address) {
 		this.workplace = workplace;
@@ -54,6 +62,9 @@ public class Employee {
 		this.password = password;
 	}
 	
+	/**
+	 * Getter und Setter
+	 */
 	public UserAccount getUserAccount() {
 		return userAccount;
 	}

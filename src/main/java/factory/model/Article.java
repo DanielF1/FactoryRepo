@@ -6,7 +6,10 @@ import org.joda.money.Money;
 import org.salespointframework.catalog.Product;
 import org.salespointframework.quantity.Units;
 
-
+/**
+ * Article ist das Produkt, welches in der Firma hergestellt und verkauft wird
+ */
+@SuppressWarnings("serial")
 @Entity
 public class Article extends Product{
 	
@@ -15,11 +18,17 @@ public class Article extends Product{
 		private String alkoholgehalt;
 		private double volumen;
 		private String cognacart;
-
+		
+		/** 
+		 * Default Constructor
+		 */
+		@Deprecated
 		public Article(){}
 		
+		/**
+		 * Constructor
+		 */
 		public Article( String image, String name, String alter, Money preis, String alkoholgehalt, double volumen, String cognacart) {
-			
 			super(name, preis, Units.METRIC);
 			
 			this.image = image;
@@ -28,6 +37,10 @@ public class Article extends Product{
 			this.volumen = volumen;
 			this.cognacart = cognacart;
 		}
+		
+		/**	
+		* Getter und Setter
+		*/
 		
 		public String getImage(){
 			return this.image;
@@ -42,11 +55,6 @@ public class Article extends Product{
 			return this.alter;
 		}
 		
-	/*	
-		public String setAlter(){
-			return alter;
-		}
-		*/
 		
 		public void setAlter(String Alter){
 			
@@ -82,6 +90,5 @@ public class Article extends Product{
 
 		public void delete(Long id) {
 			
-		}	
-
+		}
 }

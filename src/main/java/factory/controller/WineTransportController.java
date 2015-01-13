@@ -1,5 +1,6 @@
 package factory.controller;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import factory.model.Department;
-import factory.model.DepartmentRepository;
 import factory.model.Location;
-import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.ProductionManagement;
-import factory.model.ProductionManagementRepository;
 import factory.model.ProductionMonth;
 import factory.model.Still;
 import factory.model.WineStock;
 import factory.model.WineTransport;
 import factory.model.WineTransportRepository;
+import factory.repository.DepartmentRepository;
+import factory.repository.LocationRepository;
+import factory.repository.ProductionManagementRepository;
 
 @Controller
 public class WineTransportController {

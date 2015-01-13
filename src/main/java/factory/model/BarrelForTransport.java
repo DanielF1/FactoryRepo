@@ -19,7 +19,15 @@ public class BarrelForTransport {
 	private LocalDate lastFill;
 	private String position;
 	
+	/**
+	 * Default Constructor
+	 */
+	@Deprecated
+	public BarrelForTransport(){}
 	
+	/**
+	 * Constructor
+	 */
 	public BarrelForTransport(int age,String quality, double content_amount,LocalDate manufacturing_date, double barrel_volume, 
 			LocalDate birthdate_of_barrel,LocalDate death_of_barrel, LocalDate lastFill,String position)
 	{
@@ -32,13 +40,14 @@ public class BarrelForTransport {
 		this.death_of_barrel = death_of_barrel;
 		this.lastFill = lastFill;
 		this.position = position;
-		
-
 	}
 	
+	/**
+	 * Constructor
+	 */
 	public BarrelForTransport(int age,String quality, double content_amount,String manufacturing_date, String barrel_volume, 
-			String birthdate_of_barrel,String death_of_barrel, String lastFill,String position)
-	{
+			String birthdate_of_barrel,String death_of_barrel, String lastFill,String position){
+		
 		this.age = age;
 		this.quality = quality;
 		this.content_amount = content_amount;
@@ -50,11 +59,9 @@ public class BarrelForTransport {
 		this.position = position;
 	}
 	
-	
-
-	BarrelForTransport(){}
-
-	
+	/**
+	 * Getter und Setter
+	 */
 
 	public Long getId() {
 		return id;
@@ -116,6 +123,10 @@ public class BarrelForTransport {
 	public void setPosition(String position) {
 		this.position = position;
 	}
+	
+	/*
+	 * 
+	 */
 	
 	public int getAge(){
 		int datecount = 0;

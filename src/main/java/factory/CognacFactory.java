@@ -44,7 +44,7 @@ public class CognacFactory {
 			http.csrf().disable();
 
 			http.authorizeRequests().antMatchers("/**").permitAll().and().//
-					formLogin().loginPage("/login").loginProcessingUrl("/login").and(). //
+					formLogin().loginPage("/index").loginProcessingUrl("/login").and(). //
 					logout().logoutUrl("/logout").logoutSuccessUrl("/");
 		}
 	}

@@ -15,13 +15,25 @@ public class Expenditure {
 	private LocalDate date;
 	private double value;
 	private String sortOf;
-	
+		
+	/* 
+	 * default Konstruktor
+	 */
+	@Deprecated
+	public Expenditure(){}
+
+	/*
+	 * Konstruktor
+	 */
 	public Expenditure(LocalDate date, double value, String sortOf) {
 		this.date = date;
 		this.value = value;
 		this.sortOf = sortOf;
 	}
 
+	/*
+	 * Getter und Setter
+	 */
 	public LocalDate getDate() {
 		return date;
 	}

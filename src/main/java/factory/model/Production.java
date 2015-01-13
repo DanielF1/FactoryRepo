@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import org.springframework.stereotype.Component;
+
+/**
+ * Production ist ein Department, in der die Herstellung des Produkts der Firma stattfindet
+ */
 
 @Entity
-@Component
 public class Production extends Department {
 
 	private double capacity;
@@ -18,15 +19,24 @@ public class Production extends Department {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Still> stills;
 
+	/** 
+	 * Default Constructor
+	 */
 	@Deprecated
 	public Production(){}
 	
+	/**
+	 * Constructor
+	 */
 	public Production(String name, double capacity, List<Still> stills) {
 		super(name);
 		this.capacity = capacity;
 		this.stills = stills;
 	}
 
+	/*
+	 * Getter und Setter
+	 */
 	public double getCapacity() {
 		return capacity;
 	}
@@ -42,5 +52,4 @@ public class Production extends Department {
 	public void setStills(List<Still> stills) {
 		this.stills = stills;
 	}
-
 }

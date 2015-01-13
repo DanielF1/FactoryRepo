@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import factory.model.AdminTasksManager;
 import factory.model.ArticleRepository;
 import factory.model.Customer;
-import factory.model.CustomerRepository;
 import factory.model.validation.RegistrationForm;
+import factory.repository.CustomerRepository;
 
 
 @Controller
@@ -51,7 +51,12 @@ public class Verkaeufercontroller {
 		this.adminTasksManager = adminTasksManager;
 	}	
 	
-	
+	/**
+	 * Abgeschlossene Bestellungen werden angezeigt 
+	 * 
+	 * @param modelMap ModelMap bereitgestellt von Spring
+	 * @return abgeschlossenen Bestellungen einsehbar
+	 */
 	@RequestMapping("/orders")
 	public String orders(ModelMap modelMap) {
 
@@ -59,7 +64,13 @@ public class Verkaeufercontroller {
 
 		return "orders";
 	}
-	
+
+	/**
+	 * Anzeigen der Kundenliste
+	 * 
+	 * @param modelMap ModelMap bereitgestellt von Spring
+	 * @return Kundenliste wird angezeigt
+	 */
 	@RequestMapping("/customerlist")
 	public String customerlist(ModelMap modelMap) {
 
@@ -67,7 +78,13 @@ public class Verkaeufercontroller {
 
 		return "customerlist";
 	}
-
+	
+	/**
+	 * Registrierung vom Verkäufer von neuen Kunden
+	 * 
+	 * @param registrationForm Formular für Registrierung und Validierung
+	 * @param result Ergebnis der Validierung
+	 */
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
 			BindingResult result) {
@@ -83,12 +100,22 @@ public class Verkaeufercontroller {
 		return "redirect:/";
 	}
 
+	/**
+	 * Formular für Kundenregistrierung
+	 * 
+	 * @param modelMap ModelMap bereitgestellt von Spring
+	 */
 	@RequestMapping("/register")
 	public String register(ModelMap modelMap) {
 		modelMap.addAttribute("registrationForm", new RegistrationForm());
 		return "register";
 	}
 
+	/**
+	 * Schnellauswahl der Artikel für den Verkäufer 
+	 * 
+	 * @param model Model bereitgestellt von Spring
+	 */
 	@RequestMapping(value = "/saleSortiment", method = RequestMethod.GET)
 	public String buyForCustomer(Model model){
 		
@@ -96,7 +123,14 @@ public class Verkaeufercontroller {
 		
 		return "saleSortiment";
 	}
-
+	
+	/**
+	 * Kundendaten bearbeiten
+	 * 
+	 * @param id identifier des Kunden
+	 * @param model Model bereitgestellt von Spring
+	 * @param customer ist im model definiert, Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
+	 */
 	@RequestMapping(value="/editCustomer/{id}", method = RequestMethod.GET)
 	public String editEmployee(@PathVariable Long id, Model model, Customer customer){
 			
@@ -104,7 +138,18 @@ public class Verkaeufercontroller {
 		
 		return "editCustomer";
 	} 
-	 
+
+	/**
+	 * Kundendaten speichern
+	 * 
+	 * @param customer ist im model definiert, Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
+	 * @param bindingResult Ergebnis der Validierung
+	 * @param username Benutzername des Kunden
+	 * @param familyname Nachname des Kunden
+	 * @param firstname Vorname des Kunden
+	 * @param address Adresse des Kunden
+	 * @return Kundenliste wird aktualisiert(gespeichert) und angezeigt
+	 */
 	@RequestMapping(value="/editCustomer", method = RequestMethod.POST)
 	public String editEmployee(	@Valid Customer customer,
 								BindingResult bindingResult,
@@ -120,9 +165,4 @@ public class Verkaeufercontroller {
 		
 		return "redirect:/customerlist";
 		}
-	
-	
-	
-	
-	
 }

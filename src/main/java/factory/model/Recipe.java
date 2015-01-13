@@ -20,17 +20,20 @@ public class Recipe {
 	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
 	
 	/*
-	 * constructor
+	 * Konstruktor
 	 */
 	public Recipe(String name, List<Ingredient> map1){
 		this.name = name;
 		this.ingredients = map1;
 	}
 
+	/* 
+	 * default Konstruktor
+	 */
 	Recipe(){}
 	
 	/*
-	 * getter & setter
+	 * Getter und Setter
 	 */
 	public String getName(){
 		return name;
@@ -55,5 +58,4 @@ public class Recipe {
 	public Long getId(){
 		return id;
 	}
-	
 }

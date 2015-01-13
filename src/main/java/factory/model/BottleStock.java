@@ -6,25 +6,34 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import org.springframework.stereotype.Component;
-
+/**
+ * BottleStock ist ein Department, in welchem die Flaschen gelagert werden, 
+ * die für die Produktion notwendig sind und für die Flaschen, die verkaufsbereit sind
+ */
 @Entity
-@Component
 public class BottleStock extends Department{
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Bottle> bottles;	
 
+	/** 
+	 * Default Constructor
+	 */
 	@Deprecated
 	public BottleStock(){}
 	
+	/**
+	 * Constructor
+	 */
 	public BottleStock(String name, List<Bottle> bottles/*, List<Bottle> fullbottles*/){
 		
 		super(name);
 		this.bottles = bottles;
 		
 	}
-
+	/**
+	 * Getter und Setter
+	 */
 	public List<Bottle> getBottles() {
 		return bottles;
 	}

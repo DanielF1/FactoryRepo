@@ -4,15 +4,12 @@ import static org.joda.money.CurrencyUnit.EUR;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.order.Order;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -23,32 +20,32 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import factory.model.Accountancy;
+import factory.model.AdminTasksManager;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Bottle;
 import factory.model.BottleStock;
-import factory.model.CookBookRepository;
 import factory.model.Customer;
-import factory.model.CustomerRepository;
-import factory.model.Delivery;
-import factory.model.DeliveryRepository;
 import factory.model.Department;
-import factory.model.DepartmentRepository;
 import factory.model.Employee;
-import factory.model.EmployeeRepository;
-import factory.model.Expenditure;
+import factory.model.Income;
 import factory.model.Ingredient;
 import factory.model.Location;
-import factory.model.LocationRepository;
 import factory.model.Production;
-import factory.model.ProductionManagementRepository;
 import factory.model.ProductionMonth;
 import factory.model.Recipe;
 import factory.model.Sale;
 import factory.model.Still;
 import factory.model.WineStock;
+import factory.repository.CookBookRepository;
+import factory.repository.CustomerRepository;
+import factory.repository.DepartmentRepository;
+import factory.repository.EmployeeRepository;
+import factory.repository.IncomeRepository;
+import factory.repository.LocationRepository;
+import factory.repository.ProductionManagementRepository;
 
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
@@ -61,8 +58,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final CustomerRepository customerRepository;
 	private final ArticleRepository articleRepository;
 	private final CookBookRepository cookbookrepository;
-	private final DeliveryRepository deliveryRepository;
-	private final ProductionManagementRepository productionManagementRepository;
+	private final IncomeRepository incomeRepository;
+	private final AdminTasksManager adminTasksManager;
+
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager,
@@ -72,9 +70,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										EmployeeRepository employeeRepository,
 										ArticleRepository articleRepository,
 										CookBookRepository cookbookrepository, 
-										DeliveryRepository deliveryRepository,
 										Inventory<InventoryItem> inventory,
-										ProductionManagementRepository productionManagementRepository) {
+										IncomeRepository incomeRepository,
+										AdminTasksManager adminTasksManager) {
 
 		
 		Assert.notNull(locationRepository, "LocationRepository must not be null!");
@@ -82,7 +80,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Assert.notNull(employeeRepository, "EmployeeRepository must not be null!");
 		Assert.notNull(userAccountManager, "UserAccountManager must not be null!");
 		Assert.notNull(cookbookrepository, "CookBook must not be null!");
-		Assert.notNull(deliveryRepository, "CookBook must not be null!");
 		Assert.notNull(inventory, "Inventory must not be null!");
 		
 		this.userAccountManager = userAccountManager;
@@ -92,9 +89,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.employeeRepository = employeeRepository;
 		this.articleRepository = articleRepository;
 		this.cookbookrepository = cookbookrepository;
-		this.deliveryRepository = deliveryRepository;
 		this.inventory = inventory;
-		this.productionManagementRepository = productionManagementRepository;
+		this.incomeRepository = incomeRepository;
+		this.adminTasksManager = adminTasksManager;
 	}
 
 	@Override
@@ -103,7 +100,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 											departmentRepository, 
 											employeeRepository, 
 											userAccountManager, 
-											customerRepository);
+											customerRepository,
+											incomeRepository,
+											adminTasksManager);
 		
 		initializeSortiment(inventory);
 		initializeCookBook(cookbookrepository);
@@ -114,7 +113,9 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 													DepartmentRepository departmentRepository, 
 													EmployeeRepository employeeRepository, 
 													UserAccountManager userAccountManager, 
-													CustomerRepository customerRepository) {
+													CustomerRepository customerRepository,
+													IncomeRepository incomeRepository,
+													AdminTasksManager adminTasksManager) {
 	
 		/*
 		 * initialize barrels
@@ -150,13 +151,13 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		barrels.add(br13);
 		
 		
-		Barrel br61 = new Barrel(6, "Schlecht",17,LocalDate.parse("2008-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2014-12-03"),"");
-		Barrel br71 = new Barrel(6,"Gut", 12 ,LocalDate.parse("1994-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
-		Barrel br81 = new Barrel(1, "Gut", 7 ,LocalDate.parse("2008-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2007-12-03"),"");
-		Barrel br91 = new Barrel(6, "Gut", 10 ,LocalDate.parse("2009-12-03"),13,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2011-12-03"),"");
-		Barrel br101 = new Barrel(1, "Gut", 9 ,LocalDate.parse("2008-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-03"),"");
-		Barrel br111 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2008-12-03"),14,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
-		Barrel br121 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2000-12-03"),15,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-03"),"");
+		Barrel br61 = new Barrel(6, "Schlecht",17,LocalDate.parse("2008-12-03"),21, LocalDate.parse("2014-12-03"),LocalDate.parse("2014-12-03"), LocalDate.parse("2013-12-03"),"");
+		Barrel br71 = new Barrel(6,"Gut", 12 ,LocalDate.parse("1994-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-23"),"");
+		Barrel br81 = new Barrel(1, "Gut", 7 ,LocalDate.parse("2008-12-03"),22, LocalDate.parse("2007-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-15"),"");
+		Barrel br91 = new Barrel(6, "Gut", 10 ,LocalDate.parse("2009-12-03"),13,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-16"),"");
+		Barrel br101 = new Barrel(1, "Gut", 9 ,LocalDate.parse("2008-12-03"),12,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-13"),"");
+		Barrel br111 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2008-12-03"),14,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2013-12-24"),"");
+		Barrel br121 = new Barrel(6, "Sehr Gut", 12 ,LocalDate.parse("2000-12-03"),15,LocalDate.parse("2014-12-03"),LocalDate.parse("2015-12-03"), LocalDate.parse("2012-12-25"),"");
 		
 		List<Barrel> barrels1 = new ArrayList<Barrel>();
 		barrels1.add(br61);
@@ -274,8 +275,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list8.add(verkauf2);
 		list8.add(bottlestock2);
 		list8.add(barrelstock3);
-		
-		
+
 		if (userAccountManager.get(new UserAccountIdentifier("admin")).isPresent()) {
 			return;
 		}
@@ -317,27 +317,26 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		 * initialize employees
 		 */
 		Employee e1 = employeeRepository.save(new Employee(warehousemanAcc, "lagerist1", "123", "Lagerist","Mueller","Klaus","200","klaus@Mueller.de","Klausstrasse"));
-		
 		Employee e2 = employeeRepository.save(new Employee(warehousemanAcc2, "lagerist2", "123", "Lagerist","Maier","Chris","200","klaus@Mueller.de","Klausstrasse"));
 		Employee e10 = employeeRepository.save(new Employee(warehousemanAcc3, "lagerist3", "123", "Lagerist","Maier","Chris","200","klaus@Mueller.de","Klausstrasse"));
 		Employee e3 = employeeRepository.save(new Employee(salesmanAcc, "verkaeufer1", "123", "Verkäufer","Fischer","Dieter","210","Dieter@Fischer.de","Dieterstrasse"));
 		Employee e4 = employeeRepository.save(new Employee(salesmanAcc2, "verkaeufer2", "123", "Verkäufer","Fleischer","Detlef","210","Dieter@Fischer.de","Dieterstrasse"));
 		Employee e5 = employeeRepository.save(new Employee(barrelmakerAcc, "fassbinder1", "123", "Fassbinder","Schmidt","Bernd","100","Bernd@Schmidt.de","Berndstrasse"));
 		Employee e6 = employeeRepository.save(new Employee(barrelmakerAcc2, "fassbinder2", "123", "Fassbinder","Schmiedel","Bruno","100","Bernd@Schmidt.de","Berndstrasse"));
-		Employee e11 = employeeRepository.save(new Employee(barrelmakerAcc3, "fassbinder3", "123", "Fassbinder","Schedel","Bruno","1300","Be@Schmt.de","Bzzestrasse"));
+		Employee e11 = employeeRepository.save(new Employee(barrelmakerAcc3, "fassbinder3", "123", "Fassbinder","Schedel","Bruno","200","Be@Schmt.de","Bzzestrasse"));
 		Employee e7 = employeeRepository.save(new Employee(brewerAcc, "braumeister1", "123", "Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet"));
 		Employee e8 = employeeRepository.save(new Employee(brewerAcc2, "braumeister2", "123", "Braumeister","Smittie","Joe","250","Johannes@Smith.de","Johannesstreet"));
 		Employee e9 = employeeRepository.save(new Employee(adminAcc, "admin", "123", "Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse"));
 		
 		
 		List<Employee> list1 = new ArrayList<Employee>();
-		list1.add(e10);
+		list1.add(e1);
 		list1.add(e7);
 		list1.add(e4);
 		list1.add(e5);
 		
 		List<Employee> list2 = new ArrayList<Employee>();
-		list2.add(e1);
+		list2.add(e10);
 		list2.add(e6);
 		list2.add(e8);
 
@@ -373,6 +372,26 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Customer c1 = new Customer(ua1, "hans", "123", "Dittrich", "Günther", "Hauptstraße 5");
 		customerRepository.save(c1);
 		
+		
+		adminTasksManager.EmployeeExpenditures();
+		
+		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 1, 12), 526.90, "Produktkauf"));
+		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 1, 24), 726.00, "Produktkauf"));
+		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 2, 4), 1326.90, "Produktkauf"));
+		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2014, 3, 4), 4226.50, "Produktkauf"));
+		incomeRepository.save(new Income("Peter Peterson", LocalDate.of(2014, 4, 6), 5426.00, "Produktkauf"));
+		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 5, 21), 3526.90, "Produktkauf"));
+		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 5, 25), 726.00, "Produktkauf"));
+		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 6, 11), 1526.90, "Produktkauf"));
+		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 6, 2), 726.00, "Produktkauf"));
+		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 7, 2), 2326.90, "Produktkauf"));
+		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 7, 23), 326.90, "Produktkauf"));
+		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2014, 8, 4), 5226.50, "Produktkauf"));
+		incomeRepository.save(new Income("Peter Peterson", LocalDate.of(2014, 9, 6), 3426.00, "Produktkauf"));
+		incomeRepository.save(new Income("Günther Herson", LocalDate.of(2014, 10, 6), 1326.00, "Produktkauf"));
+		incomeRepository.save(new Income("Klaudia Gant", LocalDate.of(2014, 11, 7), 3626.00, "Produktkauf"));
+		incomeRepository.save(new Income("Harry Potter", LocalDate.of(2014, 12, 9), 1226.00, "Produktkauf"));
+		incomeRepository.save(new Income("Frodo Beutlin", LocalDate.of(2015, 1, 10), 426.50, "Produktkauf"));
 	}
 	
 	/*
@@ -420,7 +439,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		inventory.save(i6);
 		
 	}
-
 	
 	/*
 	 * initialize recipes

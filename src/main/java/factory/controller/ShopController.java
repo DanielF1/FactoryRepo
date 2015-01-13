@@ -11,7 +11,6 @@ import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,9 +26,9 @@ import factory.model.AdminTasksManager;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Customer;
-import factory.model.CustomerRepository;
 import factory.model.Employee;
-import factory.model.EmployeeRepository;
+import factory.repository.CustomerRepository;
+import factory.repository.EmployeeRepository;
 
 @Controller
 public class ShopController {
@@ -38,7 +37,6 @@ public class ShopController {
 	private final ArticleRepository articleRepository;
 	private final CustomerRepository customerRepository;
 	private final EmployeeRepository employeeRepository;
-	private final UserAccountManager userAccountManager;
 	private final AdminTasksManager adminTasksManager;
 	
 	@Autowired
@@ -46,17 +44,18 @@ public class ShopController {
 							Inventory<InventoryItem> inventory, 
 							CustomerRepository customerRepository,
 							EmployeeRepository employeeRepository,
-							UserAccountManager userAccountManager,
 							AdminTasksManager adminTasksManager){
 		this.articleRepository = articleRepository;
 		this.inventory = inventory;
 		this.customerRepository = customerRepository;
 		this.employeeRepository = employeeRepository;
-		this.userAccountManager = userAccountManager;
 		this.adminTasksManager = adminTasksManager;
 	}
 
-	
+	/**
+	 * 
+	 * @param model Model bereitgestellt von Spring
+	 */
 		@RequestMapping({ "/", "/index"})
 		public String start(Model model) {
 				
@@ -71,8 +70,13 @@ public class ShopController {
 			
 			return "index";
 		}
-	
 		
+		/**
+		 * alle Artikel aus dem Artikelrepository befinden sich aktuellen Artikelkatalog
+		 * 
+		 * @param model Model bereitgestellt von Spring
+		 * @return den Artikelkatalog
+		 */
 	    @RequestMapping(value="/sortiment", method=RequestMethod.GET)
 	    public String Willkommen(Model model) {
 	  	    	
@@ -80,8 +84,14 @@ public class ShopController {
 
 	        return "sortiment";
 	    }
-	    
-	    
+
+	    /**
+	     *  Detailansicht der einzelnen Artikel
+	     * 
+	     * @param article ist im model definiert, Article ist das Produkt, welches in der Firma hergestellt und verkauft wird
+	     * @param model Model bereitgestellt von Spring
+	     * @return die Detailansicht des einzelnen Artikels
+	     */
 	    @RequestMapping("/detail/{pid}")
 		public String detail(@PathVariable("pid") Article article ,Model model) {
 			
@@ -93,7 +103,14 @@ public class ShopController {
 	    	
 			return "detail";
 		}
-	   
+	    
+	    /**
+	     * Persönliche Daten vom Kunden können angezeigt werden
+	     * 
+	     * @param userAccount UserAccount bereitgestellt von Salespoint
+	     * @param model Model bereitgestellt von Spring
+	     * @return Persönliche Daten des Kunden
+	     */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/datacustomer", method=RequestMethod.GET)
 	    public String showCustomerData(@LoggedIn Optional<UserAccount> userAccount, Model model){
@@ -103,7 +120,13 @@ public class ShopController {
 	    	
 	    	return "datacustomer";
 	    }
-	    
+	   
+	   /**
+	    * Persönliche Daten vom Kunden können editiert werden
+	    * 
+	    * @param userAccount UserAccount bereitgestellt von Salespoint
+	    * @param model Model bereitgestellt von Spring
+	    */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/editdatacustomer", method=RequestMethod.GET)
 	   public String editCustomerData(@LoggedIn Optional<UserAccount> userAccount, Model model) {
@@ -113,7 +136,18 @@ public class ShopController {
 	    	
 	        return "editdatacustomer";
 	    }
-	    
+
+	   /**
+	    * Persönliche Daten vom Kunden werden gespeichert
+	    * 
+	    * @param customer ist im model definiert, Customer ist eine Person, die hergestellte Produkte der Firma kaufen kann
+	    * @param bindingResult Ergebnis der Validierung
+	    * @param username Benutzername des Kunden
+	    * @param familyname Nachname des Kunden
+	    * @param firstname Vorname des Kunden
+	    * @param address Adresse des Kunden
+	    * @return aktualisierte Persönliche Kundendaten werden angezeigt
+	    */
 	   @PreAuthorize("isAuthenticated()")
 	   @RequestMapping(value="/editdatacustomer", method=RequestMethod.POST)
 	   public String editCustomerData(	@Valid Customer customer,
@@ -130,7 +164,14 @@ public class ShopController {
 	    	
 		   return "redirect:/datacustomer";
 	    }
-	    
+
+	   /**
+	    * Persönliche Daten vom Mitarbeiter werden gespeichert
+	    * 
+	    * @param userAccount UserAccount bereitgestellt von Salespoint
+	    * @param model Model bereitgestellt von Spring
+	    * @return aktualisierte Persönliche Mitarbeiterdaten werden angezeigt
+	    */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/dataemployee", method=RequestMethod.GET)
 	    public String showEmployeeData(@LoggedIn Optional<UserAccount> userAccount, Model model){
@@ -140,7 +181,14 @@ public class ShopController {
 	    	
 	    	return "dataemployee";
 	    }
-	    
+
+	   
+	   /**
+	    * Persönliche Daten vom Mitarbeiter können editiert werden
+	    * 
+	    * @param userAccount UserAccount bereitgestellt von Salespoint
+	    * @param model Model bereitgestellt von Spring
+	    */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/editdataemployee", method=RequestMethod.GET)
 	    public String editEmployeeData(@LoggedIn Optional<UserAccount> userAccount, Model model) {
@@ -150,7 +198,19 @@ public class ShopController {
 	    	
 	        return "editdataemployee";
 	    }
-	    
+	   
+	   /**
+	    * Persönliche Daten vom Mitarbeiter werden gespeichert
+	    * 
+	    * @param employee ist im model definiert, ein Employee ist eine Person, die in der Firma verschiedene Arbeiten verrichtet
+	    * @param bindingResult Ergebnis der Validierung
+	    * @param username Benutzername des Mitarbeiters
+	    * @param workplace Arbeitsplatz des Mitarbeiters
+	    * @param familyname Nachname des Mitarbeiters
+	    * @param firstname Vorname des Mitarbeiters
+	    * @param mail Email Adresse des Mitarbeiters
+	    * @param address Adresse des Mitarbeiters
+	    */
 	   @PreAuthorize("isAuthenticated()")
 	    @RequestMapping(value="/editdataemployee", method=RequestMethod.POST)
 	    public String editEmployeeData(	@Valid Employee employee,

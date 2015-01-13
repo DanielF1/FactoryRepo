@@ -15,16 +15,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import factory.model.Barrel;
 import factory.model.BarrelStock;
 import factory.model.Department;
-import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.Location;
-import factory.model.LocationRepository;
 import factory.model.Production;
 import factory.model.Still;
 import factory.model.WineStock;
+import factory.repository.DepartmentRepository;
+import factory.repository.LocationRepository;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_BREWER') ||  hasRole('ROLE_SUPERUSER')")
@@ -35,14 +36,10 @@ public class DistillationController {
 	private Production production;
 	private final DepartmentRepository departmentrepository;
 	private final LocationRepository locationRepository;
-	
 	@Autowired 
-	public DistillationController(WineStock winestock, BarrelStock barrelstock, Production production, 
-			DepartmentRepository departmentrepository, LocationRepository locationRepository)
+	public DistillationController(DepartmentRepository departmentrepository, LocationRepository locationRepository)
 	{
-		this.winestock = winestock;
-		this.barrelstock = barrelstock;
-		this.production = production;
+
 		this.departmentrepository = departmentrepository;
 		this.locationRepository = locationRepository;
 	}
@@ -67,13 +64,19 @@ public class DistillationController {
 								{
 									if(barrel.getQuality().equals(""))
 									{
+										if (!barrel.getPosition().equals(""))
+										{
+											barrel.setPosition("");
+										}
 										barrel.setQuality("reserviert für Destille " + index);
+										
 										still_amount = still_amount - barrel.getBarrel_volume();
 										
 										if(stillAmount == 0)
 										{
 											break;
 										}
+										
 									}
 								}
 							}	

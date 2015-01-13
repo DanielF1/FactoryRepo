@@ -10,7 +10,10 @@ import javax.persistence.ManyToMany;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-
+/**
+ * Locations sind Produktions- und Verwaltungsstätten der Firma, 
+ * wo verschiedene Employees in verschiedenen Departments arbeiten
+ */
 @Entity
 public class Location {
 
@@ -37,12 +40,16 @@ public class Location {
 	private List<Department> departments;
 
 	
-	
+	/** 
+	 * Default Constructor
+	 */
 	@Deprecated
 	public Location() {
 	}
 
-
+	/**
+	 * Constructor
+	 */
 	public Location(String name, String address, String city, String telefon,
 			String mail, List<Employee> employees, List<Department> departments) {
 		this.name = name;
@@ -55,10 +62,9 @@ public class Location {
 
 	}
 
-//	public int getWineQuantity() {
-//		return getProductionManagementDepartment().getWineQuantity();
-//	}
-
+	/**
+	 * Getter und Setter
+	 */
 	public String getName() {
 		return name;
 	}
@@ -118,16 +124,4 @@ public class Location {
 	public List<Department> getDepartments() {
 		return departments;
 	}
-
-	public WineStock getWineStockDepartment() {
-	
-		List<Department> deps = this.getDepartments();
-		for (Department depwein : deps) {
-			if (depwein.getName().contains("Wein")) {
-				return (WineStock)depwein;
-			}
-		}
-		return null;
-	}
-	
 }

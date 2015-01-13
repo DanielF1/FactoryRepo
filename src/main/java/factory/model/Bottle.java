@@ -12,8 +12,14 @@ public class Bottle {
 	private double amount;
 	private double price;
 	
-	/*
-	 * constructor
+	/** 
+	 * Default Constructor
+	 */
+	@Deprecated
+	public Bottle(){}
+	
+	/**
+	 * Constructor
 	 */
 	public Bottle(String name, double amount, double price)
 	{
@@ -22,20 +28,12 @@ public class Bottle {
 		this.price = price;
 	}
 	
-	Bottle(){}
-	
-	/*
-	 * getter & setter
+	/**
+	 * Getter und Setter
 	 */
-	
 	public Long getId() 
 	{
 		return id;
-	}
-	
-	public void setId(Long id) 
-	{
-		this.id = id;
 	}
 	
 	public double getAmount() 

@@ -9,20 +9,19 @@
 </head>
 
 <body>
-
 	<nav th:fragment="login">
 		<!-- Log in / Log out navigation -->
 <!-- 		<div class="col-lg-5 logNavi">	 -->
-			<form class="form-inline" role="form" th:action="@{/login}" method="post" >
-		 		<div class="form-group" sec:authorize="!isAuthenticated()">
+			<form class="form-inline" role="form" th:action="@{/login}" method="post" sec:authorize="!isAuthenticated()">
+		 		<div class="form-group">
 		   			<label class="sr-only" for="username">Username</label>
 		    		<input type="text" class="form-control pull-right" id="username" name="username" autofocus="autofocus" placeholder="Username" />
 			  	</div>
-			 	<div class="form-group" sec:authorize="!isAuthenticated()">
+			 	<div class="form-group">
 			    	<label for="password" class="sr-only">Password</label>
 		    		<input type="password" class="form-control pull-right" id="password" name="password" placeholder="Password" />
 		  		</div>
-		  		<button type="submit" class="btn btn-default loginlogout" sec:authorize="!isAuthenticated()">Log in</button>	
+		  		<button type="submit" class="btn btn-default loginlogout">Log in</button>	
 			</form>
 			<form class="form-inline" role="form" action="/logout" sec:authorize="isAuthenticated()">
 				<button type="submit" class="btn-default glyphicon glyphicon-off pull-right loginlogout" style="border:none;"></button>

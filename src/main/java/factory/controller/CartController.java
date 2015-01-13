@@ -29,10 +29,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import factory.model.Article;
 import factory.model.Customer;
-import factory.model.CustomerRepository;
-import factory.model.ExpenditureRepository;
 import factory.model.Income;
-import factory.model.IncomeRepository;
+import factory.repository.CustomerRepository;
+import factory.repository.IncomeRepository;
 
 @Controller
 @PreAuthorize("isAuthenticated()")
@@ -57,18 +56,34 @@ public class CartController {
 		this.incomeRepository = incomeRepository;
 	}
 
-	
+	/**
+	 * 
+	 * @return Cart bereitgestellt von Salespoint
+	 */
 	@ModelAttribute("cart")
 	private Cart inizializeCart(){
 		return new Cart();
 	}
-    
+	
+	/**
+	 * 
+	 * @param modelMap ModelMap bereitgestellt von Spring
+	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String basket(ModelMap modelMap) {
 		modelMap.addAttribute("customerlist", customerRepository.findAll());
 		return "cart";
 	}
-    	
+	
+	/**
+	 * Artikel wird mit der quantity hinzugefügt, außerdem wird der cart geupdated
+	 * wenn der verkäufer eingeloggt ist, wird ihm das Schnellsortiment zurückgegeben, allen anderen das Sortiment
+	 * 
+	 * @param article ist im model definiert, Article ist das Produkt, welches in der Firma hergestellt und verkauft wird
+	 * @param number ist für die Anzahl der Artikel verantwortlich
+	 * @param userAccount UserAccount bereitgestellt von Salespoint
+	 * @param cart Cart bereitgestellt von Salespoint
+	 */
 	 @RequestMapping(value = "/cart", method = RequestMethod.POST)
 	    public String addArticle(	@RequestParam("pid") Article article, 
 	    							@RequestParam("number") int number,
@@ -84,8 +99,12 @@ public class CartController {
 			}
 			return "redirect:/sortiment";
 	    }
-	 
-	 // Einzelne Artikel sollen im Warenkorb gelöscht werden
+	 /**
+	  *  Einzelne Artikel werden im Warenkorb gelöscht
+	  * 
+	  * @param pid Artikel hat festgelegten Identifier und kann dadurch gelöscht werden
+	  * @param cart Cart bereitgestellt von Salespoint
+	  */
 	 @RequestMapping(value = "/article/{pid}", method = RequestMethod.GET)
 	 public String deleteArticle(@PathVariable String pid, @ModelAttribute Cart cart) {
 
@@ -95,6 +114,14 @@ public class CartController {
 	 }
 	 
 	 
+	 /**
+	  * KUNDE BESTELLT PERSÖNLICH
+	  * wenn man die Bestellung bezahlt und abgeschlossen hat,
+	  * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
+	  * 
+	  * @param userAccount UserAccount bereitgestellt von Salespoint
+	  * @param cart Cart bereitgestellt von Salespoint
+	  */
 	   @RequestMapping(value="/checkout", method=RequestMethod.POST)   
 	   public String Buy(@LoggedIn Optional<UserAccount> userAccount, @ModelAttribute Cart cart){
 	    	
@@ -106,9 +133,11 @@ public class CartController {
 					
 					UserAccount userAcc = userAccount.get();
 					
+					double i = cart.getPrice().getAmountMajorLong();
+					
 					Customer cust = customerRepository.findByUserAccount(userAcc);
 					String customer = cust.getFirstname() + " " + cust.getFamilyname();
-					incomeRepository.save(new Income(customer, LocalDate.now(), cart.getPrice(), "Produktkauf"));
+					incomeRepository.save(new Income(customer, LocalDate.now(), i, "Produktkauf"));
 					
 					orderManager.payOrder(order);
 					orderManager.completeOrder(order);
@@ -119,7 +148,17 @@ public class CartController {
 					return "redirect:/";
 				}).orElse("redirect:/cart");
 		}
-	
+	   
+	   /**
+	    * VERKÄUFER BESTELLT FÜR KUNDE
+		* wenn man die Bestellung bezahlt und abgeschlossen hat,
+	    * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
+	    * 
+	    * @param session
+	    * @param userAccountIdent Identifier eines Useraccounts
+	    * @param cart Cart bereitgestellt von Salespoint
+	    * @return geht auf die Startseite zurück
+	    */
 	   @RequestMapping(value="/saleCheckout", method=RequestMethod.POST)   
 	   public String BuyForCustomer(HttpSession session, @RequestParam("id") String userAccountIdent, @ModelAttribute Cart cart){
 	    	
@@ -131,6 +170,14 @@ public class CartController {
 	    			
 	    			cart.addItemsTo(order);
 
+	    			UserAccount userAcc = userAccount.get();
+					
+	    			double i = cart.getPrice().getAmountMajorLong();
+	    			
+					Customer cust = customerRepository.findByUserAccount(userAcc);
+					String customer = cust.getFirstname() + " " + cust.getFamilyname();
+					incomeRepository.save(new Income(customer, LocalDate.now(), i, "Produktkauf"));
+	    			
 	    			orderManager.payOrder(order);
 	    			orderManager.completeOrder(order);
 	    			orderManager.save(order);
@@ -140,7 +187,13 @@ public class CartController {
 					return "redirect:/";
 				}).orElse("redirect:/cart");
 		}
-	    
+
+	   /**
+	    * Der Warenkorb wird komplett verworfen und gelöscht
+	    * 
+	    * @param cart Cart bereitgestellt von Salespoint
+	    * @return man kommt wieder in den Artikelkatalog
+	    */
 	    @RequestMapping(value = "cart/clear", method = RequestMethod.POST)
 		public String clear(@ModelAttribute Cart cart) {
 	    	

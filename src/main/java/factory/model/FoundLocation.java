@@ -7,7 +7,9 @@ public class FoundLocation {
 	private int age;
 	private double amount;
 	
-	
+	/**
+	 * Constructor
+	 */
 	public FoundLocation(String location, String quality, int age, double amount) {
 		this.location = location;
 		this.quality = quality;
@@ -15,10 +17,13 @@ public class FoundLocation {
 		this.amount = amount;
 	}
 	
+	/** 
+	 * Default Constructor
+	 */
 	public FoundLocation(){}
 	
-	/*
-	 * getter & setter
+	/**
+	 * Getter und Setter
 	 */
 	public String getLocation() {
 		return location;

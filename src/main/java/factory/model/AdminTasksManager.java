@@ -3,16 +3,23 @@ package factory.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.joda.money.Money;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
-import org.salespointframework.order.OrderStatus;
+
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import factory.repository.CustomerRepository;
+import factory.repository.DepartmentRepository;
+import factory.repository.EmployeeRepository;
+import factory.repository.ExpenditureRepository;
+import factory.repository.IncomeRepository;
+import factory.repository.LocationRepository;
+
+/**
+ * Managerklasse, in der alle Aktionen durchgeführt werden, die für den Admin relevant sind.
+ */
 @Component
 public class AdminTasksManager {
 
@@ -21,7 +28,8 @@ public class AdminTasksManager {
 	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
 	private final CustomerRepository customerRepository;
-	private final OrderManager<Order> orderManager;
+	private final ExpenditureRepository expenditureRepository;
+	private final IncomeRepository incomeRepository;
 	
 	@Autowired
 	public AdminTasksManager(	LocationRepository locationRepository,
@@ -29,16 +37,27 @@ public class AdminTasksManager {
 								EmployeeRepository employeeRepository,
 								UserAccountManager userAccountManager,
 								CustomerRepository customerRepository,
-								OrderManager<Order> orderManager) {
+								ExpenditureRepository expenditureRepository,
+								IncomeRepository incomeRepository) {
 		
 		this.locationRepository = locationRepository;
 		this.departmentRepository = departmentRepository;
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
 		this.customerRepository = customerRepository;
-		this.orderManager = orderManager;
+		this.expenditureRepository = expenditureRepository;
+		this.incomeRepository = incomeRepository;
 	}
 	
+	/**
+	 * Erzeugt einen neuen Standort und fügt ihn zum Repository hinzu
+	 * 
+	 * @param name ist der Name des neuen Standortes
+	 * @param address ist die Straße des neuen Standortes
+	 * @param city  ist PLZ/Ort des neuen Standortes
+	 * @param telefon ist die Telefonnummer des neuen Standortes
+	 * @param mail ist die E-Mail des neuen Standortes
+	 */
 	public void addLocation(String name,String address, String city, String telefon, String mail){
 		
 		List<Employee> emp = new ArrayList<Employee>();
@@ -48,7 +67,16 @@ public class AdminTasksManager {
     	locationRepository.save(location);
 	}
 	
-	
+	/**
+	 * Daten eines bestehenden Standortes werden geändert und abgespeichert
+	 * 
+	 * @param name ist der Name der geändert wird
+	 * @param address ist die Straße die geändert wird
+	 * @param city ist die PLZ/Ort der geändert wird
+	 * @param telefon ist die Telefonnummer die geändert wird
+	 * @param mail ist die E-Mail die geändert wird
+	 * @param id Identifier des zu ändernden Standortes
+	 */
 	public void editLocation(String name,String address, String city, String telefon, String mail, Long id){
 		
 		Location location = locationRepository.findOne(id);
@@ -61,6 +89,11 @@ public class AdminTasksManager {
 		locationRepository.save(location);
 	}
 	
+	/**
+	 * Löscht einen Standort aus dem Repository und die darin enthaltenen Listen
+	 * 
+	 * @param id Identifier des zu löschenden Standortes
+	 */
 	public void deleteLocation(Long id){
 		
 		Location location = locationRepository.findOne(id);
@@ -71,7 +104,19 @@ public class AdminTasksManager {
 		locationRepository.delete(location);
 	}
 	
-	
+	/**
+	 * Neuer Mitarbeiter wird in das Mitarbeiter-Repository und einen Standort eingetragen
+	 * 
+	 * @param username Benutzername des neuen Mitarbeiters
+	 * @param password Passwort des neuen Mitarbeiters
+	 * @param location Standort, in den er eingefügt wird
+	 * @param workplace Arbeitsplatz des neuen Mitarbeiters
+	 * @param name Familienname des neuen Mitarbeiters
+	 * @param firstname Vorname des neuen Mitarbeiters
+	 * @param salary Gehalt des neuen Mitarbeiters
+	 * @param mail E-Mail des neuen Mitarbeiters
+	 * @param address Addresse des neuen Mitarbeiters
+	 */
 	public void addEmployee(String username,
 							String password,
 							String location, 
@@ -140,7 +185,16 @@ public class AdminTasksManager {
 		}
 	}
 	
-	
+	/**
+	 * Daten eines bestehenden Mitarbeites werden geändert und abgespeichert
+	 * 
+	 * @param username Benutzername des Mitarbeites
+	 * @param familyname Familienname des Mitarbeites
+	 * @param firstname Vorname des Mitarbeites
+	 * @param salary Gehalt des Mitarbeites
+	 * @param mail E-Mail des Mitarbeites
+	 * @param address Addresse des Mitarbeites
+	 */
 	public void editEmployee(	String username, 
 								String familyname, 
 								String firstname, 
@@ -159,6 +213,12 @@ public class AdminTasksManager {
 		employeeRepository.save(employee);
 	}
 	
+	
+	/**
+	 * Löscht einen Mitarbeiter aus der Mitarbeiterliste eines Standortes und aus dem Mitarbeiter-Repository
+	 * 
+	 * @param id Identifier des zu löschenden Mitarbeiters
+	 */
 	public void dismissEmployee(Long id){
 		Employee employee = employeeRepository.findOne(id);
 		
@@ -175,7 +235,14 @@ public class AdminTasksManager {
 		}
 	}
 	
-	
+	/**
+	 * Daten eines Kunden werden geändert und gespeichert
+	 * 
+	 * @param username Benutzername des Kunden
+	 * @param familyname Familienname des Kunden
+	 * @param firstname Vorname des Kunden
+	 * @param address Addresse des Kunden
+	 */
 	public void editCustomer(	String username,  
 								String familyname, 
 								String firstname, 
@@ -188,6 +255,13 @@ public class AdminTasksManager {
 		customerRepository.save(customer);
 	}
 		
+	/**
+	 * Fügt einem Standort eine neue Abteilung hinzu, wenn diese nicht schon vorhanden ist
+	 * 
+	 * @param id Identifier des Standortes
+	 * @param sort Art der Abteilung, die hinzugefügt werden soll
+	 * @return Weiterleitung auf die Standortübersicht
+	 */
 	public String addDepartment(Long id, String sort){
 		
 		Department department = new Department(sort);
@@ -204,6 +278,16 @@ public class AdminTasksManager {
 		return "redirect:/adminLocList";
 	}
 
+	/**
+	 * Daten eines Mitarbeiters werden geändert und im Mitarbeiter-Repository abgespeichert
+	 * 
+	 * @param username Benutzername des Mitarbeiters
+	 * @param workplace Arbeitsplatz des Mitarbeiters
+	 * @param familyname Familienname des Mitarbeiters
+	 * @param firstname Vorname des Mitarbeiters
+	 * @param mail E-Mail des Mitarbeiters
+	 * @param address Addresse des Mitarbeiters
+	 */
 	public void editEmployeeData(	String username, 
 									String workplace,
 									String familyname, 
@@ -220,7 +304,15 @@ public class AdminTasksManager {
 		
 		employeeRepository.save(employee);
 	}
-	
+		
+	/**
+	 * Daten eines Kunden werden geändert und im Kunden-Repository abgespeichert
+	 * 
+	 * @param username Benutzername des Kunden
+	 * @param familyname Familienname des Kunden
+	 * @param firstname Vorname des Kunden
+	 * @param address Addresse des Kunden
+	 */
 	public void editCustomerData(	String username,
 									String familyname, 
 									String firstname, 
@@ -234,6 +326,10 @@ public class AdminTasksManager {
     	customerRepository.save(customer);	
 	}
 	
+	
+	/**
+	 * Summiert alle Gehälter der Arbeiter und fügt für einen festgelegten Zeitraum Ausgaben in Höhe dieser Summe hinzu
+	 */
 	public void EmployeeExpenditures(){
 		
 		double totalSalary = 0;
@@ -244,27 +340,104 @@ public class AdminTasksManager {
 			totalSalary += sal;
 		}//for
 		
-		for(Location loc : locationRepository.findAll()){
-			for(Department department : loc.getDepartments()){
-				if(department.getName().contains("Rechnungswesen")){
-//					Accountancy acc = (Accountancy) department;
-//					for(int i=1; i<13; i++){
-//						acc.getExpenditures().add(new Expenditure(LocalDate.of(2014, i, 1), totalSalary, "Gehalt"));
-//					}
-					
-				}//if
-			}//for
-		}//for	
-	}
-	
-	public void summUp(){
-		
-		Iterable<Order> list = orderManager.find(OrderStatus.COMPLETED);
-		
-		for(Order order : list){
-			Money price = order.getTotalPrice();
+		for(int i=1; i<13; i++){
+//			if(LocalDate.now().isBefore(LocalDate.of(2015, i, 1))){
+//				break;
+//			}
+			expenditureRepository.save(new Expenditure(LocalDate.of(2014, i, 1), totalSalary, "Gehalt"));
 			
 		}
+		expenditureRepository.save(new Expenditure(LocalDate.of(2015, 1, 1), totalSalary, "Gehalt"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 1, 5), 240, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 2, 11), 100, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 3, 18), 1800, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 4, 10), 180, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 5, 3), 2600, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 6, 7), 80, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 7, 20), 1300, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 8, 16), 1200, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 9, 11), 40, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 10, 1), 4400, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 11, 18), 260, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 12, 28), 100, "Fassherstellung"));
+	
 	}
 	
+	
+	/**
+	 * Summiert alle Einkommen, die sich im Income-Repository befinden, auf
+	 * 
+	 * @return Summe aller Einkommen als double
+	 */
+	public double summUpIncome(){
+		double summ = 0;
+		
+		for(Income i : incomeRepository.findAll()){
+			double inc = i.getValue();
+			summ += inc;
+		}
+		
+		return summ;
+	}
+	
+	/**
+	 * Summiert alle Ausgaben, die sich im Expenditure-Repository befinden, auf
+	 * 
+	 * @return Summe aller Ausgaben als double
+	 */
+	public double summUpExpenditure(){
+		double summ = 0;
+		
+		for(Expenditure e : expenditureRepository.findAll()){
+			double inc = e.getValue();
+			summ += inc;
+		}
+		
+		return summ;
+	}
+	
+	public double summUpIncomeForMonth(int monthToSummUp, int year){
+		
+    	double total = 0;
+    	
+    	for(Income in : incomeRepository.findAll()){
+    		if(in.getDate().getMonth().getValue() == monthToSummUp && in.getDate().getYear() == year){
+    			total += in.getValue();
+    		}
+    	}
+    
+    	return total;
+	}
+	
+	
+	public double summUpExpenditureForMonth(int monthToSummUp, int year){
+		
+    	double total = 0;
+    	
+    	for(Expenditure ex : expenditureRepository.findAll()){
+    		if(ex.getDate().getMonth().getValue() == monthToSummUp && ex.getDate().getYear() == year){
+    			total += ex.getValue();
+    		}
+    	}
+    
+    	return total;
+	}
+
+	public List<Expenditure> filterIncome(String sort) {
+	
+		List<Expenditure> filteredList = new ArrayList<>();
+		
+		if(sort.contains("Gesamtansicht")){
+			for(Expenditure i : expenditureRepository.findAll()){
+				filteredList.add(i);
+			}
+		}else{
+			for(Expenditure i : expenditureRepository.findAll()){
+				if(i.getSortOf().contains(sort)){
+					filteredList.add(i);
+				}
+			}
+		}
+		return filteredList;
+	}
 }

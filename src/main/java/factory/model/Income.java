@@ -6,8 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.joda.money.Money;
-
+/**
+ * Income beschreibt eine finanzielle Einnahme der Firma und wird im Rechnungswesen verwendet
+ */
 @Entity
 public class Income {
 	
@@ -16,18 +17,28 @@ public class Income {
 	private  Long id;
 	private String customer;
 	private LocalDate date;
-	private Money value;
+	private double value;
 	private String sortOf;
 	
+	/** 
+	 * Default Constructor
+	 */
+	@Deprecated
 	public Income(){}
 	
-	public Income(String customer, LocalDate date, Money value, String sortOf) {
+	/**
+	 * Constructor
+	 */
+	public Income(String customer, LocalDate date, double value, String sortOf) {
 		this.customer = customer;
 		this.date = date;
 		this.value = value;
 		this.sortOf = sortOf;
 	}
 
+	/**
+	 * Getter und Setter
+	 */
 	public String getCustomer() {
 		return customer;
 	}
@@ -44,11 +55,11 @@ public class Income {
 		this.date = date;
 	}
 
-	public Money getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(Money value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

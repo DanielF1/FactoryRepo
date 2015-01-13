@@ -27,8 +27,14 @@ public class BarrelTransport {
 	private LocalDateTime goal_date;
 	private boolean arrived = false;
 	
-	/*
-	 * constructor
+	/** 
+	 * Default Constructor
+	 */
+	@Deprecated
+	public BarrelTransport(){}
+	
+	/**
+	 * Constructor
 	 */
 	public BarrelTransport(List<Location> starting_point, List<Location> goal,
 			List<BarrelForTransport> barrels, LocalDateTime start_date, LocalDateTime goal_date) {
@@ -39,11 +45,9 @@ public class BarrelTransport {
 		this.goal_date = goal_date;
 	}
 
-	BarrelTransport(){}
 	
-	
-	/*
-	 * getter & setter
+	/**
+	 * Getter und Setter
 	 */
 	public List<Location> getStarting_point() {
 		return starting_point;

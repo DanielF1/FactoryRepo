@@ -12,7 +12,9 @@ public class MaxBarrelStore {
 	private int age;
 	private double amount;
 	
-	
+	/*
+	 * constructor
+	 */
 	public MaxBarrelStore(String quality,int age, double amount) 
 	{
 		this.quality = quality;
@@ -20,7 +22,9 @@ public class MaxBarrelStore {
 		this.amount = amount;
 	}
 
-
+	/*
+	 * Getter und Setter
+	 */
 	public String getQuality() {
 		return quality;
 	}
@@ -46,6 +50,4 @@ public class MaxBarrelStore {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	
-	
 }

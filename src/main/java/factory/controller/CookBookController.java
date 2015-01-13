@@ -22,30 +22,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import factory.model.Accountancy;
 import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Barrel;
 import factory.model.BarrelForTransport;
 import factory.model.BarrelStock;
 import factory.model.BarrelTransport;
-import factory.model.BarrelTransportRepository;
 import factory.model.Bottle;
 import factory.model.BottleStock;
-import factory.model.CookBookRepository;
 import factory.model.Department;
-import factory.model.DepartmentRepository;
 import factory.model.Employee;
 import factory.model.Expenditure;
-import factory.model.ExpenditureRepository;
 import factory.model.FoundLocation;
 import factory.model.Ingredient;
 import factory.model.Location;
-import factory.model.LocationRepository;
 import factory.model.MaxBottleStore;
 import factory.model.MaxBarrelStore;
 import factory.model.Recipe;
 import factory.model.WineStock;
+import factory.repository.BarrelTransportRepository;
+import factory.repository.CookBookRepository;
+import factory.repository.DepartmentRepository;
+import factory.repository.ExpenditureRepository;
+import factory.repository.LocationRepository;
 
 
 @Controller
@@ -70,9 +69,6 @@ public class CookBookController {
 	@Autowired 
 	public CookBookController(
 			CookBookRepository cookbookrepository, 
-			BarrelStock barrelstock,
-			BottleStock bottlestock,
-			WineStock winestock,
 			LocationRepository locationRepository,
 			Inventory<InventoryItem> inventory,
 			ArticleRepository articlerepository, 
@@ -81,9 +77,6 @@ public class CookBookController {
 			ExpenditureRepository expenditureRepository)
 	{
 		this.cookbookrepository = cookbookrepository;
-		this.barrelstock = barrelstock;
-		this.bottlestock = bottlestock;
-		this.winestock = winestock;
 		this.locationRepository = locationRepository;
 		this.inventory = inventory;
 		this.articlerepository = articlerepository;
@@ -754,7 +747,7 @@ public class CookBookController {
 					if(e.getUserAccount() == userAccount.get()){
 						for(Department dep : loc.getDepartments()){
 							if(dep.getName().contains("Flaschenlager")){
-								bottlestock = (BottleStock) dep;{
+								bottlestock = (BottleStock) dep;
 								
 								if(bottlesToBuyAmount == 1){
 									price = 0.1;
@@ -765,12 +758,11 @@ public class CookBookController {
 								}
 								totalprice += price;
 								
+								
 								Bottle b1 = new Bottle("", bottlesToBuyAmount, price);
 								bottlestock.getBottles().add(b1);
 								departmentrepository.save(bottlestock);
 								
-								
-								}
 							} // /if
 						} // /for
 					} // /if
