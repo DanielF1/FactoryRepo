@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.salespointframework.inventory.Inventory;
-import org.salespointframework.inventory.InventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import factory.model.Department;
+import factory.model.Expenditure;
 import factory.model.Location;
 import factory.model.Production;
 import factory.model.ProductionManagement;
@@ -25,6 +24,7 @@ import factory.model.Still;
 import factory.model.WineStock;
 import factory.model.WineTransport;
 import factory.repository.DepartmentRepository;
+import factory.repository.ExpenditureRepository;
 import factory.repository.LocationRepository;
 import factory.repository.ProductionManagementRepository;
 import factory.repository.WineTransportRepository;
@@ -45,15 +45,18 @@ public class WineTransportController {
 	private final DepartmentRepository departmentrepository;
 	private final ProductionManagementRepository productionManagementRepository;
 	private final WineTransportRepository wineTransportRepository;
+	private final ExpenditureRepository expenditureRepository;
 	
 	@Autowired 
 	public WineTransportController(LocationRepository locationRepository, DepartmentRepository departmentrepository,
-			ProductionManagementRepository productionManagementRepository, WineTransportRepository wineTransportRepository)
+			ProductionManagementRepository productionManagementRepository, WineTransportRepository wineTransportRepository,
+			ExpenditureRepository expenditureRepository)
 	{
 		this.locationRepository = locationRepository;
 		this.departmentrepository = departmentrepository;
 		this.productionManagementRepository = productionManagementRepository;
 		this.wineTransportRepository = wineTransportRepository;
+		this.expenditureRepository = expenditureRepository;
 	}
 	
 
@@ -513,6 +516,38 @@ public class WineTransportController {
 			
 			productionManagementRepository.save(production_management);	
 		}
+		
+		int delivery_month = 0;
+		
+		switch (wine_delivery_month) {
+		 case ("Januar"):  	delivery_month = 1;
+		          			break;
+		 case ("Februar"):  delivery_month = 2;
+		          break;
+		 case ("März"):  delivery_month = 3;
+		          break;
+		 case ("April"):  delivery_month = 4;
+		          break;
+		 case ("Mai"):  delivery_month = 5;
+		          break;
+		 case ("Juni"):  delivery_month = 6;
+		          break;
+		 case ("Juli"):  delivery_month = 7;
+		          break;
+		 case ("August"):  delivery_month = 8;
+		          break;
+		 case ("September"):  delivery_month = 9;
+		          break;
+		 case ("Oktober"): delivery_month = 10;
+		          break;
+		 case ("November"): delivery_month = 11;
+		          break;
+		 case ("Dezember"): delivery_month = 12;
+		          break;
+    }
+		double totalprice = wine_delivery_amount * 0.4;
+		
+		expenditureRepository.save(new Expenditure(LocalDate.of(wine_delivery_year, delivery_month, wine_delivery_day), totalprice, "Weinlieferung"));
 		
 		return "redirect:/wine_delivery_form";
 	}

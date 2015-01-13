@@ -389,6 +389,20 @@ class AdminController {
 	    	double dec14ex = adminTasksManager.summUpExpenditureForMonth(12, 2014);
 	    	double jan15ex = adminTasksManager.summUpExpenditureForMonth(1, 2015);
 	    	
+	    	double diffja14 = (jan14in + jan14ex) / 2;
+	    	double difffe14 = (feb14in + feb14ex) / 2;
+	    	double diffma14 = (mar14in + mar14ex) / 2;
+	    	double diffap14 = (apr14in + apr14ex) / 2;
+	    	double diffmy14 = (may14in + may14ex) / 2;
+	    	double diffjn14 = (jun14in + jun14ex) / 2;
+	    	double diffjl14 = (jul14in + jul14ex) / 2;
+	    	double diffau14 = (aug14in + aug14ex) / 2;
+	    	double diffse14 = (sep14in + sep14ex) / 2;
+	    	double diffoc14 = (oct14in + oct14ex) / 2;
+	    	double diffno14 = (nov14in + nov14ex) / 2;
+	    	double diffde14 = (dec14in + dec14ex) / 2;
+	    	double diffja15 = (jan15in + jan15ex) / 2;
+	    	
 	    	modelMap.addAttribute("incjan14", jan14in);
 	    	modelMap.addAttribute("incfeb14", feb14in);
 	    	modelMap.addAttribute("incmar14", mar14in);
@@ -416,6 +430,20 @@ class AdminController {
 	    	modelMap.addAttribute("expnov14", nov14ex);
 	    	modelMap.addAttribute("expdec14", dec14ex);
 	    	modelMap.addAttribute("expjan15", jan15ex);
+	    	
+	    	modelMap.addAttribute("dja14", diffja14);
+	    	modelMap.addAttribute("dfe14", difffe14);
+	    	modelMap.addAttribute("dma14", diffma14);
+	    	modelMap.addAttribute("dap14", diffap14);
+	    	modelMap.addAttribute("dmy14", diffmy14);
+	    	modelMap.addAttribute("djn14", diffjn14);
+	    	modelMap.addAttribute("djl14", diffjl14);
+	    	modelMap.addAttribute("dau14", diffau14);
+	    	modelMap.addAttribute("dse14", diffse14);
+	    	modelMap.addAttribute("doc14", diffoc14);
+	    	modelMap.addAttribute("dno14", diffno14);
+	    	modelMap.addAttribute("dde14", diffde14);
+	    	modelMap.addAttribute("dja15", diffja15);
 	    	
 	    	String jan14 = "Januar 14";
 	    	modelMap.addAttribute("jan14", jan14);

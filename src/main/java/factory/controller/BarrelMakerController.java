@@ -175,17 +175,19 @@ public class BarrelMakerController {
 		if (result.hasErrors()) {
 		return "inserted";
 	}
+		double totalprice = 0;
+
 		//Barrel (age, quality, content_amount, manufacturing_date,barrel_volume, birth_of_barrel,death_of_barrel,position )
-		for (int i=1;i<=barrel_anzahl;i++)
-		{
-		Barrel barrel = new Barrel(0,"",0, LocalDate.parse("0000-01-01"),Double.parseDouble(barrel_volume),
-				LocalDate.now(),LocalDate.now().plusDays(2),LocalDate.parse("0000-01-01"), "");
-		barrelstock.getBarrels().add(barrel);
+		for (int i=1;i<=barrel_anzahl;i++){
+			
+			Barrel barrel = new Barrel(0,"",0, LocalDate.parse("0000-01-01"),Double.parseDouble(barrel_volume),
+										LocalDate.now(),LocalDate.now().plusDays(2),LocalDate.parse("0000-01-01"), "");
+				barrelstock.getBarrels().add(barrel);
+		
+		totalprice += 20;	
 		}
-		
-		double totalprice = 20;
-		
 		expenditureRepository.save(new Expenditure(LocalDate.now(), totalprice, "Fassherstellung"));
+		
 		
 //		for(Location loc : locationRepository.findAll()){
 //			for(Department department : loc.getDepartments()){
