@@ -43,6 +43,8 @@ import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.Production;
+import factory.model.ProductionManagementRepository;
+import factory.model.ProductionMonth;
 import factory.model.Recipe;
 import factory.model.Sale;
 import factory.model.Still;
@@ -60,6 +62,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 	private final ArticleRepository articleRepository;
 	private final CookBookRepository cookbookrepository;
 	private final DeliveryRepository deliveryRepository;
+	private final ProductionManagementRepository productionManagementRepository;
 
 	@Autowired
 	public CognacFactoryDataInitializer(UserAccountManager userAccountManager,
@@ -70,7 +73,8 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 										ArticleRepository articleRepository,
 										CookBookRepository cookbookrepository, 
 										DeliveryRepository deliveryRepository,
-										Inventory<InventoryItem> inventory) {
+										Inventory<InventoryItem> inventory,
+										ProductionManagementRepository productionManagementRepository) {
 
 		
 		Assert.notNull(locationRepository, "LocationRepository must not be null!");
@@ -90,6 +94,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		this.cookbookrepository = cookbookrepository;
 		this.deliveryRepository = deliveryRepository;
 		this.inventory = inventory;
+		this.productionManagementRepository = productionManagementRepository;
 	}
 
 	@Override
@@ -231,18 +236,18 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		List<Still> stills2 = new ArrayList<Still>();
 		
 		stills2.add(still_5);
+
 		
 		/*
 		 * initialize departments
 		 */
-	
 		Department bottlestock1 = departmentRepository.save(new BottleStock("FlaschenlagerA", bottles));
 		Department bottlestock2 = departmentRepository.save(new BottleStock("FlaschenlagerB", bottles1));
 		Department barrelstock1 = departmentRepository.save(new BarrelStock("FasslagerA", barrels));
 		Department barrelstock2 = departmentRepository.save(new BarrelStock("FasslagerB", barrels1));
 		Department barrelstock3 = departmentRepository.save(new BarrelStock("FasslagerC", barrels2));
-		Department winestock1 = departmentRepository.save(new WineStock("WeinlagerA", 300));
-		Department winestock2 = departmentRepository.save(new WineStock("WeinlagerB", 300));
+		Department winestock1 = departmentRepository.save(new WineStock("WeinlagerA", 0));
+		Department winestock2 = departmentRepository.save(new WineStock("WeinlagerB", 0));
 		Department production1 = departmentRepository.save(new Production("ProduktionA", 1000, stills1));
 		Department production2 = departmentRepository.save(new Production("ProduktionB", 1000, stills2));
 		Department verkauf1 = departmentRepository.save(new Sale("VerkaufA"));
@@ -269,34 +274,6 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		list8.add(verkauf2);
 		list8.add(bottlestock2);
 		list8.add(barrelstock3);
-		
-		
-		/*
-		 * initialize delivery
-		 */
-		
-		Delivery deliver1 = deliveryRepository.save(new Delivery(100,new GregorianCalendar(2015,Calendar.JANUARY,25,0,0,0).getTimeInMillis(), "Standort 1"));
-		Delivery deliver2 = deliveryRepository.save(new Delivery(100,new GregorianCalendar(2015,Calendar.FEBRUARY,9,0,0,0).getTimeInMillis(), "Standort 4"));
-		
-//		List<Delivery> deliver = new ArrayList<Delivery>();
-////		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		Location loc1 = locationRepository.findByName("Standort 1");
-//		Long id1 = loc1.getId();
-//		Location loc4 = locationRepository.findByName("Standort 4");
-//		Long id4 = loc4.getId();
-//		
-//		
-//		Delivery deliver_1 = new Delivery(500, new GregorianCalendar(2015,Calendar.JANUARY,25,0,0,0).getTimeInMillis(), id1);
-//		Delivery deliver_2 = new Delivery(120, new GregorianCalendar(2015,Calendar.FEBRUARY,9,0,0,0).getTimeInMillis(), id4);
-//		Delivery deliver_3 = new Delivery(120, new GregorianCalendar(2015,Calendar.MARCH,8,0,0,0).getTimeInMillis(), id4);
-//		Delivery deliver_4 = new Delivery(120, new GregorianCalendar(2015,Calendar.FEBRUARY,14,0,0,0).getTimeInMillis(), id4);
-//		
-//		deliver.add(deliver_1);
-//		deliver.add(deliver_2);
-//		deliver.add(deliver_3);
-//		deliver.add(deliver_4);
-		
-		
 		
 		
 		if (userAccountManager.get(new UserAccountIdentifier("admin")).isPresent()) {

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Weinlager</title>
+
+		<!-- JS dependencies -->
+	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
+	<script src="../resources/js/docs.min.js"></script>
+	<script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+
+    <script type="text/javascript">
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+    	  
+  		var loc_1_processing1 = document.getElementById("loc_1_processing_1").innerHTML;
+  		var loc_1_processing1 = parseFloat(loc_1_processing1);
+		var loc_1_processing2 = document.getElementById("loc_1_processing_2").innerHTML;
+		var loc_1_processing2 = parseFloat(loc_1_processing2);
+		var loc_1_processing3 = document.getElementById("loc_1_processing_3").innerHTML;
+		var loc_1_processing3 = parseFloat(loc_1_processing3);
+		var loc_1_processing4 = document.getElementById("loc_1_processing_4").innerHTML;
+		var loc_1_processing4 = parseFloat(loc_1_processing4);
+		var loc_1_processing5 = document.getElementById("loc_1_processing_5").innerHTML;
+		var loc_1_processing5 = parseFloat(loc_1_processing5);
+		var loc_1_processing6 = document.getElementById("loc_1_processing_6").innerHTML;
+		var loc_1_processing6 = parseFloat(loc_1_processing6);
+		var loc_1_processing7 = document.getElementById("loc_1_processing_7").innerHTML;
+		var loc_1_processing7 = parseFloat(loc_1_processing7);
+		var loc_1_processing8 = document.getElementById("loc_1_processing_8").innerHTML;
+		var loc_1_processing8 = parseFloat(loc_1_processing8);
+		var loc_1_processing9 = document.getElementById("loc_1_processing_9").innerHTML;
+		var loc_1_processing9 = parseFloat(loc_1_processing9);
+		var loc_1_processing10 = document.getElementById("loc_1_processing_10").innerHTML;
+		var loc_1_processing10 = parseFloat(loc_1_processing10);
+		var loc_1_processing11 = document.getElementById("loc_1_processing_11").innerHTML;
+		var loc_1_processing11 = parseFloat(loc_1_processing11);
+		var loc_1_processing12 = document.getElementById("loc_1_processing_12").innerHTML;
+		var loc_1_processing12 = parseFloat(loc_1_processing12);
+		
+		var loc_1_delivery1 = document.getElementById("loc_1_delivery_1").innerHTML;
+		var loc_1_delivery1 = parseFloat(loc_1_delivery1);
+		var loc_1_delivery2 = document.getElementById("loc_1_delivery_2").innerHTML;
+		var loc_1_delivery2 = parseFloat(loc_1_delivery2);
+		var loc_1_delivery3 = document.getElementById("loc_1_delivery_3").innerHTML;
+		var loc_1_delivery3 = parseFloat(loc_1_delivery3);
+		var loc_1_delivery4 = document.getElementById("loc_1_delivery_4").innerHTML;
+		var loc_1_delivery4 = parseFloat(loc_1_delivery4);
+		var loc_1_delivery5 = document.getElementById("loc_1_delivery_5").innerHTML;
+		var loc_1_delivery5 = parseFloat(loc_1_delivery5);
+		var loc_1_delivery6 = document.getElementById("loc_1_delivery_6").innerHTML;
+		var loc_1_delivery6 = parseFloat(loc_1_delivery6);
+		var loc_1_delivery7 = document.getElementById("loc_1_delivery_7").innerHTML;
+		var loc_1_delivery7 = parseFloat(loc_1_delivery7);
+		var loc_1_delivery8 = document.getElementById("loc_1_delivery_8").innerHTML;
+		var loc_1_delivery8 = parseFloat(loc_1_delivery8);
+		var loc_1_delivery9 = document.getElementById("loc_1_delivery_9").innerHTML;
+		var loc_1_delivery9 = parseFloat(loc_1_delivery9);
+		var loc_1_delivery10 = document.getElementById("loc_1_delivery_10").innerHTML;
+		var loc_1_delivery10 = parseFloat(loc_1_delivery10);
+		var loc_1_delivery11 = document.getElementById("loc_1_delivery_11").innerHTML;
+		var loc_1_delivery11 = parseFloat(loc_1_delivery11);
+		var loc_1_delivery12 = document.getElementById("loc_1_delivery_12").innerHTML;
+		var loc_1_delivery12 = parseFloat(loc_1_delivery12);
+		
+		var loc_1_transport1 = document.getElementById("loc_1_transport_1").innerHTML;
+		var loc_1_transport1 = parseFloat(loc_1_transport1);
+		var loc_1_transport2 = document.getElementById("loc_1_transport_2").innerHTML;
+		var loc_1_transport2 = parseFloat(loc_1_transport2);
+		var loc_1_transport3 = document.getElementById("loc_1_transport_3").innerHTML;
+		var loc_1_transport3 = parseFloat(loc_1_transport3);
+		var loc_1_transport4 = document.getElementById("loc_1_transport_4").innerHTML;
+		var loc_1_transport4 = parseFloat(loc_1_transport4);
+		var loc_1_transport5 = document.getElementById("loc_1_transport_5").innerHTML;
+		var loc_1_transport5 = parseFloat(loc_1_transport5);
+		var loc_1_transport6 = document.getElementById("loc_1_transport_6").innerHTML;
+		var loc_1_transport6 = parseFloat(loc_1_transport6);
+		var loc_1_transport7 = document.getElementById("loc_1_transport_7").innerHTML;
+		var loc_1_transport7 = parseFloat(loc_1_transport7);
+		var loc_1_transport8 = document.getElementById("loc_1_transport_8").innerHTML;
+		var loc_1_transport8 = parseFloat(loc_1_transport8);
+		var loc_1_transport9 = document.getElementById("loc_1_transport_9").innerHTML;
+		var loc_1_transport9 = parseFloat(loc_1_transport9);
+		var loc_1_transport10 = document.getElementById("loc_1_transport_10").innerHTML;
+		var loc_1_transport10 = parseFloat(loc_1_transport10);
+		var loc_1_transport11 = document.getElementById("loc_1_transport_11").innerHTML;
+		var loc_1_transport11 = parseFloat(loc_1_transport11);
+		var loc_1_transport12 = document.getElementById("loc_1_transport_12").innerHTML;
+		var loc_1_transport12 = parseFloat(loc_1_transport12);
+  		
+  		
+        var data = google.visualization.arrayToDataTable([
+          ['Month',	   	  'Produktion', 	'Weinlieferung',     'Weintransport'],
+          ['April', 	loc_1_processing1,  loc_1_delivery1, 	loc_1_transport1],
+          ['Mai',		loc_1_processing2,  loc_1_delivery2, 	loc_1_transport2],
+          ['Juni',		loc_1_processing3,  loc_1_delivery3, 	loc_1_transport3],
+          ['Juli',		loc_1_processing4,  loc_1_delivery4, 	loc_1_transport4],
+          ['August', 	loc_1_processing5, 	loc_1_delivery5, 	loc_1_transport5],
+          ['September',	loc_1_processing6, 	loc_1_delivery6, 	loc_1_transport6],
+          ['Oktober',	loc_1_processing7,  loc_1_delivery7, 	loc_1_transport7],
+          ['November', 	loc_1_processing8,  loc_1_delivery8, 	loc_1_transport8],
+          ['Dezember',	loc_1_processing9,  loc_1_delivery9, 	loc_1_transport9],
+          ['Januar',	loc_1_processing10, loc_1_delivery10, 	loc_1_transport10],
+          ['Februar', 	loc_1_processing11, loc_1_delivery11, 	loc_1_transport11],
+          ['März', 		loc_1_processing12, loc_1_delivery12, 	loc_1_transport12]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart1 = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+        
+        chart1.draw(data, options);
+      }
+      </script>    
+      
+    <script type="text/javascript">
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+    	  
+  		var loc_2_processing1 = document.getElementById("loc_2_processing_1").innerHTML;
+  		var loc_2_processing1 = parseFloat(loc_2_processing1);
+		var loc_2_processing2 = document.getElementById("loc_2_processing_2").innerHTML;
+		var loc_2_processing2 = parseFloat(loc_2_processing2);
+		var loc_2_processing3 = document.getElementById("loc_2_processing_3").innerHTML;
+		var loc_2_processing3 = parseFloat(loc_2_processing3);
+		var loc_2_processing4 = document.getElementById("loc_2_processing_4").innerHTML;
+		var loc_2_processing4 = parseFloat(loc_2_processing4);
+		var loc_2_processing5 = document.getElementById("loc_2_processing_5").innerHTML;
+		var loc_2_processing5 = parseFloat(loc_2_processing5);
+		var loc_2_processing6 = document.getElementById("loc_2_processing_6").innerHTML;
+		var loc_2_processing6 = parseFloat(loc_2_processing6);
+		var loc_2_processing7 = document.getElementById("loc_2_processing_7").innerHTML;
+		var loc_2_processing7 = parseFloat(loc_2_processing7);
+		var loc_2_processing8 = document.getElementById("loc_2_processing_8").innerHTML;
+		var loc_2_processing8 = parseFloat(loc_2_processing8);
+		var loc_2_processing9 = document.getElementById("loc_2_processing_9").innerHTML;
+		var loc_2_processing9 = parseFloat(loc_2_processing9);
+		var loc_2_processing10 = document.getElementById("loc_2_processing_10").innerHTML;
+		var loc_2_processing10 = parseFloat(loc_2_processing10);
+		var loc_2_processing11 = document.getElementById("loc_2_processing_11").innerHTML;
+		var loc_2_processing11 = parseFloat(loc_2_processing11);
+		var loc_2_processing12 = document.getElementById("loc_2_processing_12").innerHTML;
+		var loc_2_processing12 = parseFloat(loc_2_processing12);
+		
+		var loc_2_delivery1 = document.getElementById("loc_2_delivery_1").innerHTML;
+		var loc_2_delivery1 = parseFloat(loc_2_delivery1);
+		var loc_2_delivery2 = document.getElementById("loc_2_delivery_2").innerHTML;
+		var loc_2_delivery2 = parseFloat(loc_2_delivery2);
+		var loc_2_delivery3 = document.getElementById("loc_2_delivery_3").innerHTML;
+		var loc_2_delivery3 = parseFloat(loc_2_delivery3);
+		var loc_2_delivery4 = document.getElementById("loc_2_delivery_4").innerHTML;
+		var loc_2_delivery4 = parseFloat(loc_2_delivery4);
+		var loc_2_delivery5 = document.getElementById("loc_2_delivery_5").innerHTML;
+		var loc_2_delivery5 = parseFloat(loc_2_delivery5);
+		var loc_2_delivery6 = document.getElementById("loc_2_delivery_6").innerHTML;
+		var loc_2_delivery6 = parseFloat(loc_2_delivery6);
+		var loc_2_delivery7 = document.getElementById("loc_2_delivery_7").innerHTML;
+		var loc_2_delivery7 = parseFloat(loc_2_delivery7);
+		var loc_2_delivery8 = document.getElementById("loc_2_delivery_8").innerHTML;
+		var loc_2_delivery8 = parseFloat(loc_2_delivery8);
+		var loc_2_delivery9 = document.getElementById("loc_2_delivery_9").innerHTML;
+		var loc_2_delivery9 = parseFloat(loc_2_delivery9);
+		var loc_2_delivery10 = document.getElementById("loc_2_delivery_10").innerHTML;
+		var loc_2_delivery10 = parseFloat(loc_2_delivery10);
+		var loc_2_delivery11 = document.getElementById("loc_2_delivery_11").innerHTML;
+		var loc_2_delivery11 = parseFloat(loc_2_delivery11);
+		var loc_2_delivery12 = document.getElementById("loc_2_delivery_12").innerHTML;
+		var loc_2_delivery12 = parseFloat(loc_2_delivery12);
+		
+		var loc_2_transport1 = document.getElementById("loc_2_transport_1").innerHTML;
+		var loc_2_transport1 = parseFloat(loc_2_transport1);
+		var loc_2_transport2 = document.getElementById("loc_2_transport_2").innerHTML;
+		var loc_2_transport2 = parseFloat(loc_2_transport2);
+		var loc_2_transport3 = document.getElementById("loc_2_transport_3").innerHTML;
+		var loc_2_transport3 = parseFloat(loc_2_transport3);
+		var loc_2_transport4 = document.getElementById("loc_2_transport_4").innerHTML;
+		var loc_2_transport4 = parseFloat(loc_2_transport4);
+		var loc_2_transport5 = document.getElementById("loc_2_transport_5").innerHTML;
+		var loc_2_transport5 = parseFloat(loc_2_transport5);
+		var loc_2_transport6 = document.getElementById("loc_2_transport_6").innerHTML;
+		var loc_2_transport6 = parseFloat(loc_2_transport6);
+		var loc_2_transport7 = document.getElementById("loc_2_transport_7").innerHTML;
+		var loc_2_transport7 = parseFloat(loc_2_transport7);
+		var loc_2_transport8 = document.getElementById("loc_2_transport_8").innerHTML;
+		var loc_2_transport8 = parseFloat(loc_2_transport8);
+		var loc_2_transport9 = document.getElementById("loc_2_transport_9").innerHTML;
+		var loc_2_transport9 = parseFloat(loc_2_transport9);
+		var loc_2_transport10 = document.getElementById("loc_2_transport_10").innerHTML;
+		var loc_2_transport10 = parseFloat(loc_2_transport10);
+		var loc_2_transport11 = document.getElementById("loc_2_transport_11").innerHTML;
+		var loc_2_transport11 = parseFloat(loc_2_transport11);
+		var loc_2_transport12 = document.getElementById("loc_2_transport_12").innerHTML;
+		var loc_2_transport12 = parseFloat(loc_2_transport12);
+  		
+  		
+        var data = google.visualization.arrayToDataTable([
+          ['Month',	   	  'Produktion', 	'Weinlieferung',     'Weintransport'],
+          ['April', 	loc_2_processing1,  loc_2_delivery1, 	loc_2_transport1],
+          ['Mai',		loc_2_processing2,  loc_2_delivery2, 	loc_2_transport2],
+          ['Juni',		loc_2_processing3,  loc_2_delivery3, 	loc_2_transport3],
+          ['Juli',		loc_2_processing4,  loc_2_delivery4, 	loc_2_transport4],
+          ['August', 	loc_2_processing5, 	loc_2_delivery5, 	loc_2_transport5],
+          ['September',	loc_2_processing6, 	loc_2_delivery6, 	loc_2_transport6],
+          ['Oktober',	loc_2_processing7,  loc_2_delivery7, 	loc_2_transport7],
+          ['November', 	loc_2_processing8,  loc_2_delivery8, 	loc_2_transport8],
+          ['Dezember',	loc_2_processing9,  loc_2_delivery9, 	loc_2_transport9],
+          ['Januar',	loc_2_processing10, loc_2_delivery10, 	loc_2_transport10],
+          ['Februar', 	loc_2_processing11, loc_2_delivery11, 	loc_2_transport11],
+          ['März', 		loc_2_processing12, loc_2_delivery12, 	loc_2_transport12]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+        
+        chart2.draw(data, options);
+      }
+    </script>
+    
+    
+	<!-- CSS dependencies -->
+	<link href="../resources/css/style.css" rel="stylesheet" />
+	<style type="text/css">
+	  .success_table{background-color:#92D36E!important; color:#fff;}
+	  .btn-default{background-color:#92D36E!important; color:#fff;}
+	  .wine_amount{width:170px; margin-right:10px; margin-left:10px;}
+	  .diagramm{left:-120px;}
+	  .location_name{}
+	</style>
+
+	<img src="../resources/img/wein.jpg" class="header"/>
+</head>
+
+<body>
+	<div class="main-wrapper">
+		<!-- Header -->
+	
+		<div class="col-lg-7"></div>
+	
+		<!-- Log in / Log out navigation -->
+		<div class="col-lg-5 logNavi">	
+			<nav th:include="login :: login"></nav>
+		</div>
+		<!-- Log in / Log out navigation -->
+	
+		<div class="col-lg-2"></div>
+	
+		<!-- navigation -->
+		<div class="col-lg-8 navigation">
+		<nav th:include="navigation :: navigation"></nav>
+		</div>
+		<!-- /navigation -->
+	
+		<div class="col-lg-2"></div>
+	
+		<div class="header">
+			<div class="header-title">Cognac Fabrik <br/>Feuerwasser</div>
+		</div>
+		<!-- /Header -->
+	
+		<!-- Container -->
+		<div class="main-container content">
+			<div class="col-lg-12">
+				<h3 class="pull-left">Weinlager</h3>
+				<div class="pull-right">
+					<form th:method="post" th:action="@{/wineTransport}">	
+						<select name="location_start">
+							<option selected="disabled" style='display:none;'>Start</option>
+							<option th:each="production : ${production_management}" th:value="${production.location_name}">
+								<span th:text="${production.location_name}"></span>
+							</option>
+						</select>
+						
+						<select name="location_goal">
+							<option value="" selected="disabled" style='display:none;'>Ziel</option>
+							<option  th:each="production : ${production_management}" th:value="${production.location_name}">
+								<span th:text="${production.location_name}"></span>
+							</option>
+						</select>
+						
+						<input class="text-center wine_amount" type="number" name="wine_amount" min="1" placeholder="Weinmenge in Liter"/>
+						<button class="btn btn-default">Weintransport beantragen</button>
+					</form>
+				</div>
+				
+				
+				<div class="col-lg-12"  th:each="production, it : ${production_management}" th:with="loc_count = ${it.count}">
+					<div class="col-lg-6">
+						<table class="table table-condensed">
+							<tr>
+								<td class="text-center">
+									<h4 class="pull-left"><span class="location_name" th:text="${production.location_name}"></span></h4><br/><br/>
+									<div class="diagramm" th:id="curve_chart + ${loc_count}" style="width: 1000px; height: 500px"></div>
+								</td>
+							</tr>
+							<tr><td class="text-center"></td></tr>
+						</table>
+					</div>
+					
+					<div class="col-lg-1"></div>
+					
+					<div class="col-lg-5">
+						<table class="table table-condensed">
+							<tr class="">
+								<th class="text-center">Monat</th>
+								<th class="text-center">Verarbeitung</th>
+								<th class="text-center">Weinlieferung</th>
+								<th class="text-center">Weintransport</th>
+							</tr>
+							
+							<tr class="" th:each="month, it : ${production.production_month}" th:with="index = ${it.count}">
+								<td class="text-center"><span th:id="loc_ + ${loc_count} + _name_ + ${index}" th:text="${month.name}"></span></td>
+								<td class="text-center"><span th:id="loc_ + ${loc_count} + _processing_ + ${index}" th:text="${month.max_winestock_amount}"></span></td>
+								<td class="text-center"><span th:id="loc_ + ${loc_count} + _delivery_ + ${index}" th:text="${month.wine_delivery_amount}"></span></td>
+								<td class="text-center"><span th:id="loc_ + ${loc_count} + _transport_ + ${index}" th:text="${month.wine_transport_amount}"></span></td>
+							</tr>
+							
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Container -->
+</body>
+</html>

@@ -17,6 +17,8 @@ public class Location {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	
 	@NotEmpty(message = "{RegistrationForm.locname.NotEmpty}")
 	private String name;
 	@NotEmpty(message = "{RegistrationForm.address.NotEmpty}")
@@ -27,6 +29,8 @@ public class Location {
 	private String telefon;
 	@NotEmpty(message = "{RegistrationForm.mail.NotEmpty}")
 	private String mail;
+	
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Employee> employees;
 	@ManyToMany(cascade = CascadeType.ALL)

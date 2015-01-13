@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class MaxStore {
+public class MaxBarrelStore {
 	
 	private @Id @GeneratedValue Long id;
 	private String quality;
@@ -13,7 +13,7 @@ public class MaxStore {
 	private double amount;
 	
 	
-	public MaxStore(String quality,int age, double amount) 
+	public MaxBarrelStore(String quality,int age, double amount) 
 	{
 		this.quality = quality;
 		this.age = age;

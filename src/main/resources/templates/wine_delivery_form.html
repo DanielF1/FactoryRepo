@@ -3,21 +3,24 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>wine transport</title>
+	<title>Weinlieferung</title>
 
-		<!-- JS dependencies -->
+	<!-- JS dependencies -->
 	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="../resources/js/bootstrap.min.js"></script>
 	<script src="../resources/js/docs.min.js"></script>
-	
+
+      
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
 	<style type="text/css">
 	  .success_table{background-color:#92D36E!important; color:#fff;}
 	  .btn-default{background-color:#92D36E!important; color:#fff;}
+	  .wine_amount{width:190px; margin-right:10px; margin-left:10px;}
 	</style>
-		<img src="../resources/img/wein.jpg" class="header"/>
+
+	<img src="../resources/img/wein.jpg" class="header"/>
 </head>
 
 <body>
@@ -50,7 +53,32 @@
 		<!-- Container -->
 		<div class="main-container content">
 			<div class="col-lg-12">
-	
+				<h3 class="pull-left">Weinlager</h3>				
+				
+				<div class="col-lg-12">
+					<form th:method="post" th:action="@{/startWineDelivery}">
+						<input class="text-center wine_amount" type="number" name="wine_delivery_amount" min="1" placeholder="Weinmenge in Hektoliter"/>
+						<input class="text-center wine_amount" type="number" name="wine_delivery_year" min="2015" placeholder="Jahr"/>
+						
+						<select name="wine_delivery_month">
+							<option selected="disabled" style='display:none;'>Monat</option>
+							<option th:each="name : ${months}" th:value="${name}">
+								<span th:text="${name}"></span>
+							</option>
+						</select>
+						
+						<input class="text-center wine_amount" type="number" name="wine_delivery_day" min="1" placeholder="Tag"/>
+						
+						<select name="location_goal">
+							<option selected="disabled" style='display:none;'>Standort</option>
+							<option th:each="name : ${locations}" th:value="${name}">
+								<span th:text="${name}"></span>
+							</option>
+						</select>
+						
+						<button class="btn btn-default">Liefern</button>				
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

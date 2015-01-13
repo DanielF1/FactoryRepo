@@ -104,12 +104,26 @@
 				<a href="/BarrelList.html">Fassliste</a>
 			</li>
 			
-			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
-				<a href="/stocks.html">Lager</a>
+			<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+		   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
+		      		Lager <span class="caret"></span>
+		    	</a>
+		    	<ul class="dropdown-menu" role="menu">
+			    	<li><a href="/stocks.html">Fasslager</a></li>
+			    	<li><a href="/stocks.html">Flaschenlager</a></li>
+			    	<li><a href="/winestocks.html">Weinlager</a></li>
+				</ul>
 			</li>
-			
-			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">
-				<a href="/transport.html">Transportliste</a>
+
+			<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_BREWER')">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
+		      		Transportliste <span class="caret"></span>
+		    	</a>
+		    	<ul class="dropdown-menu" role="menu">
+			    	<li><a href="/transport.html">Fasstransport</a></li>
+			    	<li><a href="#">Weintransport</a></li>
+			    	<li><a href="#">Weinlieferung</a></li>
+				</ul>
 			</li>
 			
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_BREWER')">

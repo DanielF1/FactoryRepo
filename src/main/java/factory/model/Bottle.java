@@ -6,6 +6,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Bottle {
+	
 	private @Id @GeneratedValue Long id;
 	private String name;
 	private double amount;

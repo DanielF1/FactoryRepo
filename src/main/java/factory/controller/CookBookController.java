@@ -43,7 +43,7 @@ import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.LocationRepository;
 import factory.model.MaxBottleStore;
-import factory.model.MaxStore;
+import factory.model.MaxBarrelStore;
 import factory.model.Recipe;
 import factory.model.WineStock;
 
@@ -137,10 +137,10 @@ public class CookBookController {
 	/*
 	 * calculate the maximum store of barrel stock
 	 */
-	public List<MaxStore> calcMaxStore(@LoggedIn Optional<UserAccount> userAccount)
+	public List<MaxBarrelStore> calcMaxStore(@LoggedIn Optional<UserAccount> userAccount)
 	{
 		
-		List<MaxStore> maxstorelist = new ArrayList<MaxStore>();
+		List<MaxBarrelStore> maxstorelist = new ArrayList<MaxBarrelStore>();
 		
 		/*
 		 * HashMap: return a sorted list 
@@ -210,7 +210,7 @@ public class CookBookController {
 			
 				}
 				
-				MaxStore maxstore = new MaxStore(key, key1,maxAmount);
+				MaxBarrelStore maxstore = new MaxBarrelStore(key, key1,maxAmount);
 			
 				maxstorelist.add(maxstore);
 			
@@ -377,7 +377,7 @@ public class CookBookController {
 				if(e.getUserAccount() == userAccount.get()){
 					for(Department dep : loc.getDepartments()){
 						if(dep.getName().contains("Flaschenlager")){
-							bottlestock = (BottleStock) dep;{
+							bottlestock = (BottleStock) dep;
 		
 							for (Bottle bottle : bottlestock.getBottles()) 
 							{
@@ -385,7 +385,6 @@ public class CookBookController {
 								{
 									existingBottles ++;
 								}
-							}
 							}
 						} // /if
 					} // /for
@@ -448,7 +447,7 @@ public class CookBookController {
 				model.addAttribute("selected_name", recipe.getName());
 				model.addAttribute("selected_ingredients", recipe.getIngredients());
 				
-				for(MaxStore maxstore : calcMaxStore(userAccount)){			
+				for(MaxBarrelStore maxstore : calcMaxStore(userAccount)){			
 					for(Ingredient ingredient : recipe.getIngredients()){
 
 						double ingridientDistillateAmount = ingredient.getAmount();
@@ -579,7 +578,7 @@ public class CookBookController {
 						int bottles = 0;
 						bottles = (int) ((maxDestillate + waterAmount) / selectedBottleAmount);
 						
-						for(MaxStore maxstore : calcMaxStore(userAccount)){ 
+						for(MaxBarrelStore maxstore : calcMaxStore(userAccount)){ 
 							for(Recipe selectedRecipe : cookbookrepository.findById(id)){	
 								for(Ingredient ingredient : selectedRecipe.getIngredients())
 								{
