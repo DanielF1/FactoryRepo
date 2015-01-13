@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Transportliste</title>
+
+	<!-- JS dependencies -->
+	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
+	<script src="../resources/js/docs.min.js"></script>
+	
+	<!-- CSS dependencies -->
+	<link href="../resources/css/style.css" rel="stylesheet" />
+	<style type="text/css">
+	  .success_table{background-color:#92D36E!important; color:#fff;}
+	  .btn-default{background-color:#92D36E!important; color:#fff;}
+	</style>
+		<img src="../resources/img/wein.jpg" class="header"/>
+</head>
+
+<body>
+<div class="main-wrapper">
+	<!-- Header -->
+	<div class="col-lg-7"></div>
+
+	<!-- Log in / Log out navigation -->
+	<div class="col-lg-5 logNavi">	
+		<nav th:include="login :: login"></nav>
+	</div>
+	<!-- Log in / Log out navigation -->
+
+	<div class="col-lg-2"></div>
+
+	<!-- navigation -->
+	<div class="col-lg-8 navigation">
+
+		<nav th:include="navigation :: navigation"></nav>
+	</div>
+	<!-- /navigation -->
+
+	<div class="col-lg-2"></div>
+
+	<div class="header">
+		<div class="header-title">Cognac Fabrik <br/>Feuerwasser</div>
+	</div>
+	<!-- /Header -->
+
+	<!-- Container -->
+	<div class="main-container content">
+		<div class="col-lg-12">
+			<h3>Transportliste - Fässer</h3>
+			<table class="table table-condensed" width="100%">
+				<tr class="success_table">
+					<th class="text-center">#</th>
+					<th class="text-center">Startpunkt</th>
+					<th class="text-center">Start</th>
+					<th class="text-center">Ziel</th>
+					<th class="text-center">Ankunft</th>
+					<th class="text-center">Ware</th>
+					<th class="text-center">Status</th>
+				</tr>
+				<tr th:each="transport, it : ${barrel_transport}" th:with="index = ${it.count}">
+					<td class="text-center"><span th:text="${index}"></span></td>
+					<td class="text-center">
+						<div th:each="start : ${transport.starting_point}">
+							<span th:text="${start.name}"></span><br/>
+							<span th:text="${start.address}"></span><br/>
+							<span th:text="${start.city}"></span>
+						</div>
+					</td>
+					<td class="text-center"><span th:text="${transport.start_date}"></span></td>
+					<td class="text-center">
+						<div th:each="goal : ${transport.goal}">
+							<span th:text="${goal.name}"></span><br/>
+							<span th:text="${goal.address}"></span><br/>
+							<span th:text="${goal.city}"></span>
+						</div>
+					</td>
+					<td class="text-center"><span th:text="${transport.goal_date}"></span></td>
+					<td class="text-center">
+						<ul th:each="barrel : ${transport.barrels}">
+							<span>Alter:</span> <span th:text="${barrel.age}"></span> <span>Jahre</span><br/>
+							<span>Menge:</span> <span th:text="${barrel.content_amount}"></span> <span>Liter</span><br/>
+							<span>Qualität:</span> <span th:text="${barrel.quality}"></span><br/>
+						</ul>
+					</td>
+					<td class="text-center">
+						<div th:switch="${transport.arrived}">
+							<span th:case="true"> Angekommen</span> 
+							<span th:case="false"> Unterwegs</span>
+						</div> 
+					</td>
+				</tr>
+			</table>
+		</div>
+			
+	</div>
+	<!-- /Container -->
+</div>
+</body>
+</html>

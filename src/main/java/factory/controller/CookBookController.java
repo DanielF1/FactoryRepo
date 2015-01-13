@@ -45,6 +45,7 @@ import factory.repository.CookBookRepository;
 import factory.repository.DepartmentRepository;
 import factory.repository.ExpenditureRepository;
 import factory.repository.LocationRepository;
+import factory.repository.WineTransportRepository;
 
 
 @Controller
@@ -62,6 +63,7 @@ public class CookBookController {
 	private final DepartmentRepository departmentrepository;
 	private final BarrelTransportRepository barrel_transport_repository;
 	private final ExpenditureRepository expenditureRepository;
+	private final WineTransportRepository wineTransportRepository;
 
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 	List<FoundLocation> foundLocation = new ArrayList<FoundLocation>();
@@ -74,7 +76,8 @@ public class CookBookController {
 			ArticleRepository articlerepository, 
 			DepartmentRepository departmentrepository,
 			BarrelTransportRepository barrel_transport_repository,
-			ExpenditureRepository expenditureRepository)
+			ExpenditureRepository expenditureRepository,
+			WineTransportRepository wineTransportRepository)
 	{
 		this.cookbookrepository = cookbookrepository;
 		this.locationRepository = locationRepository;
@@ -83,6 +86,7 @@ public class CookBookController {
 		this.departmentrepository = departmentrepository;
 		this.barrel_transport_repository = barrel_transport_repository;
 		this.expenditureRepository = expenditureRepository;
+		this.wineTransportRepository = wineTransportRepository;
 	}
 	
 	
@@ -874,16 +878,16 @@ public class CookBookController {
 		return "redirect:/cookbook";
 	}
 	
-	@RequestMapping(value = "/transport", method = RequestMethod.GET)
-	public String transport(Model model, @LoggedIn Optional<UserAccount> userAccount)
+	@RequestMapping(value = "/barrel_transport", method = RequestMethod.GET)
+	public String barrel_transport(Model model, @LoggedIn Optional<UserAccount> userAccount)
 	{
 		checkArrivedBarrels();
 		
-		model.addAttribute("transports", barrel_transport_repository.findAll());
+		model.addAttribute("barrel_transport", barrel_transport_repository.findAll());
 		
-		return "transport";
+		return "barrel_transport";
 	}
-	
+
 	@RequestMapping(value = "/stocks", method = RequestMethod.GET)
 	public String stocks(Model model, @LoggedIn Optional<UserAccount> userAccount)
 	{

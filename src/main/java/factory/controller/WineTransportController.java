@@ -9,6 +9,7 @@ import java.util.List;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +24,13 @@ import factory.model.ProductionMonth;
 import factory.model.Still;
 import factory.model.WineStock;
 import factory.model.WineTransport;
-import factory.model.WineTransportRepository;
 import factory.repository.DepartmentRepository;
 import factory.repository.LocationRepository;
 import factory.repository.ProductionManagementRepository;
+import factory.repository.WineTransportRepository;
 
 @Controller
+@PreAuthorize("hasRole('ROLE_BREWER') ||  hasRole('ROLE_SUPERUSER') ||  hasRole('ROLE_WINEGROWER')")
 public class WineTransportController {
 
 	WineStock winestock;
@@ -37,6 +39,7 @@ public class WineTransportController {
 	ProductionManagement production_management;
 	
 	int convert_month = 0;
+	Long seconds = 10L;
 	
 	private final LocationRepository locationRepository;
 	private final DepartmentRepository departmentrepository;
@@ -155,67 +158,63 @@ public class WineTransportController {
 							
 							production = (Production) department;
 							
-							for(int i = convert_month; i < months.length; i++)
-//							for(int i = 1; i < months.length; i++)
-							{
-								double length_of_month = Double.parseDouble(months[i][1]);
-								ProductionMonth production_month = production_management.getProduction_month().get(i);
-								
-								/*
-								 * calculate maximum amount that all stills can produce
-								 */
-								for(Still still : production.getStills())
-								{
-									max_still_amount += still.getAmount() * 0.8;
-								}
-								
-								max_production_a_month = (length_of_month / 2) * max_still_amount;
-								System.out.println("max_production_a_month " + max_production_a_month);
-
-//								if((production_month.getMax_winestock_amount() - max_production_a_month) < 0){
-//									production_month.setMax_winestock_amount(0);
-//									max_stock_amount = production_month.getMax_winestock_amount();
-//								} else {
-//									if(i < 10){
-//										ProductionMonth production_month = production_management.getProduction_month().get(i + 1);
-//										production_month.setMax_winestock_amount(production_month.getMax_winestock_amount()
-//												+ (production_month.getMax_winestock_amount() - max_production_a_month));
-//										
-//										productionMonth.setMax_winestock_amount(productionMonth.getMax_winestock_amount() - max_production_a_month);	
-//										max_stock_amount = max_production_a_month;
-//									}
-//								}
-								
-								production_month.setProcessing_through_stills(max_production_a_month);
-								
-								for(Location loc : locationRepository.findAll()){
-									for(Department dep : loc.getDepartments()){	
-										if(dep.getName().contains("Weinlager")){
+							for(Department dep : location.getDepartments()){	
+								if(dep.getName().contains("Weinlager")){
+									winestock = (WineStock) dep;
 									
-											winestock = (WineStock) dep;
-											
-											if((winestock.getAmount() - max_production_a_month) < 0){
-												winestock.setAmount(0);
-											} else {
-												winestock.setAmount(winestock.getAmount() - max_production_a_month);
-											}
+									for(int i = convert_month; i < months.length; i++)
+		//							for(int i = 1; i < months.length; i++)
+									{
+										double length_of_month = Double.parseDouble(months[i][1]);
+										ProductionMonth production_month = production_management.getProduction_month().get(i);
+										
+										/*
+										 * calculate maximum amount that all stills can produce
+										 */
+										for(Still still : production.getStills())
+										{
+											max_still_amount += still.getAmount() * 0.8;
 										}
+										
+										max_production_a_month = (length_of_month / 2) * max_still_amount;
+										System.out.println("max_production_a_month " + max_production_a_month);
+		
+		//								if((production_month.getMax_winestock_amount() - max_production_a_month) < 0){
+		//									production_month.setMax_winestock_amount(0);
+		//									max_stock_amount = production_month.getMax_winestock_amount();
+		//								} else {
+		//									if(i < 10){
+		//										ProductionMonth production_month = production_management.getProduction_month().get(i + 1);
+		//										production_month.setMax_winestock_amount(production_month.getMax_winestock_amount()
+		//												+ (production_month.getMax_winestock_amount() - max_production_a_month));
+		//										
+		//										productionMonth.setMax_winestock_amount(productionMonth.getMax_winestock_amount() - max_production_a_month);	
+		//										max_stock_amount = max_production_a_month;
+		//									}
+		//								}
+									
+										production_month.setProcessing_through_stills(max_production_a_month);
+										
+										if((winestock.getAmount() - max_production_a_month) < 0){
+											winestock.setAmount(0);
+										} else {
+											winestock.setAmount(winestock.getAmount() - max_production_a_month);
+										}
+										
+										production_month.setMax_winestock_amount(winestock.getAmount());
+										
+										max_still_amount = 0;
+										max_production_a_month = 0;
+										max_stock_amount = 0;
 									}
+								
+									System.out.println("winestock.getAmount()-- " + winestock.getAmount());
+						
+									
+									productionManagementRepository.save(production_management);
+									departmentrepository.save(winestock);
 								}
-								
-								production_month.setMax_winestock_amount(winestock.getAmount());
-								
-								departmentrepository.save(winestock);
-								productionManagementRepository.save(production_management);
-								System.out.println("productionMonth+ " + production_month.getMax_winestock_amount());
-								
-								
-								max_still_amount = 0;
-								max_production_a_month = 0;
-								max_stock_amount = 0;
 							}
-							
-//							productionManagementRepository.save(production_management);
 							
 						}
 					}
@@ -306,15 +305,7 @@ public class WineTransportController {
 		System.out.println("temp_location_list## " + temp_location_list);
 			
 		processThroughStills(convert_month, months);
-		
-		
-			for(ProductionManagement production_management : productionManagementRepository.findAll()){
-				for(ProductionMonth pro : production_management.getProduction_month()){
-					System.out.println("PRO "  + pro.getMax_winestock_amount());
-				}
-			}
 	
-		
 		model.addAttribute("production_management", productionManagementRepository.findAll());
 		
 		return "winestocks";
@@ -391,10 +382,15 @@ public class WineTransportController {
 										production_month.setMax_winestock_amount(production_month.getMax_winestock_amount() + paresed_wine_amount);
 										winestock.setAmount(winestock.getAmount() + paresed_wine_amount);
 										
+										WineTransport winetransport = new WineTransport(location_start, location_goal, 
+												(wine_amount / 100), LocalDateTime.now(), LocalDateTime.now().plusSeconds(seconds), false);
+										
 										transport_is_okay = false;
+										
 										
 										departmentrepository.save(winestock);
 										productionManagementRepository.save(productionManagement);
+										wineTransportRepository.save(winetransport);
 										
 										System.out.println("production_month.getMax_winestock_amount()" + production_month.getMax_winestock_amount());
 									}
@@ -519,5 +515,13 @@ public class WineTransportController {
 		}
 		
 		return "redirect:/wine_delivery_form";
+	}
+	
+	@RequestMapping(value = "/wine_transport", method = RequestMethod.GET)
+	public String wine_transport(Model model)
+	{
+		model.addAttribute("wine_transport", wineTransportRepository.findAll());
+		
+		return "wine_transport";
 	}
 }

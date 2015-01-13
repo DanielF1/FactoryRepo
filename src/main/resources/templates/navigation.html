@@ -178,12 +178,9 @@
 			</li>
 			
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
-				<a href="http://localhost:8080/form">Weinanlieferung</a>
+				<a href="/wine_delivery_form.html">Weinanlieferung</a>
 			</li>
 
-			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
-				<a href="/locationwithwine">Weinmenge</a>
-			</li>
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_WINEGROWER')">
 				<a href="/dataemployee.html">Persönliche Daten</a>
 			</li>
@@ -254,12 +251,30 @@
 				<a href="/BarrelList.html">Fassliste</a>
 			</li>
 			
-			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
-				<a href="/locationwithwine.html">Weinmenge</a>
+			<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+		   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
+		      		Lager <span class="caret"></span>
+		    	</a>
+		    	<ul class="dropdown-menu" role="menu">
+			    	<li><a href="/stocks.html">Fasslager</a></li>
+			    	<li><a href="/stocks.html">Flaschenlager</a></li>
+			    	<li><a href="/winestocks.html">Weinlager</a></li>
+				</ul>
 			</li>
 
+			<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
+		      		Transportliste <span class="caret"></span>
+		    	</a>
+		    	<ul class="dropdown-menu" role="menu">
+			    	<li><a href="/barrel_transport.html">Fasstransport</a></li>
+			    	<li><a href="/wine_transport.html">Weintransport</a></li>
+			    	<li><a href="/delivery_transport.html">Weinlieferung</a></li>
+				</ul>
+			</li>
+			
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
-				<a href="http://localhost:8080/form">Weinanlieferung</a>
+				<a href="/wine_delivery_form.html">Weinanlieferung</a>
 			</li>
 	
 			<!-- Advanced superuser navigation -->
