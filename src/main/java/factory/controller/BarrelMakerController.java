@@ -227,8 +227,8 @@ public class BarrelMakerController {
 	/**
 	 * Wenn das Fass zu alt ist, wird es entfernt
 	 * 
-	 * @param index 
-	 * @param modelMap bereitgestellt von Spring
+	 * @param index Position des Fasses
+	 * @param model bereitgestellt von Spring
 	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/deleteBarrel/{index}", method = RequestMethod.GET)

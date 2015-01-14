@@ -46,6 +46,9 @@ public class ProductionManagement {
 		this.year = year;
 	}
 
+	/**
+	 * default constructor
+	 */
 	public ProductionManagement(){}
 	
 	/**
