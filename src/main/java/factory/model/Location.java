@@ -49,6 +49,14 @@ public class Location {
 
 	/**
 	 * Constructor
+	 * 
+	 * @param name
+	 * @param address
+	 * @param city
+	 * @param telefon
+	 * @param mail
+	 * @param employees
+	 * @param departments
 	 */
 	public Location(String name, String address, String city, String telefon,
 			String mail, List<Employee> employees, List<Department> departments) {

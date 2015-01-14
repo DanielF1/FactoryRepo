@@ -93,15 +93,18 @@ class AdminController {
 	    								@RequestParam ("address") String address,
 	    								@RequestParam ("city") String city,
 	    								@RequestParam ("telefon") String telefon,
-	    								@RequestParam ("mail") String mail) {
+	    								@RequestParam ("mail") String mail,
+	    								Model model) {
 	    	
 	    	if (bindingResult.hasErrors()) {
 	            return "addLocation";
 	        }
+	    	model.addAttribute("error_green", "Standort hinzugefügt");
+	    	model.addAttribute("locations", locationRepository.findAll());
 	    	
 	    	adminTasksManager.addLocation(name, address, city, telefon, mail);
 	    		    	
-	    	return "redirect:/adminLocList";
+	    	return "adminLocList";
 	    }
 	    
 	    /**
@@ -141,14 +144,18 @@ class AdminController {
 									@RequestParam("city") String city,
 									@RequestParam("telefon")String telefon,
 									@RequestParam("mail") String mail,
-									@RequestParam("id") Long id){
+									@RequestParam("id") Long id,
+									Model model){
 			
 			if (bindingResult.hasErrors()) {
 	            return "editLocation";
 	        }
 			adminTasksManager.editLocation(name, address, city, telefon, mail, id);
 			
-			return "redirect:/adminLocList";
+			model.addAttribute("error_green", "Standortdaten gespeichert");
+	    	model.addAttribute("locations", locationRepository.findAll());
+			
+			return "adminLocList";
 		}
 
 		/**
@@ -163,7 +170,10 @@ class AdminController {
 			
 			adminTasksManager.deleteLocation(id);
 			
-			return "redirect:/adminLocList";
+			model.addAttribute("error_green", "Standort gelöscht");
+	    	model.addAttribute("locations", locationRepository.findAll());
+			
+			return "adminLocList";
 		}
 		
 		
@@ -223,15 +233,17 @@ class AdminController {
 									@RequestParam("firstname") String firstname,
 									@RequestParam("salary") String salary,
 									@RequestParam("mail") String mail,
-									@RequestParam("address") String address
-									){
+									@RequestParam("address") String address,
+									Model model){
 			
 			if (bindingResult.hasErrors()) {
 	            return "editEmployee";
 	        }
 			adminTasksManager.editEmployee(username, familyname, firstname, salary, mail, address);
+			model.addAttribute("error_green", "Mitarbeiterdaten gespeichert");
+			model.addAttribute("employees", employeeRepository.findAll());
 			
-			return "redirect:/employeeList";
+			return "employeeList";
 			}
 		 
 		/**
@@ -285,9 +297,11 @@ class AdminController {
 			if (bindingResult.hasErrors()) {
 	            return "addEmployee";
 	        }
-			adminTasksManager.addEmployee(username, password, location, workplace, familyname, firstname, salary, mail, address);
-			
-	    	return "redirect:/employeeList";
+			model.addAttribute("error_green", "Mitarbeiter hinzugefügt");
+			model.addAttribute("employees", employeeRepository.findAll());
+	        adminTasksManager.addEmployee(username, password, location, workplace, familyname, firstname, salary, mail, address);
+	        
+	    	return "employeeList";
 	    }
 	
 		/**
@@ -332,7 +346,7 @@ class AdminController {
 		public String employeeList(ModelMap modelMap){
 	    	
 	    	modelMap.addAttribute("employees", employeeRepository.findAll());
-	    	
+
 			return "employeeList";
 		}
   
@@ -343,11 +357,13 @@ class AdminController {
 	     * @return Umleitung auf Employeeübersicht
 	     */
 	    @RequestMapping(value = "/dismissEmployee/{id}", method = RequestMethod.GET)
-		public String dismissEmployee(@PathVariable Long id){
+		public String dismissEmployee(@PathVariable Long id, Model model){
 	    	
 	    	adminTasksManager.dismissEmployee(id);
+	    	model.addAttribute("error_green", "Mitarbeiter gelöscht");
+			model.addAttribute("employees", employeeRepository.findAll());
 	    	
-			return "redirect:/employeeList";
+			return "employeeList";
 		}
 	    
 	    /**

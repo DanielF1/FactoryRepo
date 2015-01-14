@@ -21,14 +21,13 @@
 		
 		
 		
-	 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawVisualization);
+    google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawVisualization);
 
-function drawVisualization() {
-  // Some raw data (not necessarily accurate)
-  
+	function drawVisualization() {
+  	
   		var i1 = document.getElementById("incjan14").innerHTML;
     	var ij14 = parseInt(i1 | 0);
     	var e1 = document.getElementById("expjan14").innerHTML;
@@ -184,7 +183,7 @@ function drawVisualization() {
 	<!-- Container -->
 	<div class="main-container content">
 		<div class="col-lg-12">
-			<div style="display:block;">
+			<div style="display:none;">
 			<p id="dja14" th:text="${dja14}"></p>
 			<p id="dfe14" th:text="${dfe14}"></p>
 			<p id="dma14" th:text="${dma14}"></p>

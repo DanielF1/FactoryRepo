@@ -25,7 +25,6 @@ public class ProductionManagement {
 	
 	/**
 	 * constructor 
-
 	 */
 	public ProductionManagement(String location_name, String location_address,
 			String location_city, String location_telefon,
@@ -40,14 +39,14 @@ public class ProductionManagement {
 		this.year = year;
 	}
 
+	/**
+	 * default constructor
+	 */
 	public ProductionManagement(){}
 	
 	
 	/**
 	 * getter & setter
-	 * 
-	 * 
-	 * @return
 	 */
 	public String getLocation_name() {
 		return location_name;
