@@ -364,13 +364,15 @@ public class BarrelMakerController {
 	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/fassZuordnen")
-	public String fassZuordnen(){
+	public String fassZuordnen(Model model, ModelMap modelMap){
 
 		this.lagerFurVolleFasser.zuordnen(barrelstock.getBarrels());
 		departmentRepository.save(barrelstock);
 		this.lagerFurLeereFasser.zuordnen(barrelstock.getBarrels());
 		departmentRepository.save(barrelstock);
-		return "redirect:/BarrelList";
+		model.addAttribute("error_green", "Fässer wurden zugeordnet." );
+		modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
+		return "BarrelList";
 		
 	}
 }

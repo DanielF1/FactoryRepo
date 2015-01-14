@@ -36,8 +36,8 @@ import factory.model.Expenditure;
 import factory.model.FoundLocation;
 import factory.model.Ingredient;
 import factory.model.Location;
-import factory.model.MaxBottleStore;
 import factory.model.MaxBarrelStore;
+import factory.model.MaxBottleStore;
 import factory.model.Recipe;
 import factory.model.WineStock;
 import factory.repository.BarrelTransportRepository;
@@ -332,7 +332,8 @@ public class CookBookController {
 							@RequestParam("ingredientWater") String ingredientWater,
 							@RequestParam("ingredientAge3") int ingredientAge3,
 							@RequestParam("ingredientAmount3") int ingredientAmount3,
-							@RequestParam("ingredientUnit3") String ingredientUnit3) 
+							@RequestParam("ingredientUnit3") String ingredientUnit3,
+							Model model) 
 	{
 		
 		Ingredient i1 = new Ingredient(ingredientQuality,  ingredientAge,  ingredientAmount,  ingredientUnit);
@@ -348,10 +349,12 @@ public class CookBookController {
 		mapIngredient.add(i4);	
 		
 		cookbookrepository.save(new Recipe(name, mapIngredient));
-		
+		model.addAttribute("error_green", "Rezept erstellt" );
+		model.addAttribute("recipes", cookbookrepository.findAll());
+
 		mapIngredient = new ArrayList<Ingredient>();
-		
-		return "redirect:/cookbook";
+		return "cookbook";
+//		return "redirect:/cookbook";
 	}
 		
 	
@@ -726,10 +729,13 @@ public class CookBookController {
 	}
 	
 	@RequestMapping(value = "/delete/{id}/{term}")
-	public String removeRecipe(@PathVariable Long id)
+	public String removeRecipe(@PathVariable Long id,Model model)
 	{		
 		cookbookrepository.delete(id);
-		return "redirect:/cookbook";
+		model.addAttribute("error_green", "Rezept wurde gelöscht" );
+		model.addAttribute("recipes", cookbookrepository.findAll());
+		return "cookbook";
+//		return "redirect:/cookbook";
 	}
 
 	
@@ -787,6 +793,12 @@ public class CookBookController {
 //			}//for
 //		}//for
 
+		if (bottlesToBuyNumber==1)
+		{
+		model.addAttribute("error_green", "Eine Flasche mit dem Volume " + bottlesToBuyAmount + " wurde hinzugefügt." );}
+		else {
+			model.addAttribute("error_green", bottlesToBuyNumber +" Flaschen mit dem Volume " + bottlesToBuyAmount + " wurde hinzugefügt." );
+		}
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		
 		return "cookbook";
