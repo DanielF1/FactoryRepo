@@ -28,6 +28,11 @@ public class Income {
 	
 	/**
 	 * Constructor
+	 * 
+	 * @param customer Person/Kunde der Einnahme
+	 * @param date Datum der Einnahmen
+	 * @param value Wert der Einnahmen
+	 * @param sortOf Art der Einnahme
 	 */
 	public Income(String customer, LocalDate date, double value, String sortOf) {
 		this.customer = customer;
@@ -37,36 +42,65 @@ public class Income {
 	}
 
 	/**
-	 * Getter und Setter
+	 * getter
+	 * @return customer
 	 */
 	public String getCustomer() {
 		return customer;
 	}
 
+	/**
+	 * setter
+	 * @param customer
+	 */
 	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
-
+	
+	/**
+	 * getter
+	 * @return date
+	 */
 	public LocalDate getDate() {
 		return date;
 	}
 
+	/**
+	 * setter
+	 * @param date
+	 */
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
+	/**
+	 * getter
+	 * @return value
+	 */
 	public double getValue() {
 		return value;
 	}
 
+	/**
+	 * setter
+	 * @param value
+	 */
 	public void setValue(double value) {
 		this.value = value;
 	}
 
+	/**
+	 * getter
+	 * @return sortOf
+	 */
 	public String getSortOf() {
 		return sortOf;
 	}
 
+	/**
+	 * setter
+	 * @param sortOf
+	 */
 	public void setSortOf(String sortOf) {
 		this.sortOf = sortOf;
 	}

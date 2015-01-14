@@ -17,7 +17,7 @@ public class Accountancy extends Department {
 	
 	/**
 	 * Constructor
-	 * @param name
+	 * @param name Name des Rechnungswesens
 	 */
 	public Accountancy(String name){
 		super(name);

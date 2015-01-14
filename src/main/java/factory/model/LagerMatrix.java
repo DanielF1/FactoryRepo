@@ -14,8 +14,12 @@ public class LagerMatrix {
 	private final DepartmentRepository departmentRepository;
 	private Pair next;
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
+	 * 
+	 * @param departmentRepository Abteilungsrepository
+	 * @param barrelstock Fasslager
+	 * @param lagetType Lagertyp
 	 */
 	public LagerMatrix(DepartmentRepository departmentRepository, BarrelStock barrelstock, String lagetType){	
 		this.departmentRepository = departmentRepository;
@@ -24,27 +28,41 @@ public class LagerMatrix {
 		Lager = new Long[AnzahlRegale][AnzahlPlatzeProRegal];
 	}
 	
-	/*
-	 * Getters und Setters
+	
+	/**
+	 * getter 
+	 * @return lagerType
 	 */
 	public String getLagerType() {
 		return lagerType;
 	}
 
+	/**
+	 * setter
+	 * @param lagerType
+	 */
 	public void setLagerType(String lagerType) {
 		this.lagerType = lagerType;
 	}
 
+	/**
+	 * getter
+	 * @return Lager
+	 */
 	public Long[][] getLager() {
 		return Lager;
 	}
 
+	/**
+	 * setter
+	 * @param lager
+	 */
 	public void setLager(Long[][] lager) {
 		Lager = lager;
 	}
-	
-	/*
-	 * Die Fässer werden auf bestimmter Position zugeordnet
+
+	/**
+	 * @param allBarrels alle Fässer auf bestimmte Positionen zurordnen 
 	 */
 	public void zuordnen(List<Barrel> allBarrels){
 		resetLager(allBarrels);
@@ -81,11 +99,12 @@ public class LagerMatrix {
 	
 	}
 	
-	/*
+	/**
 	 * Prüf ob das Fass mit der folgenden ID aus der Matrix immer noch in der DatenBankexistiert,
 	 * wenn nicht,wird das aus der LagerMatrix (Lager[i][j] = null) gelöscht.
+	 * 
+	 * @param allBarrels alle Fässer auf bestimmte Positionen zurordnen 
 	 */
-	
 	public void resetLager(List<Barrel> allBarrels){
 
 		int x=0;	
@@ -107,7 +126,7 @@ public class LagerMatrix {
 		
 	}
 	
-	/*
+	/**
 	 * Berechnen die Position im Lager für das Fass
 	 */
 	public void getNextFreePos(){
@@ -119,10 +138,7 @@ public class LagerMatrix {
 						i = this.next.getRegal();
 						j = this.next.getPlatz();
 					}
-				}
-			}	
+			}
+		}	
 	}
 }
-
-
-

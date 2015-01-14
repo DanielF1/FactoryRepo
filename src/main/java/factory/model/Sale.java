@@ -13,9 +13,11 @@ public class Sale extends Department {
 	 */
 	@Deprecated
 	public Sale(){}
-	
-	/** 
+
+	/**
 	 * Constructor
+	 * 
+	 * @param name Name des Verkaufs
 	 */
 	public Sale(String name) {
 		

@@ -11,9 +11,14 @@ public class MaxBarrelStore {
 	private String quality;
 	private int age;
 	private double amount;
-	
-	/*
-	 * constructor
+
+
+	/**
+	 * Constructor
+	 * 
+	 * @param quality Qualität des Maximalen FassLagers
+	 * @param age Alter des Maximalen FassLagers
+	 * @param amount Menge des Maximalen FassLagers
 	 */
 	public MaxBarrelStore(String quality,int age, double amount) 
 	{
@@ -22,31 +27,50 @@ public class MaxBarrelStore {
 		this.amount = amount;
 	}
 
-	/*
-	 * Getter und Setter
+	/**
+	 * getter
+	 * @return quality
 	 */
 	public String getQuality() {
 		return quality;
 	}
 
+	/**
+	 * setter
+	 * @param quality
+	 */
 	public void setQuality(String quality) {
 		this.quality = quality;
 	}
 
-
+	/**
+	 * getter
+	 * @return age
+	 */
 	public int getAge() {
 		return age;
 	}
 
+	/**
+	 * setter
+	 * @param age
+	 */
 	public void setAge(int age) {
 		this.age = age;
 	}
 
-
+	/**
+	 * getter
+	 * @return amount
+	 */ 
 	public double getAmount() {
 		return amount;
 	}
 
+	/** 
+	 * setter
+	 * @param amount
+	 */
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}

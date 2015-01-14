@@ -31,8 +31,8 @@ public class BarrelStock extends Department {
 	/**
 	 * Constructor
 	 * 
-	 * @param name Name des Barrelstocks
-	 * @param mapBarrels Liste des Barrelstocks
+	 * @param name Name des Fasslagers
+	 * @param mapBarrels Liste des Fasslagers
 	 */
 	public BarrelStock(String name, List<Barrel> mapBarrels){
 		

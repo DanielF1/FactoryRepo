@@ -28,15 +28,15 @@ public class BarrelForTransport {
 	
 	/**
 	 * Constructor
-	 * @param age Alter des Barrels
-	 * @param quality Qualität des Barrels
-	 * @param content_amount Inhaltsangabe des Barrels
-	 * @param manufacturing_date Herstellungsdatum des Barrels
-	 * @param barrel_volume Volumen des Barrels
-	 * @param birthdate_of_barrel Herstellungsdatum des Barrels
-	 * @param death_of_barrel Ablaufdatum des Barrels
-	 * @param lastFill letzte Füllung des Barrels
-	 * @param position Position des Barrels
+	 * @param age Alter des Fasses
+	 * @param quality Qualität des Fasses
+	 * @param content_amount Inhaltsangabe des Fasses
+	 * @param manufacturing_date Herstellungsdatum des Fasses
+	 * @param barrel_volume Volumen des Fasses
+	 * @param birthdate_of_barrel Herstellungsdatum des Fasses
+	 * @param death_of_barrel Ablaufdatum des Fasses
+	 * @param lastFill letzte Füllung des Fasses
+	 * @param position Position des Fasses
 	 */
 	public BarrelForTransport(int age,String quality, double content_amount,LocalDate manufacturing_date, double barrel_volume, 
 			LocalDate birthdate_of_barrel,LocalDate death_of_barrel, LocalDate lastFill,String position)

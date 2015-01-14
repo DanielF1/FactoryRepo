@@ -16,14 +16,21 @@ public class Expenditure {
 	private double value;
 	private String sortOf;
 		
-	/* 
-	 * default Konstruktor
+
+	/**
+	 * Default Constructor
 	 */
 	@Deprecated
 	public Expenditure(){}
 
-	/*
-	 * Konstruktor
+
+	
+	/**
+	 * Construktor
+	 * 
+	 * @param date Datum der Ausgaben
+	 * @param value Wert der Ausgaben
+	 * @param sortOf Art der Ausgaben
 	 */
 	public Expenditure(LocalDate date, double value, String sortOf) {
 		this.date = date;
@@ -31,29 +38,50 @@ public class Expenditure {
 		this.sortOf = sortOf;
 	}
 
-	/*
-	 * Getter und Setter
+	/**
+	 * getter
+	 * @return date
 	 */
 	public LocalDate getDate() {
 		return date;
 	}
 
+	/**
+	 * setter
+	 * @param date
+	 */
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
+	/**
+	 * getter
+	 * @return value
+	 */
 	public double getValue() {
 		return value;
 	}
 
+	/**
+	 * setter
+	 * @param value
+	 */
 	public void setValue(double value) {
 		this.value = value;
 	}
 
+	/**
+	 * getter
+	 * @return sortOf
+	 */
 	public String getSortOf() {
 		return sortOf;
 	}
 
+	/** 
+	 * setter
+	 * @param sortOf
+	 */
 	public void setSortOf(String sortOf) {
 		this.sortOf = sortOf;
 	}
