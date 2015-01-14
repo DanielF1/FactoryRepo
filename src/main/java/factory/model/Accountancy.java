@@ -14,8 +14,10 @@ public class Accountancy extends Department {
 	@Deprecated
 	public Accountancy() {}
 
+	
 	/**
 	 * Constructor
+	 * @param name Name des Rechnungswesens
 	 */
 	public Accountancy(String name){
 		super(name);

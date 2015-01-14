@@ -22,6 +22,22 @@ public class WineTransport {
 	private LocalDateTime goal_date;
 	private boolean arrived = false;
 	
+	/**
+	 * Default Constructor
+	 */
+	public WineTransport(){}
+	
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param start Start des Weintransports
+	 * @param goal Ziel des Weintransports
+	 * @param amount Menge des Weintransports
+	 * @param start_date Startdatum des Weintransports
+	 * @param goal_date Zieldatum des Weintransports
+	 * @param arrived eintreffen des Weintransports
+	 */
 	public WineTransport(String start, String goal,
 			double amount, LocalDateTime start_date, LocalDateTime goal_date,
 			boolean arrived) {
@@ -34,44 +50,74 @@ public class WineTransport {
 		this.arrived = arrived;
 	}
 
-	public WineTransport(){}
-	
-	
-	/*
-	 * getter & setter
+	/**
+	 * getter
+	 * @return starting_point
 	 */
 	public String getStarting_point() {
 		return starting_point;
 	}
 
+	/**
+	 * setter
+	 * @param starting_point
+	 */
 	public void setStarting_point(String starting_point) {
 		this.starting_point = starting_point;
 	}
 
+	/**
+	 * getter
+	 * @return goal
+	 */
 	public String getGoal() {
 		return goal;
 	}
 
+	/**
+	 * setter
+	 * @param goal
+	 */
 	public void setGoal(String goal) {
 		this.goal = goal;
 	}
 
+	/**
+	 * getter
+	 * @return amount
+	 */
 	public double getAmount() {
 		return amount;
 	}
 
+	/**
+	 * setter
+	 * @param amount
+	 */
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
+	/**
+	 * getter
+	 * @return start_date
+	 */ 
 	public LocalDateTime getStart_date() {
 		return start_date;
 	}
 
+	/**
+	 * setter
+	 * @param start_date
+	 */
 	public void setStart_date(LocalDateTime start_date) {
 		this.start_date = start_date;
 	}
 
+	/**
+	 * getter
+	 * @return goal_date
+	 */
 	public LocalDateTime getGoal_date() {
 		return goal_date;
 	}
@@ -84,6 +130,10 @@ public class WineTransport {
 		return arrived;
 	}
 
+	/**
+	 * setter
+	 * @param arrived
+	 */
 	public void setArrived(boolean arrived) {
 		this.arrived = arrived;
 	}

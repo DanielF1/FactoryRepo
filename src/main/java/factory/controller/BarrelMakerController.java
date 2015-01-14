@@ -171,6 +171,7 @@ public class BarrelMakerController {
 			@RequestParam("Barrel_anzahl") int barrel_anzahl,
 			@ModelAttribute("insertBarrel") @Valid InsertBarrel insertBarrel,
 			Model model,
+			ModelMap modelMap,
 			BindingResult result) {
 		if (result.hasErrors()) {
 		return "inserted";
@@ -206,6 +207,7 @@ public class BarrelMakerController {
 			model.addAttribute("error_green", barrel_anzahl +" Fässer mit dem Volume " + barrel_volume + " wurde hinzugefügt." );
 		}
 		departmentRepository.save(barrelstock);
+		modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 		return "BarrelList";
 	}
 	
@@ -230,7 +232,7 @@ public class BarrelMakerController {
 	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/deleteBarrel/{index}", method = RequestMethod.GET)
-	public String deleteBarrel(@PathVariable("index") int index, Model model) {
+	public String deleteBarrel(@PathVariable("index") int index, Model model, ModelMap modelMap) {
 
 		Barrel barrel = barrelstock.getBarrels().get(index-1);
 		// Fass ist leer
@@ -260,6 +262,7 @@ public class BarrelMakerController {
 
 		}
 		departmentRepository.save(barrelstock);
+		modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 		return "BarrelList";
 	}
 	

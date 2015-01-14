@@ -87,7 +87,7 @@ public class Verkaeufercontroller {
 	 */
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
-			BindingResult result) {
+			BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
 			return "register";
@@ -97,7 +97,9 @@ public class Verkaeufercontroller {
 		userAccountManager.save(userAccount);
 		customerRepository.save(new Customer(userAccount, registrationForm.getName(), registrationForm.getPassword(), registrationForm.getFamilyname(), registrationForm.getFirstname(), registrationForm.getAddress()));
 		
-		return "redirect:/";
+		model.addAttribute("error_green", "Kundenaccount wurde erstellt!");
+		
+		return "index";
 	}
 
 	/**
