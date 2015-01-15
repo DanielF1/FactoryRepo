@@ -29,7 +29,7 @@ public class Bottle {
 	}
 	
 	/**
-	 * Getter und Setter
+	 * Getter and Setter
 	 */
 	public Long getId() 
 	{

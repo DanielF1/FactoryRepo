@@ -22,6 +22,9 @@ public class WineTransport {
 	private LocalDateTime goal_date;
 	private boolean arrived = false;
 	
+	/**
+	 * Constructor
+	 */
 	public WineTransport(String start, String goal,
 			double amount, LocalDateTime start_date, LocalDateTime goal_date,
 			boolean arrived) {
@@ -34,11 +37,14 @@ public class WineTransport {
 		this.arrived = arrived;
 	}
 
+	/**
+	 * default Constructor
+	 */
 	public WineTransport(){}
 	
 	
-	/*
-	 * getter & setter
+	/**
+	 * Getter and Setter
 	 */
 	public String getStarting_point() {
 		return starting_point;
@@ -80,7 +86,7 @@ public class WineTransport {
 		this.goal_date = goal_date;
 	}
 
-	public boolean isArrived() {
+	public boolean getArrived() {
 		return arrived;
 	}
 

@@ -12,8 +12,8 @@ public class MaxBarrelStore {
 	private int age;
 	private double amount;
 	
-	/*
-	 * constructor
+	/**
+	 * Constructor
 	 */
 	public MaxBarrelStore(String quality,int age, double amount) 
 	{
@@ -22,8 +22,16 @@ public class MaxBarrelStore {
 		this.amount = amount;
 	}
 
-	/*
-	 * Getter und Setter
+	/**
+	 * default Constructor
+	 */
+	public MaxBarrelStore(){}
+	
+	
+	/**
+	 * Getter and Setter
+	 * 
+	 * @return necessary value
 	 */
 	public String getQuality() {
 		return quality;

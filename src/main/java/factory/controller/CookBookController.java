@@ -52,11 +52,10 @@ import factory.repository.WineTransportRepository;
 @PreAuthorize("hasRole('ROLE_BREWER') ||  hasRole('ROLE_SUPERUSER')")
 public class CookBookController {
 	
-	private final CookBookRepository cookbookrepository;
-
 	BarrelStock barrelstock;
 	BottleStock bottlestock;
 	WineStock winestock;
+	
 	private final Inventory<InventoryItem> inventory;
 	private final ArticleRepository articlerepository;
 	private final LocationRepository locationRepository;
@@ -64,9 +63,13 @@ public class CookBookController {
 	private final BarrelTransportRepository barrel_transport_repository;
 	private final ExpenditureRepository expenditureRepository;
 	private final WineTransportRepository wineTransportRepository;
+	private final CookBookRepository cookbookrepository;
 
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 	List<FoundLocation> foundLocation = new ArrayList<FoundLocation>();
+	
+	Long seconds = 10L;
+	
 	
 	@Autowired 
 	public CookBookController(
@@ -89,9 +92,9 @@ public class CookBookController {
 		this.wineTransportRepository = wineTransportRepository;
 	}
 	
-	
-	/*
-	 * check arrived barrels
+
+	/**
+	 * check if there are arrived barrels
 	 */
 	public void checkArrivedBarrels()
 	{
@@ -131,8 +134,12 @@ public class CookBookController {
 	}
 	
 	
-	/*
-	 * calculate the maximum store of barrel stock
+	/**
+	 * sort and calculate the maximum store of barrel stock for every ingredient
+	 * 
+	 * 
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return a sorted list of ingredient with their maximum amount in that stock
 	 */
 	public List<MaxBarrelStore> calcMaxStore(@LoggedIn Optional<UserAccount> userAccount)
 	{
@@ -218,8 +225,13 @@ public class CookBookController {
 	}
 	
 	
-	/*
-	 * calculate the maximum store of bottle stock
+
+	/**
+	 * sort and calculate the maximum store of bottles stock for every bottle amount
+	 * 
+	 * 
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return a sorted list of bottles with their maximum count in that stock
 	 */
 	public List<MaxBottleStore> sortBottle (@LoggedIn Optional<UserAccount> userAccount)
 	{
@@ -295,9 +307,15 @@ public class CookBookController {
 		return sortBottle;
 	}
 	
+
 	
-	/*
-	 * mapping initializes 
+	/**
+	 * mapping the first called template
+	 * 
+	 * 
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/cookbook", method = RequestMethod.GET)
 	public String book(Model model, @LoggedIn Optional<UserAccount> userAccount) 
@@ -308,8 +326,29 @@ public class CookBookController {
 	}
 	
 
-	/*
-	 * add recipe
+
+	/**
+	 * add new recipe
+	 * 
+	 * 
+	 * @param name name of recipe
+	 * @param ingredientQuality quality of first ingredient
+	 * @param ingredientAge age of first ingredient
+	 * @param ingredientAmount amount of first ingredient
+	 * @param ingredientUnit unit of first ingredient
+	 * @param ingredientQuality1 quality of second ingredient
+	 * @param ingredientAge1 age of second ingredient
+	 * @param ingredientAmount1 amount of second ingredient
+	 * @param ingredientUnit1 unit of second ingredient
+	 * @param ingredientQuality2 quality of third ingredient
+	 * @param ingredientAge2 age of third ingredient
+	 * @param ingredientAmount2 amount of third ingredient
+	 * @param ingredientUnit2 unit of third ingredient
+	 * @param ingredientWater last ingredient (water)
+	 * @param ingredientAge3 default value
+	 * @param ingredientAmount3 amount of water 
+	 * @param ingredientUnit3 unit of water
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/cookbook/addRecipe", method = RequestMethod.POST)
 	public String addRecipe(@RequestParam("name") String name, 
@@ -355,10 +394,19 @@ public class CookBookController {
 	}
 		
 	
-	/*
-	 * check empty bottles
+
+	/**
+	 * check, if there are enough empty bottles 
+	 * 
+	 * 
+	 * @param missedBottles value of a lack of empty bottles
+	 * @param maxDestillate amount of distillate that i have to produce
+	 * @param waterAmount amount of ingredient "water"
+	 * @param selectedBottleAmount amount of selected bottle type
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return count of missed empty bottles
 	 */
-	public int checkEmptyBottles(int missedBottles, double maxDestillate, double waterAmount, Long id, double selectedBottleAmount,
+	public int checkEmptyBottles(int missedBottles, double maxDestillate, double waterAmount, double selectedBottleAmount,
 								@LoggedIn Optional<UserAccount> userAccount)
 	{
 		int existingBottles = 0;
@@ -408,9 +456,16 @@ public class CookBookController {
 	}
 	
 	
-	/*
-	 * pick a recipe and create new Cognac, 
-	 * if the inventory checks send their okay 
+	
+	/**
+	 * pick a recipe and create new Cognac, if the inventory checks send their okay 
+	 * 
+	 * 
+	 * @param id the id of selected recipe
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param selected_bottle_amount amount of the selected bottle
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value="/wedding/{id}", method = RequestMethod.GET)
 	public String wedding(@PathVariable("id") Long id, Model model,	@RequestParam("selected_bottle_amount") double selected_bottle_amount,
@@ -561,16 +616,16 @@ public class CookBookController {
 					/*
 					 * missed bottles > 0
 					 */
-					if(checkEmptyBottles(missedBottles, maxDestillate, waterAmount, id, selectedBottleAmount, userAccount) > 0)
+					if(checkEmptyBottles(missedBottles, maxDestillate, waterAmount, selectedBottleAmount, userAccount) > 0)
 					{
 						model.addAttribute("not_enough_bottles",  "Nicht genug leere Flaschen vorhanden. Es fehlen noch " 
-									+ checkEmptyBottles(missedBottles, maxDestillate, waterAmount, id, selectedBottleAmount, userAccount) + " Flaschen.");
+									+ checkEmptyBottles(missedBottles, maxDestillate, waterAmount, selectedBottleAmount, userAccount) + " Flaschen.");
 					}
 				
 					/*
 					 * missed bottles = 0
 					 */				
-					if(checkEmptyBottles(missedBottles, maxDestillate, waterAmount, id, selectedBottleAmount, userAccount) == 0){
+					if(checkEmptyBottles(missedBottles, maxDestillate, waterAmount, selectedBottleAmount, userAccount) == 0){
 						
 						int bottles = 0;
 						bottles = (int) ((maxDestillate + waterAmount) / selectedBottleAmount);
@@ -700,8 +755,15 @@ public class CookBookController {
 	}
 	
 	
-	/*
-	 * mapping recipe details
+
+	/**
+	 * mapping recipe details if that one is selected 
+	 * 
+	 * 
+	 * @param id the id of selected recipe
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value="/cookbook/{id}", method = RequestMethod.GET)
 	public String recipeDetails(@PathVariable("id") Long id, Model model, @LoggedIn Optional<UserAccount> userAccount)
@@ -713,8 +775,14 @@ public class CookBookController {
 	}
 	
 	
-	/*
-	 * delete recipe
+
+	/**
+	 * create new path for delete a recipe
+	 * 
+	 * 
+	 * @param id the id of selected recipe
+	 * @param redirectAttrs Spring element for redirecting the URL path
+	 * @return new URL path
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteTrue(@PathVariable(value="id") Long id, RedirectAttributes redirectAttrs) 
@@ -725,6 +793,15 @@ public class CookBookController {
 		return "redirect:/delete/{id}/{term}";
 	}
 	
+	
+	
+	/**
+	 * delete selected recipe
+	 * 
+	 * 
+	 * @param id the id of selected recipe
+	 * @return return the modeling template
+	 */
 	@RequestMapping(value = "/delete/{id}/{term}")
 	public String removeRecipe(@PathVariable Long id)
 	{		
@@ -733,8 +810,16 @@ public class CookBookController {
 	}
 
 	
-	/*
-	 * buy bottles
+
+	/**
+	 * function for buy bottles
+	 * 
+	 * 
+	 * @param bottlesToBuyAmount amount of the bottle
+	 * @param bottlesToBuyNumber count of bottles
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value="/buy/bottles", method = RequestMethod.GET)
 	public String buyBottles(	@RequestParam("bottlesToBuyAmount") double bottlesToBuyAmount, 
@@ -744,15 +829,16 @@ public class CookBookController {
 		double price = 0;
 		double totalprice = 0;
 		
-		for(int i = 0; i < bottlesToBuyNumber; i++)
-		{
-			for(Location loc : locationRepository.findAll()){
-				for(Employee e : loc.getEmployees()){
-					if(e.getUserAccount() == userAccount.get()){
-						for(Department dep : loc.getDepartments()){
-							if(dep.getName().contains("Flaschenlager")){
-								bottlestock = (BottleStock) dep;
-								
+	
+		for(Location loc : locationRepository.findAll()){
+			for(Employee e : loc.getEmployees()){
+				if(e.getUserAccount() == userAccount.get()){
+					for(Department dep : loc.getDepartments()){
+						if(dep.getName().contains("Flaschenlager")){
+							bottlestock = (BottleStock) dep;
+							
+							for(int i = 0; i < bottlesToBuyNumber; i++)
+							{
 								if(bottlesToBuyAmount == 1){
 									price = 0.1;
 								}else if(bottlesToBuyAmount == 0.7){
@@ -793,8 +879,12 @@ public class CookBookController {
 	}
 	
 	
-	/*
-	 * create and send a transport of ingredients from other location
+	/**
+	 * create and send a transport of found ingredients from other location
+	 * 
+	 * 
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/createTransport")
 	public String transportIngredients(@LoggedIn Optional<UserAccount> userAccount)
@@ -810,7 +900,7 @@ public class CookBookController {
 					List<Location> starting_point = new ArrayList<>();
 					List<Location> goal = new ArrayList<>();
 					LocalDateTime start_date = LocalDateTime.now();
-					LocalDateTime goal_date = LocalDateTime.now().plusDays(1);
+					LocalDateTime goal_date = LocalDateTime.now().plusSeconds(seconds);
 					
 					/*
 					 * prepare barrels for transport
@@ -878,6 +968,15 @@ public class CookBookController {
 		return "redirect:/cookbook";
 	}
 	
+	
+	/**
+	 * mapping the list of all barrel transports
+	 * 
+	 *  
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return the modeling template
+	 */
 	@RequestMapping(value = "/barrel_transport", method = RequestMethod.GET)
 	public String barrel_transport(Model model, @LoggedIn Optional<UserAccount> userAccount)
 	{
@@ -888,6 +987,15 @@ public class CookBookController {
 		return "barrel_transport";
 	}
 
+	
+	/**
+	 * mapping the wine stock
+	 * 
+	 * 
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param userAccount userAccount return the logged user account (salespoint)
+	 * @return the modeling template
+	 */
 	@RequestMapping(value = "/stocks", method = RequestMethod.GET)
 	public String stocks(Model model, @LoggedIn Optional<UserAccount> userAccount)
 	{

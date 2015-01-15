@@ -59,15 +59,15 @@
 					<form th:method="post" th:action="@{/startWineDelivery}">
 						<input class="text-center wine_amount" type="number" name="wine_delivery_amount" min="1" placeholder="Weinmenge in Hektoliter"/>
 						<input class="text-center wine_amount" type="number" name="wine_delivery_year" min="2015" placeholder="Jahr"/>
+						<input class="text-center wine_amount" type="number" name="wine_delivery_month" min="1" max="12" placeholder="Monat"/>
+<!-- 						<select name="wine_delivery_month"> -->
+<!-- 							<option selected="disabled" style='display:none;'>Monat</option> -->
+<!-- 							<option th:each="name : ${months}" th:value="${name}"> -->
+<!-- 								<span th:text="${name}"></span> -->
+<!-- 							</option> -->
+<!-- 						</select> -->
 						
-						<select name="wine_delivery_month">
-							<option selected="disabled" style='display:none;'>Monat</option>
-							<option th:each="name : ${months}" th:value="${name}">
-								<span th:text="${name}"></span>
-							</option>
-						</select>
-						
-						<input class="text-center wine_amount" type="number" name="wine_delivery_day" min="1" placeholder="Tag"/>
+						<input class="text-center wine_amount" type="number" name="wine_delivery_day" min="1" max="31" placeholder="Tag"/>
 						
 						<select name="location_goal">
 							<option selected="disabled" style='display:none;'>Standort</option>

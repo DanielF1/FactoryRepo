@@ -13,8 +13,14 @@ public class Ingredient {
 	private double amount;
 	private String unit;
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
+	 * 
+	 * 
+	 * @param quality
+	 * @param age
+	 * @param amount
+	 * @param unit
 	 */
 	public Ingredient(String quality, int age, double amount, String unit) {
 		this.quality = quality;
@@ -23,14 +29,16 @@ public class Ingredient {
 		this.unit = unit;
 	}
 
-	/* 
-	 * default Konstruktor
+	/**
+	 * default Constructor
 	 */
 	public Ingredient(){}
 
 	
-	/*
-	 * Getter und Setter
+	/**
+	 * Getter and Setter
+	 * 
+	 * @return necessary value
 	 */
 	public String getQuality() {
 		return quality;

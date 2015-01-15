@@ -64,7 +64,7 @@ public class Barrel {
 	}
 	
 	/**
-	 * Getter und Setter
+	 * Getter and Setter
 	 */
 
 	public Long getId() {

@@ -47,7 +47,7 @@ public class BarrelTransport {
 
 	
 	/**
-	 * Getter und Setter
+	 * Getter and Setter
 	 */
 	public List<Location> getStarting_point() {
 		return starting_point;

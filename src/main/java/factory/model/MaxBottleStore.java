@@ -6,8 +6,12 @@ public class MaxBottleStore {
 	double amount;
 	
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
+	 * 
+	 * @param name
+	 * @param quantity
+	 * @param amount
 	 */
 	public MaxBottleStore(String name,int quantity,double amount){
 		this.name = name;
@@ -15,8 +19,8 @@ public class MaxBottleStore {
 		this.amount = amount;
 	}
 	
-	/*
-	 * Getter und Setter
+	/**
+	 * Getter and Setter
 	 */
 	public String getName() {
 		return name;

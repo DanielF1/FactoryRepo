@@ -60,7 +60,7 @@ public class BarrelForTransport {
 	}
 	
 	/**
-	 * Getter und Setter
+	 * Getter and Setter
 	 */
 
 	public Long getId() {

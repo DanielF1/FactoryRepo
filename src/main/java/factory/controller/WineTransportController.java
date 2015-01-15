@@ -1,11 +1,16 @@
 package factory.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import factory.model.Department;
 import factory.model.Location;
 import factory.model.Production;
+import factory.model.ProductionADay;
 import factory.model.ProductionManagement;
 import factory.model.ProductionMonth;
 import factory.model.Still;
@@ -35,10 +41,6 @@ public class WineTransportController {
 
 	WineStock winestock;
 	Production production;
-	ProductionMonth production_month;
-	ProductionManagement production_management;
-	
-	int convert_month = 0;
 	Long seconds = 10L;
 	
 	private final LocationRepository locationRepository;
@@ -57,254 +59,185 @@ public class WineTransportController {
 	}
 	
 
-	/*
-	 * initialize months
+
+	/**
+	 * initialize an array of months and check if there is a leap year
+	 * 
+	 * 
+	 * @param months an array of strings
+	 * @return an array of strings
 	 */
 	private String[][] initializeMonths(String[][] months) 
 	{
-		months[0][0] = "April"; 	months[0][1] = "30";
-		months[1][0] = "Mai";		months[1][1] = "31";
-		months[2][0] = "Juni";		months[2][1] = "30";
-		months[3][0] = "Juli";		months[3][1] = "31";
-		months[4][0] = "August";	months[4][1] = "31";
-		months[5][0] = "September";	months[5][1] = "30";
-		months[6][0] = "Oktober";	months[6][1] = "31";
-		months[7][0] = "November";	months[7][1] = "30";
-		months[8][0] = "Dezember";	months[8][1] = "31";
-		months[9][0] = "Januar";	months[9][1] = "31";
-		months[10][0] = "Februar";	months[10][1] = "28";
-		months[11][0] = "März";		months[11][1] = "31";
+		months[0][0] = "Januar";	months[0][1] = "31";
+		months[1][0] = "Februar";	months[1][1] = "28";
+		months[2][0] = "März";		months[2][1] = "31";
+		months[3][0] = "April"; 	months[3][1] = "30";
+		months[4][0] = "Mai";		months[4][1] = "31";
+		months[5][0] = "Juni";		months[5][1] = "30";
+		months[6][0] = "Juli";		months[6][1] = "31";
+		months[7][0] = "August";	months[7][1] = "31";
+		months[8][0] = "September";	months[8][1] = "30";
+		months[9][0] = "Oktober";	months[9][1] = "31";
+		months[10][0] = "November";	months[10][1] = "30";
+		months[11][0] = "Dezember";	months[11][1] = "31";
+
 
 		
 		/*
 		 * check, if this year is a leap year
 		 */
-		if(LocalDate.now().getMonth().ordinal() > 3)
+	
+		if(LocalDate.now().isLeapYear())
 		{
-			if(LocalDate.now().plusYears(1L).isLeapYear())
-			{
-				months[10][0] = "Februar";	months[10][1] = "29";
-				
-			} else {
-				
-				months[10][0] = "Februar";	months[10][1] = "28";
-			}
+			months[1][0] = "Februar";	months[1][1] = "29";
+			
+		} else {
+			
+			months[1][0] = "Februar";	months[1][1] = "28";
 		}
-		
+
 		return months;	
 	}
 	
-	
-	/*
-	 * get the actually month and convert them to the same month in array list
-	 */
-	private int convertActuallyMonth() 
-	{
-		int actually_month = LocalDate.now().getMonth().getValue();
-		
-		switch (actually_month) {
-		 case 1:  convert_month = 9;
-		          break;
-		 case 2:  convert_month = 10;
-		          break;
-		 case 3:  convert_month = 11;
-		          break;
-		 case 4:  convert_month = 0;
-		          break;
-		 case 5:  convert_month = 1;
-		          break;
-		 case 6:  convert_month = 2;
-		          break;
-		 case 7:  convert_month = 3;
-		          break;
-		 case 8:  convert_month = 4;
-		          break;
-		 case 9:  convert_month = 5;
-		          break;
-		 case 10: convert_month = 6;
-		          break;
-		 case 11: convert_month = 7;
-		          break;
-		 case 12: convert_month = 8;
-		          break;
-		 default: break;
-     }
-		
-		return convert_month;
-	}
-	
-	
+
 	/*
 	 * calculate the amount of wine, 
 	 * that results through the still production
 	 */
-	public void processThroughStills(int convert_month, String[][] months)
+	public void processThroughStills()
 	{
-		/*
-		 * calculate the maximum amount of distillate that
-		 * the actually number of stills can produce every month
-		 */
+		productionManagementRepository.deleteAll();
+		
+		DateTime final_date = new DateTime(2015, 4, 1, 0, 0, 0, 0);
+		DateTime now = new DateTime().now();
+		int left_days = Days.daysBetween(now.toLocalDate(), final_date.toLocalDate()).getDays();
 		double max_still_amount = 0;
-		double max_production_a_month = 0;
-		double max_stock_amount = 0;
-//		ProductionMonth pre_productionMonth = null;
+		
+		List<WineTransport> transport_list = new ArrayList<>();
+		
+		/*
+		 * add all transports to a temporary list
+		 */
+		for(WineTransport wine_transport : wineTransportRepository.findAll()){
+			transport_list.add(wine_transport);
+		}
+		System.out.println("wine_transport " + productionManagementRepository.count());
 		
 		for(Location location : locationRepository.findAll()){
-			for(ProductionManagement production_management : productionManagementRepository.findAll()){
+			for(Department department : location.getDepartments()){	
+				if(department.getName().contains("Produktion")){
+					
+					production = (Production) department;
+					
+					ProductionADay default_day = new ProductionADay(null, null, 0, 0, 0, 0);
+					
+					List<ProductionADay> default_day_list = new ArrayList<ProductionADay>();
+					default_day_list.add(default_day);
+					
+					ProductionManagement production_management = new ProductionManagement(location.getName(), default_day_list);
+					
+					/*
+					 * create production days until first April
+					 */
+					for(int i = 0; i < left_days; i++){
+						LocalDate today = LocalDate.now().plusDays(i);
+						
+						ProductionADay productionADay = new ProductionADay(today, location.getName(), 0, 0, 0, 0);
+						production_management.getProduction_a_day().add(productionADay);
+						
+					}	
+					
+					production_management.getProduction_a_day().remove(0);
+					productionManagementRepository.save(production_management);
+					
+				}		
+			}
+		}
+
+		double wine_amound_at_the_end_of_day = 0;
+		
+		for(ProductionManagement production_management : productionManagementRepository.findAll()){	
+
+			/*
+			 * calculate maximum amount of stills
+			 */
+			for(Location location : locationRepository.findAll()){
 				if(location.getName().equals(production_management.getLocation_name())){
 					for(Department department : location.getDepartments()){	
-						
 						if(department.getName().contains("Produktion")){
 							
 							production = (Production) department;
-							
-							for(Department dep : location.getDepartments()){	
-								if(dep.getName().contains("Weinlager")){
-									winestock = (WineStock) dep;
-									
-									for(int i = convert_month; i < months.length; i++)
-		//							for(int i = 1; i < months.length; i++)
-									{
-										double length_of_month = Double.parseDouble(months[i][1]);
-										ProductionMonth production_month = production_management.getProduction_month().get(i);
-										
-										/*
-										 * calculate maximum amount that all stills can produce
-										 */
-										for(Still still : production.getStills())
-										{
-											max_still_amount += still.getAmount() * 0.8;
-										}
-										
-										max_production_a_month = (length_of_month / 2) * max_still_amount;
-										System.out.println("max_production_a_month " + max_production_a_month);
-		
-		//								if((production_month.getMax_winestock_amount() - max_production_a_month) < 0){
-		//									production_month.setMax_winestock_amount(0);
-		//									max_stock_amount = production_month.getMax_winestock_amount();
-		//								} else {
-		//									if(i < 10){
-		//										ProductionMonth production_month = production_management.getProduction_month().get(i + 1);
-		//										production_month.setMax_winestock_amount(production_month.getMax_winestock_amount()
-		//												+ (production_month.getMax_winestock_amount() - max_production_a_month));
-		//										
-		//										productionMonth.setMax_winestock_amount(productionMonth.getMax_winestock_amount() - max_production_a_month);	
-		//										max_stock_amount = max_production_a_month;
-		//									}
-		//								}
-									
-										production_month.setProcessing_through_stills(max_production_a_month);
-										
-										if((winestock.getAmount() - max_production_a_month) < 0){
-											winestock.setAmount(0);
-										} else {
-											winestock.setAmount(winestock.getAmount() - max_production_a_month);
-										}
-										
-										production_month.setMax_winestock_amount(winestock.getAmount());
-										
-										max_still_amount = 0;
-										max_production_a_month = 0;
-										max_stock_amount = 0;
-									}
-								
-									System.out.println("winestock.getAmount()-- " + winestock.getAmount());
-						
-									
-									productionManagementRepository.save(production_management);
-									departmentrepository.save(winestock);
-								}
+
+							for(Still still : production.getStills()){
+								max_still_amount = max_still_amount + still.getAmount();
 							}
-							
 						}
 					}
 				}
 			}
-		}	
+			
+			for(ProductionADay productionADay : production_management.getProduction_a_day()){
+							
+				double max_production_a_day = (max_still_amount * 0.8) / 2;
+				
+				productionADay.setWine_amount_for_production(productionADay.getWine_amount_for_production()
+						+ wine_amound_at_the_end_of_day);
+	
+				
+				for(WineTransport wine_transport : transport_list){	
+					
+					LocalDate today = productionADay.getDate();
+					LocalDate transport_day_start = wine_transport.getStart_date().toLocalDate();
+					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
+						
+					if((today.equals(transport_day_end)) && (productionADay.getLocation_name().equals(wine_transport.getGoal()))){
+
+							if(wine_transport.getStarting_point().equals("Weinbauer")){
+								productionADay.setWine_delivery_at_that_day(productionADay.getWine_delivery_at_that_day()
+										+ wine_transport.getAmount());
+
+							} else {
+								productionADay.setWine_transport_at_that_day_in(productionADay.getWine_transport_at_that_day_in()
+										+ wine_transport.getAmount());
+							}
+							
+							productionADay.setWine_amount_for_production((productionADay.getWine_amount_for_production() + productionADay.getWine_delivery_at_that_day()
+									+ productionADay.getWine_transport_at_that_day_in()) - productionADay.getWine_transport_at_that_day_out());
+					}
+					
+				}
+				
+				wine_amound_at_the_end_of_day = productionADay.getWine_amount_for_production() - max_production_a_day;
+				
+				if(wine_amound_at_the_end_of_day < 0){
+					wine_amound_at_the_end_of_day = 0;
+				}
+				
+				
+			}
+			
+			max_still_amount = 0;
+			wine_amound_at_the_end_of_day = 0;
+			productionManagementRepository.save(production_management);
+		}
+
 	}
 	
-	
 
-	
-	
-	/*
-	 * mapping wine stock view
+
+	/**
+	 * mapping the wine stock
+	 * 
+	 * 
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @return the modeling template
 	 */
 	@RequestMapping(value = "/winestocks", method = RequestMethod.GET)
 	public String winestocks(Model model)
 	{	
-		/*
-		 * initialize months
-		 */
-		String[][] months = new String[12][2];
-		months = initializeMonths(months);
 
-		
-		/*
-		 * get the actually month and convert them to the same month in array list
-		 */
-		convert_month = convertActuallyMonth();
-       
-
-        /*
-         * fill a temp list of locations with a production
-         */
-        List<Object> temp_location_list = new ArrayList<>();
-        List<Object> test = new ArrayList<>();
-         
-		for(Location loc : locationRepository.findAll()){		
-			for(Department dep : loc.getDepartments()){
-				if(dep.getName().contains("Produktion")){
-					temp_location_list.add(loc);
-				}
-			}
-		}
-
-		for(Object location : temp_location_list){
-			for(ProductionManagement management : productionManagementRepository.findAll()){
-				if(((Location) location).getName().equals(management.getLocation_name())){
-					
-					test.add(location);
-					
-					System.out.println("temp_location_list+ " + temp_location_list);		
-				}
-			}
-		}
-		
-		temp_location_list.removeAll(test);
-
-		
-		if(temp_location_list.size() > 0)
-		{
-			for(Object location : temp_location_list)
-			{					
-				/*
-				 * create and initialize production month
-				 */
-				List<ProductionMonth> initialize_all = new ArrayList<>();
-				for(int i = 0; i < months.length; i++)
-				{
-					production_month = new ProductionMonth(months[i][0], Integer.parseInt(months[i][1]), 0, 0, 0, 0); 
-					initialize_all.add(production_month);
-				}
-				
-				/*
-				 * create and initialize production management
-				 */
-				ProductionManagement production_management = new ProductionManagement(((Location) location).getName(), 
-						((Location) location).getAddress(),	((Location) location).getCity(), ((Location) location).getTelefon(), 
-						((Location) location).getMail(), initialize_all, LocalDate.now().getYear());
-	
-				
-				productionManagementRepository.save(production_management);	
-			}
-			
-			temp_location_list.clear();
-		}	
-	
-		System.out.println("temp_location_list## " + temp_location_list);
-			
-		processThroughStills(convert_month, months);
+		processThroughStills();
 	
 		model.addAttribute("production_management", productionManagementRepository.findAll());
 		
@@ -312,94 +245,109 @@ public class WineTransportController {
 	}
 
 
-	/*
-	 * create wine transport
+
+	/**
+	 * create an wine transport
+	 * 
+	 * 
+	 * @param location_start name of a location where the transport start
+	 * @param location_goal name of a location where the transport have to travel
+	 * @param wine_amount amount of wine that have to be transported
+	 * @return the modeling template
 	 */
 	@RequestMapping(value = "/wineTransport", method = RequestMethod.POST)
 	public String createWineTransport(@RequestParam("location_start") String location_start, 
 									  @RequestParam("location_goal") String location_goal, 
 									  @RequestParam("wine_amount") double wine_amount)
 	{
-		double paresed_wine_amount = wine_amount / 100;
+		double wine_amount_in_hectoliter = wine_amount / 100;
 		
-		if((location_start != location_goal) && ((location_start != "") || (location_goal != "")))
-		{
-			boolean transport_is_okay = false;
+		if(location_start.equals("")){
+			System.out.println("error stage 1");
+		} else if(location_goal.equals("")){
+			System.out.println("error stage 2");
+		} else if(location_start.equals(location_goal)){
+			System.out.println("error stage 3");
+		} else {
 			
+			boolean transport_is_okay = false;
+
 			for(Location location : locationRepository.findAll()){
 				if(location.getName().equals(location_start)){
 					for(Department department : location.getDepartments()){
 						if(department.getName().contains("Weinlager")){
+							
 							winestock = (WineStock) department;
-			
-							convert_month = convertActuallyMonth();
 							
 							for(ProductionManagement productionManagement : productionManagementRepository.findAll()){
 								if(productionManagement.getLocation_name().equals(location.getName())){
-									
-									ProductionMonth production_month = productionManagement.getProduction_month().get(convert_month);
-									
-									if(((winestock.getAmount() * 100) - wine_amount) >= 0)
-									{
-										
-										production_month.setWine_transport_amount(production_month.getWine_transport_amount() - paresed_wine_amount);
-										production_month.setMax_winestock_amount(production_month.getMax_winestock_amount() - paresed_wine_amount);
-										winestock.setAmount(winestock.getAmount() - paresed_wine_amount);
-										
-										transport_is_okay = true;
+									for(ProductionADay productionADay : productionManagement.getProduction_a_day()){
+										if(productionADay.getDate().equals(LocalDate.now())){
+											if((productionADay.getWine_amount_for_production() - wine_amount_in_hectoliter) >= 0){
+												
+												transport_is_okay = true;
 
-										departmentrepository.save(winestock);
-										productionManagementRepository.save(productionManagement);
-										
-										System.out.println("production_month.getMax_winestock_amount()" + production_month.getMax_winestock_amount());
-										
-									} else {
-										System.out.println("nicht genug");
+//												productionADay.setWine_amount_for_production(
+//														productionADay.getWine_amount_for_production() - wine_amount_in_hectoliter);
+												
+												WineTransport wine_transport = new WineTransport(location_start, location_goal, wine_amount_in_hectoliter, 
+														LocalDateTime.now(), LocalDateTime.now().plusSeconds(seconds), true);
+												
+												winestock.setAmount(winestock.getAmount() - wine_amount_in_hectoliter);
+												wineTransportRepository.save(wine_transport);
+												
+											} else {
+												System.out.println("error stage 4");
+											}
+											
+										}
 									}
 									
+									
+//									productionManagementRepository.save(productionManagement);
+									departmentrepository.save(winestock);
 								}
-							}
+							} // /for
+							
 						}
 					}
 				}
-			}
+			} // /for
+
 	
 			if(transport_is_okay){
 				for(Location location : locationRepository.findAll()){
 					if(location.getName().equals(location_goal)){
 						for(Department department : location.getDepartments()){
 							if(department.getName().contains("Weinlager")){
+								
 								winestock = (WineStock) department;
-								
-								convert_month = convertActuallyMonth();
-								
+						
 								for(ProductionManagement productionManagement : productionManagementRepository.findAll()){
 									if(productionManagement.getLocation_name().equals(location.getName())){
-										
-										ProductionMonth production_month = productionManagement.getProduction_month().get(convert_month);
-										
-										production_month.setWine_transport_amount(production_month.getWine_transport_amount() + paresed_wine_amount);
-										production_month.setMax_winestock_amount(production_month.getMax_winestock_amount() + paresed_wine_amount);
-										winestock.setAmount(winestock.getAmount() + paresed_wine_amount);
-										
-										WineTransport winetransport = new WineTransport(location_start, location_goal, 
-												(wine_amount / 100), LocalDateTime.now(), LocalDateTime.now().plusSeconds(seconds), false);
-										
-										transport_is_okay = false;
-										
-										
+										for(ProductionADay productionADay : productionManagement.getProduction_a_day()){
+											if(productionADay.getDate().equals(LocalDate.now())){
+									
+												transport_is_okay = false;
+												
+//												productionADay.setWine_amount_for_production(
+//														productionADay.getWine_amount_for_production() + wine_amount_in_hectoliter);
+												
+												winestock.setAmount(winestock.getAmount() + wine_amount_in_hectoliter);
+												
+											
+											}
+										}
+//										productionManagementRepository.save(productionManagement);
 										departmentrepository.save(winestock);
-										productionManagementRepository.save(productionManagement);
-										wineTransportRepository.save(winetransport);
-										
-										System.out.println("production_month.getMax_winestock_amount()" + production_month.getMax_winestock_amount());
 									}
 								}
+							
 							}
 						}
 					}
 				}
-			}	
+			}
 		}
 		
 		return "redirect:/winestocks";
@@ -407,14 +355,17 @@ public class WineTransportController {
 	}
 	
 	
-	/*
-	 * mapping delivery form
+	/**
+	 * mapping the delivery template
+	 * 
+	 * 
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @return the modeling template
 	 */
 	@RequestMapping(value = "/wine_delivery_form", method = RequestMethod.GET)
 	public String wine_dilivery_form(Model model){
 		
 		List<String> locations = new ArrayList<>();
-		String[] months = {"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"};
 
 		for(Location location : locationRepository.findAll()){
 			for(Department department : location.getDepartments()){
@@ -425,103 +376,114 @@ public class WineTransportController {
 		}
 		
 		model.addAttribute("locations", locations);
-		model.addAttribute("months", months);
 		
 		return "wine_delivery_form";
 	}
 	
 	
-	/*
-	 * start wine delivery
+
+	/**
+	 * start the wine delivery
+	 * 
+	 * 
+	 * @param wine_delivery_amount amount of wine that have to be transported
+	 * @param wine_delivery_year goal date : year
+	 * @param wine_delivery_month goal date : month
+	 * @param wine_delivery_day goal date : day
+	 * @param location_goal name of a location where the transport have to travel
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @return the modeling template
 	 */
 	@RequestMapping(value = "/startWineDelivery", method = RequestMethod.POST)
 	public String wine_dilivery(@RequestParam("wine_delivery_amount") int wine_delivery_amount, 
 								@RequestParam("wine_delivery_year") int wine_delivery_year, 
-								@RequestParam("wine_delivery_month") String wine_delivery_month,
+								@RequestParam("wine_delivery_month") int wine_delivery_month,
 								@RequestParam("wine_delivery_day") int wine_delivery_day, 
 								@RequestParam("location_goal") String location_goal, Model model)
 	{
-		Location found_location = null;
 		String[][] months = new String[12][2];
 		months = initializeMonths(months);
 		
-		for(Location location : locationRepository.findAll()){
-			if(location.getName().equals(location_goal)){
-				for(Department department : location.getDepartments()){
-					if(department.getName().contains("Weinlager")){
-						
-						winestock = (WineStock) department;
-						found_location = location;
-						
-						winestock.setAmount(winestock.getAmount() + wine_delivery_amount);
-						departmentrepository.save(winestock);
-						
-						System.out.println("winestock.getAmount() " + winestock.getAmount());
-					}
-				}
-			}
-		}
+		int max_days_of_month = Integer.parseInt(months[wine_delivery_month][1]);
 		
-		ArrayList<String> temp_list = new ArrayList<String>();
+		if(wine_delivery_day >= max_days_of_month){
+			
+			System.out.println("error");
+			
+		} else {
 		
-		if(productionManagementRepository.count() > 0){
-			for(ProductionManagement productionManagement : productionManagementRepository.findAll()){
-				if(productionManagement.getLocation_name().equals(location_goal)){
-		
-					for(ProductionMonth production_month : productionManagement.getProduction_month()){
-						if(production_month.getName().equals(wine_delivery_month)){
+			for(Location location : locationRepository.findAll()){
+				if(location.getName().equals(location_goal)){
+					for(Department department : location.getDepartments()){
+						if(department.getName().contains("Weinlager")){
 							
-							System.out.println("production_month.getWine_delivery_amount() " + production_month.getWine_delivery_amount());
-							temp_list.add(location_goal);
-							production_month.setWine_delivery_amount(production_month.getWine_delivery_amount() + wine_delivery_amount);
-							production_month.setMax_winestock_amount(production_month.getMax_winestock_amount() + wine_delivery_amount);
+							winestock = (WineStock) department;
+													
+							winestock.setAmount(winestock.getAmount() + wine_delivery_amount);
 							
-							productionManagementRepository.save(productionManagement);
-							System.out.println("production_month.getWine_delivery_amount()+ " + production_month.getWine_delivery_amount());
-						
-							break;
+	
+							LocalDateTime date = LocalDateTime.of(wine_delivery_year, wine_delivery_month, wine_delivery_day, LocalDateTime.now().getHour(), LocalDateTime.now().getMinute());
+							
+							WineTransport winetransport = new WineTransport("Weinbauer", location_goal, wine_delivery_amount, LocalDateTime.now(), date, true);
+							
+							wineTransportRepository.save(winetransport);
+							departmentrepository.save(winestock);
+							
+							System.out.println("winestock.getAmount() " + winestock.getAmount());
 						}
 					}
 				}
 			}
-		}
-		System.out.println("temp_list.size() " + temp_list.size());
-		
-		if(temp_list.size() == 0)
-		{
-			/*
-			 * create and initialize new production months
-			 */
-			List<ProductionMonth> initialize_all = new ArrayList<>();
-			
-			for(int i = 0; i < months.length; i++)
-			{
-				if(months[i][0].equals(wine_delivery_month)){
-					ProductionMonth production_month = new ProductionMonth(months[i][0], Integer.parseInt(months[i][1]), 0, wine_delivery_amount, 0, wine_delivery_amount); 
-					initialize_all.add(production_month);
-				} else {
-					ProductionMonth production_month = new ProductionMonth(months[i][0], Integer.parseInt(months[i][1]), 0, 0, 0, 0); 
-					initialize_all.add(production_month);
-				}
-			}
-			
-			/*
-			 * create and initialize new production management
-			 */			
-			ProductionManagement production_management = new ProductionManagement(found_location.getName(), found_location.getAddress(), found_location.getCity(),
-					found_location.getTelefon(), found_location.getMail(), initialize_all, wine_delivery_year);
-			
-			productionManagementRepository.save(production_management);	
-		}
+		} // /else
 		
 		return "redirect:/wine_delivery_form";
 	}
 	
+	
+	/**
+	 * mapping the wine transport template
+	 * 
+	 * 
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @return the modeling template
+	 */
 	@RequestMapping(value = "/wine_transport", method = RequestMethod.GET)
 	public String wine_transport(Model model)
 	{
-		model.addAttribute("wine_transport", wineTransportRepository.findAll());
+		List<WineTransport> wine_transports = new ArrayList<>();
+		
+		for(WineTransport winetransport : wineTransportRepository.findAll()){
+			if(winetransport.getStarting_point() != "Weinbauer"){
+				wine_transports.add(winetransport);
+			}
+		}
+		
+		model.addAttribute("wine_transport", wine_transports);
 		
 		return "wine_transport";
+	}
+	
+	
+	/**
+	 * mapping the delivery transport template
+	 * 
+	 * 
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @return the modeling template
+	 */
+	@RequestMapping(value = "/delivery_transport", method = RequestMethod.GET)
+	public String delivery_transport(Model model)
+	{
+		List<WineTransport> delivery_transports = new ArrayList<>();
+		
+		for(WineTransport winetransport : wineTransportRepository.findAll()){
+			if(winetransport.getStarting_point().equals("Weinbauer")){
+				delivery_transports.add(winetransport);
+			}
+		}
+		
+		model.addAttribute("delivery_transport", delivery_transports);
+		
+		return "delivery_transport";
 	}
 }

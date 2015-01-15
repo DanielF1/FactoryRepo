@@ -31,8 +31,10 @@ public class BottleStock extends Department{
 		this.bottles = bottles;
 		
 	}
+	
+	
 	/**
-	 * Getter und Setter
+	 * Getter and Setter
 	 */
 	public List<Bottle> getBottles() {
 		return bottles;

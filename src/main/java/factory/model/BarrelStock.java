@@ -36,7 +36,7 @@ public class BarrelStock extends Department {
 	}
 
 	/**
-	 * Getter und Setter
+	 * Getter and Setter
 	 */
 	public List<Barrel> getBarrels() {
 		return barrels;

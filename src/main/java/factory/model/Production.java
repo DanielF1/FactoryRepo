@@ -34,8 +34,8 @@ public class Production extends Department {
 		this.stills = stills;
 	}
 
-	/*
-	 * Getter und Setter
+	/**
+	 * Getter and Setter
 	 */
 	public double getCapacity() {
 		return capacity;

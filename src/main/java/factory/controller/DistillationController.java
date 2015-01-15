@@ -36,6 +36,9 @@ public class DistillationController {
 	private Production production;
 	private final DepartmentRepository departmentrepository;
 	private final LocationRepository locationRepository;
+	
+	Long seconds = 10L;
+	
 	@Autowired 
 	public DistillationController(DepartmentRepository departmentrepository, LocationRepository locationRepository)
 	{
@@ -43,9 +46,15 @@ public class DistillationController {
 		this.departmentrepository = departmentrepository;
 		this.locationRepository = locationRepository;
 	}
+
 	
-	/*
-	 * reserve barrels
+	/**
+	 * reserve barrels for stills
+	 * 
+	 * 
+	 * @param stillAmount amount of a still in hectoliter
+	 * @param userAccount return the logged user account (salespoint)
+	 * @param index index of a still in array
 	 */
 	public void reserveBarrels(double stillAmount, @LoggedIn Optional<UserAccount> userAccount, int index)
 	{
@@ -90,8 +99,12 @@ public class DistillationController {
 	}
 	
 	
-	/*
-	 * check the status of stills
+	/**
+	 * check the status of still processing
+	 * 
+	 * 
+	 * @param still Class Still
+	 * @return still with new set status
 	 */
 	public Still stillCaseProcess(Still still)
 	{
@@ -119,7 +132,7 @@ public class DistillationController {
 		 */
 		
 		if((LocalDateTime.now().isAfter(still_process_start_time))
-				&& (LocalDateTime.now().isBefore(still_process_end_time.minusDays(1L))))
+				&& (LocalDateTime.now().isBefore(still_process_end_time.minusSeconds(seconds))))
 		{
 			still.setStatus_one(1);
 			still.setStatus_two(0);
@@ -130,7 +143,7 @@ public class DistillationController {
 		 *		(local time > start time + one day) && (local time < end time)
 		 * =======================================================================
 		 */
-		if((LocalDateTime.now().isAfter(still_process_start_time.plusDays(1L)))
+		if((LocalDateTime.now().isAfter(still_process_start_time.plusSeconds(seconds)))
 				&& (LocalDateTime.now().isBefore(still_process_end_time)))
 		{
 			still.setStatus_one(2);
@@ -142,7 +155,7 @@ public class DistillationController {
 		 *		(local time > start time + one day) && (local time > end time)
 		 * =======================================================================
 		 */
-		if((LocalDateTime.now().isAfter(still_process_start_time.plusDays(1L)))
+		if((LocalDateTime.now().isAfter(still_process_start_time.plusSeconds(seconds)))
 				&& (LocalDateTime.now().isAfter(still_process_end_time)))
 		{
 			still.setStatus_one(2);
@@ -152,6 +165,13 @@ public class DistillationController {
 		return still;
 	}
 
+	
+	/**
+	 * call the processing status of all stills
+	 * 
+	 * 
+	 * @param userAccount return the logged user account (salespoint)
+	 */
 	public void checkStillStatus(@LoggedIn Optional<UserAccount> userAccount) 
 	{
 		for(Location loc : locationRepository.findAll()){
@@ -176,8 +196,13 @@ public class DistillationController {
 	}
 	
 	
-	/*
-	 * mapping all stills of currently location
+	/**
+	 * mapping all stills of location where the user is logged in
+	 * 
+	 * 
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/distillation", method = RequestMethod.GET)
 	public String still(Model model, @LoggedIn Optional<UserAccount> userAccount) 
@@ -203,13 +228,18 @@ public class DistillationController {
 		return "distillation";
 	}
 
-	
-	/*
-	 * check barrels
+
+	/**
+	 * check, if there are enough empty barrels for my still
+	 * 
+	 * 
+	 * @param stillAmount the amount of a still
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return remainder (still amount - amount of free barrels)
 	 */
-	public double checkBarrels(double d, @LoggedIn Optional<UserAccount> userAccount)
+	public double checkBarrels(double stillAmount, @LoggedIn Optional<UserAccount> userAccount)
 	{
-		double still_amount = d;
+		double still_amount = stillAmount;
 		double max_barrel_amount = 0;
 		double remainder = 0;
 		
@@ -241,8 +271,16 @@ public class DistillationController {
 	}
 	
 	
-	/*
-	 * check still
+	/**
+	 * check status of still
+	 * check if there is enough wine in stock
+	 * call reserve barrels function
+	 * 
+	 * 
+	 * @param still class Still
+	 * @param userAccount return the logged user account (salespoint)
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param index index of a still in array
 	 */
 	public void checkStill(Still still, @LoggedIn Optional<UserAccount> userAccount, Model model, int index)
 	{
@@ -291,7 +329,7 @@ public class DistillationController {
 									still.setStatus_one(1);
 									still.setStatus_two(0);
 									still.setStill_process_start_time(LocalDateTime.now());
-									still.setStill_process_end_time(LocalDateTime.now().plusDays(2));
+									still.setStill_process_end_time(LocalDateTime.now().plusSeconds(2 * seconds));
 									
 									departmentrepository.save(production);
 									departmentrepository.save(winestock);
@@ -308,8 +346,14 @@ public class DistillationController {
 	}
 	
 	
-	/*
-	 * distillation
+	/**
+	 * start the checks of different cases that have to proof for still to continue process
+	 * 
+	 * 
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param index index of a still in array
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/distillation/{index}", method = RequestMethod.POST)
 	public String distillation(Model model, @PathVariable(value="index") int index, @LoggedIn Optional<UserAccount> userAccount) 
@@ -334,9 +378,18 @@ public class DistillationController {
 		return "distillation";
 	}
 	
-	
-	/*
-	 * fill
+
+	/**
+	 * check still and if still is ready than fill up distillate
+	 * 
+	 * 
+	 * @param quality quality of distillate
+	 * @param one status one of still
+	 * @param two status two of still
+	 * @param index index of a still in array
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/distillation/f{index}")
 	public String distillationFill( @RequestParam("quality") String quality,
@@ -459,8 +512,13 @@ public class DistillationController {
 	}
 	
 	
-	/*
-	 * add new still
+	/**
+	 * add a new still
+	 * 
+	 * 
+	 * @param new_still_amount amount of the new still
+	 * @param userAccount return the logged user account (salespoint)
+	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/addNewStill", method = RequestMethod.POST)
 	public String addNewStill( @RequestParam("new_still_amount") int new_still_amount,	@LoggedIn Optional<UserAccount> userAccount)
@@ -486,9 +544,15 @@ public class DistillationController {
 		return "redirect:/distillation";
 	}
 	
-	
-	/*
+
+	/**
 	 * delete still
+	 * 
+	 * 
+	 * @param index index of a still in array
+	 * @param userAccount return the logged user account (salespoint)
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
+	 * @return the modeling template
 	 */
 	@RequestMapping(value = "/deleteStill/{index}", method = RequestMethod.GET)
 	public String deleteStill(@PathVariable(value="index") int index, @LoggedIn Optional<UserAccount> userAccount, Model model) 

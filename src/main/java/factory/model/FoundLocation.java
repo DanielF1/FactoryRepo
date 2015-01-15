@@ -23,7 +23,7 @@ public class FoundLocation {
 	public FoundLocation(){}
 	
 	/**
-	 * Getter und Setter
+	 * Getter and Setter
 	 */
 	public String getLocation() {
 		return location;

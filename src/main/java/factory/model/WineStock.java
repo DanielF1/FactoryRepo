@@ -26,7 +26,7 @@ public class WineStock extends Department {
 	}
 
 	/**
-	 * Getter und Setter
+	 * Getter and Setter
 	 */
 	public double getAmount() {
 		return amount;
