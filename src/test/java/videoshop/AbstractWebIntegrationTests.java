@@ -27,9 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import factory.CognacFactory;
 
-/**
- * @author Oliver Gierke
- */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = CognacFactory.class)

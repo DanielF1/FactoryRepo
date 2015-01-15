@@ -7,11 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import factory.CognacFactory;
 
-/**
- * Base class for integration tests bootstrapping the core {@link VideoShop} configuration class.
- * 
- * @author Oliver Gierke
- */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CognacFactory.class)
 public class AbstractIntegrationTests {
