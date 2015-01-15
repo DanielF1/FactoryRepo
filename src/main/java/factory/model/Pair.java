@@ -4,8 +4,11 @@ public class Pair {
 	private Integer platz;
 	private Integer regal;
 	
-	/*
-	 * Konstruktor
+	/**
+	 * Constructor
+	 * 
+	 * @param regal Regal des Paars
+	 * @param platz Platz des Paars
 	 */
 	public Pair(Integer regal, Integer platz){
 		this.platz = platz;
@@ -13,21 +16,34 @@ public class Pair {
 	}
 
 
-	/*
-	 * Getter und Setter
+	/**
+	 * getter
+	 * @return platz
 	 */
 	public Integer getPlatz() {
 		return platz;
 	}
 
+	/**
+	 * setter
+	 * @param platz
+	 */
 	public void setPlatz(Integer platz) {
 		this.platz = platz;
 	}
 
+	/**
+	 * getter
+	 * @return regal
+	 */
 	public Integer getRegal() {
 		return regal;
 	}
 
+	/** 
+	 * setter
+	 * @param regal
+	 */
 	public void setRegal(Integer regal) {
 		this.regal = regal;
 	}

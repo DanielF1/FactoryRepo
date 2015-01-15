@@ -26,7 +26,6 @@ import factory.model.Location;
 import factory.model.Production;
 import factory.model.ProductionADay;
 import factory.model.ProductionManagement;
-import factory.model.ProductionMonth;
 import factory.model.Still;
 import factory.model.WineStock;
 import factory.model.WineTransport;

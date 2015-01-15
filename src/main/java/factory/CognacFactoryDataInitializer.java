@@ -34,7 +34,6 @@ import factory.model.Income;
 import factory.model.Ingredient;
 import factory.model.Location;
 import factory.model.Production;
-import factory.model.ProductionMonth;
 import factory.model.Recipe;
 import factory.model.Sale;
 import factory.model.Still;
@@ -45,7 +44,6 @@ import factory.repository.DepartmentRepository;
 import factory.repository.EmployeeRepository;
 import factory.repository.IncomeRepository;
 import factory.repository.LocationRepository;
-import factory.repository.ProductionManagementRepository;
 
 @Component
 public class CognacFactoryDataInitializer implements DataInitializer {
@@ -375,7 +373,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		
 		adminTasksManager.EmployeeExpenditures();
 		
-		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 1, 12), 526.90, "Produktkauf"));
+		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 1, 12), 4526.90, "Produktkauf"));
 		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 1, 24), 726.00, "Produktkauf"));
 		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 2, 4), 1326.90, "Produktkauf"));
 		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2014, 3, 4), 4226.50, "Produktkauf"));
@@ -383,15 +381,15 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 5, 21), 3526.90, "Produktkauf"));
 		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 5, 25), 726.00, "Produktkauf"));
 		incomeRepository.save(new Income("Hans Klausen", LocalDate.of(2014, 6, 11), 1526.90, "Produktkauf"));
-		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 6, 2), 726.00, "Produktkauf"));
+		incomeRepository.save(new Income("Dieter Petersen", LocalDate.of(2014, 6, 2), 926.00, "Produktkauf"));
 		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 7, 2), 2326.90, "Produktkauf"));
 		incomeRepository.save(new Income("Klaus Klausen", LocalDate.of(2014, 7, 23), 326.90, "Produktkauf"));
 		incomeRepository.save(new Income("Marianne Müller", LocalDate.of(2014, 8, 4), 5226.50, "Produktkauf"));
 		incomeRepository.save(new Income("Peter Peterson", LocalDate.of(2014, 9, 6), 3426.00, "Produktkauf"));
 		incomeRepository.save(new Income("Günther Herson", LocalDate.of(2014, 10, 6), 1326.00, "Produktkauf"));
 		incomeRepository.save(new Income("Klaudia Gant", LocalDate.of(2014, 11, 7), 3626.00, "Produktkauf"));
-		incomeRepository.save(new Income("Harry Potter", LocalDate.of(2014, 12, 9), 1226.00, "Produktkauf"));
-		incomeRepository.save(new Income("Frodo Beutlin", LocalDate.of(2015, 1, 10), 426.50, "Produktkauf"));
+		incomeRepository.save(new Income("Harry Potter", LocalDate.of(2014, 12, 9), 6226.00, "Produktkauf"));
+		incomeRepository.save(new Income("Frodo Beutlin", LocalDate.of(2015, 1, 10), 1426.50, "Produktkauf"));
 	}
 	
 	/*

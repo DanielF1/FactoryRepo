@@ -33,8 +33,16 @@ public class BarrelTransport {
 	@Deprecated
 	public BarrelTransport(){}
 	
+
+
 	/**
 	 * Constructor
+	 * 
+	 * @param starting_point Startpunkt des Barrelstransports
+	 * @param goal Ziel des Barrelstransports
+	 * @param barrels Fass des Barrelstransports
+	 * @param start_date Startdatum des Barrelstransports
+	 * @param goal_date Zielpunkt des Barrelstransports
 	 */
 	public BarrelTransport(List<Location> starting_point, List<Location> goal,
 			List<BarrelForTransport> barrels, LocalDateTime start_date, LocalDateTime goal_date) {
@@ -45,62 +53,114 @@ public class BarrelTransport {
 		this.goal_date = goal_date;
 	}
 
-	
 	/**
-	 * Getter and Setter
+	 * getter
+	 * @return starting_point
 	 */
 	public List<Location> getStarting_point() {
 		return starting_point;
 	}
-
+	
+	/**
+	 * getter
+	 * @return start_date
+	 */
 	public LocalDateTime getStart_date() {
 		return start_date;
 	}
-
+	
+	/**
+	 * setter
+	 * @param start_date
+	 */
 	public void setStart_date(LocalDateTime start_date) {
 		this.start_date = start_date;
 	}
-
+	
+	/**
+	 * getter
+	 * @return goal_date
+	 */
 	public LocalDateTime getGoal_date() {
 		return goal_date;
 	}
-
+	
+	/**
+	 * setter
+	 * @param goal_date
+	 */
 	public void setGoal_date(LocalDateTime goal_date) {
 		this.goal_date = goal_date;
 	}
 
+	/**
+	 * setter
+	 * @param starting_point
+	 */
 	public void setStarting_point(List<Location> starting_point) {
 		this.starting_point = starting_point;
 	}
-
+	
+	/**
+	 * getter
+	 * @return goal
+	 */
 	public List<Location> getGoal() {
 		return goal;
 	}
 
+	/**
+	 * setter
+	 * @param goal
+	 */
 	public void setGoal(List<Location> goal) {
 		this.goal = goal;
 	}
-
+	
+	/**
+	 * getter
+	 * @return barrels
+	 */
 	public List<BarrelForTransport> getBarrels() {
 		return barrels;
 	}
-
+	
+	/**
+	 * setter
+	 * @param barrels
+	 */
 	public void setBarrels(List<BarrelForTransport> barrels) {
 		this.barrels = barrels;
 	}
-
+	
+	/**
+	 * getter
+	 * @return arrived
+	 */
 	public boolean getArrived() {
 		return arrived;
 	}
 
+	/**
+	 * setter
+	 * @param arrived
+	 */
 	public void setArrived(boolean arrived) {
 		this.arrived = arrived;
 	}
 
+	/**
+	 * getter
+	 * @return id
+	 */
 	public Long getId() {
 		return id;
 	}
-
+	
+	/**
+	 * setter
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}

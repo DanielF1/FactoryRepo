@@ -3,9 +3,11 @@ package factory.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -254,6 +256,16 @@ public class AdminTasksManager {
 		customer.setAddress(address);
 		customerRepository.save(customer);
 	}
+	
+	public void deleteCustomer(Long id){
+		Customer customer = customerRepository.findOne(id);
+		String username = customer.getUsername();
+		Optional<UserAccount> account = userAccountManager.findByUsername(username);
+		UserAccount acc = account.get();
+		UserAccountIdentifier identifier = acc.getIdentifier();
+		userAccountManager.disable(identifier);
+		customerRepository.delete(customer);
+	}
 		
 	/**
 	 * Fügt einem Standort eine neue Abteilung hinzu, wenn diese nicht schon vorhanden ist
@@ -348,18 +360,18 @@ public class AdminTasksManager {
 			
 		}
 		expenditureRepository.save(new Expenditure(LocalDate.of(2015, 1, 1), totalSalary, "Gehalt"));
-		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 1, 5), 240, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 1, 5), 3240, "Fassherstellung"));
 		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 2, 11), 100, "Fassherstellung"));
 		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 3, 18), 1800, "Weinlieferung"));
 		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 4, 10), 180, "Fassherstellung"));
 		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 5, 3), 2600, "Weinlieferung"));
-		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 6, 7), 80, "Fassherstellung"));
-		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 7, 20), 1300, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 6, 7), 480, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 7, 20), 1800, "Fassherstellung"));
 		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 8, 16), 1200, "Weinlieferung"));
 		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 9, 11), 40, "Fassherstellung"));
-		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 10, 1), 4400, "Weinlieferung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 10, 1), 2400, "Weinlieferung"));
 		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 11, 18), 260, "Fassherstellung"));
-		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 12, 28), 100, "Fassherstellung"));
+		expenditureRepository.save(new Expenditure(LocalDate.of(2014, 12, 28), 800, "Fassherstellung"));
 	
 	}
 	

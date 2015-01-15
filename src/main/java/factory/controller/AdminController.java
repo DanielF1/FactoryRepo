@@ -93,15 +93,18 @@ class AdminController {
 	    								@RequestParam ("address") String address,
 	    								@RequestParam ("city") String city,
 	    								@RequestParam ("telefon") String telefon,
-	    								@RequestParam ("mail") String mail) {
+	    								@RequestParam ("mail") String mail,
+	    								Model model) {
 	    	
 	    	if (bindingResult.hasErrors()) {
 	            return "addLocation";
 	        }
+	    	model.addAttribute("error_green", "Standort hinzugefügt");
+	    	model.addAttribute("locations", locationRepository.findAll());
 	    	
 	    	adminTasksManager.addLocation(name, address, city, telefon, mail);
 	    		    	
-	    	return "redirect:/adminLocList";
+	    	return "adminLocList";
 	    }
 	    
 	    /**
@@ -141,14 +144,18 @@ class AdminController {
 									@RequestParam("city") String city,
 									@RequestParam("telefon")String telefon,
 									@RequestParam("mail") String mail,
-									@RequestParam("id") Long id){
+									@RequestParam("id") Long id,
+									Model model){
 			
 			if (bindingResult.hasErrors()) {
 	            return "editLocation";
 	        }
 			adminTasksManager.editLocation(name, address, city, telefon, mail, id);
 			
-			return "redirect:/adminLocList";
+			model.addAttribute("error_green", "Standortdaten gespeichert");
+	    	model.addAttribute("locations", locationRepository.findAll());
+			
+			return "adminLocList";
 		}
 
 		/**
@@ -163,7 +170,10 @@ class AdminController {
 			
 			adminTasksManager.deleteLocation(id);
 			
-			return "redirect:/adminLocList";
+			model.addAttribute("error_green", "Standort gelöscht");
+	    	model.addAttribute("locations", locationRepository.findAll());
+			
+			return "adminLocList";
 		}
 		
 		
@@ -223,15 +233,17 @@ class AdminController {
 									@RequestParam("firstname") String firstname,
 									@RequestParam("salary") String salary,
 									@RequestParam("mail") String mail,
-									@RequestParam("address") String address
-									){
+									@RequestParam("address") String address,
+									Model model){
 			
 			if (bindingResult.hasErrors()) {
 	            return "editEmployee";
 	        }
 			adminTasksManager.editEmployee(username, familyname, firstname, salary, mail, address);
+			model.addAttribute("error_green", "Mitarbeiterdaten gespeichert");
+			model.addAttribute("employees", employeeRepository.findAll());
 			
-			return "redirect:/employeeList";
+			return "employeeList";
 			}
 		 
 		/**
@@ -285,9 +297,11 @@ class AdminController {
 			if (bindingResult.hasErrors()) {
 	            return "addEmployee";
 	        }
-			adminTasksManager.addEmployee(username, password, location, workplace, familyname, firstname, salary, mail, address);
-			
-	    	return "redirect:/employeeList";
+			model.addAttribute("error_green", "Mitarbeiter hinzugefügt");
+			model.addAttribute("employees", employeeRepository.findAll());
+	        adminTasksManager.addEmployee(username, password, location, workplace, familyname, firstname, salary, mail, address);
+	        
+	    	return "employeeList";
 	    }
 	
 		/**
@@ -332,7 +346,7 @@ class AdminController {
 		public String employeeList(ModelMap modelMap){
 	    	
 	    	modelMap.addAttribute("employees", employeeRepository.findAll());
-	    	
+
 			return "employeeList";
 		}
   
@@ -343,11 +357,13 @@ class AdminController {
 	     * @return Umleitung auf Employeeübersicht
 	     */
 	    @RequestMapping(value = "/dismissEmployee/{id}", method = RequestMethod.GET)
-		public String dismissEmployee(@PathVariable Long id){
+		public String dismissEmployee(@PathVariable Long id, Model model){
 	    	
 	    	adminTasksManager.dismissEmployee(id);
+	    	model.addAttribute("error_green", "Mitarbeiter gelöscht");
+			model.addAttribute("employees", employeeRepository.findAll());
 	    	
-			return "redirect:/employeeList";
+			return "employeeList";
 		}
 	    
 	    /**
@@ -389,6 +405,20 @@ class AdminController {
 	    	double dec14ex = adminTasksManager.summUpExpenditureForMonth(12, 2014);
 	    	double jan15ex = adminTasksManager.summUpExpenditureForMonth(1, 2015);
 	    	
+	    	double diffja14 = (jan14in + jan14ex) / 2;
+	    	double difffe14 = (feb14in + feb14ex) / 2;
+	    	double diffma14 = (mar14in + mar14ex) / 2;
+	    	double diffap14 = (apr14in + apr14ex) / 2;
+	    	double diffmy14 = (may14in + may14ex) / 2;
+	    	double diffjn14 = (jun14in + jun14ex) / 2;
+	    	double diffjl14 = (jul14in + jul14ex) / 2;
+	    	double diffau14 = (aug14in + aug14ex) / 2;
+	    	double diffse14 = (sep14in + sep14ex) / 2;
+	    	double diffoc14 = (oct14in + oct14ex) / 2;
+	    	double diffno14 = (nov14in + nov14ex) / 2;
+	    	double diffde14 = (dec14in + dec14ex) / 2;
+	    	double diffja15 = (jan15in + jan15ex) / 2;
+	    	
 	    	modelMap.addAttribute("incjan14", jan14in);
 	    	modelMap.addAttribute("incfeb14", feb14in);
 	    	modelMap.addAttribute("incmar14", mar14in);
@@ -416,6 +446,20 @@ class AdminController {
 	    	modelMap.addAttribute("expnov14", nov14ex);
 	    	modelMap.addAttribute("expdec14", dec14ex);
 	    	modelMap.addAttribute("expjan15", jan15ex);
+	    	
+	    	modelMap.addAttribute("dja14", diffja14);
+	    	modelMap.addAttribute("dfe14", difffe14);
+	    	modelMap.addAttribute("dma14", diffma14);
+	    	modelMap.addAttribute("dap14", diffap14);
+	    	modelMap.addAttribute("dmy14", diffmy14);
+	    	modelMap.addAttribute("djn14", diffjn14);
+	    	modelMap.addAttribute("djl14", diffjl14);
+	    	modelMap.addAttribute("dau14", diffau14);
+	    	modelMap.addAttribute("dse14", diffse14);
+	    	modelMap.addAttribute("doc14", diffoc14);
+	    	modelMap.addAttribute("dno14", diffno14);
+	    	modelMap.addAttribute("dde14", diffde14);
+	    	modelMap.addAttribute("dja15", diffja15);
 	    	
 	    	String jan14 = "Januar 14";
 	    	modelMap.addAttribute("jan14", jan14);

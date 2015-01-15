@@ -16,11 +16,10 @@ public class Ingredient {
 	/**
 	 * Constructor
 	 * 
-	 * 
-	 * @param quality
-	 * @param age
-	 * @param amount
-	 * @param unit
+	 * @param quality Qualität der Zutaten
+	 * @param age Alter der Zutaten
+	 * @param amount Menge der Zutaten
+	 * @param unit Anzahl der Zutaten
 	 */
 	public Ingredient(String quality, int age, double amount, String unit) {
 		this.quality = quality;
@@ -36,38 +35,65 @@ public class Ingredient {
 
 	
 	/**
-	 * Getter and Setter
-	 * 
-	 * @return necessary value
+	 * getter
+	 * @return quality
 	 */
 	public String getQuality() {
 		return quality;
 	}
 
+	/**
+	 * setter
+	 * @param quality
+	 */
 	public void setQuality(String quality) {
 		this.quality = quality;
 	}
 
+	/**
+	 * getter
+	 * @return age
+	 */
 	public int getAge() {
 		return age;
 	}
 
+	/**
+	 * setter
+	 * @param age
+	 */
 	public void setAge(int age) {
 		this.age = age;
 	}
 
+	/**
+	 * getter
+	 * @return amount
+	 */
 	public double getAmount() {
 		return amount;
 	}
 
+	/**
+	 * setter
+	 * @param amount
+	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
+	/**
+	 * getter
+	 * @return unit
+	 */
 	public String getUnit() {
 		return unit;
 	}
 
+	/**
+	 * setter
+	 * @param unit
+	 */
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}

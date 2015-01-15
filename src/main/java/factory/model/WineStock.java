@@ -17,7 +17,10 @@ public class WineStock extends Department {
 	public WineStock() {}
 	
 	/**
-	 * Constructor
+	 *  Constructor
+	 * 
+	 * @param name Name des Weinlagers 
+	 * @param amount Menge des Weinlagers
 	 */
 	public WineStock(String name, double amount) 
 	{
@@ -26,12 +29,17 @@ public class WineStock extends Department {
 	}
 
 	/**
-	 * Getter and Setter
-	 */
+	 * getter 
+	 * @return  amount
+	 */ 
 	public double getAmount() {
 		return amount;
 	}
 
+	/**
+	 * setter
+	 * @param amount
+	 */
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}

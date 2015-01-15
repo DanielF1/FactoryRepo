@@ -50,7 +50,13 @@
 
 	<!-- Container -->
 	<div class="main-container content">
-		<div class="col-lg-12" th:unless="${cart.empty}">
+		
+		<div class="col-lg-12">
+			<p class="btn-danger text-center" th:text="${error}"></p>
+			<p class="btn-success text-center" th:text="${error_green}"></p>
+		</div>
+		
+		<div class="col-lg-12" th:unless="${cart.empty}">	
 			<table class="table table-condensed">
 				<tr class="success_table">
 					<th class="text-center">Name</th>
@@ -129,6 +135,58 @@
 			<p align="center" th:if="${cart.empty}" th:text="#{cart.empty}">Leer</p>
 		</div>
 	</div>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	           
+	    /*
+	     * reload page after 5 seconds
+	     */
+		var url = "http://localhost:8080/cart.html";
+		var delay = "2000";
+		var show = "1000";
+		
+		window.onload = function ()
+		{
+			if(window.location.href != url)
+			{
+				DoTheRedirect();
+			}   
+		}
+		
+		function DoTheRedirect()
+		{
+		    setTimeout(GoToURL, delay);
+		}
+		
+		function DoTheShow(id)
+		{
+			var status = "false";
+			if((document.getElementById("one").value) == status){
+			setTimeout(function() {Show(id);}, show);}
+		}
+		
+		function GoToURL()
+		{
+		    // IE8 and lower fix
+		    if (navigator.userAgent.match(/MSIE\s(?!9.0)/))
+		    {
+		        var referLink = document.createElement("a");
+		        referLink.href = url;
+		        document.body.appendChild(referLink);
+		        referLink.click();
+		    }
+		
+		    // All other browsers
+		    else { window.location.replace(url); }
+		}
+		
+		function Show(id)
+		{
+			document.getElementById('abcdef' + id).style.display='block';
+		}
+
+	/*]]>*/
+	</script>
 </div>
 </body>
 </html>

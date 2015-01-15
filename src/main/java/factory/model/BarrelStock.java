@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
  * BarrelStock ist ein Department, in dem die leeren als auch die vollen Fässer gelagert werden,
  * die während der Produktion benötigt werden
  */
+
 @Entity
 @Component
 public class BarrelStock extends Department {
@@ -25,9 +26,13 @@ public class BarrelStock extends Department {
 	 */
 	@Deprecated
 	public BarrelStock(){}
+
 	
 	/**
 	 * Constructor
+	 * 
+	 * @param name Name des Fasslagers
+	 * @param mapBarrels Liste des Fasslagers
 	 */
 	public BarrelStock(String name, List<Barrel> mapBarrels){
 		
@@ -35,13 +40,19 @@ public class BarrelStock extends Department {
 		this.barrels = mapBarrels;
 	}
 
+
 	/**
-	 * Getter and Setter
+	 * Getter
+	 * @return barrels
 	 */
 	public List<Barrel> getBarrels() {
 		return barrels;
 	}
 
+	/**
+	 *setter
+	 * @param barrels
+	 */
 	public void setBarrels(List<Barrel> barrels) {
 		this.barrels = barrels;
 	}

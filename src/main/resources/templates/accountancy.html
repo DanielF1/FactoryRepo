@@ -21,21 +21,14 @@
 		
 		
 		
-	<script type="text/javascript"
-    	src="https://www.google.com/jsapi?autoload={
-			'modules':[{
-              'name':'visualization',
-              'version':'1',
-              'packages':['corechart']
-            }]}"></script>
-
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.setOnLoadCallback(drawChart);
+    google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawVisualization);
 
-      
-      function drawChart() {
-    	
-    	var i1 = document.getElementById("incjan14").innerHTML;
+	function drawVisualization() {
+  	
+  		var i1 = document.getElementById("incjan14").innerHTML;
     	var ij14 = parseInt(i1 | 0);
     	var e1 = document.getElementById("expjan14").innerHTML;
     	var ej14 = parseInt(e1 | 0);
@@ -51,9 +44,9 @@
     	var em14 = parseInt(e3 | 0);
     	
     	var i4 = document.getElementById("incapr14").innerHTML;
-    	var ia14 = parseInt(i4 | 0);
+    	var iap14 = parseInt(i4 | 0);
     	var e4 = document.getElementById("expapr14").innerHTML;
-    	var ea14 = parseInt(e4 | 0);
+    	var eap14 = parseInt(e4 | 0);
     	
     	var i5 = document.getElementById("incmay14").innerHTML;
     	var imy14 = parseInt(i5 | 0);
@@ -71,9 +64,9 @@
     	var ejl14 = parseInt(e7 | 0);
     	
     	var i8 = document.getElementById("incaug14").innerHTML;
-    	var ia14 = parseInt(i8 | 0);
+    	var iau14 = parseInt(i8 | 0);
     	var e8 = document.getElementById("expaug14").innerHTML;
-    	var ia14 = parseInt(e8 | 0);
+    	var eau14 = parseInt(e8 | 0);
     	
     	var i9 = document.getElementById("incsep14").innerHTML;
     	var is14 = parseInt(i9 | 0);
@@ -98,38 +91,63 @@
     	var i13 = document.getElementById("incjan15").innerHTML;
     	var ij15 = parseInt(i13 | 0);
     	var e13 = document.getElementById("expjan15").innerHTML;
-    	var ej15 = parseInt(e13 | 0);
-    	  
+    	var ej15 = parseInt(e13 | 0);	
+  
+    	var d1 = document.getElementById("dja14").innerHTML;
+    	var dj14 = parseInt(d1 | 0);
+    	var d2 = document.getElementById("dfe14").innerHTML;
+    	var df14 = parseInt(d2 | 0);
+    	var d3 = document.getElementById("dma14").innerHTML;
+    	var dm14 = parseInt(d3 | 0);
+    	var d4 = document.getElementById("dap14").innerHTML;
+    	var dap14 = parseInt(d4 | 0);
+    	var d5 = document.getElementById("dmy14").innerHTML;
+    	var dmy14 = parseInt(d5 | 0);
+    	var d6 = document.getElementById("djn14").innerHTML;
+    	var djn14 = parseInt(d6 | 0);
+    	var d7 = document.getElementById("djl14").innerHTML;
+    	var djl14 = parseInt(d7 | 0);
+    	var d8 = document.getElementById("dau14").innerHTML;
+    	var dau14 = parseInt(d8 | 0);
+    	var d9 = document.getElementById("dse14").innerHTML;
+    	var ds14 = parseInt(d9 | 0);
+    	var d10 = document.getElementById("doc14").innerHTML;
+    	var do14 = parseInt(d10 | 0);
+    	var d11 = document.getElementById("dno14").innerHTML;
+    	var dn14 = parseInt(d11 | 0);
+    	var d12 = document.getElementById("dde14").innerHTML;
+    	var dd14 = parseInt(d12 | 0);
+    	var d13 = document.getElementById("dja15").innerHTML;
+    	var dj15 = parseInt(d13 | 0);
     	
-    	
-    	
-        var data = google.visualization.arrayToDataTable([
-          ['Month', 'Einnahmen', 'Ausgaben'],
-          ['Jan 2014',  	ij14,	ej14],
-          ['Feb 2014',  	if14,	ef14],
-          ['März 2014',	im14,	em14],
-          ['Apr 2014',	ia14,	ea14],
-          ['Mai 2014',	imy14,	emy14],
-          ['Jun 2014',	ijn14,	ejn14],
-          ['Jul 2014',	ijl14,	ejl14],
-          ['Aug 2014',	ia14,	ea14],
-          ['Sep 2014',	is14,	es14],
-          ['Okt 2014',	io14,	eo14],
-          ['Nov 2014',	in14,	en14],
-          ['Dez 2014',	id14,	ed14],
-          ['Jan 2015',	ij15,	ej15]
-        ]);
+  var data = google.visualization.arrayToDataTable([
+    ['Month', 'Einnahmen', 'Ausgaben', 'Durchschnitt'],
+    ['Jan 2014',  ij14,	ej14, dj14],
+    ['Feb 2014',  if14,	ef14, df14],
+    ['März 2014',	im14,	em14, dm14],
+    ['Apr 2014',	iap14,	eap14, dap14],
+    ['Mai 2014',	imy14,	emy14, dmy14],
+    ['Jun 2014',	ijn14,	ejn14, djn14],
+    ['Jul 2014',	ijl14,	ejl14, djl14],
+    ['Aug 2014',	iau14,	eau14, dau14],
+    ['Sep 2014',	is14,	es14, ds14],
+    ['Okt 2014',	io14,	eo14, do14],
+    ['Nov 2014',	in14,	en14, dn14],
+    ['Dez 2014',	id14,	ed14, dd14],
+    ['Jan 2015',	ij15,	ej15, dj15]
+  ]);
 
-        var options = {
-          title: 'Übersicht der Einnahmen und Ausgaben 2014',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
+  var options = {
+    title : 'Monthly Coffee Production by Country',
+    vAxis: {title: "Geld in Tausend €"},
+    hAxis: {title: "Monat"},
+    seriesType: "bars",
+    series: {2: {type: "line"}}
+  };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-      }
+  var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+  chart.draw(data, options);
+}
     </script>
 			
 </head>
@@ -165,6 +183,21 @@
 	<!-- Container -->
 	<div class="main-container content">
 		<div class="col-lg-12">
+			<div style="display:none;">
+			<p id="dja14" th:text="${dja14}"></p>
+			<p id="dfe14" th:text="${dfe14}"></p>
+			<p id="dma14" th:text="${dma14}"></p>
+			<p id="dap14" th:text="${dap14}"></p>
+			<p id="dmy14" th:text="${dmy14}"></p>
+			<p id="djn14" th:text="${djn14}"></p>
+			<p id="djl14" th:text="${djl14}"></p>
+			<p id="dau14" th:text="${dau14}"></p>
+			<p id="dse14" th:text="${dse14}"></p>
+			<p id="doc14" th:text="${doc14}"></p>
+			<p id="dno14" th:text="${dno14}"></p>
+			<p id="dde14" th:text="${dde14}"></p>
+			<p id="dja15" th:text="${dja15}"></p>
+			</div>
 			<table class="table table-condensed">
 			<h3>Übersicht</h3>
 				<tr class="success_table">
@@ -239,7 +272,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="col-lg-12" id="curve_chart" style="width: 1300px; height: 500px"></div>
+		<div class="col-lg-12" id="chart_div" style="width: 1300px; height: 500px"></div>
 	</div>
 </div>
 </body>

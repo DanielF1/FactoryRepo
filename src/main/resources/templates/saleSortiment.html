@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>Edit Location</title>
+	<title>Sortiment</title>
 
 	<!-- JS dependencies -->
 	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
@@ -50,6 +50,9 @@
 	<!-- Container -->
 	<div class="main-container content">
 		<div class="col-lg-12">
+			<div class="col-lg-12">
+				<p class="btn-success text-center" th:text="${error_green}"></p>
+			</div>
 			<table class="table table-condensed">
 				<tr class="success_table">	
 					<th class="text-center">Name</th>
@@ -81,6 +84,58 @@
 			</table>
 		</div>
 	</div>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	           
+	    /*
+	     * reload page after 5 seconds
+	     */
+		var url = "http://localhost:8080/saleSortiment.html";
+		var delay = "2000";
+		var show = "1000";
+		
+		window.onload = function ()
+		{
+			if(window.location.href != url)
+			{
+				DoTheRedirect();
+			}   
+		}
+		
+		function DoTheRedirect()
+		{
+		    setTimeout(GoToURL, delay);
+		}
+		
+		function DoTheShow(id)
+		{
+			var status = "false";
+			if((document.getElementById("one").value) == status){
+			setTimeout(function() {Show(id);}, show);}
+		}
+		
+		function GoToURL()
+		{
+		    // IE8 and lower fix
+		    if (navigator.userAgent.match(/MSIE\s(?!9.0)/))
+		    {
+		        var referLink = document.createElement("a");
+		        referLink.href = url;
+		        document.body.appendChild(referLink);
+		        referLink.click();
+		    }
+		
+		    // All other browsers
+		    else { window.location.replace(url); }
+		}
+		
+		function Show(id)
+		{
+			document.getElementById('abcdef' + id).style.display='block';
+		}
+
+	/*]]>*/
+	</script>
 </div>
 </body>
 </html>

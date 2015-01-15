@@ -22,27 +22,38 @@ public class Department {
 	@Deprecated
 	public Department(){}
 
-	/** 
+	
+	/**
 	 * Constructor
+	 * 
+	 * @param name Name der Abteilung
 	 */
 	public Department(String name) {
 		this.name = name;
 	}
 	
+
 	/**
-	 * Getter und Setter
+	 * getter
+	 * @return name
 	 */
 	public String getName() {
 		return name;
 	}
-
+	
+	/**
+	 * setter
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	/**
+	 * getter
+	 * @return id
+	 */
 	public Long getId() {
 		return id;
 	}
-
 }
-

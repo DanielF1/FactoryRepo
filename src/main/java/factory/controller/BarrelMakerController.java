@@ -65,8 +65,10 @@ public class BarrelMakerController {
 
 	/**
 	 * Die double Zahlen werden auf 2 Nachkommastellen gerundet
+	 * 
+	 * @param x zu rundender Doublewert
+	 * @return gerundeter Doublewert
 	 */
-
 	public double Runden2Dezimal(double x) { 
 		double Ergebnis;
 		Ergebnis = (double) (int) (x*100)/100;
@@ -171,21 +173,24 @@ public class BarrelMakerController {
 			@RequestParam("Barrel_anzahl") int barrel_anzahl,
 			@ModelAttribute("insertBarrel") @Valid InsertBarrel insertBarrel,
 			Model model,
+			ModelMap modelMap,
 			BindingResult result) {
 		if (result.hasErrors()) {
 		return "inserted";
 	}
+		double totalprice = 0;
+
 		//Barrel (age, quality, content_amount, manufacturing_date,barrel_volume, birth_of_barrel,death_of_barrel,position )
-		for (int i=1;i<=barrel_anzahl;i++)
-		{
-		Barrel barrel = new Barrel(0,"",0, LocalDate.parse("0000-01-01"),Double.parseDouble(barrel_volume),
-				LocalDate.now(),LocalDate.now().plusDays(2),LocalDate.parse("0000-01-01"), "");
-		barrelstock.getBarrels().add(barrel);
+		for (int i=1;i<=barrel_anzahl;i++){
+			
+			Barrel barrel = new Barrel(0,"",0, LocalDate.parse("0000-01-01"),Double.parseDouble(barrel_volume),
+										LocalDate.now(),LocalDate.now().plusDays(2),LocalDate.parse("0000-01-01"), "");
+				barrelstock.getBarrels().add(barrel);
+		
+		totalprice += 20;	
 		}
-		
-		double totalprice = 20;
-		
 		expenditureRepository.save(new Expenditure(LocalDate.now(), totalprice, "Fassherstellung"));
+		
 		
 //		for(Location loc : locationRepository.findAll()){
 //			for(Department department : loc.getDepartments()){
@@ -204,6 +209,7 @@ public class BarrelMakerController {
 			model.addAttribute("error_green", barrel_anzahl +" Fässer mit dem Volume " + barrel_volume + " wurde hinzugefügt." );
 		}
 		departmentRepository.save(barrelstock);
+		modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 		return "BarrelList";
 	}
 	
@@ -223,12 +229,12 @@ public class BarrelMakerController {
 	/**
 	 * Wenn das Fass zu alt ist, wird es entfernt
 	 * 
-	 * @param index 
-	 * @param modelMap bereitgestellt von Spring
+	 * @param index Position des Fasses
+	 * @param model bereitgestellt von Spring
 	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/deleteBarrel/{index}", method = RequestMethod.GET)
-	public String deleteBarrel(@PathVariable("index") int index, Model model) {
+	public String deleteBarrel(@PathVariable("index") int index, Model model, ModelMap modelMap) {
 
 		Barrel barrel = barrelstock.getBarrels().get(index-1);
 		// Fass ist leer
@@ -258,6 +264,7 @@ public class BarrelMakerController {
 
 		}
 		departmentRepository.save(barrelstock);
+		modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
 		return "BarrelList";
 	}
 	
@@ -359,13 +366,15 @@ public class BarrelMakerController {
 	 * @return HTML-Seite
 	 */
 	@RequestMapping(value = "/fassZuordnen")
-	public String fassZuordnen(){
+	public String fassZuordnen(Model model, ModelMap modelMap){
 
 		this.lagerFurVolleFasser.zuordnen(barrelstock.getBarrels());
 		departmentRepository.save(barrelstock);
 		this.lagerFurLeereFasser.zuordnen(barrelstock.getBarrels());
 		departmentRepository.save(barrelstock);
-		return "redirect:/BarrelList";
+		model.addAttribute("error_green", "Fässer wurden zugeordnet." );
+		modelMap.addAttribute("BarrelList", barrelstock.getBarrels());
+		return "BarrelList";
 		
 	}
 }

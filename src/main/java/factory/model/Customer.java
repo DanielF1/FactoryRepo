@@ -37,9 +37,15 @@ public class Customer {
 	@Deprecated
 	protected Customer() {
 	}
-
+	
 	/**
-	 * Constructor
+	 * 
+	 * @param userAccount Benutzerkonto des Kunden
+	 * @param username Benutzername des Kunden
+	 * @param password Passwort des Kunden
+	 * @param familyname Nachname des Kunden
+	 * @param firstname Vorname des Kunden
+	 * @param address Adresse des Kunden
 	 */
 	public Customer(UserAccount userAccount, String username, String password, String familyname, String firstname, String address) {
 		this.userAccount = userAccount;
@@ -52,56 +58,105 @@ public class Customer {
 	}
 	
 	/**
-	 * Getter und Setter
+	 * getter
+	 * @return address
 	 */
 	public String getAddress() {
 		return address;
 	}
-
+	
+	/**
+	 * setter
+	 * @param address
+	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
+	
+	/**
+	 * getter
+	 * @return familyname
+	 */
 	public String getFamilyname() {
 		return familyname;
 	}
-
+	
+	/**
+	 * setter
+	 * @param familyname
+	 */
 	public void setFamilyname(String familyname) {
 		this.familyname = familyname;
 	}
-
+	
+	/**
+	 * getter
+	 * @return firstname
+	 */
 	public String getFirstname() {
 		return firstname;
 	}
-
+	
+	/** 
+	 * setter
+	 * @param firstname
+	 */
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-
+	
+	/**
+	 * getter
+	 * @return id
+	 */
 	public long getId() {
 		return id;
 	}
-	
+
+	/**
+	 * getter 
+	 * @return userAccount
+	 */ 
 	public UserAccount getUserAccount() {
 		return userAccount;
 	}
 	
+	/**
+	 * setter
+	 * @param userAccount
+	 */
 	public void setUserAccount(UserAccount userAccount) {
 		this.userAccount = userAccount;
 	}
-
+	
+	/**
+	 * getter
+	 * @return username
+	 */
 	public String getUsername() {
 		return username;
 	}
-
+	
+	/**
+	 * setter
+	 * @param username
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	/**
+	 * getter
+	 * @return password
+	 */
 	public String getPassword() {
 		return password;
 	}
-
+	
+	/**
+	 * setter
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
