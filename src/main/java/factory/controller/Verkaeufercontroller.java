@@ -1,5 +1,7 @@
 package factory.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.salespointframework.order.Order;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import factory.model.AdminTasksManager;
+import factory.model.Article;
 import factory.model.ArticleRepository;
 import factory.model.Customer;
 import factory.model.validation.RegistrationForm;
@@ -97,7 +100,16 @@ public class Verkaeufercontroller {
 		userAccountManager.save(userAccount);
 		customerRepository.save(new Customer(userAccount, registrationForm.getName(), registrationForm.getPassword(), registrationForm.getFamilyname(), registrationForm.getFirstname(), registrationForm.getAddress()));
 		
-		model.addAttribute("error_green", "Kundenaccount wurde erstellt!");
+		model.addAttribute("error_green", "Kundenaccount erstellt");
+		
+		List<Article> list1 = (List<Article>) articleRepository.findAll();
+		Article bestseller = list1.get(2);
+		Article newbie1 = list1.get(4);
+		Article newbie2 = list1.get(5);
+		
+		model.addAttribute("article", bestseller);
+		model.addAttribute("newbie1", newbie1);
+		model.addAttribute("newbie2", newbie2);
 		
 		return "index";
 	}
@@ -166,5 +178,16 @@ public class Verkaeufercontroller {
 		adminTasksManager.editCustomer(username, familyname, firstname, address);
 		
 		return "redirect:/customerlist";
+		}
+	
+	@RequestMapping(value="/deleteCustomer/{id}", method = RequestMethod.POST)
+	public String deleteCustomer(@PathVariable Long id, Model model){
+		
+		adminTasksManager.deleteCustomer(id);
+		
+		model.addAttribute("error_green", "Kundenaccount gelöscht");
+		model.addAttribute("customer", customerRepository.findOne(id));
+		
+		return "customerlist";
 		}
 }

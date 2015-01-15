@@ -67,6 +67,7 @@ public class ShopController {
 			model.addAttribute("article", bestseller);
 			model.addAttribute("newbie1", newbie1);
 			model.addAttribute("newbie2", newbie2);
+			model.addAttribute("loginError", "Bitte überprüfen Sie die Eingaben");
 			
 			return "index";
 		}

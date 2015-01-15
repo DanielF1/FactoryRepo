@@ -51,6 +51,9 @@
 	<!-- Container -->
 	<div class="main-container">
 		<div class="col-lg-12 content">
+			<div class="col-lg-12">
+				<p class="btn-success text-center" th:text="${error_green}"></p>
+			</div>
 			<table class="table table-condensed">
 			<h3>Kundenliste</h3>
 				<tr class="success_table">
@@ -59,6 +62,7 @@
 					<th class="text-center">Vorname</th>
 					<th class="text-center">Adresse</th>
 					<th class="text-center"></th>
+					<th class="text-center"></th>
 				</tr>
 				<tr th:each="customer : ${customerlist}">
 					<td class="text-center" th:text="${customer.userAccount.identifier}"></td>
@@ -66,17 +70,74 @@
 					<td class="text-center" th:text="${customer.firstname}"></td>
 					<td class="text-center" th:text="${customer.address}"></td>
 					
-					<td class="text-center">
+					<td class="text-right">
 						<form method="get" role="form" th:action="@{/editCustomer/} + ${customer.id}">
 							<button  type="submit" class="btn btn-default">Bearbeiten</button>
 						</form>
-					</td>	
+					</td>
+					<td class="text-left">
+						<form method="post" role="form" th:action="@{/deleteCustomer/} + ${customer.id}">
+							<button  type="submit" class="btn btn-default">Löschen</button>
+						</form>
+					</td>		
 				</tr>
 			</table>
 		
 		</div>
 		<div class="col-lg-2">	</div>
 	<!-- /Container -->		</div>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	           
+	    /*
+	     * reload page after 5 seconds
+	     */
+		var url = "http://localhost:8080/customerlist.html";
+		var delay = "2000";
+		var show = "1000";
+		
+		window.onload = function ()
+		{
+			if(window.location.href != url)
+			{
+				DoTheRedirect();
+			}   
+		}
+		
+		function DoTheRedirect()
+		{
+		    setTimeout(GoToURL, delay);
+		}
+		
+		function DoTheShow(id)
+		{
+			var status = "false";
+			if((document.getElementById("one").value) == status){
+			setTimeout(function() {Show(id);}, show);}
+		}
+		
+		function GoToURL()
+		{
+		    // IE8 and lower fix
+		    if (navigator.userAgent.match(/MSIE\s(?!9.0)/))
+		    {
+		        var referLink = document.createElement("a");
+		        referLink.href = url;
+		        document.body.appendChild(referLink);
+		        referLink.click();
+		    }
+		
+		    // All other browsers
+		    else { window.location.replace(url); }
+		}
+		
+		function Show(id)
+		{
+			document.getElementById('abcdef' + id).style.display='block';
+		}
+
+	/*]]>*/
+	</script>
 </div>
 </body>
 </html>

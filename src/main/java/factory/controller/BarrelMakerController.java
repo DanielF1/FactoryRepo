@@ -65,8 +65,10 @@ public class BarrelMakerController {
 
 	/**
 	 * Die double Zahlen werden auf 2 Nachkommastellen gerundet
+	 * 
+	 * @param x zu rundender Doublewert
+	 * @return gerundeter Doublewert
 	 */
-
 	public double Runden2Dezimal(double x) { 
 		double Ergebnis;
 		Ergebnis = (double) (int) (x*100)/100;

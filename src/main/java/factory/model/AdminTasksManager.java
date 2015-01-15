@@ -3,9 +3,11 @@ package factory.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -253,6 +255,16 @@ public class AdminTasksManager {
 		customer.setFirstname(firstname);
 		customer.setAddress(address);
 		customerRepository.save(customer);
+	}
+	
+	public void deleteCustomer(Long id){
+		Customer customer = customerRepository.findOne(id);
+		String username = customer.getUsername();
+		Optional<UserAccount> account = userAccountManager.findByUsername(username);
+		UserAccount acc = account.get();
+		UserAccountIdentifier identifier = acc.getIdentifier();
+		userAccountManager.disable(identifier);
+		customerRepository.delete(customer);
 	}
 		
 	/**
