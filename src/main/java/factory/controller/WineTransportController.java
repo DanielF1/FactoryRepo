@@ -246,68 +246,6 @@ public class WineTransportController {
 				max_inport_wine_amount = 0;
 				max_delivery_wine_amount = 0;
 				
-				
-				
-				
-				
-				
-				
-				
-//				//productionADay.setWine_amount_for_production(productionADay.getWine_amount_for_production()
-//				//		+ wine_amound_at_the_end_of_day);
-//				productionADay.setWine_amount_for_production(wine_amound_at_the_end_of_day);
-//				
-////				System.out.println("wine_amound_at_the_end_of_day " + wine_amound_at_the_end_of_day);
-////				for(WineTransport wine_transport : transport_list)
-////				{
-////					LocalDate today = productionADay.getDate();
-////					LocalDate transport_day_start = wine_transport.getStart_date().toLocalDate();
-////					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
-////					
-////					if((!wine_transport.getStarting_point().equals("Weinbauer")) && (wine_transport.getStart_date().equals(today))){
-////						max_export_wine_amount += wine_transport.getAmount();
-////					}
-////					System.out.println("max_export_wine_amount " + max_export_wine_amount);
-////				}
-//				
-//				
-//				for(WineTransport wine_transport : transport_list){	
-//					
-//					LocalDate today = productionADay.getDate();
-//					LocalDate transport_day_start = wine_transport.getStart_date().toLocalDate();
-//					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
-//						
-//					if((today.equals(transport_day_end)) && (productionADay.getLocation_name().equals(wine_transport.getGoal()))){
-//
-//							if(wine_transport.getStarting_point().equals("Weinbauer")){
-//								productionADay.setWine_delivery_at_that_day(productionADay.getWine_delivery_at_that_day()
-//										+ wine_transport.getAmount());
-//
-//							} else {
-//								productionADay.setWine_transport_at_that_day_in(productionADay.getWine_transport_at_that_day_in()
-//										+ wine_transport.getAmount());
-//							}
-//
-//							System.out.println("Stage 1 " + productionADay.getWine_amount_for_production());
-//							System.out.println("Stage 2 " + productionADay.getWine_delivery_at_that_day());
-//							System.out.println("Stage 3 " + productionADay.getWine_transport_at_that_day_in());
-//							System.out.println("Stage 4 " + productionADay.getWine_transport_at_that_day_out());
-//							
-//							
-//							productionADay.setWine_amount_for_production((productionADay.getWine_amount_for_production() + productionADay.getWine_delivery_at_that_day()
-//									+ productionADay.getWine_transport_at_that_day_in()) - productionADay.getWine_transport_at_that_day_out());
-//							
-//							System.out.println("Stage 5 " + productionADay.getWine_amount_for_production());
-//					}
-//					
-//				}
-//				
-//				wine_amound_at_the_end_of_day = productionADay.getWine_amount_for_production() - max_production_a_day;
-//				
-//				if(wine_amound_at_the_end_of_day < 0){
-//					wine_amound_at_the_end_of_day = 0;
-//				}
-				
 				i++;
 			}
 			
@@ -348,21 +286,22 @@ public class WineTransportController {
 	 * @param location_start name of a location where the transport start
 	 * @param location_goal name of a location where the transport have to travel
 	 * @param wine_amount amount of wine that have to be transported
+	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
 	 * @return the modeling template
 	 */
 	@RequestMapping(value = "/wineTransport", method = RequestMethod.POST)
 	public String createWineTransport(@RequestParam("location_start") String location_start, 
 									  @RequestParam("location_goal") String location_goal, 
-									  @RequestParam("wine_amount") double wine_amount)
+									  @RequestParam("wine_amount") double wine_amount, Model model)
 	{
 		double wine_amount_in_hectoliter = wine_amount / 100;
 		
-		if(location_start.equals("")){
-			System.out.println("error stage 1");
+		if(location_start.equals("") && location_start.equals("Start")){
+			model.addAttribute("error", "Eingabe noch einmal überprüfen.");
 		} else if(location_goal.equals("")){
-			System.out.println("error stage 2");
+			model.addAttribute("error", "Eingabe noch einmal überprüfen.");
 		} else if(location_start.equals(location_goal)){
-			System.out.println("error stage 3");
+			model.addAttribute("error", "Eingabe noch einmal überprüfen.");
 		} else {
 			
 			boolean transport_is_okay = false;
@@ -443,6 +382,7 @@ public class WineTransportController {
 					}
 				}
 			}
+			model.addAttribute("error_green", "Erfolgreich versendet.");
 		}
 		
 		return "redirect:/winestocks";
@@ -508,8 +448,7 @@ public class WineTransportController {
 		int max_days_of_month = Integer.parseInt(months[wine_delivery_month][1]);
 		
 		if(wine_delivery_day >= max_days_of_month){
-			
-			System.out.println("error");
+			model.addAttribute("error", "Eingabe noch einmal überprüfen.");
 			
 		} else {
 		
@@ -535,6 +474,8 @@ public class WineTransportController {
 					}
 				}
 			}
+			
+			model.addAttribute("error_green", "Erfolgreich versendet.");
 		} // /else
 		
 		return "redirect:/wine_delivery_form";

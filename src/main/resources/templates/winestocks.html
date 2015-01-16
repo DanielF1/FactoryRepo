@@ -275,6 +275,10 @@
 		<!-- Container -->
 		<div class="main-container content">
 			<div class="col-lg-12">
+				<p class="btn-danger text-center" th:text="${error}"></p>
+				<p class="btn-success text-center" th:text="${error_green}"></p>
+			</div>
+			<div class="col-lg-12">
 				<h3 class="pull-left">Weinlager</h3>
 				<div class="pull-right">
 					<form th:method="post" th:action="@{/wineTransport}">	

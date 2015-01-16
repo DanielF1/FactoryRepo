@@ -69,7 +69,7 @@ public class CookBookController {
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 	List<FoundLocation> foundLocation = new ArrayList<FoundLocation>();
 	
-	Long seconds = 10L;
+	Long seconds = 5L;
 	
 	
 	@Autowired 
@@ -322,7 +322,8 @@ public class CookBookController {
 	public String book(Model model, @LoggedIn Optional<UserAccount> userAccount) 
 	{
 		model.addAttribute("recipes", cookbookrepository.findAll());
-
+		checkArrivedBarrels();
+		
 		return "cookbook";
 	}
 	
@@ -392,6 +393,7 @@ public class CookBookController {
 		model.addAttribute("recipes", cookbookrepository.findAll());
 
 		mapIngredient = new ArrayList<Ingredient>();
+		checkArrivedBarrels();
 		return "cookbook";
 	}
 		
@@ -749,7 +751,7 @@ public class CookBookController {
 		
 			} // /if
 		} // /for
-
+		checkArrivedBarrels();
 		model.addAttribute("selectedRecipe", cookbookrepository.findById(id));
 		model.addAttribute("recipes", cookbookrepository.findAll());
 
@@ -808,6 +810,7 @@ public class CookBookController {
 	public String removeRecipe(@PathVariable Long id,Model model)
 	{		
 		cookbookrepository.delete(id);
+		checkArrivedBarrels();
 		model.addAttribute("error_green", "Rezept wurde gelöscht" );
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		return "cookbook";
@@ -886,7 +889,7 @@ public class CookBookController {
 			model.addAttribute("error_green", bottlesToBuyNumber +" Flaschen mit dem Volume " + bottlesToBuyAmount + " wurde hinzugefügt." );
 		}
 		model.addAttribute("recipes", cookbookrepository.findAll());
-		
+		checkArrivedBarrels();
 		return "cookbook";
 	}
 	
@@ -902,7 +905,7 @@ public class CookBookController {
 	public String transportIngredients(@LoggedIn Optional<UserAccount> userAccount, Model model)
 	{
 
-		
+	if(foundLocation.size() > 0){
 		for(Location loc : locationRepository.findAll()){
 			for(FoundLocation fl : foundLocation){
 				if(loc.getName().equals(fl.getLocation())){
@@ -970,13 +973,16 @@ public class CookBookController {
 					 * create a new transport
 					 */
 					BarrelTransport barreltransport = new BarrelTransport(starting_point, goal, barrelsForTransport, start_date , goal_date);
-					model.addAttribute("error_green", "Transport erstellt");
+					model.addAttribute("error_green", "Transport erstellt.");
 					model.addAttribute("recipes", cookbookrepository.findAll());
 					barrel_transport_repository.save(barreltransport);
 				}	
 			}
 		}
-
+	} else {
+		model.addAttribute("error", "Keine benötigten Zutaten in anderen Standorten gefunden, die transportiert werden könnten.");
+		model.addAttribute("recipes", cookbookrepository.findAll());
+		}
 		return "cookbook";
 	}
 	
@@ -1011,6 +1017,8 @@ public class CookBookController {
 	@RequestMapping(value = "/stocks", method = RequestMethod.GET)
 	public String stocks(Model model, @LoggedIn Optional<UserAccount> userAccount)
 	{
+		checkArrivedBarrels();
+		
 		for(Location loc : locationRepository.findAll()){
 			for(Employee e : loc.getEmployees()){
 				if(e.getUserAccount() == userAccount.get()){
