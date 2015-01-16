@@ -55,23 +55,15 @@
 			<div class="col-lg-12">
 				<h3 class="pull-left">Weinlager</h3>				
 				
-				<div class="col-lg-12">
+				<div class="col-lg-12 text-center">
 					<form th:method="post" th:action="@{/startWineDelivery}" th:object="${DeliveryForm}">
 						
-						<input class="text-center wine_amount" type="number" name="wine_delivery_amount" th:field="*{wine_delivery_amount}" th:errorclass="fieldError" min="1" placeholder="Weinmenge in Hektoliter"/>
+						<input class="text-center wine_amount" type="number" name="wine_delivery_amount" placeholder="Weinmenge in Hektoliter" th:field="*{wine_delivery_amount}" th:errorclass="fieldError" min="1"/>
 						<input class="text-center wine_amount" type="number" name="wine_delivery_year" th:field="*{wine_delivery_year}" th:errorclass="fieldError" min="2015" placeholder="Jahr"/>
-						<input class="text-center wine_amount" type="number" name="wine_delivery_month" th:field="*{wine_delivery_month}" th:errorclass="fieldError" min="1" max="12" placeholder="Monat"/>
-<!-- 						<select name="wine_delivery_month"> -->
-<!-- 							<option selected="disabled" style='display:none;'>Monat</option> -->
-<!-- 							<option th:each="name : ${months}" th:value="${name}"> -->
-<!-- 								<span th:text="${name}"></span> -->
-<!-- 							</option> -->
-<!-- 						</select> -->
-						
+						<input class="text-center wine_amount" type="number" name="wine_delivery_month" th:field="*{wine_delivery_month}" th:errorclass="fieldError" min="1" max="12" placeholder="Monat"/>					
 						<input class="text-center wine_amount" type="number" name="wine_delivery_day" th:field="*{wine_delivery_day}" th:errorclass="fieldError" min="1" max="31" placeholder="Tag"/>
 						
 						<select name="location_goal">
-<!-- 							<option selected="disabled" style='display:none;'>Standort</option> -->
 							<option th:each="name : ${locations}" th:value="${name}" >
 								<span th:text="${name}"></span>
 							</option>

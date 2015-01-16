@@ -482,13 +482,10 @@ public class WineTransportController {
 	 * start the wine delivery
 	 * 
 	 * 
-	 * @param wine_delivery_amount amount of wine that have to be transported
-	 * @param wine_delivery_year goal date : year
-	 * @param wine_delivery_month goal date : month
-	 * @param wine_delivery_day goal date : day
-	 * @param location_goal name of a location where the transport have to travel
+	 * @param DeliveryForm class DeliveryForm
+	 * @param bindingResult return result of validation
 	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
-	 * @return the modeling template
+	 * @return modeling template
 	 */
 	@RequestMapping(value = "/startWineDelivery", method = RequestMethod.POST)
 	public String wine_dilivery(@ModelAttribute("registrationForm") @Valid DeliveryForm DeliveryForm,

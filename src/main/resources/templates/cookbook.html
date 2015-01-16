@@ -10,6 +10,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="../resources/js/bootstrap.min.js"></script>
 	<script src="../resources/js/docs.min.js"></script>
+
 	
 	<!-- CSS dependencies -->
 	<link href="../resources/css/style.css" rel="stylesheet" />
@@ -18,6 +19,7 @@
 	  .btn-default{background-color:#92D36E!important; color:#fff;}
 	  .add_recipe{top:56px;}
 	  .recipe_NAME{color:black;}
+	  .table_max{height:1200px; overflow: auto;}
 	</style>
 	
 	<img src="../resources/img/wein.jpg" class="header"/>
@@ -92,7 +94,7 @@
 					
 					<tr>
 						<td class="text-center">
-							<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" >
+							<div class="panel-group  table_max" id="accordion" role="tablist" aria-multiselectable="true" >
 							  <div class="panel panel-default" th:each="recipe, it : ${recipes}" th:with="index=${it.count}">
 							  
 							    <div class="panel-heading" role="tab" th:id="heading_recipe + ${index}">

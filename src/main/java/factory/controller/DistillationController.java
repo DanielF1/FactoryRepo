@@ -197,14 +197,14 @@ public class DistillationController {
 			} // /for
 		} // /for
 	}
-	
-	
+
 	/**
 	 * mapping all stills of location where the user is logged in
 	 * 
 	 * 
 	 * @param model Spring element for modeling Java code with help of Thymeleaf on templates
 	 * @param userAccount return the logged user account (salespoint)
+	 * @param still class Still
 	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/distillation", method = RequestMethod.GET)
@@ -519,6 +519,8 @@ public class DistillationController {
 	 * add a new still
 	 * 
 	 * 
+	 * @param sill class Still
+	 * @param bindingResult return the result of validation
 	 * @param new_still_amount amount of the new still
 	 * @param userAccount return the logged user account (salespoint)
 	 * @return return the modeling template
