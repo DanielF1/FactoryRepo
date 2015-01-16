@@ -1,22 +1,21 @@
 package factory.controller;
 
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.salespointframework.inventory.Inventory;
-import org.salespointframework.inventory.InventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +28,7 @@ import factory.model.ProductionManagement;
 import factory.model.Still;
 import factory.model.WineStock;
 import factory.model.WineTransport;
+import factory.model.validation.DeliveryForm;
 import factory.repository.DepartmentRepository;
 import factory.repository.LocationRepository;
 import factory.repository.ProductionManagementRepository;
@@ -471,6 +471,7 @@ public class WineTransportController {
 		}
 		
 		model.addAttribute("locations", locations);
+		model.addAttribute("DeliveryForm", new DeliveryForm());
 		
 		return "wine_delivery_form";
 	}
@@ -490,12 +491,20 @@ public class WineTransportController {
 	 * @return the modeling template
 	 */
 	@RequestMapping(value = "/startWineDelivery", method = RequestMethod.POST)
-	public String wine_dilivery(@RequestParam("wine_delivery_amount") int wine_delivery_amount, 
-								@RequestParam("wine_delivery_year") int wine_delivery_year, 
-								@RequestParam("wine_delivery_month") int wine_delivery_month,
-								@RequestParam("wine_delivery_day") int wine_delivery_day, 
-								@RequestParam("location_goal") String location_goal, Model model)
-	{
+	public String wine_dilivery(@ModelAttribute("registrationForm") @Valid DeliveryForm DeliveryForm,
+								BindingResult bindingResult,
+								Model model){
+		
+		if (bindingResult.hasErrors()) {
+			return "startWineDelivery";
+		}
+		
+		int wine_delivery_amount = DeliveryForm.getWine_delivery_amount();
+		int wine_delivery_year = DeliveryForm.getWine_delivery_year();
+		int wine_delivery_month = DeliveryForm.getWine_delivery_month();
+		int wine_delivery_day = DeliveryForm.getWine_delivery_day();
+		String location_goal = DeliveryForm.getLocation_goal();
+		
 		String[][] months = new String[12][2];
 		months = initializeMonths(months);
 		

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.rules.Timeout;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Units;
@@ -392,7 +393,6 @@ public class CookBookController {
 
 		mapIngredient = new ArrayList<Ingredient>();
 		return "cookbook";
-//		return "redirect:/cookbook";
 	}
 		
 	
@@ -898,7 +898,7 @@ public class CookBookController {
 	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/createTransport")
-	public String transportIngredients(@LoggedIn Optional<UserAccount> userAccount)
+	public String transportIngredients(@LoggedIn Optional<UserAccount> userAccount, Model model)
 	{
 
 		
@@ -969,14 +969,14 @@ public class CookBookController {
 					 * create a new transport
 					 */
 					BarrelTransport barreltransport = new BarrelTransport(starting_point, goal, barrelsForTransport, start_date , goal_date);
-					
+					model.addAttribute("error_green", "Transport erstellt");
+					model.addAttribute("recipes", cookbookrepository.findAll());
 					barrel_transport_repository.save(barreltransport);
-	
 				}	
 			}
 		}
 
-		return "redirect:/cookbook";
+		return "cookbook";
 	}
 	
 	

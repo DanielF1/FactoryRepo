@@ -5,12 +5,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -205,7 +208,7 @@ public class DistillationController {
 	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/distillation", method = RequestMethod.GET)
-	public String still(Model model, @LoggedIn Optional<UserAccount> userAccount) 
+	public String still(Model model, @LoggedIn Optional<UserAccount> userAccount, Still still) 
 	{
 		for(Location loc : locationRepository.findAll()){
 			for(Employee e : loc.getEmployees()){
@@ -521,8 +524,16 @@ public class DistillationController {
 	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/addNewStill", method = RequestMethod.POST)
-	public String addNewStill( @RequestParam("new_still_amount") int new_still_amount,	@LoggedIn Optional<UserAccount> userAccount)
+	public String addNewStill(	@Valid Still sill, 
+								BindingResult bindingResult, 
+								@RequestParam("amount") int new_still_amount,	
+								@LoggedIn Optional<UserAccount> userAccount)
 	{
+		
+		if (bindingResult.hasErrors()) {
+            return "addNewStill";
+        }
+		
 		for(Location loc : locationRepository.findAll()){
 			for(Employee e : loc.getEmployees()){
 				if(e.getUserAccount() == userAccount.get()){
