@@ -17,6 +17,7 @@
 	  .success_table{background-color:#92D36E!important; color:#fff;}
 	  .btn-default{background-color:#92D36E!important; color:#fff;}
 	  .add_recipe{top:56px;}
+	  .recipe_NAME{color:black;}
 	</style>
 	
 	<img src="../resources/img/wein.jpg" class="header"/>
@@ -37,7 +38,6 @@
 
 	<!-- navigation -->
 	<div class="col-lg-8 navigation">
-
 		<nav th:include="navigation :: navigation"></nav>
 	</div>
 	<!-- /navigation -->
@@ -159,7 +159,7 @@
 						<tr class="success_table">
 							<td class="text-center"></td>
 							<td class="text-center"></td>
-							<td class="text-center"><input class="text-center" name="name" type="text"  placeholder="Rezeptname"/></td>
+							<td class="text-center"><input class="text-center recipe_NAME" name="name" type="text"  placeholder="Rezeptname"/></td>
 							<td class="text-center"></td>
 							<td class="text-center"></td>
 						</tr>
@@ -343,7 +343,7 @@
 			        	</tr>
 			        	<tr>
 			        		<td>
-			        			<form action="/createTransport">
+			        			<form action="/createTransport" >
 									<button class="btn btn-default pull-right">Transport beantragen</button> 
 								</form>
 			        		</td>
@@ -356,12 +356,6 @@
 		</div>
 	</div>
 	<!-- /Container -->
-	
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="../resources/js/bootstrap.min.js"></script>
-	
 	<script th:inline="javascript">
 	/*<![CDATA[*/
 	
@@ -416,10 +410,8 @@
 			alert(link);
 			link.setAttribute("aria-labelledby", "heading_recipe" + id);
 			document.write('<a data-toggle="collapse1" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1"></a>');
-			 
-
 		}
-		
+	
 	/*]]>*/
 	</script>
 </div>
