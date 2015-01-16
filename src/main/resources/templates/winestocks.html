@@ -10,27 +10,156 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="../resources/js/bootstrap.min.js"></script>
 	<script src="../resources/js/docs.min.js"></script>
-	
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.js"></script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
+    <script th:inline="javascript" type="text/javascript">
+    /*<![CDATA[*/
+               
+    
+               
+               
+               
+               
+               
+               
+               
      	google.load("visualization", "1", {packages:["corechart"]});
 		google.setOnLoadCallback(drawVisualization);
 
-		function drawVisualization() {
+		function test(data){
+			var test = /*[[${production_management}]]*/ null;
+			var newArray = [];
+			
+			
+
+			
+			
+			var options= {
+			    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+			    scaleBeginAtZero : true,
+
+			    //Boolean - Whether grid lines are shown across the chart
+			    scaleShowGridLines : true,
+
+			    //String - Colour of the grid lines
+			    scaleGridLineColor : "rgba(0,0,0,.05)",
+
+			    //Number - Width of the grid lines
+			    scaleGridLineWidth : 1,
+
+			    //Boolean - Whether to show horizontal lines (except X axis)
+			    scaleShowHorizontalLines: true,
+
+			    //Boolean - Whether to show vertical lines (except Y axis)
+			    scaleShowVerticalLines: true,
+
+			    //Boolean - If there is a stroke on each bar
+			    barShowStroke : true,
+
+			    //Number - Pixel width of the bar stroke
+			    barStrokeWidth : 2,
+
+			    //Number - Spacing between each of the X value sets
+			    barValueSpacing : 5,
+
+			    //Number - Spacing between data sets within X values
+			    barDatasetSpacing : 1,
+
+			    //String - A legend template
+			    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+
+			};
+			
+			var dateArray = [];
+			var wine_amount_for_production = [];
+			var wine_delivery_at_that_day = [];
+			var wine_transport_at_that_day_in = [];
+			var wine_transport_at_that_day_out = [];
+			
+				for (var i=0;i<test[0].production_a_day.length;i++) {
+						//console.log(test[a].production_a_day[i]);
+					dateArray.push(test[0].production_a_day[i].date.year + '-' + test[0].production_a_day[i].date.monthValue + '-' + test[0].production_a_day[i].date.dayOfMonth);	
+// 					newArray.push({'date': test[a].production_a_day[i].date.year + '-' + test[a].production_a_day[i].date.monthValue + '-' + test[a].production_a_day[i].date.dayOfMonth,
+// 						'wine_amount_for_production': test[a].production_a_day[i].wine_amount_for_production,
+// 						'wine_delivery_at_that_day': test[a].production_a_day[i].wine_delivery_at_that_day,
+// 						'wine_transport_at_that_day_in': test[a].production_a_day[i].wine_transport_at_that_day_in,
+// 						'wine_transport_at_that_day_out': test[a].production_a_day[i].wine_transport_at_that_day_out});	
+					wine_amount_for_production.push(test[0].production_a_day[i].wine_amount_for_production);
+					wine_delivery_at_that_day.push(test[0].production_a_day[i].wine_delivery_at_that_day);
+					wine_transport_at_that_day_in.push(test[0].production_a_day[i].wine_transport_at_that_day_in);
+					wine_transport_at_that_day_out.push(test[0].production_a_day[i].wine_transport_at_that_day_out);
+					
+				}
+			
+			
+	
+			
+			console.log(dateArray);
+			var data = {
+				    labels: dateArray,//["January", "February", "March", "April", "May", "June", "July"],
+				    datasets: [
+				        {
+				            label: "My First dataset",
+				            fillColor: "rgba(220,220,220,0.5)",
+				            strokeColor: "rgba(220,220,220,0.8)",
+				            highlightFill: "rgba(220,220,220,0.75)",
+				            highlightStroke: "rgba(220,220,220,1)",
+				            data: wine_amount_for_production
+				        },
+				        {
+				            label: "My Second dataset",
+				            fillColor: "rgba(151,187,205,0.5)",
+				            strokeColor: "rgba(151,187,205,0.8)",
+				            highlightFill: "rgba(151,187,205,0.75)",
+				            highlightStroke: "rgba(151,187,205,1)",
+				            data: wine_delivery_at_that_day
+				        },
+				        {
+				            label: "My First dataset",
+				            fillColor: "rgba(220,220,220,0.5)",
+				            strokeColor: "rgba(220,220,220,0.8)",
+				            highlightFill: "rgba(220,220,220,0.75)",
+				            highlightStroke: "rgba(220,220,220,1)",
+				            data: wine_transport_at_that_day_in
+				        },
+				        {
+				            label: "My Second dataset",
+				            fillColor: "rgba(151,187,205,0.5)",
+				            strokeColor: "rgba(151,187,205,0.8)",
+				            highlightFill: "rgba(151,187,205,0.75)",
+				            highlightStroke: "rgba(151,187,205,1)",
+				            data: wine_transport_at_that_day_out
+				        }
+				    ]
+				};
+			
+		
+			//drawVisualization(newArray);
+			var ctx = $("#myChart").get(0).getContext("2d");
+			var myBarChart = new Chart(ctx).Bar(data, options);
+			
+             
+		}
+		
+		
+		function drawVisualization(data) {
 	    	
 // 	    	var table = document.getElementById("dataTable"); 
 // 	    	var rows = table.getElementsByTagName("tr");
 // 	    	var cells = table.getElementsByTagName("td"); 
 
-	    	var values = [];
+	    	//var values = [];
+	    	/*
 	    	$('#dataTable tbody tr').each(function () {
 	    	    values.push($('td:first', this).text());
 	    	});
+*/
+var values = data;
 
 	    	
 	    	console.log(values);
 		  // Some raw data (not necessarily accurate)
-		  var data = google.visualization.arrayToDataTable([[values]]);
+		  var data = google.visualization.arrayToDataTable(values);
 
 		  var options = {
 		    title : 'Monthly Coffee Production by Country',
@@ -43,6 +172,7 @@
 		  var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
 		  chart.draw(data, options);
 		}
+		/*]]>*/
 	</script>
 	
 	
@@ -123,12 +253,12 @@
 					<div>
 						<h4><span th:id="loc_ + ${loc_count} + _name_ + ${index}" th:text="${production.location_name}"></span></h4>
 					</div>
-
+<input type="button" th:onclick="'javascript:test(\''+${production.production_a_day} + '\');'" />
 					<div class="table_max">
 						<table class="table table-condensed dataTable" id="dataTable">
 							<tr class="success_table">
 								<td class="text-center">Datum</td>
-								<td class="text-center" th:each="day : ${production.production_a_day}"><span th:id="loc_ + ${loc_count} + _name_ + ${index}" th:text="${day.date}"></span></td>
+								<td class="text-center" th:each="day : ${production.production_a_day}"><span  th:text="${day.date}"></span></td>
 							</tr>
 							<tr>
 								<td class="text-center">Verarbeitung</td>
@@ -148,8 +278,9 @@
 							</tr>
 						</table>
 					</div>
+					<div class="table_max">
+					<canvas id="myChart" width="4000" height="800"></canvas></div>
 					
-					<div id="chart_div" style="width: 900px; height: 500px;"></div>
 				</div>
 			</div>
 		</div>

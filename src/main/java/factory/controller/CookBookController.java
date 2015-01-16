@@ -369,7 +369,6 @@ public class CookBookController {
 							@RequestParam("ingredientUnit2") String ingredientUnit2,
 							
 							@RequestParam("ingredientWater") String ingredientWater,
-							@RequestParam("ingredientAge3") int ingredientAge3,
 							@RequestParam("ingredientAmount3") int ingredientAmount3,
 							@RequestParam("ingredientUnit3") String ingredientUnit3,
 							Model model) 
@@ -378,7 +377,7 @@ public class CookBookController {
 		Ingredient i1 = new Ingredient(ingredientQuality,  ingredientAge,  ingredientAmount,  ingredientUnit);
 		Ingredient i2 = new Ingredient(ingredientQuality1, ingredientAge1, ingredientAmount1, ingredientUnit1);
 		Ingredient i3 = new Ingredient(ingredientQuality2, ingredientAge2, ingredientAmount2, ingredientUnit2);
-		Ingredient i4 = new Ingredient(ingredientWater, ingredientAge3, ingredientAmount3, ingredientUnit3);
+		Ingredient i4 = new Ingredient(ingredientWater, 		0, 		   ingredientAmount3, ingredientUnit3);
 		
 		List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 				
@@ -793,7 +792,7 @@ public class CookBookController {
 		String delete = "true";
 		redirectAttrs.addAttribute("id", id);
 		redirectAttrs.addAttribute("term", delete);
-		return "redirect:/delete/{id}/{term}";
+		return "redirect:/{id}/{term}";
 	}
 	
 	
@@ -805,7 +804,7 @@ public class CookBookController {
 	 * @param id the id of selected recipe
 	 * @return return the modeling template
 	 */
-	@RequestMapping(value = "/delete/{id}/{term}")
+	@RequestMapping(value = "/{id}/{term}")
 	public String removeRecipe(@PathVariable Long id,Model model)
 	{		
 		cookbookrepository.delete(id);
@@ -879,7 +878,7 @@ public class CookBookController {
 //			}//for
 //		}//for
 
-		if (bottlesToBuyNumber==1)
+		if (bottlesToBuyNumber == 1)
 		{
 		model.addAttribute("error_green", "Eine Flasche mit dem Volume " + bottlesToBuyAmount + " wurde hinzugefügt." );}
 		else {

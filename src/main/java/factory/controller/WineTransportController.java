@@ -60,7 +60,7 @@ public class WineTransportController {
 
 
 	/**
-	 * initialize an array of months and check if there is a leap year
+	 * initialize an array of months and check if this year is a leap year
 	 * 
 	 * 
 	 * @param months an array of strings
@@ -121,14 +121,19 @@ public class WineTransportController {
 		for(WineTransport wine_transport : wineTransportRepository.findAll()){
 			transport_list.add(wine_transport);
 		}
-		System.out.println("wine_transport " + productionManagementRepository.count());
-		
+
+		/*
+		 * search for productions
+		 */
 		for(Location location : locationRepository.findAll()){
 			for(Department department : location.getDepartments()){	
 				if(department.getName().contains("Produktion")){
 					
 					production = (Production) department;
 					
+					/*
+					 * create default day
+					 */
 					ProductionADay default_day = new ProductionADay(null, null, 0, 0, 0, 0);
 					
 					List<ProductionADay> default_day_list = new ArrayList<ProductionADay>();
@@ -155,6 +160,7 @@ public class WineTransportController {
 		}
 
 		double wine_amound_at_the_end_of_day = 0;
+		int i = 1;
 		
 		for(ProductionManagement production_management : productionManagementRepository.findAll()){	
 
@@ -177,45 +183,132 @@ public class WineTransportController {
 			}
 			
 			for(ProductionADay productionADay : production_management.getProduction_a_day()){
-							
-				double max_production_a_day = (max_still_amount * 0.8) / 2;
+
+				double max_still_production_a_day = (max_still_amount * 0.8) / 2;
+				double max_export_wine_amount = 0;
+				double max_inport_wine_amount = 0;
+				double max_delivery_wine_amount = 0;
 				
-				productionADay.setWine_amount_for_production(productionADay.getWine_amount_for_production()
-						+ wine_amound_at_the_end_of_day);
-	
 				
-				for(WineTransport wine_transport : transport_list){	
-					
+				for(WineTransport wine_transport : transport_list){
 					LocalDate today = productionADay.getDate();
 					LocalDate transport_day_start = wine_transport.getStart_date().toLocalDate();
-					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
-						
-					if((today.equals(transport_day_end)) && (productionADay.getLocation_name().equals(wine_transport.getGoal()))){
 
-							if(wine_transport.getStarting_point().equals("Weinbauer")){
-								productionADay.setWine_delivery_at_that_day(productionADay.getWine_delivery_at_that_day()
-										+ wine_transport.getAmount());
-
-							} else {
-								productionADay.setWine_transport_at_that_day_in(productionADay.getWine_transport_at_that_day_in()
-										+ wine_transport.getAmount());
-							}
-							
-							productionADay.setWine_amount_for_production((productionADay.getWine_amount_for_production() + productionADay.getWine_delivery_at_that_day()
-									+ productionADay.getWine_transport_at_that_day_in()) - productionADay.getWine_transport_at_that_day_out());
+					if((!wine_transport.getStarting_point().equals("Weinbauer")) && (transport_day_start.equals(today))
+							&& (wine_transport.getStarting_point().equals(productionADay.getLocation_name()))){
+						max_export_wine_amount += wine_transport.getAmount();	
 					}
+				}
+				
+				for(WineTransport wine_transport : transport_list){
+					LocalDate today = productionADay.getDate();
+					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
+
+					if((!wine_transport.getStarting_point().equals("Weinbauer")) && (transport_day_end.equals(today))
+							&& (wine_transport.getGoal().equals(productionADay.getLocation_name()))){
+						max_inport_wine_amount += wine_transport.getAmount();
+						
+					}
+				}
+				
+				for(WineTransport wine_transport : transport_list){
+					LocalDate today = productionADay.getDate();
+					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
 					
+					if((wine_transport.getStarting_point().equals("Weinbauer")) && (transport_day_end.equals(today))){
+						max_delivery_wine_amount += wine_transport.getAmount();
+						
+					}
 				}
 				
-				wine_amound_at_the_end_of_day = productionADay.getWine_amount_for_production() - max_production_a_day;
 				
-				if(wine_amound_at_the_end_of_day < 0){
-					wine_amound_at_the_end_of_day = 0;
-				}
+				System.out.println("max_export_wine_amount " + max_export_wine_amount);
+				System.out.println("max_inport_wine_amount " + max_inport_wine_amount);
+				System.out.println("max_delivery_wine_amount " + max_delivery_wine_amount);
+				
+				productionADay.setWine_delivery_at_that_day(max_delivery_wine_amount);
+				productionADay.setWine_transport_at_that_day_in(max_inport_wine_amount);
+				productionADay.setWine_transport_at_that_day_out(max_export_wine_amount);
+				productionADay.setWine_amount_for_production(wine_amound_at_the_end_of_day + max_inport_wine_amount 
+						+ max_delivery_wine_amount - max_export_wine_amount);
 				
 				
+				wine_amound_at_the_end_of_day = wine_amound_at_the_end_of_day + max_delivery_wine_amount 
+						+ max_inport_wine_amount - max_export_wine_amount - max_export_wine_amount - (max_still_production_a_day);
+				System.out.println("wine_amound_at_the_end_of_day " + wine_amound_at_the_end_of_day);
+				
+				
+				
+				max_export_wine_amount = 0;
+				max_inport_wine_amount = 0;
+				max_delivery_wine_amount = 0;
+				
+				
+				
+				
+				
+				
+				
+				
+//				//productionADay.setWine_amount_for_production(productionADay.getWine_amount_for_production()
+//				//		+ wine_amound_at_the_end_of_day);
+//				productionADay.setWine_amount_for_production(wine_amound_at_the_end_of_day);
+//				
+////				System.out.println("wine_amound_at_the_end_of_day " + wine_amound_at_the_end_of_day);
+////				for(WineTransport wine_transport : transport_list)
+////				{
+////					LocalDate today = productionADay.getDate();
+////					LocalDate transport_day_start = wine_transport.getStart_date().toLocalDate();
+////					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
+////					
+////					if((!wine_transport.getStarting_point().equals("Weinbauer")) && (wine_transport.getStart_date().equals(today))){
+////						max_export_wine_amount += wine_transport.getAmount();
+////					}
+////					System.out.println("max_export_wine_amount " + max_export_wine_amount);
+////				}
+//				
+//				
+//				for(WineTransport wine_transport : transport_list){	
+//					
+//					LocalDate today = productionADay.getDate();
+//					LocalDate transport_day_start = wine_transport.getStart_date().toLocalDate();
+//					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
+//						
+//					if((today.equals(transport_day_end)) && (productionADay.getLocation_name().equals(wine_transport.getGoal()))){
+//
+//							if(wine_transport.getStarting_point().equals("Weinbauer")){
+//								productionADay.setWine_delivery_at_that_day(productionADay.getWine_delivery_at_that_day()
+//										+ wine_transport.getAmount());
+//
+//							} else {
+//								productionADay.setWine_transport_at_that_day_in(productionADay.getWine_transport_at_that_day_in()
+//										+ wine_transport.getAmount());
+//							}
+//
+//							System.out.println("Stage 1 " + productionADay.getWine_amount_for_production());
+//							System.out.println("Stage 2 " + productionADay.getWine_delivery_at_that_day());
+//							System.out.println("Stage 3 " + productionADay.getWine_transport_at_that_day_in());
+//							System.out.println("Stage 4 " + productionADay.getWine_transport_at_that_day_out());
+//							
+//							
+//							productionADay.setWine_amount_for_production((productionADay.getWine_amount_for_production() + productionADay.getWine_delivery_at_that_day()
+//									+ productionADay.getWine_transport_at_that_day_in()) - productionADay.getWine_transport_at_that_day_out());
+//							
+//							System.out.println("Stage 5 " + productionADay.getWine_amount_for_production());
+//					}
+//					
+//				}
+//				
+//				wine_amound_at_the_end_of_day = productionADay.getWine_amount_for_production() - max_production_a_day;
+//				
+//				if(wine_amound_at_the_end_of_day < 0){
+//					wine_amound_at_the_end_of_day = 0;
+//				}
+				
+				i++;
 			}
 			
+			i = 0;
 			max_still_amount = 0;
 			wine_amound_at_the_end_of_day = 0;
 			productionManagementRepository.save(production_management);

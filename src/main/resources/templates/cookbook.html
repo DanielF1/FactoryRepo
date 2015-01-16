@@ -167,6 +167,7 @@
 							<td class="text-center"><label for="ingredient">Zutat 1</label></td>
 							<td class="text-center">
 								<select name="ingredientQuality">
+									<option value="" selected="disabled" style='display:none;'>Qualität</option>
 									<option value="Schlecht">Schlecht</option>
 									<option value="Gut">Gut</option>
 									<option value="Sehr Gut">Sehr Gut</option>
@@ -185,6 +186,7 @@
 							<td class="text-center"><label for="ingredient">Zutat 2</label></td>
 							<td class="text-center">
 				               	<select name="ingredientQuality1">
+				               		<option value="" selected="disabled" style='display:none;'>Qualität</option>
 									<option value="Schlecht">Schlecht</option>
 									<option value="Gut">Gut</option>
 									<option value="Sehr Gut">Sehr Gut</option>
@@ -203,6 +205,7 @@
 							<td class="text-center"><label for="ingredient">Zutat 3</label></td>
 							<td class="text-center">
 								<select name="ingredientQuality2">
+									<option value="" selected="disabled" style='display:none;'>Qualität</option>
 									<option value="Schlecht">Schlecht</option>
 									<option value="Gut">Gut</option>
 									<option value="Sehr Gut">Sehr Gut</option>
@@ -224,7 +227,7 @@
 									<option value="Wasser">Wasser</option>
 								</select>
 							</td>
-							<td class="text-center"><input class="text-center" type="number" name="ingredientAge3" value="" id="box" min="0" placeholder="Alter"/></td>
+							<td class="text-center"></td>
 							<td class="text-center"><input class="text-center" type="number" name="ingredientAmount3" value="" id="box" min="1" placeholder="Menge"/></td>
 							<td class="text-center">		                
 								<select name="ingredientUnit3">
@@ -272,14 +275,17 @@
 									</select>
 									<span class="pull-right">Flaschenvolumen  </span>	
 								</td>
-								<td class="text-center"><br/><br/><button class="btn btn-default pull-left">Herstellen</button>	</td>
+								<td class="text-center"><br/><br/><button class="btn btn-default pull-right">Herstellen</button>	</td>
 							</tr>
 						</table>
 					</form>
 		
-					<span class="btn-danger text-center" th:text="${not_enough_0}"></span> <span class="btn-danger text-center" th:text="${not_enough_1}"></span><br/>
-					<span class="btn-danger text-center" th:text="${not_enough_2}"></span> <span class="btn-danger text-center" th:text="${not_enough_3}"></span><br/>
-					<span class="btn-danger text-center" th:text="${not_enough_4}"></span> <span class="btn-danger text-center" th:text="${not_enough_5}"></span>
+					<span class="btn-danger text-center" th:text="${not_enough_0}"></span><br/>
+					<span class="btn-danger text-center" th:text="${not_enough_1}"></span><br/>
+					<span class="btn-danger text-center" th:text="${not_enough_2}"></span><br/>
+					<span class="btn-danger text-center" th:text="${not_enough_3}"></span><br/>
+					<span class="btn-danger text-center" th:text="${not_enough_4}"></span><br/> 
+					<span class="btn-danger text-center" th:text="${not_enough_5}"></span><br/>
 							
 					<table class="table table-condensed">
 						<h4>Flaschenbestellung</h4>

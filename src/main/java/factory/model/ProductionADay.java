@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class ProductionADay {
 
 	@Id @GeneratedValue private Long id;
-	LocalDate date ;
+	LocalDate date;
 	String location_name;
 	double wine_amount_for_production;
 	double wine_transport_at_that_day_in;
