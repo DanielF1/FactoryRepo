@@ -970,13 +970,14 @@ public class CookBookController {
 					 * create a new transport
 					 */
 					BarrelTransport barreltransport = new BarrelTransport(starting_point, goal, barrelsForTransport, start_date , goal_date);
-					model.addAttribute("error_green", "Transport erstellt");
-					model.addAttribute("recipes", cookbookrepository.findAll());
+					
 					barrel_transport_repository.save(barreltransport);
 				}	
 			}
 		}
 
+		model.addAttribute("error_green", "Transport erstellt");
+		model.addAttribute("recipes", cookbookrepository.findAll());
 		return "cookbook";
 	}
 	
