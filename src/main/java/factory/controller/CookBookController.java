@@ -983,6 +983,9 @@ public class CookBookController {
 		model.addAttribute("error", "Keine benötigten Zutaten in anderen Standorten gefunden, die transportiert werden könnten.");
 		model.addAttribute("recipes", cookbookrepository.findAll());
 		}
+
+		model.addAttribute("error_green", "Transport erstellt");
+		model.addAttribute("recipes", cookbookrepository.findAll());
 		return "cookbook";
 	}
 	
