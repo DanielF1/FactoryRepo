@@ -359,7 +359,7 @@ public class DistillationController {
 	 * @return return the modeling template
 	 */
 	@RequestMapping(value = "/distillation/{index}", method = RequestMethod.POST)
-	public String distillation(Model model, @PathVariable(value="index") int index, @LoggedIn Optional<UserAccount> userAccount) 
+	public String distillation(Model model, @PathVariable(value="index") int index, @LoggedIn Optional<UserAccount> userAccount, Still still) 
 	{
 		for(Location loc : locationRepository.findAll()){
 			for(Employee e : loc.getEmployees()){
@@ -368,8 +368,8 @@ public class DistillationController {
 						if(dep.getName().contains("Produktion")){
 							production = (Production) dep;{
 								
-							Still still = production.getStills().get(index - 1);
-							checkStill(still, userAccount, model, index);
+							Still s = production.getStills().get(index - 1);
+							checkStill(s, userAccount, model, index);
 							model.addAttribute("stills", production.getStills());
 							}
 						}
@@ -399,7 +399,8 @@ public class DistillationController {
 									@RequestParam("one") String one,
 									@RequestParam("two") String two,
 									@PathVariable(value="index") int index, Model model,
-									@LoggedIn Optional<UserAccount> userAccount)
+									@LoggedIn Optional<UserAccount> userAccount,
+									Still still)
 	{
 		int status_one = 0;
 		int status_two = 0;
@@ -412,11 +413,11 @@ public class DistillationController {
 						if(dep.getName().contains("Produktion")){
 							production = (Production) dep;{
 								
-							Still still = production.getStills().get(index - 1);
+							Still stiLL = production.getStills().get(index - 1);
 							
-							status_one = still.getStatus_one();
-							status_two = still.getStatus_two();
-							final_distillate = ((still.getAmount() * 0.8) * 0.75) * 100;
+							status_one = stiLL.getStatus_one();
+							status_two = stiLL.getStatus_two();
+							final_distillate = ((stiLL.getAmount() * 0.8) * 0.75) * 100;
 							
 							}
 						}
@@ -436,12 +437,12 @@ public class DistillationController {
 							if(dep.getName().contains("Produktion")){
 								production = (Production) dep;{
 									
-								Still still = production.getStills().get(index - 1);	
+								Still stilL = production.getStills().get(index - 1);	
 					
-								still.setStatus_one(0);
-								still.setStatus_two(0);
-								still.setStill_process_start_time(null);
-								still.setStill_process_end_time(null);
+								stilL.setStatus_one(0);
+								stilL.setStatus_two(0);
+								stilL.setStill_process_start_time(null);
+								stilL.setStill_process_end_time(null);
 								
 								departmentrepository.save(production);
 								}

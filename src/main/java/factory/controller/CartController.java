@@ -179,6 +179,58 @@ public class CartController {
 		}
 	   
 	   /**
+		  * KUNDE BESTELLT PERSÖNLICH
+		  * wenn man die Bestellung bezahlt und abgeschlossen hat,
+		  * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
+		  * 
+		  * @param userAccount UserAccount bereitgestellt von Salespoint
+		  * @param cart Cart bereitgestellt von Salespoint
+		  */
+		   @RequestMapping(value="/superCheckout", method=RequestMethod.POST)   
+		   public String BuySuper(@ModelAttribute Cart cart, Model model){
+		    	
+			   Customer cust = customerRepository.findByUsername("hans");
+			  Optional<UserAccount> userAccount = userAccountManager.findByUsername("hans");
+			   
+			   if(cart.isEmpty()){
+				   model.addAttribute("error", "Es wurden keine Artikel ausgewählt");
+				   return "cart";
+			   }
+			   
+		    	return userAccount.map(account -> {
+
+						Order order = new Order(account, Cash.CASH);
+						
+						cart.addItemsTo(order);
+						
+						
+						
+						double i = cart.getPrice().getAmountMajorLong();
+						
+						String customer = cust.getFirstname() + " " + cust.getFamilyname();
+						incomeRepository.save(new Income(customer, LocalDate.now(), i, "Produktkauf"));
+						
+						orderManager.payOrder(order);
+						orderManager.completeOrder(order);
+						orderManager.save(order);
+
+						cart.clear();
+
+						List<Article> list1 = (List<Article>) articleRepository.findAll();
+						Article bestseller = list1.get(2);
+						Article newbie1 = list1.get(4);
+						Article newbie2 = list1.get(5);
+						
+						model.addAttribute("error_green", "Bestellung abgeschlossen");
+						model.addAttribute("article", bestseller);
+						model.addAttribute("newbie1", newbie1);
+						model.addAttribute("newbie2", newbie2);
+						
+						return "index";
+					}).orElse("redirect:/cart");
+			}
+	   
+	   /**
 	    * VERKÄUFER BESTELLT FÜR KUNDE
 		* wenn man die Bestellung bezahlt und abgeschlossen hat,
 	    * wird der Warenkorb gelöscht und man kommt wieder zurück auf die Startseite
