@@ -215,7 +215,8 @@ public class WineTransportController {
 					LocalDate today = productionADay.getDate();
 					LocalDate transport_day_end = wine_transport.getGoal_date().toLocalDate();
 					
-					if((wine_transport.getStarting_point().equals("Weinbauer")) && (transport_day_end.equals(today))){
+					if((wine_transport.getStarting_point().equals("Weinbauer")) && (transport_day_end.equals(today))
+							&& (wine_transport.getGoal().equals(productionADay.getLocation_name()))){
 						max_delivery_wine_amount += wine_transport.getAmount();
 						
 					}
@@ -237,7 +238,9 @@ public class WineTransportController {
 						+ max_inport_wine_amount - max_export_wine_amount - max_export_wine_amount - (max_still_production_a_day);
 				System.out.println("wine_amound_at_the_end_of_day " + wine_amound_at_the_end_of_day);
 				
-				
+				if(wine_amound_at_the_end_of_day < 0){
+					wine_amound_at_the_end_of_day = 0;
+				}
 				
 				max_export_wine_amount = 0;
 				max_inport_wine_amount = 0;
