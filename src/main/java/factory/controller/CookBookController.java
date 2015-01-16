@@ -865,6 +865,7 @@ public class CookBookController {
 			} // /for
 		} // /for
 		
+		totalprice = (double)Math.round(totalprice * 100) / 100;
 		expenditureRepository.save(new Expenditure(LocalDate.now(), totalprice, "Flaschenbestellung"));
 		
 //		for(Location loc : locationRepository.findAll()){

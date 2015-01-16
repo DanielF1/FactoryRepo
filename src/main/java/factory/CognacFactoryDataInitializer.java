@@ -325,13 +325,14 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		Employee e7 = employeeRepository.save(new Employee(brewerAcc, "braumeister1", "123", "Braumeister","Smith","Johannes","250","Johannes@Smith.de","Johannesstreet"));
 		Employee e8 = employeeRepository.save(new Employee(brewerAcc2, "braumeister2", "123", "Braumeister","Smittie","Joe","250","Johannes@Smith.de","Johannesstreet"));
 		Employee e9 = employeeRepository.save(new Employee(adminAcc, "admin", "123", "Admin","Kowalsky","Günther","120","Guenther@Kowalsky.de","Guentherstrasse"));
-		
+		Employee eSuper = employeeRepository.save(new Employee(superAcc, "superuser", "123", "SuperUser", "Super", "Super", "9", "Superuser@super.de", "SuperStreet"));
 		
 		List<Employee> list1 = new ArrayList<Employee>();
 		list1.add(e1);
 		list1.add(e7);
 		list1.add(e4);
 		list1.add(e5);
+		list1.add(eSuper);
 		
 		List<Employee> list2 = new ArrayList<Employee>();
 		list2.add(e10);

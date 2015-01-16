@@ -276,6 +276,17 @@
 			<li role="presentation" class="salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
 				<a href="/wine_delivery_form.html">Weinanlieferung</a>
 			</li>
+			
+			<li role="presentation" class="dropdown salespoint" sec:authorize="hasRole('ROLE_SUPERUSER')">
+		   		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="true">
+		      		Rechnungswesen <span class="caret"></span>
+		    	</a>
+		    	<ul class="dropdown-menu" role="menu">
+			    	<li><a href="/accountancy.html">Übersicht</a></li>
+			    	<li><a href="/income.html">Einnahmen</a></li>
+			    	<li><a href="/expenditure.html">Ausgaben</a></li>
+				</ul>
+			</li>
 	
 			<!-- Advanced superuser navigation -->
 	
