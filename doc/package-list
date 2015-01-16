@@ -3,5 +3,6 @@ factory.controller
 factory.model
 factory.model.validation
 factory.repository
-videoshop
-videoshop.model
+factoryTests
+factoryTests.controller
+factoryTests.model
