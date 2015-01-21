@@ -68,7 +68,7 @@ public class CookBookController {
 	List<Ingredient> mapIngredient = new ArrayList<Ingredient>();
 	List<FoundLocation> foundLocation = new ArrayList<FoundLocation>();
 	
-	Long seconds = 5L;
+	Long seconds = 1L;
 	
 	
 	@Autowired 
