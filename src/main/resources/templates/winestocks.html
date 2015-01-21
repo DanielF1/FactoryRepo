@@ -52,7 +52,7 @@
 			    barDatasetSpacing : 1,
 
 			    //String - A legend template
-			    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+			    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\">jvvbnvn<% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 
 			};
 			
@@ -95,7 +95,7 @@
 				            fillColor: "rgba(255,197,66,0.5)",
 				            strokeColor: "rgba(255,197,66,0.8)",
 				            highlightFill: "rgba(255,197,66,0.75)",
-				            highlightStroke: "rgba(255,197,66,220,1)",
+				            highlightStroke: "rgba(255,197,66,1)",
 				            data: wine_transport_at_that_day_in
 				        },
 				        {
@@ -194,7 +194,7 @@
 					            fillColor: "rgba(255,197,66,0.5)",
 					            strokeColor: "rgba(255,197,66,0.8)",
 					            highlightFill: "rgba(255,197,66,0.75)",
-					            highlightStroke: "rgba(255,197,66,220,1)",
+					            highlightStroke: "rgba(255,197,66,1)",
 					            data: wine_transport_at_that_day_in
 					        },
 					        {
@@ -240,6 +240,11 @@
  		}
 	  .table_max{overflow: auto;}
 	  .show_btn{width:100%;}
+	  .btn_color_p{background-color:rgba(60,186,215,1); width:30px; height: 18px; margin-left:400px;}
+	  .btn_color_w{background-color:rgba(76,107,221,1); width:30px; height: 18px; margin-left:540px; margin-top:-18px;}
+	  .btn_color_i{background-color:rgba(255,197,66,1); width:30px; height: 18px; margin-left:700px; margin-top:-18px;}
+	  .btn_color_e{background-color:rgba(255,160,66,1); width:30px; height: 18px; margin-left:800px; margin-top:-18px;}
+	  .btn_color{margin-left:32px;}
 	</style>
 
 	<img src="../resources/img/wein.jpg" class="header"/>
@@ -342,11 +347,21 @@
 					<div class="collapse" th:id="chart-container- + ${loc_count}">
 					  <div class="table_max">
 					    <canvas th:id="myChart + ${loc_count}" width="4000" height="300px"></canvas>
-					    
 					  </div>
+					  
+					  <br/>
+					  
+					    <div>
+					    	<div class="text-center"><h4>Legende</h4></div>
+				    		<div class="btn_color_p text-center"><span class="btn_color text-center"> Verarbeitung</span></div>
+				    		<div class="btn_color_w text-center"><span class="btn_color text-center"> Weinanlieferung</span></div>
+				    		<div class="btn_color_i text-center"><span class="btn_color text-center"> Inport</span></div>
+				    		<div class="btn_color_e text-center"><span class="btn_color text-center"> Export</span></div>
+					    </div>
 					</div>
-					
+					<br/><br/>
 				</div>
+				
 			</div>
 		</div>
 	</div>
