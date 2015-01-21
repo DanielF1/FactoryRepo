@@ -332,7 +332,7 @@ public class BarrelMakerController {
 				while(it.hasNext())
 //				for (Barrel barrel : alterMap.get(key1)) {
 				{
-					barrel = (Barrel) it.next();
+					barrel = it.next();
 					double volume = barrel.getBarrel_volume();
 					if (hilfsFass < volume)
 						volume = hilfsFass;

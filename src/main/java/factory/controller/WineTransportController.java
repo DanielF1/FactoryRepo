@@ -109,7 +109,8 @@ public class WineTransportController {
 		productionManagementRepository.deleteAll();
 		
 		DateTime final_date = new DateTime(2015, 4, 1, 0, 0, 0, 0);
-		DateTime now = new DateTime().now();
+		new DateTime();
+		DateTime now = DateTime.now();
 		int left_days = Days.daysBetween(now.toLocalDate(), final_date.toLocalDate()).getDays();
 		double max_still_amount = 0;
 		

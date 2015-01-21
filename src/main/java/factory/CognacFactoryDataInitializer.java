@@ -368,7 +368,7 @@ public class CognacFactoryDataInitializer implements DataInitializer {
 		UserAccount ua1 = userAccountManager.create("hans", "123", userRole);
 		userAccountManager.save(ua1);
 		
-		Customer c1 = new Customer(ua1, "hans", "123", "Dittrich", "Günther", "Hauptstraße 5");
+		Customer c1 = new Customer(ua1, "hans", "123", "Dittrich", "Hans", "Hauptstraße 5");
 		customerRepository.save(c1);
 		
 		
