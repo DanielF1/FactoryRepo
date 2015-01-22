@@ -70,7 +70,6 @@ public class DistillationController {
 										if (!barrel.getPosition().equals(""))
 										{
 											barrel.setPosition("");
-											
 										}
 										barrel.setQuality("reserviert für Destille " + index);
 										
@@ -80,6 +79,7 @@ public class DistillationController {
 										{
 											break;
 										}
+										
 									}
 								}
 							}	

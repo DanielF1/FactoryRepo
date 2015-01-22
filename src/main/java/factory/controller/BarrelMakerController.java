@@ -3,6 +3,7 @@ package factory.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -282,8 +283,13 @@ public class BarrelMakerController {
 					barrel.setContent_amount(0);
 				}
 				System.out.println(hilfsFass);
-				for (Barrel barrel : alterMap.get(key1)) {
-					
+				Iterable<Barrel> allBarrels = alterMap.get(key1);
+				Iterator<Barrel> it= allBarrels.iterator();
+				Barrel barrel =null;
+				while(it.hasNext())
+//				for (Barrel barrel : alterMap.get(key1)) {
+				{
+					barrel = (Barrel) it.next();
 					double volume = barrel.getBarrel_volume();
 					if (hilfsFass < volume)
 						volume = hilfsFass;
@@ -293,11 +299,12 @@ public class BarrelMakerController {
 					barrel.setLastFill(LocalDate.now());
 					if (barrel.getContent_amount()==0)
 					{
-						double x=barrel.getBarrel_volume();
-						LocalDate y = barrel.getBirthdate_of_barrel();
-						LocalDate z = barrel.getDeath_of_barrel();
+						Barrel barrel1=barrel;
+						barrel1.setQuality("");
+						barrel1.setAge(0);
+						barrel1.setPosition("");
+						barrel1.setManufacturing_date(LocalDate.parse("0000-01-01"));
 						barrelstock.getBarrels().remove(barrel);
-						Barrel barrel1 = new Barrel(0,"",0,LocalDate.parse("0000-01-01"),x,y,z, LocalDate.now(),"");
 						barrelstock.getBarrels().add(barrel1);
 					}
 					
